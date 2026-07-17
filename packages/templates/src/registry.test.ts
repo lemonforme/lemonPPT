@@ -28,12 +28,12 @@ describe('registry', () => {
   });
 
   it('should render a known slide', () => {
-    const element = renderSlide({ layout: 'minimal_cover_v1', props: { title: 'Hi' } });
+    const element = renderSlide({ role: 'cover' as const, layout: 'minimal_cover_v1', props: { title: 'Hi' } });
     expect(element).not.toBeNull();
   });
 
   it('should return null for unknown slide layout', () => {
-    const element = renderSlide({ layout: 'nonexistent', props: {} });
+    const element = renderSlide({ role: 'content' as const, layout: 'nonexistent', props: {} });
     expect(element).toBeNull();
   });
 });

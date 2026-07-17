@@ -17,7 +17,7 @@ export interface PestV1Props {
 export const pestV1Meta: LayoutMeta = {
   id: 'minimal_pest_v1',
   theme: 'minimal',
-  role: 'analysis',
+  role: 'pest',
   displayName: 'PEST 分析',
   description: '2x2 PEST 宏观环境分析矩阵',
   needsMedia: false,

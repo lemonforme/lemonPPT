@@ -8,13 +8,24 @@ export type SlideRole =
   | 'cover'
   | 'tableOfContents'
   | 'metric'
+  | 'stats'
   | 'chart'
   | 'comparison'
+  | 'pricing'
   | 'process'
+  | 'timeline'
+  | 'roadmap'
   | 'quote'
+  | 'testimonial'
   | 'content'
+  | 'faq'
+  | 'feature'
+  | 'team'
+  | 'partners'
   | 'image'
-  | 'analysis'
+  | 'gallery'
+  | 'swot'
+  | 'pest'
   | 'closing';
 
 /** 版式标识，例如 cover_v1、metric_v2 */
@@ -23,12 +34,29 @@ export type LayoutId = string;
 /** 主题标识 */
 export type ThemeId = string;
 
-/** 单页幻灯片 */
+/** 单页幻灯片（最终形态，必须包含版式） */
 export interface Slide {
+  /** 页面角色 */
+  role: SlideRole;
   /** 具体版式 ID */
   layout: LayoutId;
   /** 版式所需属性 */
   props: Record<string, unknown>;
+}
+
+/** Agent 生成的原始幻灯片（可只含角色，由 composer 补全版式） */
+export interface RawSlide {
+  /** 页面角色 */
+  role: SlideRole;
+  /** 可选的具体版式 ID；留空由 composer 自动选择 */
+  layout?: LayoutId;
+  /** 版式所需属性 */
+  props: Record<string, unknown>;
+}
+
+/** Agent 生成的原始 DeckGoal */
+export interface RawDeckGoal extends Omit<DeckGoal, 'slides'> {
+  slides: RawSlide[];
 }
 
 /** 媒体槽位描述（供 Agent 选页与填充使用） */

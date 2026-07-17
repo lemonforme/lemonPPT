@@ -1,5 +1,6 @@
 /**
  * 当未配置 LLM API Key 时，基于用户输入生成一份 demo 级别的 goal.json。
+ * fallback 直接产出完整 Slide（含 role + layout），仍走 recomposeDeck 规范化。
  */
 
 import type { DeckGoal } from '@lemonppt/core';
@@ -10,6 +11,31 @@ export interface FallbackOptions {
   theme?: string;
   language?: string;
 }
+
+const layoutToRole = (layout: string): string => {
+  if (layout.startsWith('minimal_cover')) return 'cover';
+  if (layout.startsWith('minimal_table_of_contents')) return 'tableOfContents';
+  if (layout.startsWith('minimal_metric')) return 'metric';
+  if (layout.startsWith('minimal_stats')) return 'stats';
+  if (layout.startsWith('minimal_chart')) return 'chart';
+  if (layout.startsWith('minimal_comparison')) return 'comparison';
+  if (layout.startsWith('minimal_pricing')) return 'pricing';
+  if (layout.startsWith('minimal_process')) return 'process';
+  if (layout.startsWith('minimal_timeline')) return 'timeline';
+  if (layout.startsWith('minimal_roadmap')) return 'roadmap';
+  if (layout.startsWith('minimal_quote')) return 'quote';
+  if (layout.startsWith('minimal_testimonial')) return 'testimonial';
+  if (layout.startsWith('minimal_faq')) return 'faq';
+  if (layout.startsWith('minimal_feature')) return 'feature';
+  if (layout.startsWith('minimal_team')) return 'team';
+  if (layout.startsWith('minimal_partners')) return 'partners';
+  if (layout.startsWith('minimal_gallery')) return 'gallery';
+  if (layout.startsWith('minimal_image')) return 'image';
+  if (layout.startsWith('minimal_swot')) return 'swot';
+  if (layout.startsWith('minimal_pest')) return 'pest';
+  if (layout.startsWith('minimal_closing')) return 'closing';
+  return 'content';
+};
 
 export function createFallbackGoal(options: FallbackOptions): DeckGoal {
   const { input, pageCount = 5, theme = 'minimal', language = 'zh' } = options;
@@ -103,17 +129,27 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
     },
   ];
 
-  const slides = baseSlides.slice(0, pageCount);
+  const slides = baseSlides
+    .slice(0, pageCount)
+    .map((s) => ({ role: layoutToRole(s.layout), layout: s.layout, props: s.props }));
 
   // 如果页数少于基础版式，确保最后一页是结尾页
   const lastSlide = slides[slides.length - 1];
-  if (lastSlide && !lastSlide.layout.startsWith('minimal_closing')) {
-    slides[slides.length - 1] = baseSlides.find((s) => s.layout.startsWith('minimal_closing'))!;
+  if (lastSlide && lastSlide.role !== 'closing') {
+    const closing = baseSlides.find((s) => layoutToRole(s.layout) === 'closing');
+    if (closing) {
+      slides[slides.length - 1] = {
+        role: 'closing',
+        layout: closing.layout,
+        props: closing.props,
+      };
+    }
   }
 
   // 如果页数多于基础版式，用内容页填充
   while (slides.length < pageCount) {
     slides.splice(slides.length - 1, 0, {
+      role: 'content',
       layout: 'minimal_content_v3',
       props: {
         kicker: `补充页 ${slides.length}`,

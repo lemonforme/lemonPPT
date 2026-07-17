@@ -14,7 +14,7 @@ export interface RoadmapV1Props {
 export const roadmapV1Meta: LayoutMeta = {
   id: 'minimal_roadmap_v1',
   theme: 'minimal',
-  role: 'process',
+  role: 'roadmap',
   displayName: '路线图',
   description: '垂直阶段路线图，展示规划与里程碑',
   needsMedia: false,

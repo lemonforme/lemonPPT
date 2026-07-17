@@ -14,7 +14,7 @@ export interface FaqV1Props {
 export const faqV1Meta: LayoutMeta = {
   id: 'minimal_faq_v1',
   theme: 'minimal',
-  role: 'content',
+  role: 'faq',
   displayName: '问答页',
   description: 'FAQ 问答列表，适合澄清常见疑问',
   needsMedia: false,

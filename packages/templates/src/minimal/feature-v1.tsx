@@ -14,7 +14,7 @@ export interface FeatureV1Props {
 export const featureV1Meta: LayoutMeta = {
   id: 'minimal_feature_v1',
   theme: 'minimal',
-  role: 'content',
+  role: 'feature',
   displayName: '产品特性',
   description: '三列卡片展示产品特性或优势',
   needsMedia: false,

@@ -17,7 +17,7 @@ export interface SwotV1Props {
 export const swotV1Meta: LayoutMeta = {
   id: 'minimal_swot_v1',
   theme: 'minimal',
-  role: 'analysis',
+  role: 'swot',
   displayName: 'SWOT 分析',
   description: '2x2 SWOT 分析矩阵',
   needsMedia: false,

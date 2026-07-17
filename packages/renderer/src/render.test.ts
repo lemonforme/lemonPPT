@@ -10,8 +10,8 @@ const sampleGoal: DeckGoal = {
   language: 'zh',
   pageCount: 2,
   slides: [
-    { layout: 'minimal_cover_v1', props: { title: '封面' } },
-    { layout: 'minimal_closing_v1', props: { title: '结尾' } },
+    { role: 'cover' as const, layout: 'minimal_cover_v1', props: { title: '封面' } },
+    { role: 'closing' as const, layout: 'minimal_closing_v1', props: { title: '结尾' } },
   ],
 };
 

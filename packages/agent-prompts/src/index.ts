@@ -1,6 +1,6 @@
 import type { DeckGoal } from '@lemonppt/core';
-import { validateDeckGoal } from '@lemonppt/core';
-import { recomposeDeck } from '@lemonppt/composer';
+import { validateRawGoal } from '@lemonppt/core';
+import { composeDeckFromRaw, recomposeDeck } from '@lemonppt/composer';
 import { createFallbackGoal } from './fallback.js';
 import { callOpenAICompatible, type LlmOptions } from './llm.js';
 import { buildPrompt, type PromptContext } from './prompt.js';
@@ -53,12 +53,12 @@ export async function generateGoal(
     throw new Error(`LLM 返回不是合法 JSON: ${err instanceof Error ? err.message : String(err)}\n\n${raw}`);
   }
 
-  const validation = validateDeckGoal(parsed);
+  const validation = validateRawGoal(parsed);
   if (!validation.success || !validation.data) {
     throw new Error(`goal.json 校验失败: ${JSON.stringify(validation.errors?.format())}`);
   }
 
-  const goal = recomposeDeck(validation.data);
+  const goal = recomposeDeck(composeDeckFromRaw(validation.data));
   return { goal, source: 'llm', raw };
 }
 

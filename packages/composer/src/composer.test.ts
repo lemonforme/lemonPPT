@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { composeDeck, selectLayoutForRole } from './index.js';
+import { composeDeck, composeDeckFromRaw, selectLayoutForRole } from './index.js';
 
 describe('selectLayoutForRole', () => {
   it('returns a registered layout for cover', () => {
@@ -16,8 +16,17 @@ describe('selectLayoutForRole', () => {
   it('can return different layouts for the same role with different seeds', () => {
     const a = selectLayoutForRole('closing', 'seed-a', 0);
     const b = selectLayoutForRole('closing', 'seed-b', 0);
-    // 概率上可能相同，但 closing 有两个候选，不同种子通常不同
     expect([a, b].every((l) => l.startsWith('minimal_closing'))).toBe(true);
+  });
+
+  it('covers stats role', () => {
+    const layout = selectLayoutForRole('stats');
+    expect(layout).toBe('minimal_stats_v1');
+  });
+
+  it('covers team role', () => {
+    const layout = selectLayoutForRole('team');
+    expect(layout).toBe('minimal_team_v1');
   });
 });
 
@@ -39,9 +48,10 @@ describe('composeDeck', () => {
 
     expect(goal.slides.length).toBe(3);
     expect(goal.pageCount).toBe(3);
+    expect(goal.slides[0]?.role).toBe('cover');
     expect(goal.slides[0]?.layout.startsWith('minimal_cover')).toBe(true);
-    expect(goal.slides[1]?.layout.startsWith('minimal_content')).toBe(true);
-    expect(goal.slides[2]?.layout.startsWith('minimal_closing')).toBe(true);
+    expect(goal.slides[1]?.role).toBe('content');
+    expect(goal.slides[2]?.role).toBe('closing');
     expect(goal.slides[0]?.props._slideIdx).toBe(1);
     expect(goal.slides[2]?.props._slideIdx).toBe(3);
   });
@@ -56,18 +66,7 @@ describe('composeDeck', () => {
     });
 
     expect(goal.slides[0]?.layout).toBe('minimal_chart_v1');
-  });
-
-  it('falls back to content layout when role and layout are missing', () => {
-    const goal = composeDeck({
-      title: '测试',
-      goal: '测试目标',
-      audience: '测试受众',
-      theme: 'minimal',
-      slides: [{ props: { title: 'X' } }],
-    });
-
-    expect(goal.slides[0]?.layout).toBe('minimal_content_v1');
+    expect(goal.slides[0]?.role).toBe('cover');
   });
 
   it('normalizes pageCount even if input is wrong', () => {
@@ -81,5 +80,27 @@ describe('composeDeck', () => {
     });
 
     expect(goal.pageCount).toBe(1);
+  });
+});
+
+describe('composeDeckFromRaw', () => {
+  it('composes from a raw goal without layout', () => {
+    const goal = composeDeckFromRaw({
+      title: '测试',
+      goal: '测试目标',
+      audience: '测试受众',
+      theme: 'minimal',
+      language: 'zh',
+      pageCount: 2,
+      randomSeed: 'raw-test',
+      slides: [
+        { role: 'cover', props: { title: '封面' } },
+        { role: 'metric', props: { value: '99%' } },
+      ],
+    });
+
+    expect(goal.slides[0]?.layout.startsWith('minimal_cover')).toBe(true);
+    expect(goal.slides[1]?.layout.startsWith('minimal_metric')).toBe(true);
+    expect(goal.slides[0]?.props._slideIdx).toBe(1);
   });
 });

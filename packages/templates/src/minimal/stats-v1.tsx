@@ -14,7 +14,7 @@ export interface StatsV1Props {
 export const statsV1Meta: LayoutMeta = {
   id: 'minimal_stats_v1',
   theme: 'minimal',
-  role: 'metric',
+  role: 'stats',
   displayName: '关键指标网格',
   description: '2x2 指标卡片，适合数据概览页',
   needsMedia: false,

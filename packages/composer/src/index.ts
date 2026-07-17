@@ -1,11 +1,11 @@
-import type { DeckGoal, LayoutMeta, Slide, SlideRole } from '@lemonppt/core';
+import type { DeckGoal, LayoutMeta, RawDeckGoal, Slide, SlideRole } from '@lemonppt/core';
 import { listLayoutsByRole } from '@lemonppt/templates';
 import { normalizeDeck } from '@lemonppt/view-model';
 
 export interface ComposeSlideInput {
   /** 页面角色；提供 role 时 composer 会自动挑选版式 */
-  role?: SlideRole;
-  /** 具体版式 ID；优先级高于 role */
+  role: SlideRole;
+  /** 具体版式 ID；优先级高于自动选择 */
   layout?: string;
   /** 页面属性 */
   props?: Record<string, unknown>;
@@ -25,20 +25,30 @@ export interface ComposeInput {
 
 /**
  * 角色到候选版式的映射。
- * 只包含 props 形状相近、可安全互换的版式；
- * 更复杂的版式（如图库、团队、价格表）需要显式指定 layout。
+ * 覆盖当前 30 个版式，同一角色下的多个版式会在生成时随机/按 seed 轮换。
  */
 const ROLE_LAYOUT_CANDIDATES: Record<SlideRole, string[]> = {
   cover: ['minimal_cover_v1'],
   tableOfContents: ['minimal_table_of_contents_v1'],
   metric: ['minimal_metric_v1', 'minimal_metric_v2'],
+  stats: ['minimal_stats_v1'],
   chart: ['minimal_chart_v1'],
   comparison: ['minimal_comparison_v1', 'minimal_comparison_v2'],
-  process: ['minimal_process_v1'],
+  pricing: ['minimal_pricing_v1'],
+  process: ['minimal_process_v1', 'minimal_process_v2'],
+  timeline: ['minimal_timeline_v1'],
+  roadmap: ['minimal_roadmap_v1'],
   quote: ['minimal_quote_v1', 'minimal_quote_v2'],
-  content: ['minimal_content_v1'],
+  testimonial: ['minimal_testimonial_v1'],
+  content: ['minimal_content_v1', 'minimal_content_v2', 'minimal_content_v3', 'minimal_split_v1'],
+  faq: ['minimal_faq_v1'],
+  feature: ['minimal_feature_v1'],
+  team: ['minimal_team_v1'],
+  partners: ['minimal_partners_v1'],
   image: ['minimal_image_v1'],
-  analysis: ['minimal_swot_v1', 'minimal_pest_v1'],
+  gallery: ['minimal_gallery_v1'],
+  swot: ['minimal_swot_v1'],
+  pest: ['minimal_pest_v1'],
   closing: ['minimal_closing_v1', 'minimal_closing_v2'],
 };
 
@@ -85,8 +95,9 @@ export function selectLayoutForRole(role: SlideRole, seed?: string, index = 0): 
  */
 export function composeDeck(input: ComposeInput): DeckGoal {
   const slides: Slide[] = input.slides.map((s, index) => {
-    const layout = s.layout ?? (s.role ? selectLayoutForRole(s.role, input.randomSeed, index) : 'minimal_content_v1');
+    const layout = s.layout ?? selectLayoutForRole(s.role, input.randomSeed, index);
     return {
+      role: s.role,
       layout,
       props: s.props ?? {},
     };
@@ -105,6 +116,23 @@ export function composeDeck(input: ComposeInput): DeckGoal {
   };
 
   return normalizeDeck(draft);
+}
+
+/**
+ * 将 Agent 原始输出（只含 role，可省略 layout）编排成完整 DeckGoal。
+ */
+export function composeDeckFromRaw(raw: RawDeckGoal): DeckGoal {
+  return composeDeck({
+    title: raw.title,
+    goal: raw.goal,
+    audience: raw.audience,
+    owner: raw.owner,
+    theme: raw.theme,
+    language: raw.language,
+    pageCount: raw.pageCount,
+    randomSeed: raw.randomSeed,
+    slides: raw.slides.map((s) => ({ role: s.role, layout: s.layout, props: s.props })),
+  });
 }
 
 /**
