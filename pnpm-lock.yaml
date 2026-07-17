@@ -61,13 +61,35 @@ importers:
 
   packages/agent-prompts:
     dependencies:
+      '@lemonppt/composer':
+        specifier: workspace:*
+        version: link:../composer
       '@lemonppt/core':
         specifier: workspace:*
         version: link:../core
+      '@lemonppt/view-model':
+        specifier: workspace:*
+        version: link:../view-model
     devDependencies:
       '@types/node':
         specifier: ^20.0.0
         version: 20.19.43
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  packages/composer:
+    dependencies:
+      '@lemonppt/core':
+        specifier: workspace:*
+        version: link:../core
+      '@lemonppt/templates':
+        specifier: workspace:*
+        version: link:../templates
+      '@lemonppt/view-model':
+        specifier: workspace:*
+        version: link:../view-model
+    devDependencies:
       typescript:
         specifier: ^5.5.0
         version: 5.9.3
@@ -139,6 +161,16 @@ importers:
         version: 5.9.3
 
   packages/themes:
+    dependencies:
+      '@lemonppt/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  packages/view-model:
     dependencies:
       '@lemonppt/core':
         specifier: workspace:*

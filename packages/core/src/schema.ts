@@ -11,6 +11,7 @@ const slideRoleSchema = z.enum([
   'quote',
   'content',
   'image',
+  'analysis',
   'closing',
 ]) satisfies z.ZodType<SlideRole>;
 

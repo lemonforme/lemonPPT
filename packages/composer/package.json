@@ -1,5 +1,5 @@
 {
-  "name": "@lemonppt/agent-prompts",
+  "name": "@lemonppt/composer",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -16,11 +16,10 @@
   },
   "dependencies": {
     "@lemonppt/core": "workspace:*",
-    "@lemonppt/composer": "workspace:*",
+    "@lemonppt/templates": "workspace:*",
     "@lemonppt/view-model": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
     "typescript": "^5.5.0"
   },
   "license": "MIT"
