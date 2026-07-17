@@ -1,0 +1,36 @@
+{
+  "name": "lemonppt",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-developed AI PPT generation agent. Independent from dashi-ppt-skill.",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter @lemonppt/server dev",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "render": "node scripts/render.mjs",
+    "render:editor": "node scripts/render-editor.mjs",
+    "export:pptx": "node scripts/export-pptx.mjs",
+    "export:pdf": "node scripts/export-pdf.mjs",
+    "generate:goal": "node scripts/generate-goal.mjs"
+  },
+  "dependencies": {
+    "@lemonppt/agent-prompts": "workspace:*",
+    "@lemonppt/core": "workspace:*",
+    "@lemonppt/renderer": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/supertest": "^7.2.1",
+    "supertest": "^7.2.2",
+    "typescript": "^5.5.0",
+    "vitest": "^4.1.10"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT"
+}

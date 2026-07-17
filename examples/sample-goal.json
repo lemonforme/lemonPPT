@@ -1,0 +1,164 @@
+{
+  "title": "lemonPPT 产品发布",
+  "goal": "向早期用户介绍 lemonPPT 的核心能力和使用方式",
+  "audience": "AI 工具爱好者 / 内容创作者",
+  "owner": "lemonPPT 团队",
+  "theme": "minimal",
+  "language": "zh",
+  "pageCount": 13,
+  "randomSeed": "lemon-intro-20260717-001",
+  "slides": [
+    {
+      "layout": "minimal_cover_v1",
+      "props": {
+        "kicker": "智能演示 · V0.1",
+        "title": "lemonPPT",
+        "subtitle": "一句话生成可编辑的演示文稿",
+        "date": "2026.07",
+        "image": "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1280&q=80"
+      }
+    },
+    {
+      "layout": "minimal_table_of_contents_v1",
+      "props": {
+        "kicker": "目录",
+        "title": "今天聊什么",
+        "items": [
+          "产品定位与核心理念",
+          "核心能力展示",
+          "典型使用场景",
+          "下一步规划"
+        ]
+      }
+    },
+    {
+      "layout": "minimal_metric_v1",
+      "props": {
+        "label": "效率提升",
+        "value": "10",
+        "unit": "倍",
+        "description": "相比传统手动排版，制作时间平均缩短 10 倍"
+      }
+    },
+    {
+      "layout": "minimal_metric_v2",
+      "props": {
+        "kicker": "核心能力",
+        "value": "3",
+        "unit": "步生成",
+        "description": "描述需求、选择主题、导出文件"
+      }
+    },
+    {
+      "layout": "minimal_chart_v1",
+      "props": {
+        "kicker": "数据洞察",
+        "title": "用户增长趋势",
+        "type": "bar",
+        "labels": ["Q1", "Q2", "Q3", "Q4"],
+        "data": [1200, 2100, 3400, 4800],
+        "unit": "人"
+      }
+    },
+    {
+      "layout": "minimal_content_v3",
+      "props": {
+        "kicker": "产品亮点",
+        "title": "AI 驱动的设计引擎",
+        "points": [
+          "自动匹配版式与配色",
+          "支持一键切换主题",
+          "导出可编辑 PPTX"
+        ],
+        "imageUrl": "https://images.unsplash.com/photo-1512314889357-e157c22f938d?w=1280&q=80"
+      }
+    },
+    {
+      "layout": "minimal_content_v2",
+      "props": {
+        "kicker": "适用场景",
+        "title": "谁适合用 lemonPPT？",
+        "leftPoints": [
+          "创业者路演",
+          "产品经理汇报",
+          "市场活动方案"
+        ],
+        "rightPoints": [
+          "教育培训课件",
+          "技术分享讲座",
+          "年终总结报告"
+        ]
+      }
+    },
+    {
+      "layout": "minimal_comparison_v2",
+      "props": {
+        "kicker": "对比",
+        "title": "传统方式 vs lemonPPT",
+        "leftTitle": "传统方式",
+        "leftPoints": [
+          "手动排版耗时",
+          "设计门槛高",
+          "重复修改成本高"
+        ],
+        "rightTitle": "lemonPPT",
+        "rightPoints": [
+          "AI 自动排版",
+          "内置专业主题",
+          "可编辑 PPTX 导出"
+        ]
+      }
+    },
+    {
+      "layout": "minimal_process_v2",
+      "props": {
+        "kicker": "使用流程",
+        "title": "从想法到成稿",
+        "steps": [
+          { "title": "输入需求", "description": "用自然语言描述你想表达的内容" },
+          { "title": "AI 生成", "description": "Agent 自动规划结构并选择版式" },
+          { "title": "在线编辑", "description": "在浏览器里调整文字、图片和主题" },
+          { "title": "导出文件", "description": "一键导出 PPTX 或 PDF" }
+        ]
+      }
+    },
+    {
+      "layout": "minimal_swot_v1",
+      "props": {
+        "title": "SWOT 分析",
+        "strength": "AI 自动生成 + 可编辑，显著降低制作门槛",
+        "weakness": "版式库仍在快速扩展中",
+        "opportunity": "AI 办公工具市场高速增长",
+        "threat": "主流办公软件也在集成 AI 能力"
+      }
+    },
+    {
+      "layout": "minimal_pest_v1",
+      "props": {
+        "title": "PEST 分析",
+        "political": "政策鼓励 AI 创新与应用落地",
+        "economic": "企业降本增效需求强烈",
+        "social": "远程办公推动在线协作工具普及",
+        "technological": "大模型与多模态能力持续进步"
+      }
+    },
+    {
+      "layout": "minimal_quote_v2",
+      "props": {
+        "quote": "最好的 PPT 不是炫技，而是把想法清楚有力地传递出去。",
+        "author": "lemonPPT 团队",
+        "role": "产品理念"
+      }
+    },
+    {
+      "layout": "minimal_closing_v2",
+      "props": {
+        "title": "开始创作",
+        "subtitle": "把你的想法变成高质量演示",
+        "contact": "lemonPPT 团队",
+        "email": "hello@lemonppt.dev",
+        "link": "www.lemonppt.dev"
+      }
+    }
+  ]
+}
