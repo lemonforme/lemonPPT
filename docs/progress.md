@@ -83,6 +83,34 @@
   - `corepack pnpm -r build && corepack pnpm test`：9 个测试文件、49 个测试通过。
   - CLI render + export 成功生成 `/tmp/testimonial-v2-output/index.html` 与 `/tmp/testimonial-v2.pptx`。
 
+### 2026-07-20（补充 chart_v2 / gallery_v2）
+
+- **新增版式 `chart_v2`**
+  - 多系列柱状图，支持多组数据对比与图例
+  - 组件：`packages/templates/src/base/chart-v2.tsx`（SVG 渲染）
+  - PPTX 导出：`packages/renderer/src/export-pptx.ts`（pptxgenjs 多系列柱状图）
+
+- **新增版式 `gallery_v2`**
+  - 三列图片墙，支持最多 6 张图片配说明
+  - 组件：`packages/templates/src/base/gallery-v2.tsx`
+  - PPTX 导出：`packages/renderer/src/export-pptx.ts`
+
+- **注册与样式**
+  - 两个版式均注册到 `templates/index.ts`、`templates/registry.tsx`、`composer` 候选列表
+  - 为 `base`、`dark-tech`、`warm-business` 三个主题补充 CSS
+  - 更新 `SKILL.md` 与 `packages/cli/SKILL.md`
+
+- **测试**
+  - `vitest.config.ts` 已支持 `.test.tsx`，新增两个版式测试
+  - `corepack pnpm test`：11 个测试文件、53 个测试通过
+
+- **发布 0.1.5**
+  - 8 个包全部升级到 `0.1.5`
+  - 通过 `npx @lemonppt/cli@0.1.5 generate/export` 端到端验证
+
+- **本地验证通过**
+  - CLI render + export 成功生成 `/tmp/new-layouts-output/index.html` 与 `/tmp/new-layouts.pptx`
+
 ### 待完成
 
 - [ ] 在 Claude/Codex/Cursor 中实测 SKILL.md 效果并收集反馈
