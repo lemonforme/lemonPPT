@@ -36,7 +36,7 @@ describe('composeDeck', () => {
       title: '测试',
       goal: '测试目标',
       audience: '测试受众',
-      theme: 'minimal',
+      theme: 'base',
       language: 'zh',
       randomSeed: 'test',
       slides: [
@@ -61,7 +61,7 @@ describe('composeDeck', () => {
       title: '测试',
       goal: '测试目标',
       audience: '测试受众',
-      theme: 'minimal',
+      theme: 'base',
       slides: [{ role: 'cover', layout: 'chart_v1', props: { title: 'T' } }],
     });
 
@@ -74,7 +74,7 @@ describe('composeDeck', () => {
       title: '测试',
       goal: '测试目标',
       audience: '测试受众',
-      theme: 'minimal',
+      theme: 'base',
       pageCount: 99,
       slides: [{ role: 'cover' }],
     });
@@ -89,7 +89,7 @@ describe('composeDeckFromRaw', () => {
       title: '测试',
       goal: '测试目标',
       audience: '测试受众',
-      theme: 'minimal',
+      theme: 'base',
       language: 'zh',
       pageCount: 2,
       randomSeed: 'raw-test',

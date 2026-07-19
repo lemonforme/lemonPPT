@@ -30,8 +30,8 @@ async function main() {
 
   await mkdir(assetsDir, { recursive: true });
   await copyFile(
-    path.join(rootDir, 'packages', 'themes', 'src', 'minimal', 'styles.css'),
-    path.join(assetsDir, 'minimal.css')
+    path.join(rootDir, 'packages', 'themes', 'src', 'base', 'styles.css'),
+    path.join(assetsDir, 'base.css')
   );
 
   await mkdir(outputDir, { recursive: true });

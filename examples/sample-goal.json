@@ -3,7 +3,7 @@
   "goal": "向早期用户介绍 lemonPPT 的核心能力和使用方式",
   "audience": "AI 工具爱好者 / 内容创作者",
   "owner": "lemonPPT 团队",
-  "theme": "minimal",
+  "theme": "base",
   "language": "zh",
   "pageCount": 13,
   "randomSeed": "lemon-intro-20260717-001",

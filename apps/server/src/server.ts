@@ -98,8 +98,8 @@ export function createServer(options: ServerOptions): Express {
     try {
       const samplePath = path.join(rootDir, 'examples/sample-goal.json');
       const goal = await readGoalFromFile(samplePath);
-      const themeId = String(req.query.theme || goal.theme || 'minimal');
-      goal.theme = getTheme(themeId) ? themeId : 'minimal';
+      const themeId = String(req.query.theme || goal.theme || 'base');
+      goal.theme = getTheme(themeId) ? themeId : 'base';
 
       await renderGoalToDir(goal, { outDir: options.outputDir, editable: true });
 
@@ -113,7 +113,7 @@ export function createServer(options: ServerOptions): Express {
   // 生成 goal.json
   app.post('/api/generate-goal', async (req, res) => {
     try {
-      const { input, pageCount = 8, theme = 'minimal', language = 'zh', apiKey } = req.body;
+      const { input, pageCount = 8, theme = 'base', language = 'zh', apiKey } = req.body;
 
       const result = await generateGoal({
         input,

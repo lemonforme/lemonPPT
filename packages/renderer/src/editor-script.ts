@@ -347,7 +347,7 @@ export const editorScript = `
   // 主题切换
   const themeSwitcher = document.getElementById('lp-theme-switcher');
   if (themeSwitcher) {
-    themeSwitcher.value = goal.theme || 'minimal';
+    themeSwitcher.value = goal.theme || 'base';
     themeSwitcher.addEventListener('change', () => {
       const newTheme = themeSwitcher.value;
       if (newTheme === goal.theme) return;

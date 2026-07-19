@@ -6,7 +6,7 @@ describe('schema', () => {
     title: '测试演示',
     goal: '验证 schema 校验',
     audience: '开发者',
-    theme: 'minimal',
+    theme: 'base',
     language: 'zh',
     pageCount: 2,
     slides: [

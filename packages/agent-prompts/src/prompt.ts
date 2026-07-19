@@ -86,7 +86,7 @@ const ROLE_CATALOG = `
 `;
 
 export function buildPrompt(context: PromptContext): string {
-  const { input, pageCount = 8, theme = 'minimal', language = 'zh' } = context;
+  const { input, pageCount = 8, theme = 'base', language = 'zh' } = context;
 
   return `你是一个专业的演示文稿规划助手。请根据用户的需求，生成一份符合 lemonPPT 格式的 goal.json。
 

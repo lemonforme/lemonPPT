@@ -6,7 +6,7 @@ const sampleGoal: DeckGoal = {
   title: '测试渲染',
   goal: '测试',
   audience: '开发者',
-  theme: 'minimal',
+  theme: 'base',
   language: 'zh',
   pageCount: 2,
   slides: [
@@ -20,7 +20,7 @@ describe('renderDeck', () => {
     const result = renderDeck(sampleGoal);
     expect(result.html).toContain('<!DOCTYPE html>');
     expect(result.html).toContain('测试渲染');
-    expect(result.assets).toContain('./assets/minimal.css');
+    expect(result.assets).toContain('./assets/base.css');
   });
 
   it('should render correct number of slide wrappers', () => {

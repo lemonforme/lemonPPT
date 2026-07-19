@@ -113,7 +113,7 @@ ${scriptMarkup}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=${width}, initial-scale=1.0">
   <title>${escapeHtml(goal.title)}</title>
-  <link rel="stylesheet" href="./assets/${goal.theme || 'minimal'}.css">
+  <link rel="stylesheet" href="./assets/${goal.theme || 'base'}.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
@@ -652,7 +652,7 @@ ${bodyMarkup}
 
   return {
     html,
-    assets: ['./assets/minimal.css'],
+    assets: ['./assets/base.css'],
   };
 }
 
@@ -677,7 +677,7 @@ function buildEditorBarMarkup(): string {
   <label class="lp-theme-switcher-label">
     主题
     <select id="lp-theme-switcher">
-      <option value="minimal">极简白</option>
+      <option value="base">极简白</option>
       <option value="dark-tech">深色科技</option>
       <option value="warm-business">暖色商务</option>
     </select>

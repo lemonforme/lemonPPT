@@ -94,7 +94,7 @@
     - `@lemonppt/server`
 
 - **本地预览服务器修复**
-  - `POST /api/render`：生成 `output/index.html` 并复制 `minimal.css`
+  - `POST /api/render`：生成 `output/index.html` 并复制 `base.css`
   - `POST /api/export/pptx`：生成 `output/presentation.pptx`
   - `GET /api/health`：健康检查
   - 修复 CSS 路径基于脚本位置计算，避免 `process.cwd()` 依赖
