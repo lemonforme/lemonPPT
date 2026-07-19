@@ -48,6 +48,9 @@ export function createServer(options: ServerOptions): Express {
   // 静态资源：输出目录
   app.use('/deck', express.static(options.outputDir));
 
+  // 静态资源：首页/创建页
+  app.use(express.static(path.join(__dirname, 'public')));
+
   // 健康检查
   app.get('/api/health', (_req, res) => {
     res.json({ ok: true, service: 'lemonPPT' });
@@ -79,7 +82,7 @@ export function createServer(options: ServerOptions): Express {
       await exportDeckToPptx(goal, { outFile: filePath });
 
       log('info', 'Exported PPTX', { theme: goal.theme, slides: goal.slides.length });
-      res.json({ success: true, file: '/deck/deck.pptx' });
+      res.download(filePath, `${goal.title || 'presentation'}.pptx`);
     } catch (err) {
       handleError(err, req, res);
     }
@@ -93,10 +96,15 @@ export function createServer(options: ServerOptions): Express {
       await exportDeckToPdf(goal, { outFile: filePath });
 
       log('info', 'Exported PDF', { theme: goal.theme, slides: goal.slides.length });
-      res.json({ success: true, file: '/deck/deck.pdf' });
+      res.download(filePath, `${goal.title || 'presentation'}.pdf`);
     } catch (err) {
       handleError(err, req, res);
     }
+  });
+
+  // 首页重定向到创建页
+  app.get('/', (_req, res) => {
+    res.redirect('/create.html');
   });
 
   // 直接打开编辑器（使用 sample-goal.json 示例）
@@ -123,7 +131,7 @@ export function createServer(options: ServerOptions): Express {
   // 生成 goal.json
   app.post('/api/generate-goal', async (req, res) => {
     try {
-      const { input, pageCount = 8, theme = 'minimal', language = 'zh' } = req.body;
+      const { input, pageCount = 8, theme = 'minimal', language = 'zh', apiKey } = req.body;
 
       const result = await generateGoal({
         input,
@@ -131,7 +139,7 @@ export function createServer(options: ServerOptions): Express {
         theme,
         language,
         llm: {
-          apiKey: process.env.OPENAI_API_KEY,
+          apiKey: apiKey || process.env.OPENAI_API_KEY,
           baseUrl: process.env.OPENAI_BASE_URL,
           model: process.env.OPENAI_MODEL,
         },
