@@ -12,8 +12,8 @@ export interface TeamV1Props {
 }
 
 export const teamV1Meta: LayoutMeta = {
-  id: 'minimal_team_v1',
-  theme: 'minimal',
+  id: 'team_v1',
+  theme: 'base',
   role: 'team',
   displayName: '团队介绍',
   description: '展示团队成员头像、姓名、职位与简介',

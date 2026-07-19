@@ -11,8 +11,8 @@ const baseGoal: DeckGoal = {
   pageCount: 2,
   randomSeed: 'test',
   slides: [
-    { role: 'cover', layout: 'minimal_cover_v1', props: { title: '封面', subtitle: '副标题' } },
-    { role: 'content', layout: 'minimal_content_v1', props: { title: '内容', points: ['a', 'b', 'c'] } },
+    { role: 'cover', layout: 'cover_v1', props: { title: '封面', subtitle: '副标题' } },
+    { role: 'content', layout: 'content_v1', props: { title: '内容', points: ['a', 'b', 'c'] } },
   ],
 };
 
@@ -36,7 +36,7 @@ describe('normalizeSlide', () => {
 
   it('truncates title', () => {
     const slide = normalizeSlide(
-      { role: 'cover' as const, layout: 'minimal_cover_v1', props: { title: 'a'.repeat(100) } },
+      { role: 'cover' as const, layout: 'cover_v1', props: { title: 'a'.repeat(100) } },
       0,
       1,
       { maxTitleLength: 20 }
@@ -46,7 +46,7 @@ describe('normalizeSlide', () => {
 
   it('ensures points array exists', () => {
     const slide = normalizeSlide(
-      { role: 'content' as const, layout: 'minimal_content_v1', props: {} },
+      { role: 'content' as const, layout: 'content_v1', props: {} },
       0,
       1
     );
@@ -55,7 +55,7 @@ describe('normalizeSlide', () => {
 
   it('caps points length', () => {
     const slide = normalizeSlide(
-      { role: 'content' as const, layout: 'minimal_content_v1', props: { points: ['1', '2', '3', '4', '5', '6', '7'] } },
+      { role: 'content' as const, layout: 'content_v1', props: { points: ['1', '2', '3', '4', '5', '6', '7'] } },
       0,
       1,
       { maxPoints: 5 }

@@ -12,8 +12,8 @@ export interface ContentV1Props {
 }
 
 export const contentV1Meta: LayoutMeta = {
-  id: 'minimal_content_v1',
-  theme: 'minimal',
+  id: 'content_v1',
+  theme: 'base',
   role: 'content',
   displayName: '要点内容',
   description: '标题 + bullet points，适合正文页',

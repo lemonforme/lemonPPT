@@ -15,8 +15,8 @@ export interface ChartV1Props {
 }
 
 export const chartV1Meta: LayoutMeta = {
-  id: 'minimal_chart_v1',
-  theme: 'minimal',
+  id: 'chart_v1',
+  theme: 'base',
   role: 'chart',
   displayName: '基础图表',
   description: '柱状图、折线图、饼图，适合数据展示',

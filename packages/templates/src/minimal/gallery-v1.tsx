@@ -12,8 +12,8 @@ export interface GalleryV1Props {
 }
 
 export const galleryV1Meta: LayoutMeta = {
-  id: 'minimal_gallery_v1',
-  theme: 'minimal',
+  id: 'gallery_v1',
+  theme: 'base',
   role: 'gallery',
   displayName: '图片画廊',
   description: '2x2 图片网格，适合作品集或场景展示',

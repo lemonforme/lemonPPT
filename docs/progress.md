@@ -57,14 +57,14 @@
   - 修复 CSS 路径基于脚本位置计算，避免 `process.cwd()` 依赖
 
 - **版式扩展（8/8，达成 Phase 1 目标）**
-  - `minimal_cover_v1`
-  - `minimal_table_of_contents_v1`（新增）
-  - `minimal_metric_v2`
-  - `minimal_comparison_v1`（新增）
-  - `minimal_process_v1`（新增）
-  - `minimal_content_v1`
-  - `minimal_quote_v1`（新增）
-  - `minimal_closing_v1`
+  - `cover_v1`
+  - `table_of_contents_v1`（新增）
+  - `metric_v2`
+  - `comparison_v1`（新增）
+  - `process_v1`（新增）
+  - `content_v1`
+  - `quote_v1`（新增）
+  - `closing_v1`
   - 每个版式均包含：React 组件、模板注册、PPTX 导出映射、CSS 样式
 
 - **示例与脚本**
@@ -108,7 +108,7 @@
   - 已验证：生成 8 页 PDF，含封面图片
 
 - **换图能力**
-  - `minimal_cover_v1` 支持 `image` 背景图
+  - `cover_v1` 支持 `image` 背景图
   - 示例 `sample-goal.json` 封面已添加 Unsplash 图片
   - 编辑器中点击图片即可通过 `prompt` 输入新 URL 替换
   - 已验证：`/editor` 渲染出封面背景图

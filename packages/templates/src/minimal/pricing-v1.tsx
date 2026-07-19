@@ -12,8 +12,8 @@ export interface PricingV1Props {
 }
 
 export const pricingV1Meta: LayoutMeta = {
-  id: 'minimal_pricing_v1',
-  theme: 'minimal',
+  id: 'pricing_v1',
+  theme: 'base',
   role: 'pricing',
   displayName: '价格方案',
   description: '三列价格方案对比，突出推荐方案',

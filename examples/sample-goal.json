@@ -9,7 +9,7 @@
   "randomSeed": "lemon-intro-20260717-001",
   "slides": [
     {
-      "layout": "minimal_cover_v1",
+      "layout": "cover_v1",
       "props": {
         "kicker": "智能演示 · V0.1",
         "title": "lemonPPT",
@@ -19,7 +19,7 @@
       }
     },
     {
-      "layout": "minimal_table_of_contents_v1",
+      "layout": "table_of_contents_v1",
       "props": {
         "kicker": "目录",
         "title": "今天聊什么",
@@ -32,7 +32,7 @@
       }
     },
     {
-      "layout": "minimal_metric_v1",
+      "layout": "metric_v1",
       "props": {
         "label": "效率提升",
         "value": "10",
@@ -41,7 +41,7 @@
       }
     },
     {
-      "layout": "minimal_metric_v2",
+      "layout": "metric_v2",
       "props": {
         "kicker": "核心能力",
         "value": "3",
@@ -50,7 +50,7 @@
       }
     },
     {
-      "layout": "minimal_chart_v1",
+      "layout": "chart_v1",
       "props": {
         "kicker": "数据洞察",
         "title": "用户增长趋势",
@@ -61,7 +61,7 @@
       }
     },
     {
-      "layout": "minimal_content_v3",
+      "layout": "content_v3",
       "props": {
         "kicker": "产品亮点",
         "title": "AI 驱动的设计引擎",
@@ -74,7 +74,7 @@
       }
     },
     {
-      "layout": "minimal_content_v2",
+      "layout": "content_v2",
       "props": {
         "kicker": "适用场景",
         "title": "谁适合用 lemonPPT？",
@@ -91,7 +91,7 @@
       }
     },
     {
-      "layout": "minimal_comparison_v2",
+      "layout": "comparison_v2",
       "props": {
         "kicker": "对比",
         "title": "传统方式 vs lemonPPT",
@@ -110,7 +110,7 @@
       }
     },
     {
-      "layout": "minimal_process_v2",
+      "layout": "process_v2",
       "props": {
         "kicker": "使用流程",
         "title": "从想法到成稿",
@@ -123,7 +123,7 @@
       }
     },
     {
-      "layout": "minimal_swot_v1",
+      "layout": "swot_v1",
       "props": {
         "title": "SWOT 分析",
         "strength": "AI 自动生成 + 可编辑，显著降低制作门槛",
@@ -133,7 +133,7 @@
       }
     },
     {
-      "layout": "minimal_pest_v1",
+      "layout": "pest_v1",
       "props": {
         "title": "PEST 分析",
         "political": "政策鼓励 AI 创新与应用落地",
@@ -143,7 +143,7 @@
       }
     },
     {
-      "layout": "minimal_quote_v2",
+      "layout": "quote_v2",
       "props": {
         "quote": "最好的 PPT 不是炫技，而是把想法清楚有力地传递出去。",
         "author": "lemonPPT 团队",
@@ -151,7 +151,7 @@
       }
     },
     {
-      "layout": "minimal_closing_v2",
+      "layout": "closing_v2",
       "props": {
         "title": "开始创作",
         "subtitle": "把你的想法变成高质量演示",

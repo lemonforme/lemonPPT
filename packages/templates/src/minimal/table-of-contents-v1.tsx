@@ -12,8 +12,8 @@ export interface TableOfContentsV1Props {
 }
 
 export const tableOfContentsV1Meta: LayoutMeta = {
-  id: 'minimal_table_of_contents_v1',
-  theme: 'minimal',
+  id: 'table_of_contents_v1',
+  theme: 'base',
   role: 'tableOfContents',
   displayName: '极简目录',
   description: '标题 + 编号目录项',

@@ -14,8 +14,8 @@ export interface ClosingV2Props {
 }
 
 export const closingV2Meta: LayoutMeta = {
-  id: 'minimal_closing_v2',
-  theme: 'minimal',
+  id: 'closing_v2',
+  theme: 'base',
   role: 'closing',
   displayName: '联系方式结尾',
   description: '结尾页 + 联系方式/邮箱/链接',

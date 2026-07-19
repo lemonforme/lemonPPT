@@ -13,8 +13,8 @@ export interface ContentV2Props {
 }
 
 export const contentV2Meta: LayoutMeta = {
-  id: 'minimal_content_v2',
-  theme: 'minimal',
+  id: 'content_v2',
+  theme: 'base',
   role: 'content',
   displayName: '双列要点',
   description: '标题 + 左右两列 bullet points',

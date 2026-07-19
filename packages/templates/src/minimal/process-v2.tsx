@@ -12,8 +12,8 @@ export interface ProcessV2Props {
 }
 
 export const processV2Meta: LayoutMeta = {
-  id: 'minimal_process_v2',
-  theme: 'minimal',
+  id: 'process_v2',
+  theme: 'base',
   role: 'process',
   displayName: '垂直时间线',
   description: '垂直时间线流程，每个步骤含标题和描述',

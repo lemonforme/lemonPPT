@@ -15,8 +15,8 @@ export interface ComparisonV2Props {
 }
 
 export const comparisonV2Meta: LayoutMeta = {
-  id: 'minimal_comparison_v2',
-  theme: 'minimal',
+  id: 'comparison_v2',
+  theme: 'base',
   role: 'comparison',
   displayName: '优缺点对比',
   description: '左右卡片式优缺点/正反面对比',

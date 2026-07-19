@@ -28,28 +28,28 @@ export interface ComposeInput {
  * 覆盖当前 30 个版式，同一角色下的多个版式会在生成时随机/按 seed 轮换。
  */
 const ROLE_LAYOUT_CANDIDATES: Record<SlideRole, string[]> = {
-  cover: ['minimal_cover_v1'],
-  tableOfContents: ['minimal_table_of_contents_v1'],
-  metric: ['minimal_metric_v1', 'minimal_metric_v2'],
-  stats: ['minimal_stats_v1'],
-  chart: ['minimal_chart_v1'],
-  comparison: ['minimal_comparison_v1', 'minimal_comparison_v2'],
-  pricing: ['minimal_pricing_v1'],
-  process: ['minimal_process_v1', 'minimal_process_v2'],
-  timeline: ['minimal_timeline_v1'],
-  roadmap: ['minimal_roadmap_v1'],
-  quote: ['minimal_quote_v1', 'minimal_quote_v2'],
-  testimonial: ['minimal_testimonial_v1'],
-  content: ['minimal_content_v1', 'minimal_content_v2', 'minimal_content_v3', 'minimal_split_v1'],
-  faq: ['minimal_faq_v1'],
-  feature: ['minimal_feature_v1'],
-  team: ['minimal_team_v1'],
-  partners: ['minimal_partners_v1'],
-  image: ['minimal_image_v1'],
-  gallery: ['minimal_gallery_v1'],
-  swot: ['minimal_swot_v1'],
-  pest: ['minimal_pest_v1'],
-  closing: ['minimal_closing_v1', 'minimal_closing_v2'],
+  cover: ['cover_v1'],
+  tableOfContents: ['table_of_contents_v1'],
+  metric: ['metric_v1', 'metric_v2'],
+  stats: ['stats_v1'],
+  chart: ['chart_v1'],
+  comparison: ['comparison_v1', 'comparison_v2'],
+  pricing: ['pricing_v1'],
+  process: ['process_v1', 'process_v2'],
+  timeline: ['timeline_v1'],
+  roadmap: ['roadmap_v1'],
+  quote: ['quote_v1', 'quote_v2'],
+  testimonial: ['testimonial_v1'],
+  content: ['content_v1', 'content_v2', 'content_v3', 'split_v1'],
+  faq: ['faq_v1'],
+  feature: ['feature_v1'],
+  team: ['team_v1'],
+  partners: ['partners_v1'],
+  image: ['image_v1'],
+  gallery: ['gallery_v1'],
+  swot: ['swot_v1'],
+  pest: ['pest_v1'],
+  closing: ['closing_v1', 'closing_v2'],
 };
 
 /**
@@ -80,10 +80,10 @@ function createSeededRandom(seed: string): () => number {
  * 优先使用运行时注册表中真实存在的版式；未注册时返回兜底版式。
  */
 export function selectLayoutForRole(role: SlideRole, seed?: string, index = 0): string {
-  const candidates = ROLE_LAYOUT_CANDIDATES[role] ?? ['minimal_content_v1'];
+  const candidates = ROLE_LAYOUT_CANDIDATES[role] ?? ['content_v1'];
   const registered = listLayoutsByRole(role).map((m: LayoutMeta) => m.id);
   const validCandidates = candidates.filter((id) => registered.includes(id));
-  const pool = validCandidates.length > 0 ? validCandidates : registered.length > 0 ? registered : ['minimal_content_v1'];
+  const pool = validCandidates.length > 0 ? validCandidates : registered.length > 0 ? registered : ['content_v1'];
 
   const random = seed ? createSeededRandom(`${seed}-${index}`) : Math.random;
   const idx = Math.floor(random() * pool.length);

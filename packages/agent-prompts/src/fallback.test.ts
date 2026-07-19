@@ -17,9 +17,9 @@ describe('fallback', () => {
 
   it('should start with cover and end with closing', () => {
     const goal = createFallbackGoal({ input: '测试主题', pageCount: 8 });
-    expect(goal.slides[0].layout).toBe('minimal_cover_v1');
+    expect(goal.slides[0].layout).toBe('cover_v1');
     const last = goal.slides[goal.slides.length - 1];
-    expect(last.layout).toMatch(/minimal_closing_v\d/);
+    expect(last.layout).toMatch(/closing_v\d/);
   });
 
   it('should apply theme and language options', () => {
