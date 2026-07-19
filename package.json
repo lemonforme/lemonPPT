@@ -16,7 +16,7 @@
     "export:pptx": "node scripts/export-pptx.mjs",
     "export:pdf": "node scripts/export-pdf.mjs",
     "generate:goal": "node scripts/generate-goal.mjs",
-    "publish:packages": "pnpm -r publish"
+    "publish:packages": "corepack pnpm -r publish"
   },
   "dependencies": {
     "@lemonppt/agent-prompts": "workspace:*",
