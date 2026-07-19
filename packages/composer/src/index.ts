@@ -39,7 +39,7 @@ const ROLE_LAYOUT_CANDIDATES: Record<SlideRole, string[]> = {
   timeline: ['timeline_v1'],
   roadmap: ['roadmap_v1'],
   quote: ['quote_v1', 'quote_v2'],
-  testimonial: ['testimonial_v1'],
+  testimonial: ['testimonial_v1', 'testimonial_v2'],
   content: ['content_v1', 'content_v2', 'content_v3', 'split_v1'],
   faq: ['faq_v1'],
   feature: ['feature_v1'],
