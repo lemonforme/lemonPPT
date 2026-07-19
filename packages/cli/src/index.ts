@@ -17,7 +17,7 @@ export interface GenerateCliOptions {
   input: string;
   /** 页数，默认 8 */
   pageCount?: number;
-  /** 主题 ID，默认 minimal */
+  /** 主题 ID，默认 base */
   theme?: string;
   /** 语言，默认 zh */
   language?: 'zh' | 'en';

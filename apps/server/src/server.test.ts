@@ -7,7 +7,7 @@ const sampleGoal: DeckGoal = {
   title: '测试渲染',
   goal: '测试',
   audience: '开发者',
-  theme: 'minimal',
+  theme: 'base',
   language: 'zh',
   pageCount: 2,
   slides: [
@@ -39,6 +39,6 @@ describe('server', () => {
     const res = await request(app).post('/api/render').send(sampleGoal);
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.assets).toContain('./assets/minimal.css');
+    expect(res.body.assets).toContain('./assets/base.css');
   });
 });

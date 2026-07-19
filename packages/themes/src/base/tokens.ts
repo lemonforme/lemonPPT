@@ -1,8 +1,8 @@
 /**
- * minimal 主题设计 token
+ * base 主题设计 token
  */
-export const minimalTokens = {
-  id: 'minimal',
+export const baseTokens = {
+  id: 'base',
   displayName: '极简白',
   description: '干净、专业、适合商务汇报',
   colors: {

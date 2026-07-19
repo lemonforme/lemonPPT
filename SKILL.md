@@ -20,7 +20,7 @@ lemonppt generate "<主题>" --pages <页数> --theme <主题> --language zh --o
 ```
 
 - `--pages`：页数，建议 6~20 页
-- `--theme`：主题 ID，可选 `minimal`、`dark-tech`、`warm-business`
+- `--theme`：主题 ID，可选 `base`、`dark-tech`、`warm-business`
 - `--language`：`zh` 或 `en`
 - `--api-key`：可选，OpenAI 兼容 API Key；不传则使用内置 fallback 示例
 
@@ -46,7 +46,7 @@ lemonppt export ./goal.json --pptx ./deck.pptx --pdf ./deck.pdf
   "goal": "演示目标",
   "audience": "目标受众",
   "owner": "汇报人",
-  "theme": "minimal",
+  "theme": "base",
   "language": "zh",
   "pageCount": 8,
   "randomSeed": "可选种子",
@@ -90,7 +90,7 @@ lemonppt export ./goal.json --pptx ./deck.pptx --pdf ./deck.pdf
 
 | 主题 ID | 风格 |
 |---|---|
-| `minimal` | 极简商务 |
+| `base` | 极简商务 |
 | `dark-tech` | 深色科技 |
 | `warm-business` | 温暖商务 |
 

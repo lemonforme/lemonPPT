@@ -17,8 +17,8 @@ async function main() {
   const assetsDir = path.join(outDir, 'assets');
   await mkdir(assetsDir, { recursive: true });
 
-  const cssSource = path.join(rootDir, 'packages/themes/src/minimal/styles.css');
-  const cssDest = path.join(assetsDir, 'minimal.css');
+  const cssSource = path.join(rootDir, 'packages/themes/src/base/styles.css');
+  const cssDest = path.join(assetsDir, 'base.css');
   await copyFile(cssSource, cssDest);
 
   await writeFile(outFile, result.html, 'utf-8');

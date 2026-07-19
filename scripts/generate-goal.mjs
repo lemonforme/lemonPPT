@@ -23,7 +23,7 @@ async function main() {
   const result = await generateGoal({
     input,
     pageCount: 8,
-    theme: 'minimal',
+    theme: 'base',
     language: 'zh',
     llm: {
       apiKey: process.env.OPENAI_API_KEY,

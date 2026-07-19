@@ -6,7 +6,7 @@ const baseGoal: DeckGoal = {
   title: '测试',
   goal: '测试目标',
   audience: '测试受众',
-  theme: 'minimal',
+  theme: 'base',
   language: 'zh',
   pageCount: 2,
   randomSeed: 'test',
