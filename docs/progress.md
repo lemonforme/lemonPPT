@@ -21,6 +21,12 @@
     - `@lemonppt/cli@0.1.0`
   - 通过 `npx @lemonppt/cli generate ...` 和 `npx @lemonppt/cli export --pptx ...` 端到端验证发布包可正常工作。
 
+- **npm 补丁发布 0.1.1（2026-07-20）**
+  - 8 个包全部升级到 `0.1.1`。
+  - 包含主题重命名 `minimal` → `base`、版式目录重命名、向后兼容映射。
+  - 通过 `npx @lemonppt/cli@0.1.1 generate ...` 和 `npx @lemonppt/cli@0.1.1 export ...` 验证发布包可正常工作。
+  - `npx @lemonppt/cli@0.1.1 install-skill` 成功安装到 Claude/Codex/Cursor 技能目录。
+
 - **Skill 分发安装器（阶段 B）**
   - 新增 `lemonppt install-skill` 子命令（`packages/cli/src/install-skill.ts`）。
   - 支持安装到 `~/.claude/skills/lemonppt/`、`~/.codex/skills/lemonppt/`、`~/.cursor/skills/lemonppt/`。
