@@ -58,6 +58,19 @@ lemonPPT/
 COREPACK_INTEGRITY_KEYS=0 corepack pnpm install
 ```
 
+### 通过 npm 直接使用（无需克隆仓库）
+
+```bash
+# 生成 goal.json
+npx @lemonppt/cli generate "AI 产品发布会" --pages 8 --out ./goal.json
+
+# 导出 PPTX
+npx @lemonppt/cli export ./goal.json --pptx ./output.pptx
+
+# 安装 AI Agent skill
+npx @lemonppt/cli install-skill
+```
+
 ### 启动服务
 
 ```bash
@@ -101,8 +114,8 @@ node scripts/export-pdf.mjs examples/sample-goal.json
 
 ## 新增版式
 
-1. 在 `packages/templates/src/minimal/` 创建新的 React 组件。
-2. 定义 `LayoutMeta` 并导出组件。
+1. 在 `packages/templates/src/base/` 创建新的 React 组件。
+2. 定义 `LayoutMeta` 并导出组件（`theme` 建议使用 `'base'`）。
 3. 在 `packages/templates/src/registry.tsx` 中注册。
 4. 在三套主题的 CSS 中添加对应样式。
 

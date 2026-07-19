@@ -1,4 +1,5 @@
 import type { DeckGoal, RenderOutput } from '@lemonppt/core';
+import { normalizeDeckGoal } from '@lemonppt/core';
 import { renderSlide } from '@lemonppt/templates';
 import ReactDOMServer from 'react-dom/server';
 import { editorScript } from './editor-script.js';
@@ -13,6 +14,7 @@ export interface RenderOptions {
 }
 
 export function renderDeck(goal: DeckGoal, options: RenderOptions = {}): RenderOutput {
+  goal = normalizeDeckGoal(goal);
   const { width = 1280, height = 720, editable = false } = options;
 
   const slideCount = goal.slides.length;

@@ -1,5 +1,6 @@
 import { generateGoal } from '@lemonppt/agent-prompts';
 import type { DeckGoal } from '@lemonppt/core';
+import { normalizeDeckGoal } from '@lemonppt/core';
 import {
   exportDeckToPdf,
   exportDeckToPptx,
@@ -43,8 +44,8 @@ export interface ExportCliOptions {
 }
 
 function resolveTheme(themeId?: string): string {
-  const id = themeId || 'minimal';
-  return getTheme(id) ? id : 'minimal';
+  const id = themeId || 'base';
+  return getTheme(id) ? id : 'base';
 }
 
 async function copyThemeAssets(themeId: string, assetsDir: string): Promise<void> {
@@ -68,7 +69,7 @@ export async function generateGoalToFile(options: GenerateCliOptions): Promise<D
   const {
     input,
     pageCount = 8,
-    theme = 'minimal',
+    theme = 'base',
     language = 'zh',
     apiKey,
     baseUrl,
@@ -103,7 +104,7 @@ export async function readGoalFromFile(filePath: string): Promise<DeckGoal> {
   const raw = await readFile(path.resolve(filePath), 'utf-8');
   const parsed = JSON.parse(raw) as DeckGoal;
   parsed.theme = resolveTheme(parsed.theme);
-  return parsed;
+  return normalizeDeckGoal(parsed);
 }
 
 /**
