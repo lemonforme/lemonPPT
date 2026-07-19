@@ -37,17 +37,50 @@ const layoutToRole = (layout: string): string => {
   return 'content';
 };
 
+function extractTitle(input: string): string {
+  const firstSentence = input.split(/[。！？\n]/)[0].trim();
+  if (firstSentence.length <= 80) return firstSentence || '未命名演示';
+
+  // 超过 80 字符时，尽量在语义边界截断，避免切断数字或关键词
+  const truncated = firstSentence.slice(0, 80);
+  const lastPunct = Math.max(truncated.lastIndexOf('，'), truncated.lastIndexOf('、'));
+  if (lastPunct > 40) return truncated.slice(0, lastPunct);
+  return truncated;
+}
+
+function inferAudience(input: string): string {
+  if (input.includes('企业客户')) return '企业客户';
+  if (input.includes('投资人')) return '投资人';
+  if (input.includes('内部')) return '内部团队';
+  return '通用观众';
+}
+
+function inferSellingPoints(input: string): string[] {
+  const match = input.match(/核心卖点[：:](.+)/);
+  if (match) {
+    return match[1]
+      .split(/[,，、]/)
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .slice(0, 4);
+  }
+  return ['核心优势一', '核心优势二', '核心优势三'];
+}
+
 export function createFallbackGoal(options: FallbackOptions): DeckGoal {
   const { input, pageCount = 5, theme = 'base', language = 'zh' } = options;
-  const title = input.split(/[。！？\n]/)[0].slice(0, 30) || '未命名演示';
+  const title = extractTitle(input);
+  const audience = inferAudience(input);
+  const sellingPoints = inferSellingPoints(input);
+  const [sp1 = '核心优势一', sp2 = '核心优势二', sp3 = '核心优势三', sp4 = '持续迭代'] = sellingPoints;
 
   const baseSlides: { layout: string; props: Record<string, unknown> }[] = [
     {
       layout: 'cover_v1',
       props: {
-        kicker: '自动生成',
+        kicker: '产品发布',
         title,
-        subtitle: '由 lemonPPT 根据您的描述生成',
+        subtitle: '由 lemonPPT 根据你的描述生成（fallback 示例）',
       },
     },
     {
@@ -55,16 +88,16 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
       props: {
         kicker: '目录',
         title: '内容概览',
-        items: ['核心要点', '关键数据', '实施流程', '展望未来'],
+        items: ['核心卖点', '关键数据', '实施流程', '展望未来'],
       },
     },
     {
       layout: 'content_v2',
       props: {
-        kicker: '核心要点',
-        title: '本次分享的重点',
-        leftPoints: [`主题：${title}`, '结构清晰，重点突出'],
-        rightPoints: ['支持多主题切换', '导出可编辑 PPTX'],
+        kicker: '核心卖点',
+        title: '为什么选择我们',
+        leftPoints: [sp1, sp2],
+        rightPoints: [sp3, sp4],
       },
     },
     {
@@ -73,18 +106,18 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
         label: '效率提升',
         value: '10',
         unit: '倍',
-        description: '使用 lemonPPT 自动生成演示文稿',
+        description: 'AI 助手帮助企业客户显著降本增效',
       },
     },
     {
       layout: 'process_v2',
       props: {
-        kicker: '流程',
-        title: '三步完成',
+        kicker: '实施流程',
+        title: '三步落地',
         steps: [
-          { title: '描述需求', description: '用自然语言输入 PPT 主题与重点' },
-          { title: 'AI 生成内容', description: '自动规划页面并填充文案' },
-          { title: '导出演示文稿', description: '支持 PPTX、PDF 与 HTML' },
+          { title: '需求调研', description: '梳理企业业务场景与关键痛点' },
+          { title: '私有化部署', description: '安全接入企业知识库与系统' },
+          { title: '持续运营', description: '基于使用数据不断优化效果' },
         ],
       },
     },
@@ -102,27 +135,27 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
     {
       layout: 'quote_v2',
       props: {
-        quote: '好的演示文稿不是信息的堆砌，而是观点的提炼。',
-        author: 'lemonPPT',
-        role: '设计原则',
+        quote: 'AI 不是替代人，而是让每个人拥有更强的创造力。',
+        author: '产品团队',
+        role: '产品理念',
       },
     },
     {
       layout: 'swot_v1',
       props: {
         title: 'SWOT 简析',
-        strength: 'AI 自动化生成，节省时间',
-        weakness: '复杂图表仍需手动调整',
-        opportunity: '可扩展为企业私有化部署',
+        strength: '深耕企业场景，私有化部署能力',
+        weakness: '品牌知名度仍需建设',
+        opportunity: '企业数字化转型需求旺盛',
         threat: '同类产品竞争激烈',
       },
     },
     {
       layout: 'closing_v2',
       props: {
-        title: '开始创作',
-        subtitle: '用 lemonPPT 把你的想法变成演示',
-        contact: 'lemonPPT 团队',
+        title: '开启智能办公新篇章',
+        subtitle: '让 AI 助手成为企业增长的新引擎',
+        contact: '产品团队',
         email: 'hello@lemonppt.dev',
         link: 'https://lemonppt.dev',
       },
@@ -166,7 +199,7 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
   return {
     title,
     goal: input,
-    audience: '通用观众',
+    audience,
     owner: 'lemonPPT',
     theme,
     language,
