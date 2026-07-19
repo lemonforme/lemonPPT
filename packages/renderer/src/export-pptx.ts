@@ -101,6 +101,9 @@ function renderSlideToPptx(pptxSlide: PptxSlide, slide: CoreSlide): void {
     case 'testimonial_v1':
       renderTestimonialV1(pptxSlide, slide.props as unknown as TestimonialV1Props);
       break;
+    case 'testimonial_v2':
+      renderTestimonialV2(pptxSlide, slide.props as unknown as TestimonialV2Props);
+      break;
     case 'faq_v1':
       renderFaqV1(pptxSlide, slide.props as unknown as FaqV1Props);
       break;
@@ -717,6 +720,65 @@ function renderTestimonialV1(slide: PptxSlide, props: TestimonialV1Props): void 
       fontSize: 16, color: COLORS.secondary, align: 'center',
       fontFace: FONTS.mono,
     });
+  }
+}
+
+interface TestimonialV2Props {
+  quote: string;
+  author?: string;
+  role?: string;
+  company?: string;
+  logoUrl?: string;
+  metric?: string;
+  metricLabel?: string;
+}
+
+function renderTestimonialV2(slide: PptxSlide, props: TestimonialV2Props): void {
+  // 卡片背景
+  slide.addShape('rect', {
+    x: 1, y: 1.2, w: 8, h: 4.6,
+    fill: { color: COLORS.light },
+    line: { color: COLORS.border, width: 1 },
+  });
+  // 公司/Logo
+  const header = props.company || '';
+  if (header) {
+    slide.addText(header, {
+      x: 1.4, y: 1.5, w: 7.2, h: 0.4,
+      fontSize: 14, color: COLORS.secondary, bold: true,
+      fontFace: FONTS.mono,
+    });
+  }
+  if (props.logoUrl) addImageMaybe(slide, props.logoUrl, 7.2, 1.4, 1.2, 0.6);
+  // 引用
+  slide.addText(`“${props.quote}”`, {
+    x: 1.4, y: 2.1, w: 7.2, h: 2.2,
+    fontSize: 28, color: COLORS.primary, bold: true, align: 'left', valign: 'top',
+    fontFace: FONTS.heading,
+  });
+  // 作者信息
+  const attribution = [props.author, props.role].filter(Boolean).join(' · ');
+  if (attribution) {
+    slide.addText(attribution, {
+      x: 1.4, y: 4.5, w: 4.5, h: 0.4,
+      fontSize: 16, color: COLORS.secondary, align: 'left',
+      fontFace: FONTS.body,
+    });
+  }
+  // 指标
+  if (props.metric) {
+    slide.addText(props.metric, {
+      x: 6.2, y: 4.3, w: 2, h: 0.6,
+      fontSize: 32, color: COLORS.accent, bold: true, align: 'right',
+      fontFace: FONTS.heading,
+    });
+    if (props.metricLabel) {
+      slide.addText(props.metricLabel, {
+        x: 6.2, y: 4.85, w: 2, h: 0.3,
+        fontSize: 12, color: COLORS.secondary, align: 'right',
+        fontFace: FONTS.mono,
+      });
+    }
   }
 }
 

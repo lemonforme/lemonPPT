@@ -56,14 +56,39 @@
   - 已配置 `https://github.com/lemonforme/lemonPPT.git` 为 origin。
   - 已推送阶段 B、C 变更到 main 分支。
 
+### 2026-07-20（Phase 4 规模化启动）
+
+- **决策：继续使用 CLI 内置 `install-skill`**
+  - 创建 `docs/decisions/skill-distribution-architecture.md`，决定不新建独立 `@lemonppt/skill` 包。
+
+- **版式/主题脚手架**
+  - 新增 `scripts/create-layout.mjs`：自动生成版式组件、测试文件并提示注册位置。
+  - 新增 `scripts/create-theme.mjs`：自动生成主题 token、样式目录并提示注册位置。
+
+- **新增版式 `testimonial_v2`（验证脚手架）**
+  - 组件：`packages/templates/src/base/testimonial-v2.tsx`
+  - 测试：`packages/templates/src/base/testimonial-v2.test.tsx`
+  - 注册到 `templates/index.ts`、`templates/registry.tsx`、`composer` 候选列表
+  - PPTX 导出：`packages/renderer/src/export-pptx.ts`
+  - 三套主题 CSS：`base`、`dark-tech`、`warm-business`
+  - 更新 `SKILL.md` 与 `packages/cli/SKILL.md`
+
+- **社区贡献机制**
+  - 新增 `CONTRIBUTING.md`：环境搭建、版式/主题开发流程、提交规范、发布流程。
+
+- **测试配置修复**
+  - `vitest.config.ts` 增加 `.test.tsx` 文件匹配，使版式组件测试生效。
+
+- **本地验证通过**
+  - `corepack pnpm -r build && corepack pnpm test`：9 个测试文件、49 个测试通过。
+  - CLI render + export 成功生成 `/tmp/testimonial-v2-output/index.html` 与 `/tmp/testimonial-v2.pptx`。
+
 ### 待完成
 
 - [ ] 在 Claude/Codex/Cursor 中实测 SKILL.md 效果并收集反馈
-- [x] 为旧版 `minimal_xxx_v1` layout ID 增加向后兼容映射
-- [x] 将 `packages/templates/src/minimal/` 目录重命名为 `base/`（并同步 import 路径与 README）
-- [x] 补充 README 中 `npx @lemonppt/cli` 的使用方式
-- [ ] 考虑创建独立 `@lemonppt/skill` 包或继续用 CLI 内置安装器
-- [ ] 规划 Phase 4：版式/主题规模化与社区贡献机制
+- [ ] 继续用新主题/版式脚手架补充更多版式（如 `gallery_v2`、`chart_v2`）
+- [ ] 邀请社区贡献新主题，验证 `CONTRIBUTING.md` 的可用性
+- [ ] 根据社区反馈迭代 `SKILL.md` 与脚手架
 
 ---
 

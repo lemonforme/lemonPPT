@@ -28,4 +28,5 @@ export * from './base/gallery-v1.js';
 export * from './base/faq-v1.js';
 export * from './base/partners-v1.js';
 export * from './base/testimonial-v1.js';
+export * from './base/testimonial-v2.js';
 export * from './base/roadmap-v1.js';
