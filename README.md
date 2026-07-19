@@ -33,10 +33,14 @@ lemonPPT/
 │   ├── renderer/        # HTML/PPTX/PDF 渲染
 │   ├── templates/       # 版式组件注册
 │   └── themes/          # 主题 tokens 与 CSS
+├── docs/                # 项目文档
+│   ├── plans/           # 规划文档
+│   ├── analysis/        # 方案分析
+│   └── progress.md      # 进度记录
 ├── examples/            # 示例 goal.json
 ├── scripts/             # CLI 脚本
-├── PROJECT_PLAN.md      # 项目计划
-├── PROGRESS.md          # 进度记录
+├── SKILL.md             # AI Agent 使用协议
+├── LICENSE              # MIT 协议
 └── README.md            # 本文件
 ```
 

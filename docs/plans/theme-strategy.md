@@ -141,7 +141,7 @@ export const neonTheme: Theme = {
 
 ## 三、lemonPPT 不能走的路
 
-| ❌ 不要这样做 | 原因 |
+| 不要这样做 | 原因 |
 |---|---|
 | 直接复用 Dashi 的 theme01~theme12 代码 | 违反 AGPL，且 lemonPPT 计划 MIT/Apache-2.0 |
 | 把 Dashi 的 CSS 改个类名就用 | 仍是衍生作品，许可证污染 |

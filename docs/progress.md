@@ -1,7 +1,32 @@
 # lemonPPT 项目进度
 
 > 记录迁移清理、MVP 功能开发与验证状态。
-> 最新更新：2026-07-17
+> 最新更新：2026-07-19
+
+---
+
+## 2026-07-19
+
+### 已完成
+
+- **npm 发布准备**
+  - 添加 MIT LICENSE
+  - 为 8 个可发布包配置发布元数据：`files`、`publishConfig.access`、`repository`、`prepublishOnly`
+  - 排除测试文件出发布包（tsconfig exclude）
+  - `@lemonppt/themes` 额外发布 `src/**/*.css`
+  - `apps/server` 标记 `private: true`
+  - 修复 CLI 包路径解析，支持从 `node_modules` 运行
+  - 提交：`chore(publish): configure packages for npm release`
+
+### 待完成
+
+- [ ] 登录 npm 并执行 `pnpm publish:packages`
+- [ ] 验证 `npm i -g @lemonppt/cli` 后可正常工作
+- [ ] 改造 `scripts/install.mjs` 支持从 npm 包运行
+- [ ] 解耦布局命名与 minimal 主题绑定
+- [ ] 在 Claude/Codex/Cursor 中实测 SKILL.md
+
+---
 
 ## 2026-07-17
 
