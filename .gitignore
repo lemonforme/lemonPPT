@@ -22,6 +22,7 @@ apps/*/src/**/*.d.ts.map
 
 # Generated output
 output/
+tmp/
 packages/cli/SKILL.md
 
 # OS / Editor
