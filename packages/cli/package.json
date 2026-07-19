@@ -13,7 +13,7 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "SKILL.md"],
   "publishConfig": {
     "access": "public"
   },
@@ -29,7 +29,7 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc && node scripts/copy-skill.mjs"
   },
   "dependencies": {
     "@lemonppt/agent-prompts": "workspace:*",

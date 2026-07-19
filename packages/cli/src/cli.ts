@@ -6,12 +6,14 @@ import {
   readGoalFromFile,
   renderGoalToDir,
 } from './index.js';
+import { installSkill } from './install-skill.js';
 
 function printUsage(): void {
   console.log(`Usage:
   lemonppt generate "<input>" [--pages N] [--theme <id>] [--language zh|en] [--out goal.json] [--api-key KEY]
   lemonppt render <goal.json> [--out ./output] [--editable]
   lemonppt export <goal.json> --pptx out.pptx [--pdf out.pdf]
+  lemonppt install-skill [--claude] [--codex] [--cursor] [--all]
 `);
 }
 
@@ -108,6 +110,19 @@ async function main(): Promise<void> {
           console.error('Error: export command requires --pptx or --pdf.');
           process.exit(1);
         }
+        break;
+      }
+
+      case 'install-skill': {
+        const agents: string[] = [];
+        if (args.options.claude) agents.push('claude');
+        if (args.options.codex) agents.push('codex');
+        if (args.options.cursor) agents.push('cursor');
+        if (args.options.all || agents.length === 0) {
+          agents.length = 0;
+          agents.push('claude', 'codex', 'cursor');
+        }
+        await installSkill({ agents });
         break;
       }
 
