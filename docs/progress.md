@@ -27,6 +27,12 @@
   - 通过 `npx @lemonppt/cli@0.1.1 generate ...` 和 `npx @lemonppt/cli@0.1.1 export ...` 验证发布包可正常工作。
   - `npx @lemonppt/cli@0.1.1 install-skill` 成功安装到 Claude/Codex/Cursor 技能目录。
 
+- **npm 补丁发布 0.1.2（2026-07-20）**
+  - 8 个包全部升级到 `0.1.2`。
+  - 基于 Agent 实测反馈迭代 `SKILL.md`：增加生成前信息收集、 richer prompt 示例、fallback 说明。
+  - 通过 `npx @lemonppt/cli@0.1.2 install-skill` 和 `npx @lemonppt/cli@0.1.2 generate/export` 验证。
+  - 将 `tmp/` 目录加入 `.gitignore`，避免生成文件误提交。
+
 - **Skill 分发安装器（阶段 B）**
   - 新增 `lemonppt install-skill` 子命令（`packages/cli/src/install-skill.ts`）。
   - 支持安装到 `~/.claude/skills/lemonppt/`、`~/.codex/skills/lemonppt/`、`~/.cursor/skills/lemonppt/`。
