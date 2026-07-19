@@ -36,12 +36,12 @@ importers:
       '@lemonppt/agent-prompts':
         specifier: workspace:*
         version: link:../../packages/agent-prompts
+      '@lemonppt/cli':
+        specifier: workspace:*
+        version: link:../../packages/cli
       '@lemonppt/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@lemonppt/renderer':
-        specifier: workspace:*
-        version: link:../../packages/renderer
       '@lemonppt/themes':
         specifier: workspace:*
         version: link:../../packages/themes
@@ -70,6 +70,28 @@ importers:
       '@lemonppt/view-model':
         specifier: workspace:*
         version: link:../view-model
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.43
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  packages/cli:
+    dependencies:
+      '@lemonppt/agent-prompts':
+        specifier: workspace:*
+        version: link:../agent-prompts
+      '@lemonppt/core':
+        specifier: workspace:*
+        version: link:../core
+      '@lemonppt/renderer':
+        specifier: workspace:*
+        version: link:../renderer
+      '@lemonppt/themes':
+        specifier: workspace:*
+        version: link:../themes
     devDependencies:
       '@types/node':
         specifier: ^20.0.0

@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@lemonppt/agent-prompts": "workspace:*",
+    "@lemonppt/cli": "workspace:*",
     "@lemonppt/core": "workspace:*",
-    "@lemonppt/renderer": "workspace:*",
     "@lemonppt/themes": "workspace:*",
     "express": "^4.19.0"
   },

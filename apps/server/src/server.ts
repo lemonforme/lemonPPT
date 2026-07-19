@@ -1,9 +1,13 @@
 import { generateGoal } from '@lemonppt/agent-prompts';
 import type { DeckGoal } from '@lemonppt/core';
+import {
+  exportGoalToPdf,
+  exportGoalToPptx,
+  readGoalFromFile,
+  renderGoalToDir,
+} from '@lemonppt/cli';
 import { getTheme } from '@lemonppt/themes';
-import { exportDeckToPdf, exportDeckToPptx, renderDeck } from '@lemonppt/renderer';
 import express, { type Express, type NextFunction, type Request, type Response } from 'express';
-import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { log } from './logger.js';
@@ -26,19 +30,6 @@ export function createServer(options: ServerOptions): Express {
     next();
   });
 
-  function resolveTheme(themeId?: string): string {
-    const id = themeId || 'minimal';
-    return getTheme(id) ? id : 'minimal';
-  }
-
-  async function copyThemeAssets(themeId: string, assetsDir: string): Promise<void> {
-    const theme = resolveTheme(themeId);
-    await mkdir(assetsDir, { recursive: true });
-    const cssSource = path.join(rootDir, 'packages/themes/src', theme, 'styles.css');
-    const cssDest = path.join(assetsDir, `${theme}.css`);
-    await copyFile(cssSource, cssDest);
-  }
-
   function handleError(err: unknown, req: Request, res: Response): void {
     const message = err instanceof Error ? err.message : String(err);
     log('error', `Request failed: ${req.method} ${req.path}`, { error: message });
@@ -60,12 +51,7 @@ export function createServer(options: ServerOptions): Express {
   app.post('/api/render', async (req, res) => {
     try {
       const goal = req.body as DeckGoal;
-      const result = renderDeck(goal);
-
-      const assetsDir = path.resolve(options.outputDir, 'assets');
-      await copyThemeAssets(goal.theme, assetsDir);
-
-      await writeFile(path.join(options.outputDir, 'index.html'), result.html, 'utf-8');
+      const result = await renderGoalToDir(goal, { outDir: options.outputDir });
 
       log('info', 'Rendered deck', { theme: goal.theme, slides: goal.slides.length });
       res.json({ success: true, assets: result.assets });
@@ -79,7 +65,7 @@ export function createServer(options: ServerOptions): Express {
     try {
       const goal = req.body as DeckGoal;
       const filePath = path.join(options.outputDir, 'deck.pptx');
-      await exportDeckToPptx(goal, { outFile: filePath });
+      await exportGoalToPptx(goal, { outFile: filePath });
 
       log('info', 'Exported PPTX', { theme: goal.theme, slides: goal.slides.length });
       res.download(filePath, `${goal.title || 'presentation'}.pptx`);
@@ -93,7 +79,7 @@ export function createServer(options: ServerOptions): Express {
     try {
       const goal = req.body as DeckGoal;
       const filePath = path.join(options.outputDir, 'deck.pdf');
-      await exportDeckToPdf(goal, { outFile: filePath });
+      await exportGoalToPdf(goal, { outFile: filePath });
 
       log('info', 'Exported PDF', { theme: goal.theme, slides: goal.slides.length });
       res.download(filePath, `${goal.title || 'presentation'}.pdf`);
@@ -111,17 +97,13 @@ export function createServer(options: ServerOptions): Express {
   app.get('/editor', async (req, res) => {
     try {
       const samplePath = path.join(rootDir, 'examples/sample-goal.json');
-      const goal = JSON.parse(await readFile(samplePath, 'utf-8')) as DeckGoal;
-      const theme = resolveTheme(String(req.query.theme || goal.theme || 'minimal'));
-      goal.theme = theme;
-      const result = renderDeck(goal, { editable: true });
+      const goal = await readGoalFromFile(samplePath);
+      const themeId = String(req.query.theme || goal.theme || 'minimal');
+      goal.theme = getTheme(themeId) ? themeId : 'minimal';
 
-      const assetsDir = path.resolve(options.outputDir, 'assets');
-      await copyThemeAssets(goal.theme, assetsDir);
+      await renderGoalToDir(goal, { outDir: options.outputDir, editable: true });
 
-      await writeFile(path.join(options.outputDir, 'editor.html'), result.html, 'utf-8');
-
-      log('info', 'Opened editor', { theme });
+      log('info', 'Opened editor', { theme: goal.theme });
       res.redirect('/deck/editor.html');
     } catch (err) {
       handleError(err, req, res);
@@ -156,13 +138,7 @@ export function createServer(options: ServerOptions): Express {
   app.post('/api/render-editor', async (req, res) => {
     try {
       const goal = req.body as DeckGoal;
-      goal.theme = resolveTheme(goal.theme);
-      const result = renderDeck(goal, { editable: true });
-
-      const assetsDir = path.resolve(options.outputDir, 'assets');
-      await copyThemeAssets(goal.theme, assetsDir);
-
-      await writeFile(path.join(options.outputDir, 'editor.html'), result.html, 'utf-8');
+      const result = await renderGoalToDir(goal, { outDir: options.outputDir, editable: true });
 
       log('info', 'Rendered editor', { theme: goal.theme, slides: goal.slides.length });
       res.json({ success: true, assets: result.assets });

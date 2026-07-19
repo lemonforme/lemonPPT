@@ -12,6 +12,7 @@ dist/
 # Compiled artifacts misplaced in src
 packages/*/src/**/*.js
 packages/*/src/**/*.d.ts
+!packages/renderer/src/pptxgenjs.d.ts
 packages/*/src/**/*.js.map
 packages/*/src/**/*.d.ts.map
 apps/*/src/**/*.js

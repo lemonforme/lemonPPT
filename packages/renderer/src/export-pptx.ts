@@ -159,14 +159,6 @@ function addTitle(slide: PptxSlide, title: string, x = 0.8, y = 1.3, w = 8.4, h 
   });
 }
 
-function addCenterTitle(slide: PptxSlide, title: string, y: number, fontSize = 48): void {
-  slide.addText(title, {
-    x: 1, y, w: 8, h: 1.2,
-    fontSize, color: COLORS.primary, bold: true, align: 'center', valign: 'middle',
-    fontFace: FONTS.heading,
-  });
-}
-
 function addBulletList(slide: PptxSlide, items: string[], x: number, y: number, w: number, maxItems = 8): number {
   const list = items.slice(0, maxItems);
   let cy = y;
@@ -1096,7 +1088,7 @@ function renderClosingV2(slide: PptxSlide, props: ClosingV2Props): void {
       fontFace: FONTS.body,
     });
   }
-  const lines = [props.contact, props.email, props.link].filter(Boolean);
+  const lines = [props.contact, props.email, props.link].filter(Boolean) as string[];
   let y = 4.2;
   lines.forEach((line) => {
     slide.addText(line, {
