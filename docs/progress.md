@@ -33,6 +33,13 @@
   - 通过 `npx @lemonppt/cli@0.1.2 install-skill` 和 `npx @lemonppt/cli@0.1.2 generate/export` 验证。
   - 将 `tmp/` 目录加入 `.gitignore`，避免生成文件误提交。
 
+- **npm 补丁发布 0.1.3（2026-07-20）**
+  - 8 个包全部升级到 `0.1.3`。
+  - 修复 fallback 标题被截断为 30 字符的 bug，改为 80 字符并在标点处截断。
+  - fallback 内容现在会根据输入推断受众、提取核心卖点，减少自说自话。
+  - 补充 `fallback.test.ts` 单元测试。
+  - 通过 `npx @lemonppt/cli@0.1.3 generate/export` 验证。
+
 - **Skill 分发安装器（阶段 B）**
   - 新增 `lemonppt install-skill` 子命令（`packages/cli/src/install-skill.ts`）。
   - 支持安装到 `~/.claude/skills/lemonppt/`、`~/.codex/skills/lemonppt/`、`~/.cursor/skills/lemonppt/`。
