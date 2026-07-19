@@ -1,7 +1,50 @@
 # lemonPPT 项目进度
 
 > 记录迁移清理、MVP 功能开发与验证状态。
-> 最新更新：2026-07-19
+> 最新更新：2026-07-20
+
+---
+
+## 2026-07-20
+
+### 已完成
+
+- **npm 发布（阶段 A）**
+  - 已用粒度访问令牌成功发布 8 个包到 npm registry：
+    - `@lemonppt/core@0.1.0`
+    - `@lemonppt/view-model@0.1.0`
+    - `@lemonppt/themes@0.1.0`
+    - `@lemonppt/templates@0.1.0`
+    - `@lemonppt/composer@0.1.0`
+    - `@lemonppt/renderer@0.1.0`
+    - `@lemonppt/agent-prompts@0.1.0`
+    - `@lemonppt/cli@0.1.0`
+  - 通过 `npx @lemonppt/cli generate ...` 和 `npx @lemonppt/cli export --pptx ...` 端到端验证发布包可正常工作。
+
+- **Skill 分发安装器（阶段 B）**
+  - 新增 `lemonppt install-skill` 子命令（`packages/cli/src/install-skill.ts`）。
+  - 支持安装到 `~/.claude/skills/lemonppt/`、`~/.codex/skills/lemonppt/`、`~/.cursor/skills/lemonppt/`。
+  - `SKILL.md` 已打包进 `@lemonppt/cli` 发布包。
+  - 通过 `npx @lemonppt/cli install-skill --claude` 验证成功。
+
+- **布局与主题命名解耦（阶段 C）**
+  - 30 个版式组件的 `theme` 从 `'minimal'` 改为 `'base'`。
+  - 版式 ID 从 `minimal_xxx_v1` 改为 `xxx_v1`（如 `cover_v1`、`metric_v1`）。
+  - 同步更新 `composer`、`renderer/export-pptx`、`agent-prompts/fallback`、`SKILL.md`、测试与示例。
+  - 提交：`refactor: decouple layout naming from minimal theme`
+
+- **GitHub 远程仓库**
+  - 已配置 `https://github.com/lemonforme/lemonPPT.git` 为 origin。
+  - 已推送阶段 B、C 变更到 main 分支。
+
+### 待完成
+
+- [ ] 在 Claude/Codex/Cursor 中实测 SKILL.md 效果并收集反馈
+- [ ] 为旧版 `minimal_xxx_v1` layout ID 增加向后兼容映射
+- [ ] 将 `packages/templates/src/minimal/` 目录重命名为 `base/`（并同步 import 路径与 README）
+- [ ] 补充 README 中 `npx @lemonppt/cli` 的使用方式
+- [ ] 考虑创建独立 `@lemonppt/skill` 包或继续用 CLI 内置安装器
+- [ ] 规划 Phase 4：版式/主题规模化与社区贡献机制
 
 ---
 
@@ -20,10 +63,10 @@
 
 ### 待完成
 
-- [ ] 登录 npm 并执行 `pnpm publish:packages`
-- [ ] 验证 `npm i -g @lemonppt/cli` 后可正常工作
-- [ ] 改造 `scripts/install.mjs` 支持从 npm 包运行
-- [ ] 解耦布局命名与 minimal 主题绑定
+- [x] 登录 npm 并执行 `pnpm publish:packages`
+- [x] 验证 `npm i -g @lemonppt/cli` 后可正常工作
+- [x] 改造 `scripts/install.mjs` 支持从 npm 包运行
+- [x] 解耦布局命名与 minimal 主题绑定
 - [ ] 在 Claude/Codex/Cursor 中实测 SKILL.md
 
 ---
@@ -144,4 +187,4 @@
 
 ### 当前状态
 
-Phase 2 已完成；Phase 3 核心任务基本完成。剩余任务：配置 GitHub 远程仓库并首次提交。
+Phase 2 已完成；Phase 3 核心任务基本完成。Phase A/B/C（npm 发布、Skill 安装器、命名解耦）已全部完成。下一步进入 Agent 实测与工程债务清理阶段。
