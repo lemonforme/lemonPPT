@@ -22,6 +22,7 @@ apps/*/src/**/*.d.ts.map
 
 # Generated output
 output/
+packages/cli/SKILL.md
 
 # OS / Editor
 .DS_Store
