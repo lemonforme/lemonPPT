@@ -42,94 +42,94 @@ export async function exportDeckToPptx(goal: DeckGoal, options: PptxExportOption
 
 function renderSlideToPptx(pptxSlide: PptxSlide, slide: CoreSlide): void {
   switch (slide.layout) {
-    case 'minimal_cover_v1':
+    case 'cover_v1':
       renderCoverV1(pptxSlide, slide.props as unknown as CoverV1Props);
       break;
-    case 'minimal_table_of_contents_v1':
+    case 'table_of_contents_v1':
       renderTableOfContentsV1(pptxSlide, slide.props as unknown as TableOfContentsV1Props);
       break;
-    case 'minimal_metric_v1':
+    case 'metric_v1':
       renderMetricV1(pptxSlide, slide.props as unknown as MetricV1Props);
       break;
-    case 'minimal_metric_v2':
+    case 'metric_v2':
       renderMetricV2(pptxSlide, slide.props as unknown as MetricV2Props);
       break;
-    case 'minimal_stats_v1':
+    case 'stats_v1':
       renderStatsV1(pptxSlide, slide.props as unknown as StatsV1Props);
       break;
-    case 'minimal_chart_v1':
+    case 'chart_v1':
       renderChartV1(pptxSlide, slide.props as unknown as ChartV1Props);
       break;
-    case 'minimal_content_v1':
+    case 'content_v1':
       renderContentV1(pptxSlide, slide.props as unknown as ContentV1Props);
       break;
-    case 'minimal_content_v2':
+    case 'content_v2':
       renderContentV2(pptxSlide, slide.props as unknown as ContentV2Props);
       break;
-    case 'minimal_content_v3':
+    case 'content_v3':
       renderContentV3(pptxSlide, slide.props as unknown as ContentV3Props);
       break;
-    case 'minimal_split_v1':
+    case 'split_v1':
       renderSplitV1(pptxSlide, slide.props as unknown as SplitV1Props);
       break;
-    case 'minimal_comparison_v1':
+    case 'comparison_v1':
       renderComparisonV1(pptxSlide, slide.props as unknown as ComparisonV1Props);
       break;
-    case 'minimal_comparison_v2':
+    case 'comparison_v2':
       renderComparisonV2(pptxSlide, slide.props as unknown as ComparisonV2Props);
       break;
-    case 'minimal_process_v1':
+    case 'process_v1':
       renderProcessV1(pptxSlide, slide.props as unknown as ProcessV1Props);
       break;
-    case 'minimal_process_v2':
+    case 'process_v2':
       renderProcessV2(pptxSlide, slide.props as unknown as ProcessV2Props);
       break;
-    case 'minimal_timeline_v1':
+    case 'timeline_v1':
       renderTimelineV1(pptxSlide, slide.props as unknown as TimelineV1Props);
       break;
-    case 'minimal_roadmap_v1':
+    case 'roadmap_v1':
       renderRoadmapV1(pptxSlide, slide.props as unknown as RoadmapV1Props);
       break;
-    case 'minimal_quote_v1':
+    case 'quote_v1':
       renderQuoteV1(pptxSlide, slide.props as unknown as QuoteV1Props);
       break;
-    case 'minimal_quote_v2':
+    case 'quote_v2':
       renderQuoteV2(pptxSlide, slide.props as unknown as QuoteV2Props);
       break;
-    case 'minimal_testimonial_v1':
+    case 'testimonial_v1':
       renderTestimonialV1(pptxSlide, slide.props as unknown as TestimonialV1Props);
       break;
-    case 'minimal_faq_v1':
+    case 'faq_v1':
       renderFaqV1(pptxSlide, slide.props as unknown as FaqV1Props);
       break;
-    case 'minimal_feature_v1':
+    case 'feature_v1':
       renderFeatureV1(pptxSlide, slide.props as unknown as FeatureV1Props);
       break;
-    case 'minimal_team_v1':
+    case 'team_v1':
       renderTeamV1(pptxSlide, slide.props as unknown as TeamV1Props);
       break;
-    case 'minimal_partners_v1':
+    case 'partners_v1':
       renderPartnersV1(pptxSlide, slide.props as unknown as PartnersV1Props);
       break;
-    case 'minimal_pricing_v1':
+    case 'pricing_v1':
       renderPricingV1(pptxSlide, slide.props as unknown as PricingV1Props);
       break;
-    case 'minimal_gallery_v1':
+    case 'gallery_v1':
       renderGalleryV1(pptxSlide, slide.props as unknown as GalleryV1Props);
       break;
-    case 'minimal_image_v1':
+    case 'image_v1':
       renderImageV1(pptxSlide, slide.props as unknown as ImageV1Props);
       break;
-    case 'minimal_swot_v1':
+    case 'swot_v1':
       renderSwotV1(pptxSlide, slide.props as unknown as SwotV1Props);
       break;
-    case 'minimal_pest_v1':
+    case 'pest_v1':
       renderPestV1(pptxSlide, slide.props as unknown as PestV1Props);
       break;
-    case 'minimal_closing_v1':
+    case 'closing_v1':
       renderClosingV1(pptxSlide, slide.props as unknown as ClosingV1Props);
       break;
-    case 'minimal_closing_v2':
+    case 'closing_v2':
       renderClosingV2(pptxSlide, slide.props as unknown as ClosingV2Props);
       break;
     default:

@@ -4,7 +4,7 @@ import { composeDeck, composeDeckFromRaw, selectLayoutForRole } from './index.js
 describe('selectLayoutForRole', () => {
   it('returns a registered layout for cover', () => {
     const layout = selectLayoutForRole('cover');
-    expect(layout.startsWith('minimal_')).toBe(true);
+    expect(layout).toBe('cover_v1');
   });
 
   it('is deterministic with the same seed and index', () => {
@@ -16,17 +16,17 @@ describe('selectLayoutForRole', () => {
   it('can return different layouts for the same role with different seeds', () => {
     const a = selectLayoutForRole('closing', 'seed-a', 0);
     const b = selectLayoutForRole('closing', 'seed-b', 0);
-    expect([a, b].every((l) => l.startsWith('minimal_closing'))).toBe(true);
+    expect([a, b].every((l) => l.startsWith('closing'))).toBe(true);
   });
 
   it('covers stats role', () => {
     const layout = selectLayoutForRole('stats');
-    expect(layout).toBe('minimal_stats_v1');
+    expect(layout).toBe('stats_v1');
   });
 
   it('covers team role', () => {
     const layout = selectLayoutForRole('team');
-    expect(layout).toBe('minimal_team_v1');
+    expect(layout).toBe('team_v1');
   });
 });
 
@@ -49,7 +49,7 @@ describe('composeDeck', () => {
     expect(goal.slides.length).toBe(3);
     expect(goal.pageCount).toBe(3);
     expect(goal.slides[0]?.role).toBe('cover');
-    expect(goal.slides[0]?.layout.startsWith('minimal_cover')).toBe(true);
+    expect(goal.slides[0]?.layout.startsWith('cover')).toBe(true);
     expect(goal.slides[1]?.role).toBe('content');
     expect(goal.slides[2]?.role).toBe('closing');
     expect(goal.slides[0]?.props._slideIdx).toBe(1);
@@ -62,10 +62,10 @@ describe('composeDeck', () => {
       goal: '测试目标',
       audience: '测试受众',
       theme: 'minimal',
-      slides: [{ role: 'cover', layout: 'minimal_chart_v1', props: { title: 'T' } }],
+      slides: [{ role: 'cover', layout: 'chart_v1', props: { title: 'T' } }],
     });
 
-    expect(goal.slides[0]?.layout).toBe('minimal_chart_v1');
+    expect(goal.slides[0]?.layout).toBe('chart_v1');
     expect(goal.slides[0]?.role).toBe('cover');
   });
 
@@ -99,8 +99,8 @@ describe('composeDeckFromRaw', () => {
       ],
     });
 
-    expect(goal.slides[0]?.layout.startsWith('minimal_cover')).toBe(true);
-    expect(goal.slides[1]?.layout.startsWith('minimal_metric')).toBe(true);
+    expect(goal.slides[0]?.layout.startsWith('cover')).toBe(true);
+    expect(goal.slides[1]?.layout.startsWith('metric')).toBe(true);
     expect(goal.slides[0]?.props._slideIdx).toBe(1);
   });
 });

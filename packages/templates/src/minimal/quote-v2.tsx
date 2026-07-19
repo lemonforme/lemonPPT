@@ -12,8 +12,8 @@ export interface QuoteV2Props {
 }
 
 export const quoteV2Meta: LayoutMeta = {
-  id: 'minimal_quote_v2',
-  theme: 'minimal',
+  id: 'quote_v2',
+  theme: 'base',
   role: 'quote',
   displayName: '侧栏引用',
   description: '左侧 accent 边框的引用样式',

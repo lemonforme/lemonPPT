@@ -14,8 +14,8 @@ export interface CoverV1Props {
 }
 
 export const coverV1Meta: LayoutMeta = {
-  id: 'minimal_cover_v1',
-  theme: 'minimal',
+  id: 'cover_v1',
+  theme: 'base',
   role: 'cover',
   displayName: '极简封面',
   description: '居中大标题，适合正式汇报封面',

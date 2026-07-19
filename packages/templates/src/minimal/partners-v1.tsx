@@ -12,8 +12,8 @@ export interface PartnersV1Props {
 }
 
 export const partnersV1Meta: LayoutMeta = {
-  id: 'minimal_partners_v1',
-  theme: 'minimal',
+  id: 'partners_v1',
+  theme: 'base',
   role: 'partners',
   displayName: '合作伙伴墙',
   description: 'Logo 网格展示合作伙伴或客户',

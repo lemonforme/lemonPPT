@@ -13,8 +13,8 @@ export interface MetricV2Props {
 }
 
 export const metricV2Meta: LayoutMeta = {
-  id: 'minimal_metric_v2',
-  theme: 'minimal',
+  id: 'metric_v2',
+  theme: 'base',
   role: 'metric',
   displayName: '核心数字',
   description: '突出展示一个核心指标',

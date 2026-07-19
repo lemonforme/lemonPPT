@@ -14,8 +14,8 @@ export interface ContentV3Props {
 }
 
 export const contentV3Meta: LayoutMeta = {
-  id: 'minimal_content_v3',
-  theme: 'minimal',
+  id: 'content_v3',
+  theme: 'base',
   role: 'content',
   displayName: '图文并排',
   description: '左侧标题 + 要点，右侧图片，适合产品特性页',

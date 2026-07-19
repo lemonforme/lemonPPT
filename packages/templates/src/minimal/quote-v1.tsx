@@ -12,8 +12,8 @@ export interface QuoteV1Props {
 }
 
 export const quoteV1Meta: LayoutMeta = {
-  id: 'minimal_quote_v1',
-  theme: 'minimal',
+  id: 'quote_v1',
+  theme: 'base',
   role: 'quote',
   displayName: '引用观点',
   description: '大段引用 + 作者/来源',

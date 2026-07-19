@@ -6,13 +6,13 @@ describe('registry', () => {
     const layouts = listLayouts();
     expect(layouts.length).toBeGreaterThanOrEqual(23);
     const ids = layouts.map((l) => l.id);
-    expect(ids).toContain('minimal_cover_v1');
-    expect(ids).toContain('minimal_chart_v1');
-    expect(ids).toContain('minimal_image_v1');
+    expect(ids).toContain('cover_v1');
+    expect(ids).toContain('chart_v1');
+    expect(ids).toContain('image_v1');
   });
 
   it('should find a registered layout', () => {
-    const layout = getLayout('minimal_cover_v1');
+    const layout = getLayout('cover_v1');
     expect(layout).toBeDefined();
     expect(layout?.meta.role).toBe('cover');
   });
@@ -28,7 +28,7 @@ describe('registry', () => {
   });
 
   it('should render a known slide', () => {
-    const element = renderSlide({ role: 'cover' as const, layout: 'minimal_cover_v1', props: { title: 'Hi' } });
+    const element = renderSlide({ role: 'cover' as const, layout: 'cover_v1', props: { title: 'Hi' } });
     expect(element).not.toBeNull();
   });
 

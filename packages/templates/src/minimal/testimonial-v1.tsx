@@ -14,8 +14,8 @@ export interface TestimonialV1Props {
 }
 
 export const testimonialV1Meta: LayoutMeta = {
-  id: 'minimal_testimonial_v1',
-  theme: 'minimal',
+  id: 'testimonial_v1',
+  theme: 'base',
   role: 'testimonial',
   displayName: '客户评价',
   description: '大字引用配头像与作者信息，适合客户证言页',

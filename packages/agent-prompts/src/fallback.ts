@@ -13,37 +13,37 @@ export interface FallbackOptions {
 }
 
 const layoutToRole = (layout: string): string => {
-  if (layout.startsWith('minimal_cover')) return 'cover';
-  if (layout.startsWith('minimal_table_of_contents')) return 'tableOfContents';
-  if (layout.startsWith('minimal_metric')) return 'metric';
-  if (layout.startsWith('minimal_stats')) return 'stats';
-  if (layout.startsWith('minimal_chart')) return 'chart';
-  if (layout.startsWith('minimal_comparison')) return 'comparison';
-  if (layout.startsWith('minimal_pricing')) return 'pricing';
-  if (layout.startsWith('minimal_process')) return 'process';
-  if (layout.startsWith('minimal_timeline')) return 'timeline';
-  if (layout.startsWith('minimal_roadmap')) return 'roadmap';
-  if (layout.startsWith('minimal_quote')) return 'quote';
-  if (layout.startsWith('minimal_testimonial')) return 'testimonial';
-  if (layout.startsWith('minimal_faq')) return 'faq';
-  if (layout.startsWith('minimal_feature')) return 'feature';
-  if (layout.startsWith('minimal_team')) return 'team';
-  if (layout.startsWith('minimal_partners')) return 'partners';
-  if (layout.startsWith('minimal_gallery')) return 'gallery';
-  if (layout.startsWith('minimal_image')) return 'image';
-  if (layout.startsWith('minimal_swot')) return 'swot';
-  if (layout.startsWith('minimal_pest')) return 'pest';
-  if (layout.startsWith('minimal_closing')) return 'closing';
+  if (layout.startsWith('cover')) return 'cover';
+  if (layout.startsWith('table_of_contents')) return 'tableOfContents';
+  if (layout.startsWith('metric')) return 'metric';
+  if (layout.startsWith('stats')) return 'stats';
+  if (layout.startsWith('chart')) return 'chart';
+  if (layout.startsWith('comparison')) return 'comparison';
+  if (layout.startsWith('pricing')) return 'pricing';
+  if (layout.startsWith('process')) return 'process';
+  if (layout.startsWith('timeline')) return 'timeline';
+  if (layout.startsWith('roadmap')) return 'roadmap';
+  if (layout.startsWith('quote')) return 'quote';
+  if (layout.startsWith('testimonial')) return 'testimonial';
+  if (layout.startsWith('faq')) return 'faq';
+  if (layout.startsWith('feature')) return 'feature';
+  if (layout.startsWith('team')) return 'team';
+  if (layout.startsWith('partners')) return 'partners';
+  if (layout.startsWith('gallery')) return 'gallery';
+  if (layout.startsWith('image')) return 'image';
+  if (layout.startsWith('swot')) return 'swot';
+  if (layout.startsWith('pest')) return 'pest';
+  if (layout.startsWith('closing')) return 'closing';
   return 'content';
 };
 
 export function createFallbackGoal(options: FallbackOptions): DeckGoal {
-  const { input, pageCount = 5, theme = 'minimal', language = 'zh' } = options;
+  const { input, pageCount = 5, theme = 'base', language = 'zh' } = options;
   const title = input.split(/[。！？\n]/)[0].slice(0, 30) || '未命名演示';
 
   const baseSlides: { layout: string; props: Record<string, unknown> }[] = [
     {
-      layout: 'minimal_cover_v1',
+      layout: 'cover_v1',
       props: {
         kicker: '自动生成',
         title,
@@ -51,7 +51,7 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
       },
     },
     {
-      layout: 'minimal_table_of_contents_v1',
+      layout: 'table_of_contents_v1',
       props: {
         kicker: '目录',
         title: '内容概览',
@@ -59,7 +59,7 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
       },
     },
     {
-      layout: 'minimal_content_v2',
+      layout: 'content_v2',
       props: {
         kicker: '核心要点',
         title: '本次分享的重点',
@@ -68,7 +68,7 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
       },
     },
     {
-      layout: 'minimal_metric_v1',
+      layout: 'metric_v1',
       props: {
         label: '效率提升',
         value: '10',
@@ -77,7 +77,7 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
       },
     },
     {
-      layout: 'minimal_process_v2',
+      layout: 'process_v2',
       props: {
         kicker: '流程',
         title: '三步完成',
@@ -89,7 +89,7 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
       },
     },
     {
-      layout: 'minimal_chart_v1',
+      layout: 'chart_v1',
       props: {
         kicker: '数据洞察',
         title: '增长趋势',
@@ -100,7 +100,7 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
       },
     },
     {
-      layout: 'minimal_quote_v2',
+      layout: 'quote_v2',
       props: {
         quote: '好的演示文稿不是信息的堆砌，而是观点的提炼。',
         author: 'lemonPPT',
@@ -108,7 +108,7 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
       },
     },
     {
-      layout: 'minimal_swot_v1',
+      layout: 'swot_v1',
       props: {
         title: 'SWOT 简析',
         strength: 'AI 自动化生成，节省时间',
@@ -118,7 +118,7 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
       },
     },
     {
-      layout: 'minimal_closing_v2',
+      layout: 'closing_v2',
       props: {
         title: '开始创作',
         subtitle: '用 lemonPPT 把你的想法变成演示',
@@ -150,7 +150,7 @@ export function createFallbackGoal(options: FallbackOptions): DeckGoal {
   while (slides.length < pageCount) {
     slides.splice(slides.length - 1, 0, {
       role: 'content',
-      layout: 'minimal_content_v3',
+      layout: 'content_v3',
       props: {
         kicker: `补充页 ${slides.length}`,
         title: '更多内容',

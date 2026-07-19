@@ -13,8 +13,8 @@ export interface ClosingV1Props {
 }
 
 export const closingV1Meta: LayoutMeta = {
-  id: 'minimal_closing_v1',
-  theme: 'minimal',
+  id: 'closing_v1',
+  theme: 'base',
   role: 'closing',
   displayName: '极简结尾',
   description: '居中大标题 + 行动号召，适合结尾页',

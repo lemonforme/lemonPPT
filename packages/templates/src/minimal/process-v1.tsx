@@ -12,8 +12,8 @@ export interface ProcessV1Props {
 }
 
 export const processV1Meta: LayoutMeta = {
-  id: 'minimal_process_v1',
-  theme: 'minimal',
+  id: 'process_v1',
+  theme: 'base',
   role: 'process',
   displayName: '横向流程',
   description: '横向步骤流程，适合流程说明',

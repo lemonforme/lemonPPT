@@ -13,8 +13,8 @@ export interface MetricV1Props {
 }
 
 export const metricV1Meta: LayoutMeta = {
-  id: 'minimal_metric_v1',
-  theme: 'minimal',
+  id: 'metric_v1',
+  theme: 'base',
   role: 'metric',
   displayName: '超大数字',
   description: '居中大字号展示核心数字，适合关键数据页',

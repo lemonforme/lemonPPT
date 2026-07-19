@@ -14,8 +14,8 @@ export interface SplitV1Props {
 }
 
 export const splitV1Meta: LayoutMeta = {
-  id: 'minimal_split_v1',
-  theme: 'minimal',
+  id: 'split_v1',
+  theme: 'base',
   role: 'content',
   displayName: '图文分屏',
   description: '左文右图分屏展示，适合产品亮点或场景介绍',

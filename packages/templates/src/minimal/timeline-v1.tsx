@@ -12,8 +12,8 @@ export interface TimelineV1Props {
 }
 
 export const timelineV1Meta: LayoutMeta = {
-  id: 'minimal_timeline_v1',
-  theme: 'minimal',
+  id: 'timeline_v1',
+  theme: 'base',
   role: 'timeline',
   displayName: '时间线',
   description: '水平时间线展示关键里程碑',

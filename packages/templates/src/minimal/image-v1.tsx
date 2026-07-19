@@ -13,8 +13,8 @@ export interface ImageV1Props {
 }
 
 export const imageV1Meta: LayoutMeta = {
-  id: 'minimal_image_v1',
-  theme: 'minimal',
+  id: 'image_v1',
+  theme: 'base',
   role: 'image',
   displayName: '全屏图片',
   description: '全屏背景图配居中标题，适合冲击力强的视觉页',
