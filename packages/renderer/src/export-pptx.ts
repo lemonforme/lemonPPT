@@ -18,6 +18,8 @@ const COLORS = {
   border: 'E2E8F0',
 };
 
+const DEFAULT_CHART_COLORS = ['3B82F6', '10B981', 'F59E0B', 'EF4444', '8B5CF6', 'EC4899'];
+
 const FONTS = {
   heading: 'Inter',
   body: 'Inter',
@@ -61,6 +63,9 @@ function renderSlideToPptx(pptxSlide: PptxSlide, slide: CoreSlide): void {
       break;
     case 'chart_v1':
       renderChartV1(pptxSlide, slide.props as unknown as ChartV1Props);
+      break;
+    case 'chart_v2':
+      renderChartV2(pptxSlide, slide.props as unknown as ChartV2Props);
       break;
     case 'content_v1':
       renderContentV1(pptxSlide, slide.props as unknown as ContentV1Props);
@@ -121,6 +126,9 @@ function renderSlideToPptx(pptxSlide: PptxSlide, slide: CoreSlide): void {
       break;
     case 'gallery_v1':
       renderGalleryV1(pptxSlide, slide.props as unknown as GalleryV1Props);
+      break;
+    case 'gallery_v2':
+      renderGalleryV2(pptxSlide, slide.props as unknown as GalleryV2Props);
       break;
     case 'image_v1':
       renderImageV1(pptxSlide, slide.props as unknown as ImageV1Props);
@@ -391,6 +399,37 @@ function renderChartV1(slide: PptxSlide, props: ChartV1Props): void {
   slide.addChart(chartType as 'bar' | 'line' | 'pie', chartData, {
     x: 0.8, y: 2.3, w: 8.4, h: 3.2,
     chartColors: [COLORS.accent],
+    showValue: true,
+    dataLabelColor: COLORS.primary,
+    dataLabelFontSize: 10,
+  });
+}
+
+interface ChartV2Props {
+  title: string;
+  kicker?: string;
+  labels?: string[];
+  datasets?: { label?: string; data?: number[]; color?: string }[];
+  unit?: string;
+}
+
+function renderChartV2(slide: PptxSlide, props: ChartV2Props): void {
+  addKicker(slide, props.kicker);
+  addTitle(slide, props.title);
+  const labels = props.labels || [];
+  const datasets = (props.datasets || []).filter((d) => (d.data ?? []).length > 0);
+  if (labels.length === 0 || datasets.length === 0) return;
+
+  const chartData = datasets.map((dataset) => ({
+    name: dataset.label || '数据',
+    labels,
+    values: dataset.data || [],
+  }));
+  const chartColors = datasets.map((d, i) => d.color || DEFAULT_CHART_COLORS[i % DEFAULT_CHART_COLORS.length]);
+
+  slide.addChart('bar', chartData, {
+    x: 0.8, y: 2.3, w: 8.4, h: 3.2,
+    chartColors,
     showValue: true,
     dataLabelColor: COLORS.primary,
     dataLabelFontSize: 10,
@@ -986,6 +1025,39 @@ function renderGalleryV1(slide: PptxSlide, props: GalleryV1Props): void {
     if (image.caption) {
       slide.addText(image.caption, {
         x: pos.x, y: pos.y + 1.35, w: 4.0, h: 0.25,
+        fontSize: 12, color: COLORS.secondary, align: 'center',
+        fontFace: FONTS.body,
+      });
+    }
+  });
+}
+
+interface GalleryV2Props {
+  kicker?: string;
+  title: string;
+  images?: { url?: string; caption?: string }[];
+}
+
+function renderGalleryV2(slide: PptxSlide, props: GalleryV2Props): void {
+  addKicker(slide, props.kicker);
+  addTitle(slide, props.title);
+  const images = (props.images || []).slice(0, 6);
+  const cols = 3;
+  const itemWidth = 2.6;
+  const itemHeight = 1.5;
+  const gapX = 0.33;
+  const startX = 0.8;
+  const startY = 2.4;
+
+  images.forEach((image, index) => {
+    const col = index % cols;
+    const row = Math.floor(index / cols);
+    const x = startX + col * (itemWidth + gapX);
+    const y = startY + row * (itemHeight + 0.45);
+    if (image.url) addImageMaybe(slide, image.url, x, y, itemWidth, itemHeight);
+    if (image.caption) {
+      slide.addText(image.caption, {
+        x, y: y + itemHeight + 0.05, w: itemWidth, h: 0.25,
         fontSize: 12, color: COLORS.secondary, align: 'center',
         fontFace: FONTS.body,
       });
