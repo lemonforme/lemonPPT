@@ -15,7 +15,8 @@
     "render:editor": "node scripts/render-editor.mjs",
     "export:pptx": "node scripts/export-pptx.mjs",
     "export:pdf": "node scripts/export-pdf.mjs",
-    "generate:goal": "node scripts/generate-goal.mjs"
+    "generate:goal": "node scripts/generate-goal.mjs",
+    "publish:packages": "pnpm -r publish"
   },
   "dependencies": {
     "@lemonppt/agent-prompts": "workspace:*",
@@ -32,5 +33,13 @@
   "engines": {
     "node": ">=20.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lemonforme/lemonPPT.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lemonforme/lemonPPT/issues"
+  },
+  "homepage": "https://github.com/lemonforme/lemonPPT#readme",
   "license": "MIT"
 }

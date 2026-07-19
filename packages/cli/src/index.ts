@@ -9,6 +9,7 @@ import {
 import { getTheme } from '@lemonppt/themes';
 import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export interface GenerateCliOptions {
   /** 用户输入的主题/需求 */
@@ -49,14 +50,15 @@ function resolveTheme(themeId?: string): string {
 async function copyThemeAssets(themeId: string, assetsDir: string): Promise<void> {
   const theme = resolveTheme(themeId);
   await mkdir(assetsDir, { recursive: true });
-  const cssSource = resolvePackagePath('themes', 'src', theme, 'styles.css');
+  const cssSource = resolvePackagePath('@lemonppt/themes', 'src', theme, 'styles.css');
   const cssDest = path.join(assetsDir, `${theme}.css`);
   await copyFile(cssSource, cssDest);
 }
 
 function resolvePackagePath(pkg: string, ...segments: string[]): string {
-  const root = path.resolve(process.cwd());
-  return path.join(root, 'packages', pkg, ...segments);
+  const mainUrl = import.meta.resolve(pkg);
+  const pkgRoot = path.resolve(path.dirname(fileURLToPath(mainUrl)), '..');
+  return path.join(pkgRoot, ...segments);
 }
 
 /**

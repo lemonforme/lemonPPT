@@ -10,9 +10,23 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lemonforme/lemonPPT.git",
+    "directory": "packages/view-model"
+  },
+  "bugs": {
+    "url": "https://github.com/lemonforme/lemonPPT/issues"
+  },
+  "homepage": "https://github.com/lemonforme/lemonPPT#readme",
   "scripts": {
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "tsc"
   },
   "dependencies": {
     "@lemonppt/core": "workspace:*"
