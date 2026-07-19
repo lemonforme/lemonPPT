@@ -22,13 +22,13 @@
 |------|-------------|---------------|---------|
 | 主题 Token 系统 | 必须有 | 间接需要 | 已完成：`packages/themes/src/*/tokens.ts` |
 | 布局组件 | MVP 5-8 个 | 越多越好 | 已完成：30 个布局，22 个 role |
-| 布局/主题解耦 | 必须解耦 | 希望解耦 | **半解耦**：结构已解耦（语义化 className），但 meta 和命名仍绑定 minimal |
+| 布局/主题解耦 | 必须解耦 | 希望解耦 | 已完成：`theme` 改为 `'base'`，layout ID 去掉 `minimal_` 前缀，目录重命名为 `base/` |
 | role→layout | 需要 | 需要 | 已完成：`packages/composer` |
 | PPTX 导出映射 | 需要 | 需要 | 已完成：30 个 layout 全部映射 |
 | CLI 工具 | 脚本调用 | 核心入口 | 已完成：`@lemonppt/cli` |
-| SKILL.md | 不需要 | 核心协议 | 已存在 |
-| install.mjs | 不需要 | 核心 | 已存在但**只适配本地仓库** |
-| npm 发布配置 | 不需要 | 核心 | 已配置，未真正发布 |
+| SKILL.md | 不需要 | 核心协议 | 已存在并随 `@lemonppt/cli` 发布 |
+| install-skill | 不需要 | 核心 | 已完成：`lemonppt install-skill` 支持 Claude/Codex/Cursor |
+| npm 发布 | 不需要 | 核心 | 已完成：8 个包已发布到 npm |
 | 开源协议 | MIT/Apache-2.0 | MIT/Apache-2.0 | 已添加 MIT LICENSE |
 
 ### 1.3 关键发现
@@ -37,18 +37,16 @@
 - 主题策略建议先做 1 个主题 + 5-8 个布局，当前已有 3 个主题 + 30 个布局。
 - 但这也带来隐患：如果每新增一个主题都要重做 30 个布局变体，工作量不可持续。
 
-**发现 2：布局与主题是"半解耦"状态**
-- 好的方面：布局组件只用语义化 className（`lp-slide`、`lp-heading` 等），样式由外部 CSS 控制，换主题 CSS 就能换肤。
-- 问题方面：
-  - 所有 layout meta 的 `theme` 都写死为 `'minimal'`
-  - layout ID 都是 `minimal_xxx_v1`
-  - 目录是 `packages/templates/src/minimal/`
-  - 这会让 composer 和 AI Agent 误以为这些布局只属于 minimal 主题。
+**发现 2：布局与主题命名已解耦**
+- layout meta 的 `theme` 已改为 `'base'`，表示通用版式。
+- layout ID 已去掉 `minimal_` 前缀（如 `cover_v1`）。
+- 目录已从 `packages/templates/src/minimal/` 重命名为 `packages/templates/src/base/`。
+- 为兼容旧 `goal.json`，在 `@lemonppt/core` 中增加了 `normalizeDeckGoal`，自动把 `minimal_xxx_v1` 映射为 `xxx_v1`、`minimal` 主题映射为 `base`。
 
-**发现 3：Skill 分发还差"最后一公里"**
-- `SKILL.md` 内容已完整。
-- `scripts/install.mjs` 存在，但它默认 `projectDir` 是脚本所在目录的父目录，且直接引用 `packages/cli/dist/cli.js`。
-- 这意味着它**只能在本仓库运行**，用户无法通过 `npx @lemonppt/cli install-skill` 或单独 skill 包完成安装。
+**发现 3：Skill 分发已打通**
+- `SKILL.md` 已随 `@lemonppt/cli` 发布包分发。
+- `lemonppt install-skill` 命令支持安装到 Claude/Codex/Cursor 技能目录。
+- `scripts/install.mjs` 保留作为本地兼容入口。
 
 **发现 4：许可证风险已被规避**
 - 主题策略明确警告不要抄袭 Dashi 的 theme01~theme12。
@@ -60,16 +58,18 @@
 
 | 风险 | 等级 | 说明 |
 |------|------|------|
-| 布局命名与主题绑定 | 高 | 未来新增主题专属变体时会产生命名冲突、大量重命名 |
-| install.mjs 不能从 npm 运行 | 中 | 影响 Agent 一键安装体验，但手动安装 CLI 仍可工作 |
-| npm 尚未发布 | 中 | 外部用户暂时无法安装，但配置已完成 |
-| 缺少 Agent 实测反馈 | 低 | 不影响功能，但会拖慢迭代方向 |
+| 布局命名与主题绑定 | 已解决 | 命名已解耦，旧 ID 有兼容映射 |
+| Skill 分发安装器 | 已解决 | `lemonppt install-skill` 已可用 |
+| npm 发布 | 已解决 | 8 个包已发布到 npm |
+| 缺少 Agent 实测反馈 | 中 | 不影响功能，但会拖慢迭代方向 |
 
 ---
 
 ## 三、详细执行方案
 
-### 阶段 A：发布 npm（1 天内完成）
+> **状态更新（2026-07-20）**：阶段 A、B、C 已全部完成。下文保留原始执行步骤供复盘，后续重点进入 Agent 实测与 Phase 4 规模化。
+
+### 阶段 A：发布 npm（已完成）
 
 **目标**：让外部用户今天就能 `npm i -g @lemonppt/cli` 使用。
 

@@ -1,4 +1,5 @@
 import type { DeckGoal, Slide as CoreSlide } from '@lemonppt/core';
+import { normalizeDeckGoal } from '@lemonppt/core';
 import PptxGenJS, { type Slide as PptxSlide } from 'pptxgenjs';
 
 export interface PptxExportOptions {
@@ -24,6 +25,7 @@ const FONTS = {
 };
 
 export async function exportDeckToPptx(goal: DeckGoal, options: PptxExportOptions): Promise<void> {
+  goal = normalizeDeckGoal(goal);
   const { outFile, title = goal.title, subject, author } = options;
 
   const pptx = new PptxGenJS();

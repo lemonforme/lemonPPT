@@ -1,4 +1,5 @@
 import type { DeckGoal } from '@lemonppt/core';
+import { normalizeDeckGoal } from '@lemonppt/core';
 import { writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -15,6 +16,7 @@ export interface ExportPdfOptions {
 }
 
 export async function exportDeckToPdf(goal: DeckGoal, options: ExportPdfOptions): Promise<void> {
+  goal = normalizeDeckGoal(goal);
   const { outFile, width = 1280, height = 720 } = options;
 
   const result = renderDeck(goal);

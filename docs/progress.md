@@ -40,9 +40,9 @@
 ### 待完成
 
 - [ ] 在 Claude/Codex/Cursor 中实测 SKILL.md 效果并收集反馈
-- [ ] 为旧版 `minimal_xxx_v1` layout ID 增加向后兼容映射
-- [ ] 将 `packages/templates/src/minimal/` 目录重命名为 `base/`（并同步 import 路径与 README）
-- [ ] 补充 README 中 `npx @lemonppt/cli` 的使用方式
+- [x] 为旧版 `minimal_xxx_v1` layout ID 增加向后兼容映射
+- [x] 将 `packages/templates/src/minimal/` 目录重命名为 `base/`（并同步 import 路径与 README）
+- [x] 补充 README 中 `npx @lemonppt/cli` 的使用方式
 - [ ] 考虑创建独立 `@lemonppt/skill` 包或继续用 CLI 内置安装器
 - [ ] 规划 Phase 4：版式/主题规模化与社区贡献机制
 
