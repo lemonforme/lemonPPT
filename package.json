@@ -18,6 +18,7 @@
     "generate:goal": "node scripts/generate-goal.mjs",
     "gallery": "node scripts/gallery.mjs",
     "snapshot": "node scripts/snapshot.mjs",
+    "agent:test": "node scripts/agent-test.mjs",
     "publish:packages": "corepack pnpm -r publish"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "@lemonppt/renderer": "workspace:*"
   },
   "devDependencies": {
+    "@lemonppt/composer": "^0.1.6",
     "@lemonppt/templates": "workspace:*",
     "@types/supertest": "^7.2.1",
     "playwright": "^1.61.1",

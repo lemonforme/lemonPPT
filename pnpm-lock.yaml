@@ -18,6 +18,9 @@ importers:
         specifier: workspace:*
         version: link:packages/renderer
     devDependencies:
+      '@lemonppt/composer':
+        specifier: ^0.1.6
+        version: 0.1.6
       '@lemonppt/templates':
         specifier: workspace:*
         version: link:packages/templates
@@ -383,6 +386,21 @@ packages:
 
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
+
+  '@lemonppt/composer@0.1.6':
+    resolution: {integrity: sha512-ZphjlH1pOem9oBJGxUZEtPCrWlHYNqUAS9GPejWlNh4rvN2IchRka6P911MY8YosMZULLxuBWAN9VCz3xTu3hQ==}
+
+  '@lemonppt/core@0.1.6':
+    resolution: {integrity: sha512-7QAjhShEKKh1K9Jz93JEAfot5jAaL8S3FJBqilQkDRoI6M1/Py7ddN5zeVy68sl9LPXuMlKPKw5fWKwRKiocZA==}
+
+  '@lemonppt/templates@0.1.6':
+    resolution: {integrity: sha512-zGv4eHzF6WsaQtbfeoOXHg5fQaDJfyOUJJf6jRN/aJJnfjRKz0hfvR+zA/Tr9OBcKZAatI9uS46IKU8I3XnXog==}
+
+  '@lemonppt/themes@0.1.6':
+    resolution: {integrity: sha512-fGpk8ryEuyLxtmTUKQK7ew4eD754B2oRkR23KTB8rEAD1/SunsYxFWCZ8YE04w8GlWTg4/ZRdl6d2Q6q4EfJKg==}
+
+  '@lemonppt/view-model@0.1.6':
+    resolution: {integrity: sha512-syFlHMFnGDrXlp48AvEeJit0qLt3yx9MS2zDw+utKUT1Uar4chrugAy0UY1mqel640OXwi0b7p3vtAEtETKLZg==}
 
   '@napi-rs/wasm-runtime@1.1.6':
     resolution: {integrity: sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg==}
@@ -1404,6 +1422,30 @@ snapshots:
     optional: true
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
+
+  '@lemonppt/composer@0.1.6':
+    dependencies:
+      '@lemonppt/core': 0.1.6
+      '@lemonppt/templates': 0.1.6
+      '@lemonppt/view-model': 0.1.6
+
+  '@lemonppt/core@0.1.6':
+    dependencies:
+      zod: 3.25.76
+
+  '@lemonppt/templates@0.1.6':
+    dependencies:
+      '@lemonppt/core': 0.1.6
+      '@lemonppt/themes': 0.1.6
+      react: 18.3.1
+
+  '@lemonppt/themes@0.1.6':
+    dependencies:
+      '@lemonppt/core': 0.1.6
+
+  '@lemonppt/view-model@0.1.6':
+    dependencies:
+      '@lemonppt/core': 0.1.6
 
   '@napi-rs/wasm-runtime@1.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)':
     dependencies:
