@@ -187,7 +187,7 @@
 ### 待完成
 
 - [x] 本地 Agent smoke test（Trae）通过 6 个 SKILL.md 用例
-- [ ] 在 Claude/Codex/Cursor 中实测 SKILL.md 效果并收集反馈（当前无环境，暂缓）
+- [ ] 在 Claude/Codex/Cursor 中实测 SKILL.md 效果并收集反馈（⏸️ 本地无环境，暂缓）
 - [x] 优化 fallback 内容，让无 API Key 生成的 PPT 更贴合主题
 - [x] 统一 `base` 主题字号/间距/卡片视觉规范
 - [x] PPTX 导出读取 `goal.theme` 并按主题配色/字体
