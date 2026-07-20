@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 /**
  * 渲染示例 goal.json 到 output/index.html
  * 用法: node scripts/render.mjs [path/to/goal.json]

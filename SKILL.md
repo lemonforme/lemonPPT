@@ -2,6 +2,8 @@
 
 根据一句话主题或需求，自动生成精美 PPT（goal.json/HTML/PPTX/PDF）。
 
+> **协议声明**：lemonPPT 采用 AGPL-3.0 开源协议。若你通过 AI Agent 向第三方提供基于 lemonPPT 的服务，请遵守 AGPL-3.0 的源代码公开义务。lemonPPT 与 Dashi PPT 无代码或资产依赖关系。详见项目根目录 `LICENSE` 与 `docs/LEGAL.md`。
+
 ## 能力
 
 - 接受用户输入（主题、目标页数、主题风格、语言）

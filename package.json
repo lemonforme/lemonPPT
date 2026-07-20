@@ -1,6 +1,6 @@
 {
   "name": "lemonppt",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "private": true,
   "description": "Self-developed AI PPT generation agent. Independent from dashi-ppt-skill.",
   "type": "module",
@@ -41,5 +41,5 @@
     "url": "https://github.com/lemonforme/lemonPPT/issues"
   },
   "homepage": "https://github.com/lemonforme/lemonPPT#readme",
-  "license": "MIT"
+  "license": "AGPL-3.0"
 }

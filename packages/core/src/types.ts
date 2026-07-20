@@ -1,3 +1,7 @@
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 /**
  * lemonPPT 核心类型定义
  * 描述 Agent 工作流与渲染引擎之间的 JSON 协议

@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 /**
  * 版式脚手架：生成新 layout 组件并提示需要手动注册的位置。
  *

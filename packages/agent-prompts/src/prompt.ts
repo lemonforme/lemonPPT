@@ -1,3 +1,7 @@
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 /**
  * 构建用于将自然语言需求转换为 lemonPPT goal.json 的 LLM prompt。
  * 自 0.x 起，Agent 不再直接选择版式，而是输出“页面角色(role) + props”，

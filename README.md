@@ -40,7 +40,8 @@ lemonPPT/
 ├── examples/            # 示例 goal.json
 ├── scripts/             # CLI 脚本
 ├── SKILL.md             # AI Agent 使用协议
-├── LICENSE              # MIT 协议
+├── LICENSE              # AGPL-3.0 协议
+├── CONTRIBUTING.md      # 贡献指南（当前暂不接受外部 PR）
 └── README.md            # 本文件
 ```
 
@@ -135,4 +136,12 @@ node scripts/export-pdf.mjs examples/sample-goal.json
 
 ## 许可证
 
-MIT
+本项目采用 [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE) 开源协议。
+
+lemonPPT 是独立开发的 AI 演示文稿生成工具，与 Dashi PPT 无代码或资产层面的依赖关系。详见 [`docs/LEGAL.md`](docs/LEGAL.md)。
+
+## 贡献
+
+当前阶段**暂不接受外部 Pull Request**。我们欢迎通过 Issue 提交建议与反馈，正式开放贡献时会提前公告贡献者协议（CLA）流程。详见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
+
+**重要提示**：若你将 lemonPPT 作为网络服务部署或集成到 AI Agent 中向第三方提供服务，根据 AGPL-3.0 要求，你必须向用户公开对应版本的源代码。

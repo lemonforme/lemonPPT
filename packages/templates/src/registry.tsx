@@ -1,3 +1,7 @@
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import type { LayoutMeta, Slide } from '@lemonppt/core';
 import type { ComponentType, ReactElement } from 'react';
 import { ClosingV1, closingV1Meta, type ClosingV1Props } from './base/closing-v1.js';

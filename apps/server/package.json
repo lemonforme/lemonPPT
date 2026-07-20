@@ -1,6 +1,6 @@
 {
   "name": "@lemonppt/server",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "private": true,
   "type": "module",
   "scripts": {
@@ -20,5 +20,5 @@
     "tsx": "^4.20.0",
     "typescript": "^5.5.0"
   },
-  "license": "MIT"
+  "license": "AGPL-3.0"
 }

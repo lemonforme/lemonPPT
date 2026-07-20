@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 /**
  * 根据自然语言生成 goal.json
  * 用法: node scripts/generate-goal.mjs "描述你的演示文稿主题" [path/to/output.json]
