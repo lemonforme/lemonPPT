@@ -3,14 +3,18 @@
 
 :root {
   --lp-bg: #0a0f1c;
-  --lp-surface: #111827;
+  --lp-surface: rgba(17, 24, 39, 0.72);
+  --lp-surface-elevated: rgba(31, 41, 55, 0.8);
   --lp-text: #f3f4f6;
   --lp-secondary: #94a3b8;
   --lp-accent: #06b6d4;
-  --lp-border: rgba(255, 255, 255, 0.1);
+  --lp-border: rgba(255, 255, 255, 0.12);
   --lp-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
   --lp-font: Inter, "Noto Sans SC", system-ui, sans-serif;
   --lp-font-mono: JetBrains Mono, "SF Mono", monospace;
+  --lp-radius-small: 6px;
+  --lp-radius-medium: 12px;
+  --lp-radius-large: 16px;
 }
 
 * {
@@ -27,6 +31,15 @@ body {
   background: var(--lp-bg);
   color: var(--lp-text);
   overflow: hidden;
+}
+
+body {
+  background-color: var(--lp-bg);
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.12), transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
 }
 
 .lp-deck {
@@ -69,14 +82,19 @@ body {
   width: 1280px;
   height: 720px;
   background: var(--lp-surface);
-  border: 1px solid rgba(6, 182, 212, 0.15);
-  border-radius: 16px;
-  box-shadow: var(--lp-shadow), 0 0 0 1px rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.22);
+  border-radius: var(--lp-radius-large);
+  box-shadow:
+    var(--lp-shadow),
+    0 0 0 1px rgba(6, 182, 212, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   padding: 80px 96px;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .lp-slide::before {
@@ -84,8 +102,9 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.12), transparent 40%),
-    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1), transparent 40%);
+    radial-gradient(circle at 85% 15%, rgba(6, 182, 212, 0.18), transparent 42%),
+    radial-gradient(circle at 15% 85%, rgba(59, 130, 246, 0.14), transparent 42%),
+    linear-gradient(180deg, rgba(6, 182, 212, 0.04) 0%, transparent 35%);
   pointer-events: none;
   z-index: 0;
 }
@@ -650,7 +669,7 @@ body {
 .lp-image-editor button {
   border: 1px solid var(--lp-border);
   background: var(--lp-accent);
-  color: #0a0f1c;
+  color: var(--lp-textInverse);
   font-size: 14px;
   padding: 9px 18px;
   border-radius: 8px;
@@ -756,7 +775,7 @@ body {
 }
 
 .lp-comparison-v2-card {
-  background: rgba(17, 24, 39, 0.6);
+  background: var(--lp-surface-elevated);
   border: 1px solid rgba(6, 182, 212, 0.15);
   border-radius: 16px;
   padding: 32px;
@@ -822,7 +841,7 @@ body {
 
 .lp-process-v2-content {
   flex: 1;
-  background: rgba(17, 24, 39, 0.6);
+  background: var(--lp-surface-elevated);
   border: 1px solid rgba(6, 182, 212, 0.15);
   border-radius: 12px;
   padding: 18px 22px;
@@ -930,7 +949,7 @@ body {
 
 .lp-swot-cell,
 .lp-pest-cell {
-  background: rgba(17, 24, 39, 0.6);
+  background: var(--lp-surface-elevated);
   border: 1px solid rgba(6, 182, 212, 0.15);
   border-radius: 16px;
   padding: 28px;
@@ -1056,9 +1075,10 @@ body {
 .lp-image-v1-title {
   font-size: 72px;
   font-weight: 800;
-  color: #fff;
+  color: #ffffff;
   line-height: 1.1;
   margin-bottom: 24px;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
 }
 
 .lp-image-v1-subtitle {
@@ -1098,7 +1118,7 @@ body {
 }
 
 .lp-team-avatar-placeholder {
-  background: rgba(17, 24, 39, 0.6);
+  background: var(--lp-surface-elevated);
   border-color: rgba(6, 182, 212, 0.3);
 }
 
@@ -1139,7 +1159,7 @@ body {
 }
 
 .lp-feature-card {
-  background: rgba(17, 24, 39, 0.6);
+  background: var(--lp-surface-elevated);
   border: 1px solid rgba(6, 182, 212, 0.15);
   border-radius: 16px;
   padding: 36px;
@@ -1251,7 +1271,7 @@ body {
 }
 
 .lp-pricing-card {
-  background: rgba(17, 24, 39, 0.6);
+  background: var(--lp-surface-elevated);
   border: 1px solid rgba(6, 182, 212, 0.15);
   border-radius: 16px;
   padding: 36px 28px;
@@ -1307,7 +1327,7 @@ body {
 .lp-pricing-cta {
   display: inline-block;
   background: var(--lp-accent);
-  color: #0b1220;
+  color: var(--lp-textInverse);
   font-size: 16px;
   font-weight: 600;
   padding: 12px 28px;
@@ -1472,8 +1492,8 @@ body {
   left: 0;
   right: 0;
   padding: 12px 16px;
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  color: #ffffff;
   font-size: 14px;
 }
 
@@ -1537,7 +1557,7 @@ body {
 
 .lp-faq-v1-q {
   background: var(--lp-accent);
-  color: #fff;
+  color: var(--lp-textInverse);
 }
 
 .lp-faq-v1-a {
@@ -1732,7 +1752,7 @@ body {
   font-size: 12px;
   font-weight: 600;
   color: var(--lp-accent);
-  background: rgba(0, 113, 227, 0.1);
+  background: rgba(6, 182, 212, 0.12);
   padding: 4px 10px;
   border-radius: 100px;
 }
@@ -1746,7 +1766,9 @@ body {
 @media print {
   html, body {
     display: block;
-    background: #fff;
+    background: var(--lp-bg) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .lp-editor-bar,
@@ -1762,6 +1784,7 @@ body {
     width: 100% !important;
     height: auto !important;
     overflow: visible;
+    background: transparent !important;
   }
 
   .lp-slide-wrapper {
@@ -1773,6 +1796,13 @@ body {
     page-break-after: always;
     break-after: page;
     z-index: auto !important;
+  }
+
+  .lp-slide {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: var(--lp-surface) !important;
   }
 
   .lp-slide-wrapper:last-child {
