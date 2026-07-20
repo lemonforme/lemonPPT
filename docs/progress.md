@@ -111,11 +111,88 @@
 - **本地验证通过**
   - CLI render + export 成功生成 `/tmp/new-layouts-output/index.html` 与 `/tmp/new-layouts.pptx`
 
+### 发布 0.1.6
+
+- 8 个可发布包全部升级到 `0.1.6`
+- **协议变更**：项目主协议从 MIT 切换为 **AGPL-3.0**
+  - 根目录 `LICENSE` 替换为 GNU Affero General Public License v3.0 全文
+  - 所有 `package.json` 的 `license` 字段更新为 `AGPL-3.0`
+  - 87 个源码/CSS 文件添加 SPDX 协议头
+- **PR 策略**：当前阶段暂不接受外部 Pull Request
+  - 更新 `README.md`、`SKILL.md`、`CONTRIBUTING.md`
+  - 新增 `docs/LEGAL.md` 作为协议治理与合规说明
+- **合规自查**
+  - 依赖协议扫描通过，无与 AGPL-3.0 不兼容的强 copyleft 依赖
+  - 确认无 Dashi PPT 代码或资产依赖
+  - jszip 按 MIT 许可使用
+- 通过 `npx @lemonppt/cli@0.1.6 generate/export` 端到端验证
+
+### 2026-07-20（Phase 4 继续：脚手架 + timeline_v2）
+
+- **版式脚手架升级**
+  - `scripts/create-layout.mjs` 现在会自动完成：
+    - 生成带 SPDX 协议头的组件和测试文件
+    - 在 `packages/templates/src/index.ts` 中导出
+    - 在 `packages/templates/src/registry.tsx` 中注册
+    - 在 `packages/composer/src/index.ts` 的候选列表中追加（若 role 已存在）或新增
+    - 在 `packages/renderer/src/export-pptx.ts` 中生成 switch case 与 `renderXxx` 占位函数
+  - 修复 shebang 在 SPDX 头之前导致脚本无法运行的问题
+
+- **新增版式 `timeline_v2`**
+  - 垂直时间线布局，适合发展历程、项目里程碑
+  - 组件：`packages/templates/src/base/timeline-v2.tsx`
+  - 测试：`packages/templates/src/base/timeline-v2.test.tsx`
+  - 三套主题 CSS：`base`、`dark-tech`、`warm-business`
+  - PPTX 导出：`packages/renderer/src/export-pptx.ts`
+  - 端到端验证：`npx @lemonppt/cli@0.1.6 generate/export` 成功生成 PPTX（133KB）
+
+- **版式 Gallery 预览/回归机制**
+  - 新增脚本 `scripts/gallery.mjs`
+  - 一键生成 `output/gallery/<theme>/index.html`，展示所有版式 × 主题渲染效果
+  - 运行命令：`corepack pnpm gallery`
+  - 当前共 39 个版式 × 3 套主题
+
+- **新增高价值版式（Phase 4 规模化）**
+  - `roadmap_v2`：阶段路线图，展示季度/年度目标
+  - `pricing_v2`：三列价格方案对比，支持高亮推荐
+  - `feature_v2`：三列特性卡片，带图标和说明
+  - `team_v2`：团队介绍墙，支持头像占位、职位、简介
+  - `metric_v3`：双指标对比，强调增长率
+  - 均已完成：组件、测试、注册、PPTX 导出、三套主题 CSS
+
+- **验证**
+  - `corepack pnpm -r build` 通过
+  - `corepack pnpm test`：17 个测试文件、66 个测试通过
+  - `corepack pnpm gallery` 成功生成 39 个版式 × 3 套主题预览页
+
+### Agent 实测准备
+
+- **SKILL.md 同步新版式**
+  - 更新 [`SKILL.md`](file:///Users/apple/工作/lemonPPT/SKILL.md) 和 [`packages/cli/SKILL.md`](file:///Users/apple/工作/lemonPPT/packages/cli/SKILL.md) 的版式角色表
+  - 新增 `metric_v3`、`timeline_v2`、`roadmap_v2`、`pricing_v2`、`feature_v2`、`team_v2`
+- **实测清单**
+  - 新增内部文档 [`docs/agent-testing-checklist.md`](file:///Users/apple/工作/lemonPPT/docs/agent-testing-checklist.md)
+  - 覆盖 Claude / Codex / Cursor 的 6 个常用用例和记录模板
+- **本地预验证**
+  - `lemonppt generate` + `export --pptx --pdf` 在无 API Key 场景下成功生成文件
+  - 生成 `goal.json` 合法，`pageCount` 与 `slides.length` 一致
+
+### Agent 实测反馈与视觉优化
+
+- **反馈**：Agent 能正常生成 PPT，但视觉效果较差
+- **已产出视觉审查报告**：[`docs/visual-review.md`](file:///Users/apple/工作/lemonPPT/docs/visual-review.md)
+- **主要问题**：主题颜色/字体不协调、版式间距/对齐问题、fallback 内容空洞、PPTX 与 HTML 预览不一致
+- **优化优先级**：fallback 内容 > base 主题视觉规范 > PPTX 主题化
+
 ### 待完成
 
 - [ ] 在 Claude/Codex/Cursor 中实测 SKILL.md 效果并收集反馈
-- [ ] 继续用新主题/版式脚手架补充更多版式（如 `gallery_v2`、`chart_v2`）
-- [ ] 邀请社区贡献新主题，验证 `CONTRIBUTING.md` 的可用性
+- [x] 优化 fallback 内容，让无 API Key 生成的 PPT 更贴合主题
+- [x] 统一 `base` 主题字号/间距/卡片视觉规范
+- [ ] PPTX 导出读取 `goal.theme` 并按主题配色/字体
+- [ ] ~~继续用新主题/版式脚手架补充更多版式~~（当前 5 个补充版式已完成）
+- [ ] ~~新增 1 套主题验证主题系统可扩展性~~（已暂停：当前不新增主题）
+- [ ] 正式开放社区贡献前完成 CLA 流程
 - [ ] 根据社区反馈迭代 `SKILL.md` 与脚手架
 
 ---
