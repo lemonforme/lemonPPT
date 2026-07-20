@@ -197,6 +197,8 @@
 - [ ] 正式开放社区贡献前完成 CLA 流程
 - [ ] 根据社区反馈迭代 `SKILL.md` 与脚手架
 
+> 后续详细规划见本地文档 `docs/plans/phase-5-community-plan.md`。
+
 ---
 
 ## 2026-07-19
