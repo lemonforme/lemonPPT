@@ -1,3 +1,7 @@
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 export * from './registry.js';
 export * from './base/cover-v1.js';
 export * from './base/metric-v1.js';

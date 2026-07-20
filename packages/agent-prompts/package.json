@@ -1,6 +1,6 @@
 {
   "name": "@lemonppt/agent-prompts",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -39,5 +39,5 @@
     "@types/node": "^20.0.0",
     "typescript": "^5.5.0"
   },
-  "license": "MIT"
+  "license": "AGPL-3.0"
 }

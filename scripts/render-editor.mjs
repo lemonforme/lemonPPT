@@ -1,3 +1,7 @@
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import { renderDeck } from '@lemonppt/renderer';
 import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';

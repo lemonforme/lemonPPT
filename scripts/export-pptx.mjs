@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 /**
  * 将 goal.json 导出为 PPTX
  * 用法: node scripts/export-pptx.mjs [path/to/goal.json] [path/to/output.pptx]

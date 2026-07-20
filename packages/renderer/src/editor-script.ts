@@ -1,3 +1,7 @@
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 export const editorScript = `
 (function () {
   const STORAGE_KEY = 'lemonppt:editor:' + (window.__lemonPPT_goal?.randomSeed || window.__lemonPPT_goal?.title || 'default');

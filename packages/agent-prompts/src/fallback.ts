@@ -1,3 +1,7 @@
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 /**
  * 当未配置 LLM API Key 时，基于用户输入生成一份 demo 级别的 goal.json。
  * fallback 直接产出完整 Slide（含 role + layout），仍走 recomposeDeck 规范化。

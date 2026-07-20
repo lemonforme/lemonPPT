@@ -1,3 +1,7 @@
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import type { DeckGoal } from '@lemonppt/core';
 import { normalizeDeckGoal } from '@lemonppt/core';
 import { writeFile } from 'node:fs/promises';
