@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import type { LayoutMeta, Slide } from '@lemonppt/core';
+import { TimelineV2, timelineV2Meta, type TimelineV2Props } from './base/timeline-v2.js';
 import type { ComponentType, ReactElement } from 'react';
 import { ClosingV1, closingV1Meta, type ClosingV1Props } from './base/closing-v1.js';
 import { ClosingV2, closingV2Meta, type ClosingV2Props } from './base/closing-v2.js';
@@ -82,6 +83,7 @@ export function renderSlide(slide: Slide, options: RenderSlideOptions = {}): Rea
 }
 
 // 注册内置版式
+registerLayout<TimelineV2Props>({ meta: timelineV2Meta, component: TimelineV2 });
 registerLayout<CoverV1Props>({ meta: coverV1Meta, component: CoverV1 });
 registerLayout<MetricV1Props>({ meta: metricV1Meta, component: MetricV1 });
 registerLayout<MetricV2Props>({ meta: metricV2Meta, component: MetricV2 });

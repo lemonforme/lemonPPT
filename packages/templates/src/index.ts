@@ -36,3 +36,4 @@ export * from './base/partners-v1.js';
 export * from './base/testimonial-v1.js';
 export * from './base/testimonial-v2.js';
 export * from './base/roadmap-v1.js';
+export * from './base/timeline-v2.js';

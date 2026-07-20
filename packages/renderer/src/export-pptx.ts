@@ -50,6 +50,9 @@ export async function exportDeckToPptx(goal: DeckGoal, options: PptxExportOption
 
 function renderSlideToPptx(pptxSlide: PptxSlide, slide: CoreSlide): void {
   switch (slide.layout) {
+    case 'timeline_v2':
+      renderTimelineV2(pptxSlide, slide.props as unknown as TimelineV2Props);
+      break;
     case 'cover_v1':
       renderCoverV1(pptxSlide, slide.props as unknown as CoverV1Props);
       break;
@@ -1237,5 +1240,57 @@ function renderClosingV2(slide: PptxSlide, props: ClosingV2Props): void {
       fontFace: FONTS.mono,
     });
     y += 0.45;
+  });
+}
+
+interface TimelineV2Props {
+  title?: string;
+  kicker?: string;
+  milestones?: { date?: string; title?: string; description?: string }[];
+  [key: string]: unknown;
+}
+
+function renderTimelineV2(slide: PptxSlide, props: TimelineV2Props): void {
+  addKicker(slide, props.kicker);
+  addTitle(slide, props.title ?? 'Timeline');
+  const milestones = props.milestones ?? [];
+  const maxItems = 5;
+  let y = 2.6;
+  milestones.slice(0, maxItems).forEach((milestone, index) => {
+    const isLast = index === Math.min(milestones.length, maxItems) - 1;
+    // marker dot
+    slide.addShape('ellipse', {
+      x: 0.9, y: y + 0.16, w: 0.16, h: 0.16,
+      fill: { color: COLORS.accent },
+    });
+    if (!isLast) {
+      slide.addShape('rect', {
+        x: 0.97, y: y + 0.42, w: 0.02, h: 1.0,
+        fill: { color: COLORS.border },
+      });
+    }
+    const dateText = milestone.date ?? '';
+    if (dateText) {
+      slide.addText(dateText, {
+        x: 1.3, y, w: 2.0, h: 0.35,
+        fontSize: 14, color: COLORS.accent, align: 'left', valign: 'top',
+        fontFace: FONTS.mono,
+      });
+    }
+    if (milestone.title) {
+      slide.addText(milestone.title, {
+        x: 1.3, y: y + 0.35, w: 7.8, h: 0.4,
+        fontSize: 20, color: COLORS.primary, bold: true, align: 'left', valign: 'top',
+        fontFace: FONTS.heading,
+      });
+    }
+    if (milestone.description) {
+      slide.addText(milestone.description, {
+        x: 1.3, y: y + 0.75, w: 7.8, h: 0.55,
+        fontSize: 16, color: COLORS.secondary, align: 'left', valign: 'top',
+        fontFace: FONTS.body,
+      });
+    }
+    y += 1.35;
   });
 }

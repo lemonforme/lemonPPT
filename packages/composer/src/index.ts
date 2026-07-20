@@ -40,7 +40,7 @@ const ROLE_LAYOUT_CANDIDATES: Record<SlideRole, string[]> = {
   comparison: ['comparison_v1', 'comparison_v2'],
   pricing: ['pricing_v1'],
   process: ['process_v1', 'process_v2'],
-  timeline: ['timeline_v1'],
+  timeline: ['timeline_v1', 'timeline_v2'],
   roadmap: ['roadmap_v1'],
   quote: ['quote_v1', 'quote_v2'],
   testimonial: ['testimonial_v1', 'testimonial_v2'],
