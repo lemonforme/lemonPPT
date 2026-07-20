@@ -9,6 +9,21 @@
 
 ### 已完成
 
+- **文档对齐与大师 PPT 对比**
+  - 阅读 `docs/plans/`、`docs/analysis/` 中所有规划文档
+  - 生成 [`docs/analysis/project-alignment-report.md`](docs/analysis/project-alignment-report.md)
+  - 修正 `docs/plans/project-plan.md`：协议改为 AGPL-3.0-or-later、目录结构更新为当前 workspace、版式/角色数更新
+  - 修正 `docs/plans/theme-strategy.md`：当前状态改为 3 主题/39 版式、明确暂停新增主题、更新路线图
+  - 修正 `docs/plans/technical-plan.md`：协议改为 AGPL-3.0-or-later、架构与版式列表更新
+  - 修正 `docs/analysis/phase-4-next-step-analysis.md`：版本号 0.1.3 → 0.1.6、版式数 30 → 39、测试数 47 → 66、标记 Phase 4 已完成
+  - 更新 `docs/plans/phase-5-community-plan.md`：增加 Skill 包架构决策任务、更新各任务状态
+
+---
+
+## 2026-07-20
+
+### 已完成
+
 - **npm 发布（阶段 A）**
   - 已用粒度访问令牌成功发布 8 个包到 npm registry：
     - `@lemonppt/core@0.1.0`
