@@ -4,6 +4,7 @@
 :root {
   --lp-bg: #faf6f1;
   --lp-surface: #fffbf7;
+  --lp-surface-elevated: #ffffff;
   --lp-text: #3d2c24;
   --lp-secondary: #8c7b70;
   --lp-accent: #e07b39;
@@ -11,6 +12,9 @@
   --lp-shadow: 0 20px 60px rgba(61, 44, 36, 0.1);
   --lp-font: "Noto Sans SC", Inter, system-ui, sans-serif;
   --lp-font-mono: JetBrains Mono, monospace;
+  --lp-radius-small: 6px;
+  --lp-radius-medium: 12px;
+  --lp-radius-large: 16px;
 }
 
 * {

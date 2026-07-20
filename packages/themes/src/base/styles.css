@@ -4,6 +4,7 @@
 :root {
   --lp-bg: #f5f5f7;
   --lp-surface: #ffffff;
+  --lp-surface-elevated: #ffffff;
   --lp-text: #1d1d1f;
   --lp-secondary: #6e6e73;
   --lp-accent: #0071e3;
@@ -11,6 +12,9 @@
   --lp-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
   --lp-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   --lp-font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
+  --lp-radius-small: 6px;
+  --lp-radius-medium: 12px;
+  --lp-radius-large: 16px;
 }
 
 * {
