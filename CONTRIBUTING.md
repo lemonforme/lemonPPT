@@ -4,29 +4,37 @@
 
 ## 当前贡献政策
 
-**当前阶段，lemonPPT 暂不接受外部 Pull Request。**
+**lemonPPT 现已接受外部 Pull Request，但需先完成 CLA 签署流程。**
 
-我们正在完善协议治理、贡献者许可协议（CLA）流程以及代码审查规范。在正式开放贡献之前，请通过以下方式参与：
+在提交 PR 之前，请先阅读本指南、行为准则和贡献者许可协议：
 
-- 提交 [GitHub Issue](https://github.com/lemonforme/lemonPPT/issues) 报告 Bug 或建议功能
-- 在 Issue 中讨论设计方向
-- 分享你使用 lemonPPT 生成的案例
+- [CLA.md](CLA.md) — 贡献者许可协议
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — 社区行为准则
 
-## 为什么暂不接受 PR
+## 贡献流程
 
-1. **协议过渡**：项目已从 MIT 切换至 AGPL-3.0，需要确保所有历史和未来贡献的版权清晰。
-2. **CLA 准备**：正式接受外部贡献前，需要建立贡献者许可协议，避免未来版权纠纷。
-3. **架构稳定**：版式系统、主题系统和 Agent 接口仍在快速迭代，待核心 API 稳定后开放贡献对大家更友好。
+1. **Fork 仓库** 并在你的分支上进行修改。
+2. **先开 Issue 讨论** 重大改动或新增版式/主题，避免重复劳动。
+3. **本地验证**：
+   - `corepack pnpm -r build`
+   - `corepack pnpm test`
+   - `corepack pnpm agent:test`
+   - `corepack pnpm audit:layouts`
+4. **提交 Pull Request**，并在 PR 描述中勾选 CLA 协议选项。
+5. **等待审查**：维护者会审查代码、测试和 CLA 状态。
 
-## 正式开放贡献后会怎样
+## 开发规范
 
-届时本文件会更新，包含：
+- 所有代码文件必须包含 AGPL-3.0 SPDX 协议头。
+- 提交信息应简洁说明 "为什么" 而非 "做了什么"。
+- 新增版式请使用 `node scripts/create-layout.mjs <name>` 脚手架，并补充测试。
+- 暂不新增主题；聚焦版式、Agent 体验和导出质量。
 
-- 开发环境搭建
-- 代码风格与提交规范
-- 版式/主题开发指南
-- 测试要求
-- CLA 签署流程
+## 代码风格
+
+- TypeScript：严格模式
+- 测试：使用 Vitest
+- 版式组件：使用 CSS 变量和 `lp-` 前缀类名，避免全局样式污染
 
 ## 协议
 

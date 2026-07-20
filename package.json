@@ -19,6 +19,7 @@
     "gallery": "node scripts/gallery.mjs",
     "snapshot": "node scripts/snapshot.mjs",
     "agent:test": "node scripts/agent-test.mjs",
+    "audit:layouts": "node scripts/audit-layouts.mjs",
     "publish:packages": "corepack pnpm -r publish"
   },
   "dependencies": {
