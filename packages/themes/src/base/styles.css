@@ -1217,6 +1217,84 @@ body {
   line-height: 1.55;
 }
 
+/* Timeline v2 */
+.lp-timeline-v2 {
+  justify-content: flex-start;
+  padding: 64px 80px;
+}
+
+.lp-timeline-v2-header {
+  margin-bottom: 40px;
+}
+
+.lp-timeline-v2-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.lp-timeline-v2-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.lp-timeline-v2-marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 24px;
+  min-height: 100%;
+}
+
+.lp-timeline-v2-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--lp-accent);
+  flex-shrink: 0;
+}
+
+.lp-timeline-v2-line {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: calc(100% + 12px);
+  background: var(--lp-border);
+}
+
+.lp-timeline-v2-body {
+  flex: 1;
+  padding-top: 0;
+}
+
+.lp-timeline-v2-date {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--lp-accent);
+  margin-bottom: 4px;
+  font-family: var(--lp-font-mono);
+}
+
+.lp-timeline-v2-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--lp-text);
+  margin-bottom: 6px;
+}
+
+.lp-timeline-v2-description {
+  font-size: 15px;
+  color: var(--lp-secondary);
+  line-height: 1.5;
+}
+
 /* Pricing v1 */
 .lp-pricing-v1 {
   justify-content: center;
