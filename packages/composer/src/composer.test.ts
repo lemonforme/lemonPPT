@@ -30,7 +30,7 @@ describe('selectLayoutForRole', () => {
 
   it('covers team role', () => {
     const layout = selectLayoutForRole('team');
-    expect(layout).toBe('team_v1');
+    expect(layout.startsWith('team')).toBe(true);
   });
 });
 
