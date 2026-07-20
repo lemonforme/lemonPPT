@@ -13,26 +13,104 @@ export interface PptxExportOptions {
   author?: string;
 }
 
-const COLORS = {
-  primary: '0F172A',
-  secondary: '64748B',
-  accent: '3B82F6',
-  white: 'FFFFFF',
-  light: 'F1F5F9',
-  border: 'E2E8F0',
+interface ThemeColors {
+  primary: string;
+  secondary: string;
+  accent: string;
+  white: string;
+  light: string;
+  border: string;
+  surface: string;
+  surfaceElevated: string;
+}
+
+interface ThemeFonts {
+  heading: string;
+  body: string;
+  mono: string;
+}
+
+interface ThemeConfig {
+  colors: ThemeColors;
+  fonts: ThemeFonts;
+  chartColors: string[];
+}
+
+const THEME_CONFIGS: Record<string, ThemeConfig> = {
+  base: {
+    colors: {
+      primary: '1D1D1F',
+      secondary: '6E6E73',
+      accent: '2563EB',
+      white: 'FFFFFF',
+      light: 'F3F4F6',
+      border: 'E5E7EB',
+      surface: 'FFFFFF',
+      surfaceElevated: 'F9FAFB',
+    },
+    fonts: { heading: 'Inter', body: 'Inter', mono: 'JetBrains Mono' },
+    chartColors: ['2563EB', '10B981', 'F59E0B', 'EF4444', '8B5CF6', 'EC4899'],
+  },
+  'dark-tech': {
+    colors: {
+      primary: 'F3F4F6',
+      secondary: '94A3B8',
+      accent: '06B6D4',
+      white: 'FFFFFF',
+      light: '1F2937',
+      border: '374151',
+      surface: '111827',
+      surfaceElevated: '1F2937',
+    },
+    fonts: { heading: 'Inter', body: 'Inter', mono: 'JetBrains Mono' },
+    chartColors: ['06B6D4', '3B82F6', '10B981', 'F59E0B', '8B5CF6'],
+  },
+  'warm-business': {
+    colors: {
+      primary: '3D2C24',
+      secondary: '8C7B70',
+      accent: 'E07B39',
+      white: 'FFFFFF',
+      light: 'F5EFE8',
+      border: 'EFE8E0',
+      surface: 'FFFBF7',
+      surfaceElevated: 'FFFFFF',
+    },
+    fonts: { heading: 'Noto Serif SC', body: 'Noto Sans SC', mono: 'Noto Sans SC' },
+    chartColors: ['E07B39', 'D97706', 'B45309', 'DC2626', 'A16207'],
+  },
 };
 
-const DEFAULT_CHART_COLORS = ['3B82F6', '10B981', 'F59E0B', 'EF4444', '8B5CF6', 'EC4899'];
+function resolveThemeConfig(theme: string | undefined, language: string | undefined): ThemeConfig {
+  const config = THEME_CONFIGS[theme ?? ''] ?? THEME_CONFIGS.base;
 
-const FONTS = {
-  heading: 'Inter',
-  body: 'Inter',
-  mono: 'JetBrains Mono',
-};
+  // 中文场景使用兼容性更好的中文字体
+  if (language === 'zh') {
+    return {
+      ...config,
+      fonts: {
+        heading: theme === 'warm-business' ? 'Noto Serif SC' : 'Microsoft YaHei',
+        body: 'Microsoft YaHei',
+        mono: 'Microsoft YaHei',
+      },
+    };
+  }
+
+  return config;
+}
+
+let COLORS: ThemeColors = THEME_CONFIGS.base.colors;
+let FONTS: ThemeFonts = THEME_CONFIGS.base.fonts;
+let CHART_COLORS: string[] = THEME_CONFIGS.base.chartColors;
 
 export async function exportDeckToPptx(goal: DeckGoal, options: PptxExportOptions): Promise<void> {
   goal = normalizeDeckGoal(goal);
   const { outFile, title = goal.title, subject, author } = options;
+
+  const theme = resolveThemeConfig(goal.theme, goal.language);
+  COLORS = theme.colors;
+  FONTS = theme.fonts;
+  CHART_COLORS = theme.chartColors;
 
   const pptx = new PptxGenJS();
   pptx.layout = 'LAYOUT_16x9';
@@ -42,6 +120,7 @@ export async function exportDeckToPptx(goal: DeckGoal, options: PptxExportOption
 
   for (const slide of goal.slides) {
     const pptxSlide = pptx.addSlide();
+    (pptxSlide as unknown as { background: { color: string } }).background = { color: COLORS.surface };
     renderSlideToPptx(pptxSlide, slide);
   }
 
@@ -447,7 +526,7 @@ function renderChartV2(slide: PptxSlide, props: ChartV2Props): void {
     labels,
     values: dataset.data || [],
   }));
-  const chartColors = datasets.map((d, i) => d.color || DEFAULT_CHART_COLORS[i % DEFAULT_CHART_COLORS.length]);
+  const chartColors = datasets.map((d, i) => d.color || CHART_COLORS[i % CHART_COLORS.length]);
 
   slide.addChart('bar', chartData, {
     x: 0.8, y: 2.3, w: 8.4, h: 3.2,
@@ -1330,7 +1409,7 @@ function renderRoadmapV2(slide: PptxSlide, props: RoadmapV2Props): void {
     const x = startX + index * (cardW + 0.25);
     slide.addShape('rect', {
       x, y, w: cardW, h,
-      fill: { color: 'F8FAFC' },
+      fill: { color: COLORS.surfaceElevated },
       line: { color: COLORS.border, width: 1 },
       rectRadius: 0.08,
     });
@@ -1373,7 +1452,7 @@ function renderPricingV2(slide: PptxSlide, props: PricingV2Props): void {
     const isHighlighted = plan.highlighted;
     slide.addShape('rect', {
       x, y, w: cardW, h,
-      fill: { color: isHighlighted ? COLORS.accent : 'FFFFFF' },
+      fill: { color: isHighlighted ? COLORS.accent : COLORS.surfaceElevated },
       line: { color: isHighlighted ? COLORS.accent : COLORS.border, width: 1 },
       rectRadius: 0.08,
     });
@@ -1420,7 +1499,7 @@ function renderFeatureV2(slide: PptxSlide, props: FeatureV2Props): void {
     const x = startX + index * (cardW + 0.25);
     slide.addShape('rect', {
       x, y, w: cardW, h,
-      fill: { color: 'FFFFFF' },
+      fill: { color: COLORS.surfaceElevated },
       line: { color: COLORS.border, width: 1 },
       rectRadius: 0.08,
     });
@@ -1462,7 +1541,7 @@ function renderTeamV2(slide: PptxSlide, props: TeamV2Props): void {
     const x = startX + index * (cardW + 0.25);
     slide.addShape('rect', {
       x, y, w: cardW, h,
-      fill: { color: 'FFFFFF' },
+      fill: { color: COLORS.surfaceElevated },
       line: { color: COLORS.border, width: 1 },
       rectRadius: 0.08,
     });
@@ -1508,7 +1587,7 @@ function renderMetricV3(slide: PptxSlide, props: MetricV3Props): void {
     const x = startX + index * (cardW + 0.5);
     slide.addShape('rect', {
       x, y, w: cardW, h,
-      fill: { color: 'FFFFFF' },
+      fill: { color: COLORS.surfaceElevated },
       line: { color: COLORS.border, width: 1 },
       rectRadius: 0.08,
     });
