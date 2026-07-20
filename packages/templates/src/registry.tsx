@@ -3,6 +3,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import type { LayoutMeta, Slide } from '@lemonppt/core';
+import { MetricV3, metricV3Meta, type MetricV3Props } from './base/metric-v3.js';
+import { TeamV2, teamV2Meta, type TeamV2Props } from './base/team-v2.js';
+import { FeatureV2, featureV2Meta, type FeatureV2Props } from './base/feature-v2.js';
+import { PricingV2, pricingV2Meta, type PricingV2Props } from './base/pricing-v2.js';
+import { RoadmapV2, roadmapV2Meta, type RoadmapV2Props } from './base/roadmap-v2.js';
 import { TimelineV2, timelineV2Meta, type TimelineV2Props } from './base/timeline-v2.js';
 import type { ComponentType, ReactElement } from 'react';
 import { ClosingV1, closingV1Meta, type ClosingV1Props } from './base/closing-v1.js';
@@ -83,6 +88,11 @@ export function renderSlide(slide: Slide, options: RenderSlideOptions = {}): Rea
 }
 
 // 注册内置版式
+registerLayout<MetricV3Props>({ meta: metricV3Meta, component: MetricV3 });
+registerLayout<TeamV2Props>({ meta: teamV2Meta, component: TeamV2 });
+registerLayout<FeatureV2Props>({ meta: featureV2Meta, component: FeatureV2 });
+registerLayout<PricingV2Props>({ meta: pricingV2Meta, component: PricingV2 });
+registerLayout<RoadmapV2Props>({ meta: roadmapV2Meta, component: RoadmapV2 });
 registerLayout<TimelineV2Props>({ meta: timelineV2Meta, component: TimelineV2 });
 registerLayout<CoverV1Props>({ meta: coverV1Meta, component: CoverV1 });
 registerLayout<MetricV1Props>({ meta: metricV1Meta, component: MetricV1 });

@@ -50,6 +50,21 @@ export async function exportDeckToPptx(goal: DeckGoal, options: PptxExportOption
 
 function renderSlideToPptx(pptxSlide: PptxSlide, slide: CoreSlide): void {
   switch (slide.layout) {
+    case 'metric_v3':
+      renderMetricV3(pptxSlide, slide.props as unknown as MetricV3Props);
+      break;
+    case 'team_v2':
+      renderTeamV2(pptxSlide, slide.props as unknown as TeamV2Props);
+      break;
+    case 'feature_v2':
+      renderFeatureV2(pptxSlide, slide.props as unknown as FeatureV2Props);
+      break;
+    case 'pricing_v2':
+      renderPricingV2(pptxSlide, slide.props as unknown as PricingV2Props);
+      break;
+    case 'roadmap_v2':
+      renderRoadmapV2(pptxSlide, slide.props as unknown as RoadmapV2Props);
+      break;
     case 'timeline_v2':
       renderTimelineV2(pptxSlide, slide.props as unknown as TimelineV2Props);
       break;
@@ -1292,5 +1307,227 @@ function renderTimelineV2(slide: PptxSlide, props: TimelineV2Props): void {
       });
     }
     y += 1.35;
+  });
+}
+
+interface RoadmapV2Props {
+  title?: string;
+  kicker?: string;
+  phases?: { phase?: string; goals?: string[] }[];
+  [key: string]: unknown;
+}
+
+function renderRoadmapV2(slide: PptxSlide, props: RoadmapV2Props): void {
+  addKicker(slide, props.kicker);
+  addTitle(slide, props.title ?? 'Roadmap');
+  const phases = props.phases ?? [];
+  const maxPhases = 4;
+  const cardW = 2.1;
+  const startX = 0.7;
+  const y = 2.6;
+  const h = 3.4;
+  phases.slice(0, maxPhases).forEach((phase, index) => {
+    const x = startX + index * (cardW + 0.25);
+    slide.addShape('rect', {
+      x, y, w: cardW, h,
+      fill: { color: 'F8FAFC' },
+      line: { color: COLORS.border, width: 1 },
+      rectRadius: 0.08,
+    });
+    slide.addText(phase.phase ?? `Phase ${index + 1}`, {
+      x: x + 0.12, y: y + 0.2, w: cardW - 0.24, h: 0.4,
+      fontSize: 18, color: COLORS.accent, bold: true, align: 'left', valign: 'top',
+      fontFace: FONTS.heading,
+    });
+    const goals = (phase.goals ?? []).slice(0, 5);
+    let goalY = y + 0.7;
+    goals.forEach((goal) => {
+      slide.addText(`• ${goal}`, {
+        x: x + 0.16, y: goalY, w: cardW - 0.32, h: 0.45,
+        fontSize: 13, color: COLORS.secondary, align: 'left', valign: 'top',
+        fontFace: FONTS.body,
+      });
+      goalY += 0.45;
+    });
+  });
+}
+
+interface PricingV2Props {
+  title?: string;
+  kicker?: string;
+  plans?: { name?: string; price?: string; period?: string; features?: string[]; highlighted?: boolean }[];
+  [key: string]: unknown;
+}
+
+function renderPricingV2(slide: PptxSlide, props: PricingV2Props): void {
+  addKicker(slide, props.kicker);
+  addTitle(slide, props.title ?? 'Pricing');
+  const plans = props.plans ?? [];
+  const maxPlans = 3;
+  const cardW = 2.6;
+  const startX = 0.9;
+  const y = 2.6;
+  const h = 3.8;
+  plans.slice(0, maxPlans).forEach((plan, index) => {
+    const x = startX + index * (cardW + 0.25);
+    const isHighlighted = plan.highlighted;
+    slide.addShape('rect', {
+      x, y, w: cardW, h,
+      fill: { color: isHighlighted ? COLORS.accent : 'FFFFFF' },
+      line: { color: isHighlighted ? COLORS.accent : COLORS.border, width: 1 },
+      rectRadius: 0.08,
+    });
+    slide.addText(plan.name ?? `Plan ${index + 1}`, {
+      x: x + 0.15, y: y + 0.25, w: cardW - 0.3, h: 0.4,
+      fontSize: 20, color: isHighlighted ? 'FFFFFF' : COLORS.primary, bold: true, align: 'center', valign: 'top',
+      fontFace: FONTS.heading,
+    });
+    slide.addText(`${plan.price ?? ''} ${plan.period ?? ''}`, {
+      x: x + 0.15, y: y + 0.75, w: cardW - 0.3, h: 0.5,
+      fontSize: 24, color: isHighlighted ? 'FFFFFF' : COLORS.accent, bold: true, align: 'center', valign: 'top',
+      fontFace: FONTS.heading,
+    });
+    const features = (plan.features ?? []).slice(0, 5);
+    let featY = y + 1.4;
+    features.forEach((feature) => {
+      slide.addText(`• ${feature}`, {
+        x: x + 0.2, y: featY, w: cardW - 0.4, h: 0.4,
+        fontSize: 13, color: isHighlighted ? 'FFFFFF' : COLORS.secondary, align: 'left', valign: 'top',
+        fontFace: FONTS.body,
+      });
+      featY += 0.4;
+    });
+  });
+}
+
+interface FeatureV2Props {
+  title?: string;
+  kicker?: string;
+  features?: { title?: string; description?: string; icon?: string }[];
+  [key: string]: unknown;
+}
+
+function renderFeatureV2(slide: PptxSlide, props: FeatureV2Props): void {
+  addKicker(slide, props.kicker);
+  addTitle(slide, props.title ?? 'Features');
+  const features = props.features ?? [];
+  const maxFeatures = 3;
+  const cardW = 2.8;
+  const startX = 0.7;
+  const y = 2.6;
+  const h = 3.4;
+  features.slice(0, maxFeatures).forEach((feature, index) => {
+    const x = startX + index * (cardW + 0.25);
+    slide.addShape('rect', {
+      x, y, w: cardW, h,
+      fill: { color: 'FFFFFF' },
+      line: { color: COLORS.border, width: 1 },
+      rectRadius: 0.08,
+    });
+    slide.addText(feature.icon ?? '◆', {
+      x: x + 0.2, y: y + 0.25, w: cardW - 0.4, h: 0.5,
+      fontSize: 28, color: COLORS.accent, align: 'left', valign: 'top',
+      fontFace: FONTS.body,
+    });
+    slide.addText(feature.title ?? `Feature ${index + 1}`, {
+      x: x + 0.2, y: y + 0.85, w: cardW - 0.4, h: 0.4,
+      fontSize: 18, color: COLORS.primary, bold: true, align: 'left', valign: 'top',
+      fontFace: FONTS.heading,
+    });
+    slide.addText(feature.description ?? '', {
+      x: x + 0.2, y: y + 1.35, w: cardW - 0.4, h: 1.8,
+      fontSize: 14, color: COLORS.secondary, align: 'left', valign: 'top',
+      fontFace: FONTS.body,
+    });
+  });
+}
+
+interface TeamV2Props {
+  title?: string;
+  kicker?: string;
+  members?: { name?: string; role?: string; bio?: string; avatar?: string }[];
+  [key: string]: unknown;
+}
+
+function renderTeamV2(slide: PptxSlide, props: TeamV2Props): void {
+  addKicker(slide, props.kicker);
+  addTitle(slide, props.title ?? 'Team');
+  const members = props.members ?? [];
+  const maxMembers = 4;
+  const cardW = 2.2;
+  const startX = 0.6;
+  const y = 2.5;
+  const h = 3.8;
+  members.slice(0, maxMembers).forEach((member, index) => {
+    const x = startX + index * (cardW + 0.25);
+    slide.addShape('rect', {
+      x, y, w: cardW, h,
+      fill: { color: 'FFFFFF' },
+      line: { color: COLORS.border, width: 1 },
+      rectRadius: 0.08,
+    });
+    slide.addShape('ellipse', {
+      x: x + cardW / 2 - 0.35, y: y + 0.25, w: 0.7, h: 0.7,
+      fill: { color: COLORS.border },
+    });
+    slide.addText(member.name ?? `Member ${index + 1}`, {
+      x: x + 0.15, y: y + 1.05, w: cardW - 0.3, h: 0.35,
+      fontSize: 17, color: COLORS.primary, bold: true, align: 'center', valign: 'top',
+      fontFace: FONTS.heading,
+    });
+    slide.addText(member.role ?? '', {
+      x: x + 0.15, y: y + 1.45, w: cardW - 0.3, h: 0.3,
+      fontSize: 13, color: COLORS.accent, align: 'center', valign: 'top',
+      fontFace: FONTS.body,
+    });
+    slide.addText(member.bio ?? '', {
+      x: x + 0.15, y: y + 1.85, w: cardW - 0.3, h: 1.7,
+      fontSize: 12, color: COLORS.secondary, align: 'center', valign: 'top',
+      fontFace: FONTS.body,
+    });
+  });
+}
+
+interface MetricV3Props {
+  title?: string;
+  kicker?: string;
+  metrics?: { label?: string; value?: string; unit?: string; change?: string }[];
+  [key: string]: unknown;
+}
+
+function renderMetricV3(slide: PptxSlide, props: MetricV3Props): void {
+  addKicker(slide, props.kicker);
+  addTitle(slide, props.title ?? 'Metrics');
+  const metrics = props.metrics ?? [];
+  const maxMetrics = 2;
+  const cardW = 4.0;
+  const startX = 1.0;
+  const y = 2.8;
+  const h = 3.0;
+  metrics.slice(0, maxMetrics).forEach((metric, index) => {
+    const x = startX + index * (cardW + 0.5);
+    slide.addShape('rect', {
+      x, y, w: cardW, h,
+      fill: { color: 'FFFFFF' },
+      line: { color: COLORS.border, width: 1 },
+      rectRadius: 0.08,
+    });
+    slide.addText(metric.label ?? `Metric ${index + 1}`, {
+      x: x + 0.25, y: y + 0.3, w: cardW - 0.5, h: 0.4,
+      fontSize: 16, color: COLORS.secondary, align: 'left', valign: 'top',
+      fontFace: FONTS.body,
+    });
+    slide.addText(`${metric.value ?? ''}${metric.unit ? ` ${metric.unit}` : ''}`, {
+      x: x + 0.25, y: y + 0.85, w: cardW - 0.5, h: 0.8,
+      fontSize: 48, color: COLORS.primary, bold: true, align: 'left', valign: 'top',
+      fontFace: FONTS.heading,
+    });
+    if (metric.change) {
+      slide.addText(metric.change, {
+        x: x + 0.25, y: y + 1.85, w: cardW - 0.5, h: 0.4,
+        fontSize: 16, color: COLORS.accent, bold: true, align: 'left', valign: 'top',
+        fontFace: FONTS.body,
+      });
+    }
   });
 }

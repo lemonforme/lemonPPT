@@ -1310,6 +1310,332 @@ body {
   line-height: 1.5;
 }
 
+/* Roadmap v2 */
+.lp-roadmap-v2 {
+  justify-content: flex-start;
+  padding: 64px 80px;
+}
+
+.lp-roadmap-v2-header {
+  margin-bottom: 48px;
+}
+
+.lp-roadmap-v2-track {
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+.lp-roadmap-v2-phase {
+  flex: 1;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  min-height: 360px;
+}
+
+.lp-roadmap-v2-phase:not(:last-child) .lp-roadmap-v2-connector {
+  position: absolute;
+  top: 50%;
+  right: -26px;
+  width: 24px;
+  height: 2px;
+  background: var(--lp-border);
+}
+
+.lp-roadmap-v2-phase-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--lp-accent);
+  margin-bottom: 16px;
+}
+
+.lp-roadmap-v2-goals {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lp-roadmap-v2-goal-item {
+  font-size: 16px;
+  color: var(--lp-secondary);
+  padding: 6px 0 6px 14px;
+  position: relative;
+}
+
+.lp-roadmap-v2-goal-item::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--lp-accent);
+}
+
+/* Pricing v2 */
+.lp-pricing-v2 {
+  justify-content: flex-start;
+  padding: 64px 80px;
+}
+
+.lp-pricing-v2-header {
+  margin-bottom: 48px;
+}
+
+.lp-pricing-v2-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.lp-pricing-v2-card {
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.lp-pricing-v2-card-highlighted {
+  border-color: var(--lp-accent);
+  background: var(--lp-accent);
+}
+
+.lp-pricing-v2-card-highlighted .lp-pricing-v2-name,
+.lp-pricing-v2-card-highlighted .lp-pricing-v2-price,
+.lp-pricing-v2-card-highlighted .lp-pricing-v2-feature-item,
+.lp-pricing-v2-card-highlighted .lp-pricing-v2-avatar-placeholder {
+  color: #fff;
+}
+
+.lp-pricing-v2-card-highlighted .lp-pricing-v2-period,
+.lp-pricing-v2-card-highlighted .lp-pricing-v2-feature-item::before {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.lp-pricing-v2-name {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--lp-text);
+}
+
+.lp-pricing-v2-price-row {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.lp-pricing-v2-price {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--lp-accent);
+}
+
+.lp-pricing-v2-period {
+  font-size: 16px;
+  color: var(--lp-secondary);
+}
+
+.lp-pricing-v2-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lp-pricing-v2-feature-item {
+  font-size: 16px;
+  color: var(--lp-secondary);
+  padding-left: 18px;
+  position: relative;
+}
+
+.lp-pricing-v2-feature-item::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--lp-accent);
+  font-weight: 700;
+}
+
+/* Feature v2 */
+.lp-feature-v2 {
+  justify-content: flex-start;
+  padding: 64px 80px;
+}
+
+.lp-feature-v2-header {
+  margin-bottom: 48px;
+}
+
+.lp-feature-v2-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.lp-feature-v2-card {
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.lp-feature-v2-icon {
+  font-size: 36px;
+  color: var(--lp-accent);
+  margin-bottom: 16px;
+}
+
+.lp-feature-v2-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--lp-text);
+}
+
+.lp-feature-v2-description {
+  font-size: 16px;
+  color: var(--lp-secondary);
+  line-height: 1.55;
+}
+
+/* Team v2 */
+.lp-team-v2 {
+  justify-content: flex-start;
+  padding: 64px 80px;
+}
+
+.lp-team-v2-header {
+  margin-bottom: 48px;
+}
+
+.lp-team-v2-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.lp-team-v2-card {
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.lp-team-v2-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--lp-border);
+  margin: 0 auto 16px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lp-team-v2-avatar-placeholder {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--lp-text);
+}
+
+.lp-team-v2-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--lp-text);
+}
+
+.lp-team-v2-role {
+  font-size: 14px;
+  color: var(--lp-accent);
+  margin-bottom: 12px;
+}
+
+.lp-team-v2-bio {
+  font-size: 14px;
+  color: var(--lp-secondary);
+  line-height: 1.5;
+}
+
+/* Metric v3 */
+.lp-metric-v3 {
+  justify-content: flex-start;
+  padding: 64px 80px;
+}
+
+.lp-metric-v3-header {
+  margin-bottom: 48px;
+}
+
+.lp-metric-v3-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.lp-metric-v3-card {
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  padding: 40px;
+}
+
+.lp-metric-v3-label {
+  font-size: 16px;
+  color: var(--lp-secondary);
+  margin-bottom: 12px;
+}
+
+.lp-metric-v3-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.lp-metric-v3-value {
+  font-size: 80px;
+  font-weight: 900;
+  color: var(--lp-text);
+  line-height: 1;
+}
+
+.lp-metric-v3-unit {
+  font-size: 24px;
+  color: var(--lp-secondary);
+}
+
+.lp-metric-v3-change {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--lp-accent);
+}
+
 /* Pricing v1 */
 .lp-pricing-v1 {
   justify-content: center;

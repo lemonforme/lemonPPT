@@ -37,3 +37,8 @@ export * from './base/testimonial-v1.js';
 export * from './base/testimonial-v2.js';
 export * from './base/roadmap-v1.js';
 export * from './base/timeline-v2.js';
+export * from './base/roadmap-v2.js';
+export * from './base/pricing-v2.js';
+export * from './base/feature-v2.js';
+export * from './base/team-v2.js';
+export * from './base/metric-v3.js';
