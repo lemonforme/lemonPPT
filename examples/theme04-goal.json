@@ -1,0 +1,2836 @@
+{
+  "title": "theme04 玻璃糖果风演示",
+  "goal": "展示 theme04 全部版式",
+  "audience": "品牌团队、设计师、内容创作者",
+  "themePack": "theme04",
+  "theme": "theme04",
+  "colorScheme": "green",
+  "appearance": "dark",
+  "language": "zh",
+  "pageCount": 75,
+  "slides": [
+    {
+      "role": "stats",
+      "layout": "theme04_stats_v1",
+      "props": {
+        "kicker": "核心指标 · STATS",
+        "title": "全年{{AI}}融资关键数据",
+        "subtitle": "三个维度快速把握 2024 年美国 AI 大额融资全貌",
+        "stats": [
+          {
+            "label": "全年总额 · Total",
+            "value": "970",
+            "unit": "亿美元",
+            "badge": "历史新高"
+          },
+          {
+            "label": "大额事件 · Deals",
+            "value": "97",
+            "unit": "笔",
+            "badge": "≥1 亿美元"
+          },
+          {
+            "label": "平均单笔 · Average",
+            "value": "≈10",
+            "unit": "亿美元",
+            "badge": "+18% YoY"
+          }
+        ],
+        "footnote": "数据来源：PitchBook / Crunchbase · 口径：单笔 ≥1 亿美元公开融资"
+      }
+    },
+    {
+      "role": "cover",
+      "layout": "theme04_cover_bento_v1",
+      "props": {
+        "tag": "年度报告",
+        "tagLabel": "2024",
+        "topRightMeta": "GLASS CANDY · EDITION 03",
+        "title": "资本，正在{{重新分配}}",
+        "subtitle": "2024 全球 AI 大额融资 · 全景年鉴",
+        "items": [
+          {
+            "label": "全年总额",
+            "value": "970",
+            "unit": "亿美元",
+            "tone": "green",
+            "size": "large"
+          },
+          {
+            "label": "大额事件",
+            "value": "97",
+            "unit": "笔",
+            "tone": "blue",
+            "size": "medium"
+          },
+          {
+            "label": "平均单笔",
+            "value": "≈10",
+            "unit": "亿",
+            "tone": "pink",
+            "size": "medium"
+          },
+          {
+            "label": "Q4 环比",
+            "value": "+41%",
+            "unit": "",
+            "tone": "yellow",
+            "size": "small"
+          }
+        ],
+        "footnoteLeft": "lemonPPT 研究出品",
+        "footnoteRight": "github.com/lemonforme/lemonPPT"
+      }
+    },
+    {
+      "role": "cover",
+      "layout": "theme04_cover_ghost_v1",
+      "props": {
+        "tag": "年度报告",
+        "tagLabel": "2024",
+        "topRightMeta": "GLASS CANDY · EDITION 02",
+        "ghostNumber": "01",
+        "title": "AI 产业{{新格局}}",
+        "subtitle": "从叙事驱动到兑现驱动的关键转折",
+        "metrics": [
+          {
+            "value": "970",
+            "unit": "亿美元",
+            "label": "全年总额",
+            "tone": "green"
+          },
+          {
+            "value": "97",
+            "unit": "笔",
+            "label": "大额事件",
+            "tone": "blue"
+          },
+          {
+            "value": "+41%",
+            "unit": "",
+            "label": "Q4 环比",
+            "tone": "pink"
+          }
+        ],
+        "footnoteLeft": "lemonPPT 研究出品",
+        "footnoteRight": "github.com/lemonforme/lemonPPT"
+      }
+    },
+    {
+      "role": "cover",
+      "layout": "theme04_cover_hero_v1",
+      "props": {
+        "tag": "年度封面",
+        "tagLabel": "01",
+        "topRightMeta": "GLASS CANDY · EDITION 01",
+        "title": "{{资本}}重新分配的开局之年",
+        "subtitle": "2024 全球 AI 大额融资全景年鉴",
+        "caption": "图片来源：lemonPPT 研究团队",
+        "footnoteLeft": "lemonPPT 研究出品",
+        "footnoteRight": "github.com/lemonforme/lemonPPT"
+      }
+    },
+    {
+      "role": "cover",
+      "layout": "theme04_cover_index_v1",
+      "props": {
+        "tag": "封面故事",
+        "tagLabel": "COVER STORY",
+        "topRightMeta": "NO. 04 2024 年刊",
+        "title": "谁在{{改写}}估值规则",
+        "subtitle": "头部玩家、资本流向与一年翻倍的独角兽流水线",
+        "items": [
+          {
+            "number": "01",
+            "title": "算力霸权",
+            "description": "芯片 · 数据中心 · 谁卡住咽喉",
+            "tone": "green"
+          },
+          {
+            "number": "02",
+            "title": "模型军备",
+            "description": "基础模型三强 · 烧钱与护城河",
+            "tone": "blue"
+          },
+          {
+            "number": "03",
+            "title": "应用突围",
+            "description": "从 Demo 到收入 · 谁先跑通",
+            "tone": "yellow"
+          },
+          {
+            "number": "04",
+            "title": "资本退潮",
+            "description": "热钱之后 · 谁会被留在沙滩上",
+            "tone": "pink"
+          }
+        ],
+        "footnoteLeft": "AI CAPITAL 资本观察 · 特别报告",
+        "footnoteRight": ""
+      }
+    },
+    {
+      "role": "cover",
+      "layout": "theme04_cover_magazine_v1",
+      "props": {
+        "tag": "封面故事",
+        "tagLabel": "COVER",
+        "topRightMeta": "GLASS CANDY · EDITION 04",
+        "title": "AI 融资{{新格局}}",
+        "subtitle": "从叙事驱动到兑现驱动的关键转折",
+        "image": "",
+        "caption": "数据来源：lemonPPT 研究 · 2026",
+        "metadata": [
+          {
+            "label": "报告期",
+            "value": "2024 全年"
+          },
+          {
+            "label": "样本量",
+            "value": "97 笔大额融资"
+          },
+          {
+            "label": "覆盖市场",
+            "value": "全球"
+          },
+          {
+            "label": "发布日期",
+            "value": "2026.07"
+          }
+        ],
+        "footnoteLeft": "lemonPPT 研究出品",
+        "footnoteRight": "github.com/lemonforme/lemonPPT"
+      }
+    },
+    {
+      "role": "cover",
+      "layout": "theme04_cover_v1",
+      "props": {
+        "tag": "年度报告",
+        "tagLabel": "2024",
+        "topRightMeta": "GLASS CANDY · EDITION 01",
+        "title": "资本，正在{{重新分配}}",
+        "subtitle": "2024 全球 AI 大额融资 · 全景年鉴",
+        "metrics": [
+          {
+            "value": "970",
+            "unit": "亿美元",
+            "label": "全年总额",
+            "tone": "green"
+          },
+          {
+            "value": "97",
+            "unit": "笔",
+            "label": "大额事件",
+            "tone": "blue"
+          },
+          {
+            "value": "×3",
+            "unit": "",
+            "label": "估值跃迁",
+            "tone": "pink"
+          }
+        ],
+        "footnoteLeft": "lemonPPT 研究出品",
+        "footnoteRight": "github.com/lemonforme/lemonPPT"
+      }
+    },
+    {
+      "role": "tableOfContents",
+      "layout": "theme04_agenda_v1",
+      "props": {
+        "kicker": "RESEARCH FRAMEWORK / 调研框架",
+        "title": "2024 美国大额融资 {{AI 公司}}",
+        "subtitle": "四部分拆解资本流向与结构性机会",
+        "badge": "调研报告",
+        "items": [
+          {
+            "part": "<Part01>",
+            "title": "市场全景",
+            "description": "全年 970 亿美元 · 融资全景",
+            "tone": "green"
+          },
+          {
+            "part": "<Part02>",
+            "title": "行业透视",
+            "description": "赛道 / 轮次 / 头部玩家",
+            "tone": "yellow"
+          },
+          {
+            "part": "<Part03>",
+            "title": "产业链分层",
+            "description": "上 · 中 · 下游结构透视",
+            "tone": "blue"
+          },
+          {
+            "part": "<Part04>",
+            "title": "品质涌现",
+            "description": "从「赌叙事」到「看兑现」",
+            "tone": "pink"
+          }
+        ],
+        "footnote": "横纵分析法 · 在空间维度与时间维度交叉透视同一组数据"
+      }
+    },
+    {
+      "role": "tableOfContents",
+      "layout": "theme04_table_of_contents_v1",
+      "props": {
+        "title": "目录",
+        "subtitle": "CONTENTS",
+        "items": [
+          {
+            "title": "市场背景与机会",
+            "page": "02"
+          },
+          {
+            "title": "产品方案与优势",
+            "page": "04"
+          },
+          {
+            "title": "商业模式与增长",
+            "page": "06"
+          },
+          {
+            "title": "团队与融资计划",
+            "page": "08"
+          }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme04_case_v1",
+      "props": {
+        "kicker": "典型案例 · CASE STUDY",
+        "title": "Anthropic",
+        "subtitle": "从追赶到反超 · 估值登顶",
+        "badge": "估值 9650 亿美元 · 全球最高",
+        "imageUrl": "",
+        "quote": "通过 Constitutional AI 构建可解释、可控的系统，比单纯追求规模更符合长远利益。",
+        "author": "— Dario Amodei, CEO",
+        "milestones": [
+          {
+            "date": "2024 · 5月",
+            "title": "Series G",
+            "subtitle": "融资 280 亿 · 估值 600 亿",
+            "description": "",
+            "tone": "green"
+          },
+          {
+            "date": "2024 · 8月",
+            "title": "Series H 首轮",
+            "subtitle": "融资 180 亿 · 估值 830 亿",
+            "description": "",
+            "tone": "green"
+          },
+          {
+            "date": "2024 · 11月",
+            "title": "Series H 扩轮",
+            "subtitle": "融资 190 亿 · 估值 9650 亿",
+            "description": "",
+            "tone": "green"
+          },
+          {
+            "date": "2026 · 6月",
+            "title": "递交 IPO 申请",
+            "subtitle": "估值登顶 · 预计年内上市",
+            "description": "",
+            "tone": "yellow"
+          }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme04_chapter_numbered_v1",
+      "props": {
+        "tag": "CHAPTER",
+        "number": "02",
+        "title": "核心发现",
+        "subtitle": "从数据到洞察的关键转折"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme04_chapter_split_v1",
+      "props": {
+        "number": "02",
+        "title": "核心发现",
+        "subtitle": "从数据到洞察的关键转折",
+        "image": ""
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme04_chapter_v1",
+      "props": {
+        "tag": "CHAPTER",
+        "number": "01",
+        "title": "核心发现",
+        "subtitle": "从数据到洞察的关键转折"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme04_chapter_v2",
+      "props": {
+        "number": "01",
+        "kicker": "PART 01",
+        "title": "市场{{全景}}",
+        "subtitle": "全年 970 亿美元 AI 大额融资全景透视",
+        "description": "从单笔 ≥1 亿美元的融资事件出发，追踪资本在模型层、基础设施层与应用层之间的流动。"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme04_content_v1",
+      "props": {
+        "kicker": "研究框架",
+        "title": "{{方法论}}：如何解读资本流向",
+        "subtitle": "通过数据、案例与趋势三条主线，拆解 AI 产业的资本逻辑。",
+        "items": [
+          {
+            "title": "数据筛选",
+            "description": "聚焦单笔 ≥1 亿美元的融资事件，排除债权与并购。"
+          },
+          {
+            "title": "赛道归类",
+            "description": "按通用大模型、垂直应用、AI 基础设施、芯片四条主线归类。"
+          },
+          {
+            "title": "趋势验证",
+            "description": "结合季度环比与估值变化，验证资本集中度假设。"
+          }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme04_diptych_v1",
+      "props": {
+        "kicker": "叙事 · 对兑现",
+        "title": "{{钱正在}}重新定价风险",
+        "subtitle": "当融资规模与收入增速脱钩，市场开始用新的坐标系给 AI 公司估值。",
+        "statement": "「估值不是过去 12 个月收入的倍数，而是未来 36 个月共识的折现。」",
+        "items": [
+          {
+            "label": "共识",
+            "description": "头部基金对 AI Infra 的偏好高度一致",
+            "tone": "green"
+          },
+          {
+            "label": "折现",
+            "description": "远期现金流预期取代短期盈利指标",
+            "tone": "blue"
+          },
+          {
+            "label": "风险",
+            "description": "未形成护城河的模型公司承受折价",
+            "tone": "pink"
+          },
+          {
+            "label": "机会",
+            "description": "垂直场景应用获得超额估值溢价",
+            "tone": "yellow"
+          }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme04_editorial_v1",
+      "props": {
+        "tag": "深度特写",
+        "tagLabel": "EDITORIAL",
+        "topRightMeta": "GLASS CANDY · EDITION 01",
+        "title": "{{Anthropic}} 估值登顶之路",
+        "subtitle": "从追赶到反超，它如何在一年内把估值推向 6150 亿美元？",
+        "quote": "「安全可控」不是一句口号，而是打开机构付费意愿的钥匙。",
+        "author": "— 研究主编",
+        "imageUrl": "",
+        "items": [
+          {
+            "label": "01",
+            "title": "Constitutional AI",
+            "description": "用可解释约束替代黑盒对齐",
+            "tone": "green"
+          },
+          {
+            "label": "02",
+            "title": "企业级渗透",
+            "description": "金融与医疗客户付费意愿最高",
+            "tone": "blue"
+          },
+          {
+            "label": "03",
+            "title": "融资节奏",
+            "description": "一年内完成三轮大额融资",
+            "tone": "yellow"
+          },
+          {
+            "label": "04",
+            "title": "IPO 预期",
+            "description": "预计 2026 年递交上市申请",
+            "tone": "pink"
+          }
+        ],
+        "footnoteLeft": "lemonPPT 研究出品",
+        "footnoteRight": "案例研究"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme04_matrix_v1",
+      "props": {
+        "kicker": "定位矩阵",
+        "title": "{{赛道}}吸引力矩阵",
+        "subtitle": "按市场规模与竞争密度划分的四象限",
+        "xAxis": {
+          "low": "低规模",
+          "high": "高规模"
+        },
+        "yAxis": {
+          "low": "低密度",
+          "high": "高密度"
+        },
+        "items": [
+          {
+            "title": "明星赛道",
+            "description": "规模大、竞争密度高，资本持续加注。",
+            "tone": "green"
+          },
+          {
+            "title": "潜力赛道",
+            "description": "规模尚小但增速快，早期机会显著。",
+            "tone": "blue"
+          },
+          {
+            "title": "成熟赛道",
+            "description": "规模大但格局稳定，增量空间有限。",
+            "tone": "yellow"
+          },
+          {
+            "title": "观望赛道",
+            "description": "规模与密度均低，仍需验证。",
+            "tone": "pink"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme04_trio_v1",
+      "props": {
+        "kicker": "头部玩家",
+        "title": "{{TOP 3}} 赛道领跑者",
+        "subtitle": "资本、技术与落地能力的三重较量",
+        "items": [
+          {
+            "name": "OpenAI",
+            "role": "基础模型",
+            "description": "GPT 系列引领生成式 AI 浪潮，估值与融资规模均居首位。",
+            "tone": "green"
+          },
+          {
+            "name": "Anthropic",
+            "role": "安全对齐",
+            "description": "以 AI 安全为核心差异化，持续获得大额战略投资。",
+            "tone": "blue"
+          },
+          {
+            "name": "xAI",
+            "role": "新兴力量",
+            "description": "依托算力与数据优势快速扩张， late-stage 融资势头强劲。",
+            "tone": "pink"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme04_delta_v1",
+      "props": {
+        "kicker": "增长指标",
+        "title": "Q4 融资总额{{显著增长}}",
+        "subtitle": "环比增速创全年新高",
+        "value": "412",
+        "unit": "亿美元",
+        "label": "Q4 季度总额",
+        "delta": "+41%",
+        "deltaLabel": "环比增长",
+        "tone": "green"
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme04_gauges_v1",
+      "props": {
+        "kicker": "集中度分析",
+        "title": "资金{{集中}}在头部",
+        "subtitle": "TOP3 赛道与 TOP10 公司分别拿走大部分资金",
+        "gauges": [
+          {
+            "label": "头部赛道占比",
+            "value": 68,
+            "unit": "%",
+            "tone": "green"
+          },
+          {
+            "label": "头部公司集中度",
+            "value": 52,
+            "unit": "%",
+            "tone": "blue"
+          },
+          {
+            "label": "晚期轮次占比",
+            "value": 74,
+            "unit": "%",
+            "tone": "pink"
+          }
+        ]
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme04_metric_big",
+      "props": {
+        "tag": "核心数据",
+        "tagLabel": "KEY FIGURE",
+        "topRightMeta": "2024 · AI VENTURE",
+        "value": "32",
+        "unit": "%",
+        "label": "2024 年美国 AI 吸纳的风险投资占比",
+        "showInsight": true,
+        "insight": {
+          "label": "关键洞察",
+          "value": "全球第一",
+          "description": "美国继续领跑全球 AI 风险投资，中国、欧洲紧随其后。"
+        },
+        "metrics": [
+          {
+            "value": "970",
+            "unit": "亿美元",
+            "label": "全年总额"
+          },
+          {
+            "value": "97",
+            "unit": "笔",
+            "label": "大额事件"
+          },
+          {
+            "value": "+41%",
+            "unit": "",
+            "label": "Q4 环比"
+          }
+        ]
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme04_metric_v1",
+      "props": {
+        "kicker": "核心指标",
+        "title": "年度融资总额",
+        "subtitle": "全年大额融资事件汇总",
+        "value": "970",
+        "unit": "亿美元",
+        "label": "全年 AI 风险投资额",
+        "metrics": [
+          {
+            "value": "97",
+            "unit": "笔",
+            "label": "事件笔数"
+          },
+          {
+            "value": "≈10 亿",
+            "unit": "",
+            "label": "平均单笔"
+          },
+          {
+            "value": "+41%",
+            "unit": "",
+            "label": "Q4 环比"
+          },
+          {
+            "value": "Q2-Q3",
+            "unit": "",
+            "label": "高峰区间"
+          }
+        ]
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme04_ranking_v1",
+      "props": {
+        "kicker": "头部玩家 · TOP 10 单笔融资排名",
+        "title": "三大模型公司{{霸榜前三}}",
+        "subtitle": "单位：亿美元 · 仅取各公司 2024 年最大单笔融资",
+        "unit": "亿美元",
+        "items": [
+          {
+            "rank": 1,
+            "name": "OpenAI",
+            "category": "通用大模型",
+            "value": "66",
+            "score": 100,
+            "tone": "green"
+          },
+          {
+            "rank": 2,
+            "name": "Anthropic",
+            "category": "通用大模型",
+            "value": "65",
+            "score": 98,
+            "tone": "green"
+          },
+          {
+            "rank": 3,
+            "name": "xAI",
+            "category": "通用大模型",
+            "value": "50",
+            "score": 76,
+            "tone": "green"
+          },
+          {
+            "rank": 4,
+            "name": "CoreWeave",
+            "category": "AI 基础设施",
+            "value": "11",
+            "score": 17,
+            "tone": "blue"
+          },
+          {
+            "rank": 5,
+            "name": "Safe Superintelligence",
+            "category": "通用大模型",
+            "value": "10",
+            "score": 15,
+            "tone": "green"
+          },
+          {
+            "rank": 6,
+            "name": "Scale AI",
+            "category": "AI 基础设施",
+            "value": "10",
+            "score": 15,
+            "tone": "blue"
+          }
+        ]
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme04_scorecards_v1",
+      "props": {
+        "kicker": "资本计分卡",
+        "title": "{{四维度}}看清资本风向",
+        "subtitle": "规模、增速、集中度与轮次结构",
+        "cards": [
+          {
+            "title": "全年总额",
+            "value": "970",
+            "unit": "亿美元",
+            "subtitle": "同比 +23%",
+            "tone": "green"
+          },
+          {
+            "title": "平均单笔",
+            "value": "≈10",
+            "unit": "亿",
+            "subtitle": "大额交易均值",
+            "tone": "blue"
+          },
+          {
+            "title": "头部集中度",
+            "value": "68",
+            "unit": "%",
+            "subtitle": "TOP3 赛道占比",
+            "tone": "pink"
+          },
+          {
+            "title": "晚期轮次",
+            "value": "74",
+            "unit": "%",
+            "subtitle": "C 轮及以后占比",
+            "tone": "yellow"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme04_versus_v1",
+      "props": {
+        "kicker": "横向对比",
+        "title": "{{基础设施}} vs 应用层",
+        "subtitle": "资金在两层之间的分布差异明显",
+        "left": {
+          "value": "420",
+          "unit": "亿美元",
+          "label": "基础设施层",
+          "tone": "green"
+        },
+        "right": {
+          "value": "180",
+          "unit": "亿美元",
+          "label": "应用层",
+          "tone": "pink"
+        },
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_calendar_v1",
+      "props": {
+        "kicker": "资本月历",
+        "title": "{{全年大事}}一览",
+        "subtitle": "标注投融资、政策与行业里程碑的关键月份",
+        "year": "2024",
+        "events": [
+          {
+            "month": 1,
+            "label": "算力补贴出台",
+            "value": "120亿",
+            "tone": "blue"
+          },
+          {
+            "month": 3,
+            "label": "基础模型井喷",
+            "value": "8笔",
+            "tone": "green"
+          },
+          {
+            "month": 5,
+            "label": "云厂商大额融资",
+            "value": "65亿",
+            "tone": "blue"
+          },
+          {
+            "month": 6,
+            "label": "应用层爆发",
+            "value": "22笔",
+            "tone": "pink"
+          },
+          {
+            "month": 9,
+            "label": "并购窗口打开",
+            "value": "4起",
+            "tone": "yellow"
+          },
+          {
+            "month": 12,
+            "label": "年度收官峰值",
+            "value": "210亿",
+            "tone": "green"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究整理"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_chart_donut",
+      "props": {
+        "tag": "行业分布",
+        "tagLabel": "05",
+        "topRightMeta": "AI 编码助手使用场景 · 单位：%",
+        "title": "{{场景分布}}：开发者把 AI 助手用在哪里",
+        "total": {
+          "value": "100%",
+          "label": "样本占比"
+        },
+        "segments": [
+          {
+            "label": "代码生成",
+            "labelEn": "Code Gen",
+            "value": "41"
+          },
+          {
+            "label": "代码补全",
+            "labelEn": "Completion",
+            "value": "26"
+          },
+          {
+            "label": "测试用例",
+            "labelEn": "Testing",
+            "value": "18"
+          },
+          {
+            "label": "文档注释",
+            "labelEn": "Docs",
+            "value": "10"
+          },
+          {
+            "label": "其他",
+            "labelEn": "Others",
+            "value": "5"
+          }
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "41%",
+          "label": "代码生成场景占比最高",
+          "description": "代码生成与补全合计占开发者使用场景的 67%，是 AI 编码助手最核心的价值洼地。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_chart_v1",
+      "props": {
+        "kicker": "数据趋势",
+        "topRightMeta": "单位：万元",
+        "title": "{{季度营收}}增长趋势",
+        "subtitle": "全年四个季度持续上扬",
+        "type": "bar",
+        "labels": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
+        "data": [
+          1200,
+          1850,
+          2400,
+          3100
+        ],
+        "unit": "万元",
+        "showInsight": true,
+        "insight": {
+          "value": "+38%",
+          "label": "年度同比增长",
+          "description": "核心指标连续四个季度保持双位数增长，Q4 受节日营销推动创下新高。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_dumbbell_v1",
+      "props": {
+        "kicker": "估值跃迁",
+        "title": "{{AI 独角兽}}估值两年跃迁",
+        "subtitle": "起点为 2024 年初估值，终点为当前估值，展示估值扩张幅度。",
+        "startLabel": "2024",
+        "endLabel": "2026",
+        "unit": "亿美元",
+        "items": [
+          {
+            "name": "Anthropic",
+            "start": 180,
+            "end": 615,
+            "tone": "green"
+          },
+          {
+            "name": "OpenAI",
+            "start": 800,
+            "end": 1570,
+            "tone": "blue"
+          },
+          {
+            "name": "xAI",
+            "start": 120,
+            "end": 500,
+            "tone": "pink"
+          },
+          {
+            "name": "Perplexity",
+            "start": 5,
+            "end": 90,
+            "tone": "yellow"
+          },
+          {
+            "name": "Cohere",
+            "start": 22,
+            "end": 55,
+            "tone": "green"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_groupbars_v1",
+      "props": {
+        "kicker": "多维对比",
+        "title": "{{各赛道}}季度融资对比",
+        "subtitle": "基础设施、应用层与基础模型三赛道走势",
+        "unit": "亿美元",
+        "labels": [
+          {
+            "item": "Q1"
+          },
+          {
+            "item": "Q2"
+          },
+          {
+            "item": "Q3"
+          },
+          {
+            "item": "Q4"
+          }
+        ],
+        "series": [
+          {
+            "name": "基础模型",
+            "data": [
+              120,
+              150,
+              200,
+              280
+            ],
+            "tone": "green"
+          },
+          {
+            "name": "基础设施",
+            "data": [
+              80,
+              90,
+              110,
+              140
+            ],
+            "tone": "blue"
+          },
+          {
+            "name": "应用层",
+            "data": [
+              40,
+              55,
+              70,
+              95
+            ],
+            "tone": "pink"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_heatmap_v1",
+      "props": {
+        "kicker": "资金热力 · HEATMAP",
+        "title": "{{季度}} × {{赛道}}资金热力",
+        "subtitle": "颜色越深代表该季度该赛道的大额融资越集中",
+        "xLabels": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
+        "yLabels": [
+          "通用模型",
+          "垂直应用",
+          "AI 基础设施",
+          "芯片硬件"
+        ],
+        "cells": [
+          {
+            "x": 0,
+            "y": 0,
+            "value": 85
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "value": 62
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "value": 90
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "value": 78
+          },
+          {
+            "x": 0,
+            "y": 1,
+            "value": 45
+          },
+          {
+            "x": 1,
+            "y": 1,
+            "value": 55
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "value": 70
+          },
+          {
+            "x": 3,
+            "y": 1,
+            "value": 82
+          },
+          {
+            "x": 0,
+            "y": 2,
+            "value": 70
+          },
+          {
+            "x": 1,
+            "y": 2,
+            "value": 88
+          },
+          {
+            "x": 2,
+            "y": 2,
+            "value": 95
+          },
+          {
+            "x": 3,
+            "y": 2,
+            "value": 91
+          },
+          {
+            "x": 0,
+            "y": 3,
+            "value": 30
+          },
+          {
+            "x": 1,
+            "y": 3,
+            "value": 42
+          },
+          {
+            "x": 2,
+            "y": 3,
+            "value": 58
+          },
+          {
+            "x": 3,
+            "y": 3,
+            "value": 65
+          }
+        ],
+        "colorTone": "green",
+        "footnote": "颜色深浅 = 相对资金热度 · 满分 100"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_monthchart_v1",
+      "props": {
+        "kicker": "月度趋势",
+        "topRightMeta": "单位：亿元",
+        "title": "{{全年融资}}月度走势",
+        "subtitle": "下半年显著加速，年末达到峰值",
+        "type": "bar",
+        "labels": [
+          {
+            "item": "1月"
+          },
+          {
+            "item": "2月"
+          },
+          {
+            "item": "3月"
+          },
+          {
+            "item": "4月"
+          },
+          {
+            "item": "5月"
+          },
+          {
+            "item": "6月"
+          },
+          {
+            "item": "7月"
+          },
+          {
+            "item": "8月"
+          },
+          {
+            "item": "9月"
+          },
+          {
+            "item": "10月"
+          },
+          {
+            "item": "11月"
+          },
+          {
+            "item": "12月"
+          }
+        ],
+        "data": [
+          {
+            "item": 42
+          },
+          {
+            "item": 48
+          },
+          {
+            "item": 56
+          },
+          {
+            "item": 61
+          },
+          {
+            "item": 58
+          },
+          {
+            "item": 72
+          },
+          {
+            "item": 85
+          },
+          {
+            "item": 91
+          },
+          {
+            "item": 88
+          },
+          {
+            "item": 105
+          },
+          {
+            "item": 132
+          },
+          {
+            "item": 148
+          }
+        ],
+        "unit": "亿元",
+        "showInsight": true,
+        "insight": {
+          "value": "+252%",
+          "label": "年末较年初增长",
+          "description": "Q4 连续三月突破百亿，全年呈现前低后高的爆发态势。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_pyramid_v1",
+      "props": {
+        "kicker": "估值金字塔",
+        "title": "{{从赛道}}到龙头的估值分层",
+        "subtitle": "越靠近金字塔顶端，估值倍数与确定性同时抬升。",
+        "unit": "亿美元",
+        "items": [
+          {
+            "label": "全市场",
+            "value": 970,
+            "description": "所有 AI 公司合计",
+            "tone": "green"
+          },
+          {
+            "label": "头部 10%",
+            "value": 420,
+            "description": "估值前 10% 公司",
+            "tone": "blue"
+          },
+          {
+            "label": "独角兽",
+            "value": 180,
+            "description": "估值 10 亿美元以上",
+            "tone": "pink"
+          },
+          {
+            "label": "超级独角兽",
+            "value": 66,
+            "description": "单轮融资最大额",
+            "tone": "yellow"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_radar_v1",
+      "props": {
+        "kicker": "多维能力 · RADAR",
+        "title": "三类玩家的{{能力象限}}对比",
+        "subtitle": "从融资规模、收入、技术、生态与可控性五个维度评估",
+        "labels": [
+          "融资规模",
+          "收入确定性",
+          "技术领先",
+          "生态广度",
+          "可控安全"
+        ],
+        "datasets": [
+          {
+            "name": "OpenAI",
+            "data": [
+              95,
+              70,
+              98,
+              92,
+              65
+            ],
+            "tone": "green"
+          },
+          {
+            "name": "Anthropic",
+            "data": [
+              90,
+              60,
+              95,
+              70,
+              90
+            ],
+            "tone": "pink"
+          },
+          {
+            "name": "xAI",
+            "data": [
+              85,
+              40,
+              88,
+              60,
+              55
+            ],
+            "tone": "blue"
+          }
+        ],
+        "footnote": "满分 100 · 数据为示意"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_region_v1",
+      "props": {
+        "kicker": "地区分布",
+        "title": "{{AI 融资}}的地区分布",
+        "subtitle": "按融资金额排序的主要地区",
+        "unit": "亿美元",
+        "items": [
+          {
+            "name": "北美",
+            "value": 620,
+            "tone": "green"
+          },
+          {
+            "name": "中国",
+            "value": 180,
+            "tone": "blue"
+          },
+          {
+            "name": "欧洲",
+            "value": 95,
+            "tone": "pink"
+          },
+          {
+            "name": "亚太其他",
+            "value": 48,
+            "tone": "yellow"
+          },
+          {
+            "name": "中东",
+            "value": 18,
+            "tone": "green"
+          },
+          {
+            "name": "拉美",
+            "value": 9,
+            "tone": "blue"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_scatter_v1",
+      "props": {
+        "kicker": "估值分布",
+        "title": "{{AI 独角兽}}估值与增速分布",
+        "subtitle": "横轴为估值，纵轴为同比增速，气泡大小代表累计融资额",
+        "xAxisLabel": "估值（亿美元）",
+        "yAxisLabel": "同比增速（%）",
+        "unit": "亿美元",
+        "items": [
+          {
+            "name": "OpenAI",
+            "x": 1570,
+            "y": 41,
+            "value": 970,
+            "tone": "green"
+          },
+          {
+            "name": "Anthropic",
+            "x": 184,
+            "y": 120,
+            "value": 77,
+            "tone": "blue"
+          },
+          {
+            "name": "xAI",
+            "x": 240,
+            "y": 300,
+            "value": 60,
+            "tone": "pink"
+          },
+          {
+            "name": "Databricks",
+            "x": 430,
+            "y": 25,
+            "value": 50,
+            "tone": "yellow"
+          },
+          {
+            "name": "CoreWeave",
+            "x": 70,
+            "y": 180,
+            "value": 35,
+            "tone": "green"
+          },
+          {
+            "name": "Scale AI",
+            "x": 138,
+            "y": 60,
+            "value": 25,
+            "tone": "blue"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_slope_v1",
+      "props": {
+        "kicker": "排名变迁",
+        "title": "{{头部项目}}排名两年变化",
+        "subtitle": "斜线向上表示排名上升，向下则表示下滑",
+        "previousLabel": "2024",
+        "currentLabel": "2026",
+        "items": [
+          {
+            "name": "OpenAI",
+            "previous": 1,
+            "current": 1,
+            "tone": "green"
+          },
+          {
+            "name": "Anthropic",
+            "previous": 4,
+            "current": 2,
+            "tone": "blue"
+          },
+          {
+            "name": "xAI",
+            "previous": 8,
+            "current": 3,
+            "tone": "pink"
+          },
+          {
+            "name": "Databricks",
+            "previous": 2,
+            "current": 4,
+            "tone": "yellow"
+          },
+          {
+            "name": "CoreWeave",
+            "previous": 12,
+            "current": 5,
+            "tone": "green"
+          },
+          {
+            "name": "Scale AI",
+            "previous": 5,
+            "current": 6,
+            "tone": "blue"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_spread_v1",
+      "props": {
+        "kicker": "资金消长",
+        "title": "{{增减对比}}：谁在流入，谁在流出",
+        "subtitle": "正值为资金流入，负值为资金流出或收缩",
+        "items": [
+          {
+            "label": "基础模型",
+            "value": 320,
+            "tone": "green"
+          },
+          {
+            "label": "云算力",
+            "value": 280,
+            "tone": "blue"
+          },
+          {
+            "label": "AI 应用",
+            "value": 150,
+            "tone": "pink"
+          },
+          {
+            "label": "芯片硬件",
+            "value": 120,
+            "tone": "yellow"
+          },
+          {
+            "label": "传统软件",
+            "value": -80,
+            "tone": "pink"
+          },
+          {
+            "label": "消费互联网",
+            "value": -120,
+            "tone": "blue"
+          }
+        ],
+        "unit": "亿美元",
+        "footnote": "数据来源：lemonPPT 研究整理"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_stacked_v1",
+      "props": {
+        "kicker": "资本构成",
+        "topRightMeta": "单位：亿美元",
+        "title": "{{季度资本}}构成变化",
+        "subtitle": "基础设施层占比逐季扩大，应用层稳步增长",
+        "labels": [
+          {
+            "item": "Q1"
+          },
+          {
+            "item": "Q2"
+          },
+          {
+            "item": "Q3"
+          },
+          {
+            "item": "Q4"
+          }
+        ],
+        "series": [
+          {
+            "name": "基础模型",
+            "data": [
+              120,
+              150,
+              200,
+              280
+            ],
+            "tone": "green"
+          },
+          {
+            "name": "基础设施",
+            "data": [
+              80,
+              110,
+              160,
+              220
+            ],
+            "tone": "blue"
+          },
+          {
+            "name": "应用层",
+            "data": [
+              40,
+              60,
+              85,
+              120
+            ],
+            "tone": "pink"
+          }
+        ],
+        "unit": "亿美元",
+        "showInsight": true,
+        "insight": {
+          "value": "68%",
+          "label": "基础设施层 Q4 占比",
+          "description": "算力与云服务等基建投资在年末占比接近七成，成为资本最密集赛道。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_treemap_v1",
+      "props": {
+        "kicker": "资金版图",
+        "title": "{{AI 融资}}的赛道分布",
+        "subtitle": "面积代表融资规模，颜色区分主要赛道",
+        "unit": "亿美元",
+        "items": [
+          {
+            "name": "基础模型",
+            "value": 420,
+            "tone": "green"
+          },
+          {
+            "name": "AI 基础设施",
+            "value": 180,
+            "tone": "blue"
+          },
+          {
+            "name": "应用层",
+            "value": 95,
+            "tone": "pink"
+          },
+          {
+            "name": "机器人",
+            "value": 58,
+            "tone": "yellow"
+          },
+          {
+            "name": "自动驾驶",
+            "value": 42,
+            "tone": "green"
+          },
+          {
+            "name": "其他",
+            "value": 35,
+            "tone": "blue"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_valuechart_v1",
+      "props": {
+        "kicker": "估值跃迁",
+        "title": "{{OpenAI}} 估值三级跳",
+        "subtitle": "从早期实验室到全球最高估值 AI 公司的跨越",
+        "name": "OpenAI",
+        "stages": [
+          {
+            "label": "2021",
+            "value": "200 亿",
+            "description": "由 Microsoft 领投，开启商业化探索",
+            "tone": "green"
+          },
+          {
+            "label": "2023",
+            "value": "860 亿",
+            "description": "ChatGPT 引爆市场，员工回购估值飙升",
+            "tone": "blue"
+          },
+          {
+            "label": "2024",
+            "value": "1570 亿",
+            "description": "新一轮融资巩固龙头地位",
+            "tone": "pink"
+          }
+        ],
+        "footnote": "数据来源：公开融资报道整理 · 2026"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme04_waterfall_v1",
+      "props": {
+        "kicker": "资金瀑布",
+        "title": "{{全年融资}}资金流动",
+        "subtitle": "从年初基数到全年总额，逐季度叠加/流失",
+        "startLabel": "年初基数",
+        "startValue": 1200,
+        "endLabel": "全年总额",
+        "unit": "亿美元",
+        "items": [
+          {
+            "label": "Q1 新增",
+            "value": 180,
+            "tone": "green"
+          },
+          {
+            "label": "Q2 新增",
+            "value": 220,
+            "tone": "green"
+          },
+          {
+            "label": "Q3 退出",
+            "value": -80,
+            "tone": "pink"
+          },
+          {
+            "label": "Q4 新增",
+            "value": 310,
+            "tone": "green"
+          }
+        ]
+      }
+    },
+    {
+      "role": "table",
+      "layout": "theme04_chaintable_v1",
+      "props": {
+        "kicker": "产业链 · VALUE CHAIN",
+        "title": "AI 产业链{{分层}}结构",
+        "subtitle": "从底层算力到上层应用，资本逐层向上传导",
+        "tiers": [
+          {
+            "layer": "底层算力",
+            "items": [
+              {
+                "value": "GPU / TPU"
+              },
+              {
+                "value": "云服务"
+              },
+              {
+                "value": "数据中心"
+              }
+            ],
+            "value": "45%",
+            "tone": "blue"
+          },
+          {
+            "layer": "基础模型",
+            "items": [
+              {
+                "value": "大语言模型"
+              },
+              {
+                "value": "多模态模型"
+              },
+              {
+                "value": "开源模型"
+              }
+            ],
+            "value": "28%",
+            "tone": "green"
+          },
+          {
+            "layer": "开发工具",
+            "items": [
+              {
+                "value": "模型训练平台"
+              },
+              {
+                "value": "推理框架"
+              },
+              {
+                "value": "数据标注"
+              }
+            ],
+            "value": "15%",
+            "tone": "yellow"
+          },
+          {
+            "layer": "应用层",
+            "items": [
+              {
+                "value": "AI 助手"
+              },
+              {
+                "value": "行业 SaaS"
+              },
+              {
+                "value": "内容生成"
+              }
+            ],
+            "value": "12%",
+            "tone": "pink"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究整理"
+      }
+    },
+    {
+      "role": "table",
+      "layout": "theme04_ledger_v1",
+      "props": {
+        "kicker": "投资人榜单 · INVESTOR LEDGER",
+        "title": "{{出手最多}}的投资机构",
+        "subtitle": "按年度出手次数排序，金额与趋势同步展示",
+        "investors": [
+          {
+            "rank": "01",
+            "name": "Global AI Capital",
+            "deals": "18笔",
+            "amount": "$42亿",
+            "trend": "up",
+            "tone": "green"
+          },
+          {
+            "rank": "02",
+            "name": "Horizon Ventures",
+            "deals": "15笔",
+            "amount": "$31亿",
+            "trend": "up",
+            "tone": "blue"
+          },
+          {
+            "rank": "03",
+            "name": "Neon Fund",
+            "deals": "12笔",
+            "amount": "$24亿",
+            "trend": "flat",
+            "tone": "yellow"
+          },
+          {
+            "rank": "04",
+            "name": "Quantum Partners",
+            "deals": "10笔",
+            "amount": "$19亿",
+            "trend": "down",
+            "tone": "pink"
+          },
+          {
+            "rank": "05",
+            "name": "Spark AI",
+            "deals": "9笔",
+            "amount": "$15亿",
+            "trend": "up",
+            "tone": "green"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究整理"
+      }
+    },
+    {
+      "role": "table",
+      "layout": "theme04_quartertable_v1",
+      "props": {
+        "kicker": "季度走势 · QUARTERLY TREND",
+        "title": "{{逐季增长}}，Q4 全面提速",
+        "subtitle": "事件数、单笔均值与环比变化一览",
+        "columns": [
+          "季度",
+          "事件数",
+          "单笔均值",
+          "核心指标",
+          "环比变化"
+        ],
+        "rows": [
+          {
+            "quarter": "Q1",
+            "metric1": "18笔",
+            "metric2": "6.2亿",
+            "metric3": "112亿",
+            "change": "+12%",
+            "tone": "green"
+          },
+          {
+            "quarter": "Q2",
+            "metric1": "22笔",
+            "metric2": "7.8亿",
+            "metric3": "172亿",
+            "change": "+54%",
+            "tone": "green"
+          },
+          {
+            "quarter": "Q3",
+            "metric1": "26笔",
+            "metric2": "8.5亿",
+            "metric3": "221亿",
+            "change": "+28%",
+            "tone": "blue"
+          },
+          {
+            "quarter": "Q4",
+            "metric1": "31笔",
+            "metric2": "11.4亿",
+            "metric3": "353亿",
+            "change": "+60%",
+            "tone": "pink"
+          }
+        ],
+        "summary": {
+          "label": "全年合计",
+          "value": "858亿美元 · 97笔"
+        }
+      }
+    },
+    {
+      "role": "table",
+      "layout": "theme04_scoreboard_v1",
+      "props": {
+        "kicker": "头部玩家",
+        "title": "{{TOP 5}} 玩家多维对照",
+        "subtitle": "融资规模、估值与增速的综合排名",
+        "metrics": [
+          {
+            "key": "funding",
+            "label": "融资总额"
+          },
+          {
+            "key": "valuation",
+            "label": "最新估值"
+          },
+          {
+            "key": "growth",
+            "label": "增速"
+          },
+          {
+            "key": "round",
+            "label": "轮次"
+          }
+        ],
+        "rows": [
+          {
+            "rank": 1,
+            "name": "OpenAI",
+            "values": [
+              "970 亿",
+              "1570 亿",
+              "+41%",
+              "D+"
+            ],
+            "tone": "green"
+          },
+          {
+            "rank": 2,
+            "name": "Anthropic",
+            "values": [
+              "77 亿",
+              "184 亿",
+              "+120%",
+              "D"
+            ],
+            "tone": "blue"
+          },
+          {
+            "rank": 3,
+            "name": "xAI",
+            "values": [
+              "60 亿",
+              "240 亿",
+              "+300%",
+              "B"
+            ],
+            "tone": "pink"
+          },
+          {
+            "rank": 4,
+            "name": "Databricks",
+            "values": [
+              "50 亿",
+              "430 亿",
+              "+25%",
+              "I"
+            ],
+            "tone": "yellow"
+          },
+          {
+            "rank": 5,
+            "name": "Stability AI",
+            "values": [
+              "12 亿",
+              "10 亿",
+              "-15%",
+              "C"
+            ],
+            "tone": "green"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "table",
+      "layout": "theme04_table_v1",
+      "props": {
+        "kicker": "轮次结构 · TABLE",
+        "title": "2024 美国 AI 大额融资{{轮次分布}}",
+        "subtitle": "从天使到 F 轮，资金如何向后期轮次集中",
+        "columns": [
+          "融资轮次",
+          "事件笔数",
+          "平均单笔",
+          "规模对比"
+        ],
+        "rows": [
+          {
+            "name": "种子/天使",
+            "count": "8",
+            "avg": "0.3",
+            "ratio": 3
+          },
+          {
+            "name": "A/B 轮",
+            "count": "18",
+            "avg": "1.2",
+            "ratio": 12
+          },
+          {
+            "name": "C/D 轮",
+            "count": "28",
+            "avg": "4.5",
+            "ratio": 45
+          },
+          {
+            "name": "E 轮及以后",
+            "count": "22",
+            "avg": "18.6",
+            "ratio": 100
+          },
+          {
+            "name": "战略/并购",
+            "count": "21",
+            "avg": "9.4",
+            "ratio": 51
+          }
+        ],
+        "summary": {
+          "label": "合计",
+          "count": "97",
+          "avg": "≈10"
+        }
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme04_chainflow_v1",
+      "props": {
+        "kicker": "产业链流向",
+        "title": "AI 价值{{如何流动}}",
+        "subtitle": "从算力到应用，逐层放大商业价值",
+        "steps": [
+          {
+            "label": "算力层",
+            "description": "芯片、云服务与数据中心",
+            "tone": "blue"
+          },
+          {
+            "label": "模型层",
+            "description": "基础大模型与垂直模型",
+            "tone": "green"
+          },
+          {
+            "label": "工具层",
+            "description": "训练、推理与部署工具链",
+            "tone": "yellow"
+          },
+          {
+            "label": "应用层",
+            "description": "面向用户的最终产品",
+            "tone": "pink"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究整理"
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme04_layers_v1",
+      "props": {
+        "kicker": "技术栈",
+        "title": "{{AI 应用}}的完整技术分层",
+        "subtitle": "从基础设施到应用层的四层架构",
+        "layers": [
+          {
+            "title": "应用层",
+            "items": [
+              "聊天机器人",
+              "编程助手",
+              "搜索增强"
+            ],
+            "tone": "green"
+          },
+          {
+            "title": "编排层",
+            "items": [
+              "Agent 框架",
+              "RAG 管道",
+              "提示工程"
+            ],
+            "tone": "blue"
+          },
+          {
+            "title": "模型层",
+            "items": [
+              "大语言模型",
+              "多模态模型",
+              "微调服务"
+            ],
+            "tone": "pink"
+          },
+          {
+            "title": "基础设施层",
+            "items": [
+              "算力集群",
+              "向量数据库",
+              "推理加速"
+            ],
+            "tone": "yellow"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme04_metro_v1",
+      "props": {
+        "kicker": "融资路线",
+        "title": "{{资本}}流动的地铁图",
+        "subtitle": "从种子轮到 IPO，每一站都是价值验证的里程碑。",
+        "lineLabel": "AI 独角兽专线",
+        "stops": [
+          {
+            "label": "种子轮",
+            "description": "产品原型与早期用户验证",
+            "tone": "green"
+          },
+          {
+            "label": "A 轮",
+            "description": "商业模式验证，核心团队成型",
+            "tone": "blue"
+          },
+          {
+            "label": "B 轮",
+            "description": "规模化获客与收入高速增长",
+            "tone": "pink"
+          },
+          {
+            "label": "C 轮",
+            "description": "市场领导地位与生态布局",
+            "tone": "yellow"
+          },
+          {
+            "label": "IPO",
+            "description": "公开市场与全球化扩张",
+            "tone": "green"
+          }
+        ]
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme04_process_v1",
+      "props": {
+        "tag": "实施路径",
+        "tagLabel": "07",
+        "topRightMeta": "AI 助手落地 · 四步闭环",
+        "title": "四步让 {{AI 助手}} 融入工作流",
+        "subtitle": "从需求识别到规模推广，构建可复用的落地路径",
+        "steps": [
+          {
+            "title": "需求识别",
+            "description": "梳理高频、高价值的重复性工作场景。"
+          },
+          {
+            "title": "原型验证",
+            "description": "用小范围试点验证模型能力与提效空间。"
+          },
+          {
+            "title": "工具集成",
+            "description": "嵌入现有工作流，降低使用门槛。"
+          },
+          {
+            "title": "规模推广",
+            "description": "沉淀模板与最佳实践，复制到全团队。"
+          }
+        ]
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme04_riskchain_v1",
+      "props": {
+        "kicker": "风险传导",
+        "title": "{{AI 投资}}的传导性风险",
+        "subtitle": "从估值泡沫到监管收紧，风险如何在产业链中逐级放大。",
+        "risks": [
+          {
+            "label": "估值泡沫",
+            "description": "头部项目估值脱离基本面",
+            "impact": "high",
+            "tone": "pink"
+          },
+          {
+            "label": "算力紧缺",
+            "description": "GPU 供应约束推高训练成本",
+            "impact": "medium",
+            "tone": "blue"
+          },
+          {
+            "label": "监管收紧",
+            "description": "数据合规与内容审核要求升级",
+            "impact": "high",
+            "tone": "pink"
+          },
+          {
+            "label": "人才流失",
+            "description": "核心研发团队被巨头挖角",
+            "impact": "medium",
+            "tone": "yellow"
+          },
+          {
+            "label": "商业化滞后",
+            "description": "产品收入无法覆盖高额投入",
+            "impact": "high",
+            "tone": "pink"
+          }
+        ]
+      }
+    },
+    {
+      "role": "roadmap",
+      "layout": "theme04_gantt_v1",
+      "props": {
+        "kicker": "项目计划 · GANTT",
+        "title": "{{资本节奏}}全年排期",
+        "subtitle": "关键事件按季度铺排，便于对齐节奏",
+        "periods": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4",
+          "2026 H1"
+        ],
+        "lanes": [
+          {
+            "name": "叙事驱动",
+            "tasks": [
+              {
+                "name": "早期融资",
+                "start": 0,
+                "end": 1,
+                "tone": "green"
+              },
+              {
+                "name": "估值爆发",
+                "start": 1,
+                "end": 2,
+                "tone": "green"
+              }
+            ]
+          },
+          {
+            "name": "算力卡位",
+            "tasks": [
+              {
+                "name": "GPU 锁定",
+                "start": 1,
+                "end": 3,
+                "tone": "blue"
+              },
+              {
+                "name": "云服务扩量",
+                "start": 2,
+                "end": 4,
+                "tone": "blue"
+              }
+            ]
+          },
+          {
+            "name": "兑现为王",
+            "tasks": [
+              {
+                "name": "ARR 验证",
+                "start": 3,
+                "end": 4,
+                "tone": "yellow"
+              },
+              {
+                "name": "IPO 准备",
+                "start": 4,
+                "end": 5,
+                "tone": "yellow"
+              }
+            ]
+          }
+        ],
+        "footnote": "横轴单位：季度 · 仅供参考"
+      }
+    },
+    {
+      "role": "roadmap",
+      "layout": "theme04_roadmap_v1",
+      "props": {
+        "kicker": "资本节奏 · ROADMAP",
+        "title": "一年三步：从赌叙事，到{{看兑现}}",
+        "subtitle": "资本叙事的重心逐级上移",
+        "steps": [
+          {
+            "period": "2024 H1",
+            "title": "叙事驱动",
+            "subtitle": "「为愿景下注」",
+            "description": "估值跑在收入前面，资本愿意为故事埋单。",
+            "tone": "green"
+          },
+          {
+            "period": "2024 H2",
+            "title": "算力卡位",
+            "subtitle": "「卖铲子的赢」",
+            "description": "资金大举涌入算力与云，谁锁住 GPU 谁掌握主动。",
+            "tone": "blue"
+          },
+          {
+            "period": "2025 起",
+            "title": "兑现为王",
+            "subtitle": "「看 ARR 说话」",
+            "description": "能把模型变成真实收入的公司，才留在牌桌上。",
+            "tone": "yellow"
+          }
+        ],
+        "footnote": "资本叙事的重心逐级上移：愿景 → 算力 → 兑现。"
+      }
+    },
+    {
+      "role": "timeline",
+      "layout": "theme04_timeline_v1",
+      "props": {
+        "kicker": "阶段策略 · TIMELINE",
+        "title": "资本节奏{{三段式}}演进",
+        "subtitle": "从叙事驱动到兑现为王，资本重心逐级上移",
+        "phases": [
+          {
+            "period": "2024 H1",
+            "title": "叙事驱动",
+            "badge": "愿景",
+            "description": "估值跑在收入前面，资本愿意为故事埋单。"
+          },
+          {
+            "period": "2024 H2",
+            "title": "算力卡位",
+            "badge": "基础设施",
+            "description": "资金大举涌入算力与云，谁锁住 GPU 谁掌握主动。"
+          },
+          {
+            "period": "2025 起",
+            "title": "兑现为王",
+            "badge": "收入",
+            "description": "能把模型变成真实收入的公司，才留在牌桌上。"
+          }
+        ]
+      }
+    },
+    {
+      "role": "feature",
+      "layout": "theme04_cards_v1",
+      "props": {
+        "kicker": "行业赛道",
+        "title": "{{AI 投资}}的热门赛道",
+        "subtitle": "资本正在向基础设施与应用层集中",
+        "cards": [
+          {
+            "title": "基础模型",
+            "description": "大模型研发与算力层，单笔融资规模最大。",
+            "value": "420",
+            "unit": "亿美元",
+            "tag": "TOP1",
+            "tone": "green"
+          },
+          {
+            "title": "AI 基础设施",
+            "description": "云服务、数据标注、模型部署工具链。",
+            "value": "210",
+            "unit": "亿美元",
+            "tag": "TOP2",
+            "tone": "blue"
+          },
+          {
+            "title": "垂直应用",
+            "description": "医疗、金融、法律等行业 AI 应用。",
+            "value": "180",
+            "unit": "亿美元",
+            "tag": "TOP3",
+            "tone": "pink"
+          },
+          {
+            "title": "具身智能",
+            "description": "机器人、自动驾驶、智能硬件等新兴方向。",
+            "value": "85",
+            "unit": "亿美元",
+            "tag": "新兴",
+            "tone": "yellow"
+          }
+        ]
+      }
+    },
+    {
+      "role": "feature",
+      "layout": "theme04_feature_v1",
+      "props": {
+        "kicker": "产品特性",
+        "title": "为什么选择 {{柠檬 PPT}}",
+        "subtitle": "从生成到交付，每个环节都更高效",
+        "items": [
+          {
+            "title": "AI 一键生成",
+            "description": "基于大模型自动理解需求，生成完整大纲与页面。",
+            "tone": "green"
+          },
+          {
+            "title": "主题系统",
+            "description": "深色霓虹、浅色玻璃等多种风格，全局一键切换。",
+            "tone": "blue"
+          },
+          {
+            "title": "数据可视化",
+            "description": "内置 SVG 图表与洞察面板，数据表达更聚焦。",
+            "tone": "pink"
+          }
+        ]
+      }
+    },
+    {
+      "role": "bento",
+      "layout": "theme04_bento_v1",
+      "props": {
+        "tag": "数据看板",
+        "tagLabel": "BENTO",
+        "topRightMeta": "GLASS CANDY · EDITION 01",
+        "title": "{{增长}}引擎一览",
+        "subtitle": "核心指标模块化呈现，快速定位关键数据",
+        "items": [
+          {
+            "label": "年度总额",
+            "value": "970",
+            "unit": "亿美元",
+            "size": "large",
+            "tone": "green"
+          },
+          {
+            "label": "大额事件",
+            "value": "97",
+            "unit": "笔",
+            "size": "medium",
+            "tone": "blue"
+          },
+          {
+            "label": "平均单笔",
+            "value": "≈10",
+            "unit": "亿",
+            "size": "medium",
+            "tone": "pink"
+          },
+          {
+            "label": "Q4 环比",
+            "value": "+41%",
+            "unit": "",
+            "size": "small",
+            "tone": "yellow"
+          }
+        ],
+        "footnoteLeft": "lemonPPT 研究出品",
+        "footnoteRight": "github.com/lemonforme/lemonPPT"
+      }
+    },
+    {
+      "role": "gallery",
+      "layout": "theme04_filmstrip_v1",
+      "props": {
+        "kicker": "影像长卷",
+        "title": "{{产品故事}}胶片长卷",
+        "subtitle": "用连续画面讲述关键历程",
+        "images": [
+          {
+            "image": "",
+            "caption": "阶段一"
+          },
+          {
+            "image": "",
+            "caption": "阶段二"
+          },
+          {
+            "image": "",
+            "caption": "阶段三"
+          },
+          {
+            "image": "",
+            "caption": "阶段四"
+          },
+          {
+            "image": "",
+            "caption": "阶段五"
+          }
+        ]
+      }
+    },
+    {
+      "role": "gallery",
+      "layout": "theme04_gallery_v1",
+      "props": {
+        "tag": "图集",
+        "tagLabel": "GALLERY",
+        "topRightMeta": "GLASS CANDY · EDITION 01",
+        "title": "{{产品}}界面一览",
+        "subtitle": "从编辑到导出，每个环节都更高效",
+        "images": [
+          {
+            "caption": "AI 生成大纲"
+          },
+          {
+            "caption": "主题一键切换"
+          },
+          {
+            "caption": "数据可视化"
+          },
+          {
+            "caption": "PPTX 导出"
+          }
+        ]
+      }
+    },
+    {
+      "role": "gallery",
+      "layout": "theme04_polaroid_v1",
+      "props": {
+        "kicker": "瞬间",
+        "title": "{{高光}}时刻",
+        "subtitle": "那些决定格局的关键画面",
+        "images": [
+          {
+            "caption": "产品发布"
+          },
+          {
+            "caption": "团队合影"
+          },
+          {
+            "caption": "用户增长"
+          },
+          {
+            "caption": "里程碑"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "gallery",
+      "layout": "theme04_triptych_v1",
+      "props": {
+        "tag": "全幅三联",
+        "tagLabel": "TRIPTYCH",
+        "topRightMeta": "GLASS CANDY · EDITION 01",
+        "title": "从{{数据}}到{{决策}}的三级跳",
+        "subtitle": "每一步都对应柠檬 PPT 的核心能力",
+        "panels": [
+          {
+            "label": "01",
+            "title": "AI 生成大纲",
+            "description": "输入一句话，自动生成完整大纲",
+            "tone": "green"
+          },
+          {
+            "label": "02",
+            "title": "主题一键切换",
+            "description": "多主题实时预览，风格秒变",
+            "tone": "blue"
+          },
+          {
+            "label": "03",
+            "title": "PPTX 导出",
+            "description": "可编辑源文件，本地二次创作",
+            "tone": "yellow"
+          }
+        ],
+        "footnoteLeft": "lemonPPT 产品能力",
+        "footnoteRight": "NO. 01"
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme04_annotated_v1",
+      "props": {
+        "kicker": "标注特写",
+        "title": "{{产品}}关键细节拆解",
+        "subtitle": "每一处设计都对应一个用户价值假设。",
+        "annotations": [
+          {
+            "x": 25,
+            "y": 30,
+            "label": "01",
+            "description": "极简接口降低首次使用门槛",
+            "tone": "green"
+          },
+          {
+            "x": 72,
+            "y": 28,
+            "label": "02",
+            "description": "实时协作状态减少沟通成本",
+            "tone": "blue"
+          },
+          {
+            "x": 55,
+            "y": 68,
+            "label": "03",
+            "description": "数据面板直接驱动决策",
+            "tone": "pink"
+          },
+          {
+            "x": 18,
+            "y": 75,
+            "label": "04",
+            "description": "模块化架构支持快速扩展",
+            "tone": "yellow"
+          }
+        ]
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme04_image_v1",
+      "props": {
+        "kicker": "焦点特写",
+        "title": "{{算力基建}}：资本涌入的新战场",
+        "subtitle": "从芯片到云服务，基础设施层正在成为 AI 投资的最大吸金点。",
+        "caption": "数据来源：lemonPPT 内部统计 · 2026"
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme04_imagestory_v1",
+      "props": {
+        "kicker": "图片故事",
+        "title": "{{从 0 到 1}}的四个关键帧",
+        "subtitle": "每个节点都是产品、团队与市场共振的结果。",
+        "steps": [
+          {
+            "label": "2024 Q1",
+            "caption": "MVP 验证，首批 100 家企业试用",
+            "tone": "green"
+          },
+          {
+            "label": "2024 Q3",
+            "caption": "产品市场契合，ARR 突破百万",
+            "tone": "blue"
+          },
+          {
+            "label": "2025 Q1",
+            "caption": "规模化获客，团队扩张至 80 人",
+            "tone": "pink"
+          },
+          {
+            "label": "2025 Q4",
+            "caption": "品类领先，启动全球化布局",
+            "tone": "yellow"
+          }
+        ]
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme04_showcase_v1",
+      "props": {
+        "kicker": "焦点机位",
+        "title": "{{这一刻}}，决定下一程",
+        "subtitle": "用一张核心画面定格产品价值。",
+        "caption": "图注：产品核心场景实拍，展示 AI 助手在会议中的实时协作能力。"
+      }
+    },
+    {
+      "role": "team",
+      "layout": "theme04_team_v1",
+      "props": {
+        "tag": "团队",
+        "tagLabel": "TEAM",
+        "topRightMeta": "GLASS CANDY · EDITION 01",
+        "title": "核心{{团队}}",
+        "subtitle": "来自产品、技术与设计的多元背景",
+        "members": [
+          {
+            "name": "李明远",
+            "role": "研究负责人",
+            "bio": "负责行业洞察与数据解读。"
+          },
+          {
+            "name": "陈嘉树",
+            "role": "产品总监",
+            "bio": "主导 lemonPPT 产品体验与增长。"
+          },
+          {
+            "name": "王雨桐",
+            "role": "设计主管",
+            "bio": "把控视觉系统与主题设计语言。"
+          },
+          {
+            "name": "张一凡",
+            "role": "技术负责人",
+            "bio": "负责渲染引擎与导出管线。"
+          }
+        ],
+        "footnoteLeft": "lemonPPT 研究出品",
+        "footnoteRight": "github.com/lemonforme/lemonPPT"
+      }
+    },
+    {
+      "role": "quote",
+      "layout": "theme04_image_quote_v1",
+      "props": {
+        "kicker": "终审判断 · THE VERDICT",
+        "quote": "这不是一次普通的风口，而是一场{{资本的总动员}}——钱、算力与共识，同时压向了同一个方向。",
+        "source": "970 亿美元在一年内涌入，把「AI 是否值得」的争论，直接改写成了「谁能上车」。",
+        "author": "—《2024 美国大额融资 AI 公司调研报告》· 总结",
+        "value": "970",
+        "unit": "亿美元",
+        "valueLabel": "FUNDING YEAR · 2024",
+        "footnote": ""
+      }
+    },
+    {
+      "role": "quote",
+      "layout": "theme04_quote_v1",
+      "props": {
+        "kicker": "金句",
+        "quote": "AI 产业正在从「叙事驱动」进入{{兑现驱动}}的新阶段。",
+        "author": "李明远",
+        "role": "lemonPPT 研究负责人"
+      }
+    },
+    {
+      "role": "quote",
+      "layout": "theme04_voices_v1",
+      "props": {
+        "kicker": "投资人说",
+        "title": "{{市场}}正在形成新共识",
+        "subtitle": "来自不同视角的判断，指向同一个方向。",
+        "voices": [
+          {
+            "quote": "这不是短期泡沫，而是生产力曲线的永久性抬升。",
+            "author": "Sarah Chen",
+            "role": "GP, Horizon Ventures",
+            "tone": "green"
+          },
+          {
+            "quote": "我们愿意为有数据飞轮的公司支付明显溢价。",
+            "author": "李明远",
+            "role": "合伙人，光源资本",
+            "tone": "blue"
+          },
+          {
+            "quote": "通用模型的窗口期正在关闭，垂直场景才刚开始。",
+            "author": "Alex Rao",
+            "role": "MD, Compound",
+            "tone": "pink"
+          }
+        ]
+      }
+    },
+    {
+      "role": "comparison",
+      "layout": "theme04_comparison_v1",
+      "props": {
+        "kicker": "策略对比 · COMPARISON",
+        "title": "叙事驱动 vs {{兑现驱动}}",
+        "subtitle": "AI 投资逻辑正在从「为愿景下注」转向「看收入说话」",
+        "sides": [
+          {
+            "label": "叙事驱动",
+            "title": "2023-2024 H1",
+            "icon": "cross",
+            "items": [
+              {
+                "title": "估值跑在收入前面",
+                "description": "收入尚未验证，估值已先翻倍"
+              },
+              {
+                "title": "资本为故事埋单",
+                "description": "模型能力、创始人背景成为定价核心"
+              },
+              {
+                "title": "亏损容忍度极高",
+                "description": "只要算力规模扩大，亏损被视为必要投入"
+              }
+            ]
+          },
+          {
+            "label": "兑现驱动",
+            "title": "2024 H2-2025",
+            "icon": "check",
+            "items": [
+              {
+                "title": "ARR 成为核心指标",
+                "description": "企业客户付费与续费决定估值上限"
+              },
+              {
+                "title": "单位经济模型受关注",
+                "description": "推理成本、毛利率进入投资人必问清单"
+              },
+              {
+                "title": "头部集中度提升",
+                "description": "能把模型变成收入的公司才留在牌桌上"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "role": "comparison",
+      "layout": "theme04_quadrant_v1",
+      "props": {
+        "kicker": "选题四象限 · 资本热度 × 商业兑现",
+        "title": "从「谁融得多」升级为{{「谁能兑现」}}",
+        "subtitle": "用 2×2 矩阵定位 AI 项目的资本位置",
+        "xAxisLabel": "商业兑现度",
+        "xAxisLabels": [
+          "低 / 待验证",
+          "高"
+        ],
+        "yAxisLabel": "资本热度",
+        "yAxisLabels": [
+          "低",
+          "高"
+        ],
+        "quadrants": [
+          {
+            "title": "明星兑现区",
+            "description": "融资热度与收入确定性兼具，「卖铲子」逻辑成立。",
+            "tags": [
+              "CoreWeave",
+              "Databricks",
+              "Scale AI"
+            ],
+            "tone": "green"
+          },
+          {
+            "title": "叙事泡沫区",
+            "description": "巨额融资在手，商业兑现仍受成本与监管约束。",
+            "tags": [
+              "OpenAI",
+              "Anthropic",
+              "xAI"
+            ],
+            "tone": "yellow"
+          },
+          {
+            "title": "隐形价值区",
+            "description": "单笔不一定最大，但落地路径与留存更清晰。",
+            "tags": [
+              "Glean",
+              "Perplexity"
+            ],
+            "tone": "blue"
+          },
+          {
+            "title": "等待验证区",
+            "description": "概念成立、规模未证，作为风险与边缘变量观察。",
+            "tags": [
+              "长尾工具链",
+              "AI 安全",
+              "早期硬件"
+            ],
+            "tone": "pink"
+          }
+        ]
+      }
+    },
+    {
+      "role": "closing",
+      "layout": "theme04_closing_v1",
+      "props": {
+        "tag": "结论",
+        "title": "资本正在{{重新分配}}",
+        "subtitle": "AI 产业进入兑现驱动阶段，头部格局已然确立。",
+        "cta": "下载完整报告",
+        "contact": "hello@lemonforme.com"
+      }
+    },
+    {
+      "role": "closing",
+      "layout": "theme04_verdict_v1",
+      "props": {
+        "tag": "最终结论",
+        "title": "AI 产业已进入{{兑现驱动}}阶段",
+        "subtitle": "头部格局确立，资本正在向执行力倾斜。",
+        "verdict": "YES",
+        "verdictLabel": "VERDICT",
+        "cta": "下载完整报告",
+        "contact": "hello@lemonforme.com"
+      }
+    }
+  ]
+}
