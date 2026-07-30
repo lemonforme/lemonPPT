@@ -1,0 +1,226 @@
+// lemonPPT - AI-powered presentation generation
+// Copyright (c) 2026 lemonforme
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
+import type { ReactNode } from 'react';
+import { EditableField } from '../../editable-field.js';
+import { LpEChart } from '../theme01/echart.js';
+
+export interface Theme04ChartV1Insight {
+  value?: string;
+  label?: string;
+  description?: string;
+}
+
+export interface Theme04ChartV1Props {
+  kicker?: string;
+  topRightMeta?: string;
+  title: string;
+  subtitle?: string;
+  type?: 'bar' | 'line';
+  labels?: string[];
+  data?: number[];
+  unit?: string;
+  showInsight?: boolean;
+  insight?: Theme04ChartV1Insight;
+  _slideIdx?: number;
+  _editable?: boolean;
+  [key: string]: unknown;
+}
+
+export const theme04ChartV1Meta: LayoutMeta = {
+  id: 'theme04_chart_v1',
+  theme: 'theme04',
+  role: 'chart',
+  displayName: 'Theme 04 糖果图表页',
+  description: '柱状/折线图表 + 可选重点强调面板',
+  needsMedia: false,
+  tags: ['chart', 'bar', 'line', 'candy'],
+  contentShape: 'generic-chart',
+};
+
+export const theme04ChartV1Schema: PropsSchema = {
+  fields: [
+    { key: 'kicker', label: '顶部标签', type: 'text', inlineEditable: true, defaultValue: '数据趋势' },
+    { key: 'topRightMeta', label: '顶部元信息', type: 'text', inlineEditable: true, defaultValue: '单位：万元' },
+    { key: 'title', label: '标题', type: 'text', inlineEditable: true, defaultValue: '{{季度营收}}增长趋势' },
+    { key: 'subtitle', label: '副标题', type: 'textarea', inlineEditable: true, defaultValue: '全年四个季度持续上扬' },
+    {
+      key: 'type',
+      label: '图表类型',
+      type: 'select',
+      defaultValue: 'bar',
+      options: [
+        { value: 'bar', label: '柱状图' },
+        { value: 'line', label: '折线图' },
+      ],
+    },
+    {
+      key: 'labels',
+      label: '分类标签',
+      type: 'array',
+      minItems: 1,
+      maxItems: 12,
+      itemSchema: [{ key: 'item', label: '项', type: 'text', inlineEditable: true }],
+    },
+    {
+      key: 'data',
+      label: '数据',
+      type: 'array',
+      minItems: 1,
+      maxItems: 12,
+      itemSchema: [{ key: 'item', label: '项', type: 'number', inlineEditable: true }],
+    },
+    { key: 'unit', label: '数值单位', type: 'text', inlineEditable: true },
+    { key: 'showInsight', label: '重点强调', type: 'boolean', defaultValue: true },
+    {
+      key: 'insight',
+      label: '洞察面板',
+      type: 'object',
+      visibleWhen: { key: 'showInsight', value: true },
+      defaultValue: {
+        value: '+38%',
+        label: '年度同比增长',
+        description: '核心指标连续四个季度保持双位数增长，Q4 受节日营销推动创下新高。',
+      },
+      itemSchema: [
+        { key: 'value', label: '主数值', type: 'text' },
+        { key: 'label', label: '主数值说明', type: 'text' },
+        { key: 'description', label: '解读文字', type: 'textarea' },
+      ],
+    },
+  ],
+};
+
+function renderTitle(title: string, slideIdx?: number, editable?: boolean): ReactNode {
+  const parts = title.split(/(\{\{[^}]+\}\})/g);
+  return (
+    <EditableField prop="title" slideIdx={slideIdx} editable={editable} as="h2" className="lp-theme04-chart-title lp-rise">
+      {parts.map((part, idx) => {
+        const match = part.match(/^\{\{(.+)\}\}$/);
+        if (match) {
+          return <em key={idx} className="lp-theme04-pill">{match[1]}</em>;
+        }
+        return <span key={idx}>{part}</span>;
+      })}
+    </EditableField>
+  );
+}
+
+function buildOption(type: 'bar' | 'line', labels: string[], data: number[]): Record<string, unknown> {
+  const categoryData = labels.map((label) => label ?? '');
+  const max = Math.max(...data, 1);
+  const topIndex = data.indexOf(max);
+
+  const seriesData = data.map((value, index) => ({
+    value,
+    itemStyle: {
+      color: index === topIndex ? 'var(--lp-accent)' : 'var(--lp-accent-cool)',
+      borderRadius: type === 'bar' ? [6, 6, 0, 0] : undefined,
+    },
+  }));
+
+  const barSeries: Record<string, unknown> = {
+    type: 'bar',
+    data: seriesData,
+    barWidth: data.length <= 6 ? 48 : 28,
+    label: {
+      show: true,
+      position: 'top',
+      color: 'var(--lp-ink)',
+      fontSize: 12,
+      fontWeight: 700,
+      fontFamily: 'var(--lp-font-mono)',
+    },
+    animationDuration: 700,
+  };
+
+  const lineSeries: Record<string, unknown> = {
+    type: 'line',
+    data: seriesData,
+    smooth: true,
+    symbolSize: 10,
+    lineStyle: { width: 4, color: 'var(--lp-accent)' },
+    itemStyle: { color: 'var(--lp-accent)' },
+    areaStyle: { opacity: 0.15, color: 'var(--lp-accent)' },
+    animationDuration: 900,
+  };
+
+  return {
+    grid: { top: 40, right: 24, bottom: 52, left: 56, containLabel: false },
+    xAxis: {
+      type: 'category',
+      data: categoryData,
+      axisLine: { lineStyle: { color: 'var(--lp-divider)' } },
+      axisTick: { show: false },
+      axisLabel: {
+        color: 'var(--lp-ink2)',
+        fontSize: 12,
+        fontWeight: 600,
+        fontFamily: 'var(--lp-font)',
+        interval: 0,
+      },
+    },
+    yAxis: {
+      type: 'value',
+      splitLine: { lineStyle: { color: 'var(--lp-divider)', opacity: 0.6 } },
+      axisLabel: { color: 'var(--lp-ink3)', fontFamily: 'var(--lp-font-mono)' },
+    },
+    series: [type === 'bar' ? barSeries : lineSeries],
+  };
+}
+
+export function Theme04ChartV1(props: Theme04ChartV1Props): ReactNode {
+  const { kicker, topRightMeta, title, subtitle, type = 'bar', labels = [], data = [], showInsight = true, insight, _slideIdx, _editable } = props;
+
+  const validLabels = labels.slice(0, data.length);
+  const validData = data.slice(0, labels.length);
+  const hasData = validLabels.length > 0 && validData.length > 0;
+  const hasInsight = showInsight !== false && !!insight && (!!insight.value || !!insight.label || !!insight.description);
+
+  return (
+    <div className="lp-slide lp-theme04-chart">
+      <div className="lp-theme04-chart-top lp-rise">
+        {(kicker || topRightMeta) && (
+          <div className="lp-theme04-tag">
+            {kicker && <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="span">{kicker}</EditableField>}
+            {kicker && topRightMeta && <span>·</span>}
+            {topRightMeta && <EditableField prop="topRightMeta" slideIdx={_slideIdx} editable={_editable} as="span">{topRightMeta}</EditableField>}
+          </div>
+        )}
+      </div>
+
+      <div className="lp-theme04-chart-head lp-rise">
+        {renderTitle(title || '', _slideIdx, _editable)}
+        {subtitle && (
+          <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-theme04-chart-subtitle">{subtitle}</EditableField>
+        )}
+      </div>
+
+      <div className="lp-theme04-chart-body">
+        <div className="lp-theme04-chart-wrap lp-rise">
+          {hasData ? (
+            <LpEChart type={type === 'bar' ? 'bar' : 'line'} option={buildOption(type, validLabels, validData)} className="lp-theme04-chart-echart" />
+          ) : (
+            <div className="lp-theme04-chart-empty">请配置图表数据</div>
+          )}
+        </div>
+
+        {hasInsight && (
+          <div className="lp-theme04-chart-insight lp-theme04-card lp-rise">
+            {insight.value && (
+              <EditableField prop="insight.value" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-theme04-chart-insight-value">{insight.value}</EditableField>
+            )}
+            {insight.label && (
+              <EditableField prop="insight.label" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-theme04-chart-insight-sub">{insight.label}</EditableField>
+            )}
+            {insight.description && (
+              <EditableField prop="insight.description" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-theme04-chart-insight-desc">{insight.description}</EditableField>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
