@@ -138,12 +138,19 @@ export const editorScript = `
     updateUndoRedoButtons();
   }
 
+  let autoSaveTimer = null;
   function autoSave() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(goal));
-    } catch (err) {
-      console.warn('自动保存失败', err);
+    if (autoSaveTimer) {
+      clearTimeout(autoSaveTimer);
     }
+    autoSaveTimer = setTimeout(() => {
+      autoSaveTimer = null;
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(goal));
+      } catch (err) {
+        console.warn('自动保存失败', err);
+      }
+    }, 400);
   }
 
   // 获取可编辑元素；兼容 Text 节点、Shadow DOM 等场景
