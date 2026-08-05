@@ -1,0 +1,641 @@
+{
+  "title": "Theme02 霓虹演示",
+  "goal": "展示 theme02 深色霓虹风格的全部 34 个版式",
+  "audience": "设计师 / 产品团队",
+  "owner": "lemonPPT 团队",
+  "theme": "theme02",
+  "language": "zh",
+  "pageCount": 39,
+  "randomSeed": "theme02-neon-20260727-028",
+  "slides": [
+    {
+      "role": "cover",
+      "layout": "theme02_cover_v1",
+      "props": {
+        "kicker": "霓虹主题演示",
+        "title": "Neon Pitch",
+        "subtitle": "深色背景 + 双配色方案 + 科技感版式",
+        "date": "2026.07"
+      }
+    },
+    {
+      "role": "cover",
+      "layout": "theme02_cover_v2",
+      "props": {
+        "kicker": "全屏冲击封面",
+        "title": "Neon Impact",
+        "subtitle": "大字号标题 + 动态霓虹背景渐变 + 光球装饰",
+        "date": "2026.07"
+      }
+    },
+    {
+      "role": "tableOfContents",
+      "layout": "theme02_table_of_contents_v1",
+      "props": {
+        "title": "目录",
+        "subtitle": "CONTENTS",
+        "items": [
+          { "title": "市场背景与机会", "page": "02" },
+          { "title": "产品方案与优势", "page": "04" },
+          { "title": "商业模式与增长", "page": "06" },
+          { "title": "团队与融资计划", "page": "08" }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme02_chapter_v1",
+      "props": {
+        "kicker": "章节",
+        "number": "01",
+        "title": "核心发现",
+        "subtitle": "从数据到洞察的关键转折"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme02_chapter_v2",
+      "props": {
+        "kicker": "霓虹章节",
+        "number": "02",
+        "title": "增长引擎",
+        "subtitle": "用霓虹描边章节号引领视觉焦点"
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme02_metric_big",
+      "props": {
+        "kicker": "核心指标",
+        "title": "年度融资总额",
+        "subtitle": "全年大额融资事件汇总",
+        "value": "970",
+        "unit": "亿美元",
+        "context": "创历史新高，占全美风险投资近三分之一",
+        "metrics": [
+          { "value": "97", "label": "事件笔数", "accent": false },
+          { "value": "≈10 亿", "label": "平均单笔", "accent": false },
+          { "value": "+41%", "label": "Q4 环比", "accent": true },
+          { "value": "Q2-Q3", "label": "高峰区间", "accent": false }
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "+41%",
+          "label": "Q4 环比增长",
+          "description": "下半年增速明显加快，企业客户大额签约成为主要驱动力。"
+        }
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme02_number_showcase_v1",
+      "props": {
+        "kicker": "数字秀",
+        "title": "单季度活跃用户峰值",
+        "value": "450K",
+        "unit": "MAU",
+        "description": "历史最高月活跃用户数，环比增长 38%",
+        "footnote": "数据来源：lemonPPT 数据分析平台 · 2026 Q2"
+      }
+    },
+    {
+      "role": "stats",
+      "layout": "theme02_metrics_v1",
+      "props": {
+        "kicker": "数据墙",
+        "title": "核心指标一览",
+        "subtitle": "用霓虹卡片呈现关键业务数据",
+        "stats": [
+          { "label": "年度营收", "value": "1.2", "unit": "亿元", "tone": "accent" },
+          { "label": "用户增长", "value": "+320", "unit": "%", "tone": "cool" },
+          { "label": "客户满意度", "value": "98", "unit": "%", "tone": "accent2" },
+          { "label": "团队规模", "value": "86", "unit": "人", "tone": "default" }
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "98%",
+          "label": "客户满意度",
+          "description": "产品体验持续获得市场验证，客户留存率稳步提升。"
+        }
+      }
+    },
+    {
+      "role": "stats",
+      "layout": "theme02_stats_v1",
+      "props": {
+        "kicker": "核心指标",
+        "title": "增长数据一览",
+        "subtitle": "用霓虹数字卡片突出关键成果",
+        "stats": [
+          { "label": "注册用户", "value": "120K", "unit": "+" },
+          { "label": "月活跃用户", "value": "45K", "unit": "+" },
+          { "label": "付费转化率", "value": "8.5", "unit": "%" },
+          { "label": "客户续费率", "value": "92", "unit": "%" },
+          { "label": "模板使用量", "value": "2.4M", "unit": "+" },
+          { "label": "NPS 评分", "value": "72", "unit": "" }
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "3.2x",
+          "label": "全年增长倍数",
+          "description": "核心指标呈指数级增长，市场渗透率快速提升。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme02_chart_v1",
+      "props": {
+        "title": "季度营收增长",
+        "kicker": "霓虹图表",
+        "subtitle": "全年四个季度持续上扬",
+        "type": "bar",
+        "labels": ["Q1", "Q2", "Q3", "Q4"],
+        "data": [1800, 2450, 3200, 4150],
+        "unit": "万元",
+        "showInsight": true,
+        "insight": {
+          "headline": "11,600",
+          "subheadline": "FULL-YEAR TOTAL",
+          "items": [
+            { "label": "Q4 环比", "value": "+30%" },
+            { "label": "平均季度", "value": "2,900" }
+          ],
+          "badge": { "text": "Q4 增长最快", "tone": "accent" }
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme02_chart_funnel",
+      "props": {
+        "title": "资金集中度",
+        "kicker": "霓虹漏斗",
+        "subtitle": "资本如何向头部收敛",
+        "data": [
+          { "name": "全市场", "value": 970 },
+          { "name": "头部 10 家", "value": 232 },
+          { "name": "Top 3", "value": 181 },
+          { "name": "单笔最大", "value": 66 }
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "24%",
+          "label": "头部 10 家 = 全市场近 1/4",
+          "description": "少数独角兽反复获得巨额追加投资，头部格局已然确立。"
+        },
+        "footnote": "数据来源：lemonPPT 内部统计 · 2026"
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme02_delta_v1",
+      "props": {
+        "kicker": "今昔对照",
+        "title": "关键指标前后变化",
+        "subtitle": "用霓虹对比卡呈现核心数据跃迁",
+        "items": [
+          { "label": "年度营收", "previous": 0.8, "current": 1.2, "unit": "亿元" },
+          { "label": "用户增长", "previous": 85, "current": 320, "unit": "%" },
+          { "label": "付费转化", "previous": 5.2, "current": 8.5, "unit": "%" },
+          { "label": "客户续费", "previous": 84, "current": 92, "unit": "%" }
+        ],
+        "footnote": "数据来源：lemonPPT 2025-2026 年度经营数据",
+        "showInsight": true,
+        "insight": {
+          "value": "+127%",
+          "label": "平均改善幅度",
+          "description": "所有对照项均实现正增长，运营效率显著提升。"
+        }
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme02_progress_v1",
+      "props": {
+        "kicker": "达成度",
+        "title": "年度目标完成进度",
+        "subtitle": "用霓虹进度条追踪关键 OKR",
+        "items": [
+          { "label": "营收目标", "value": 1.2, "max": 1.5, "unit": "亿元" },
+          { "label": "用户增长", "value": 320, "max": 400, "unit": "%" },
+          { "label": "付费客户", "value": 1200, "max": 1500, "unit": "家" },
+          { "label": "NPS 评分", "value": 72, "max": 80, "unit": "分" }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme02_chart_donut",
+      "props": {
+        "kicker": "环形图拆解",
+        "title": "客户来源构成",
+        "subtitle": "各渠道贡献占比一览",
+        "total": { "value": "100%", "label": "全渠道" },
+        "segments": [
+          { "label": "自然搜索", "labelEn": "Organic", "value": "35", "percent": "35%", "color": "var(--lp-accent)" },
+          { "label": "社交媒体", "labelEn": "Social", "value": "25", "percent": "25%", "color": "var(--lp-accent-cool)" },
+          { "label": "付费广告", "labelEn": "Paid", "value": "20", "percent": "20%", "color": "var(--lp-accent-2)" },
+          { "label": "口碑推荐", "labelEn": "Referral", "value": "15", "percent": "15%", "color": "var(--lp-violet)" },
+          { "label": "其他", "labelEn": "Other", "value": "5", "percent": "5%", "color": "var(--lp-cyan)" }
+        ],
+        "footnote": "数据来源：2026 Q2 营销归因报告",
+        "showInsight": true,
+        "insight": {
+          "value": "35%",
+          "label": "自然搜索占比最高",
+          "description": "自然搜索与社交媒体合计贡献 60% 客户来源，内容营销ROI显著。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme02_chart_heatmap",
+      "props": {
+        "kicker": "月度热力",
+        "title": "用户活跃时段分布",
+        "xAxis": ["周一", "周二", "周三", "周四", "周五"],
+        "yAxis": ["00:00", "06:00", "12:00", "18:00"],
+        "data": [
+          ["周一", "00:00", 12], ["周一", "06:00", 35], ["周一", "12:00", 78], ["周一", "18:00", 95],
+          ["周二", "00:00", 18], ["周二", "06:00", 42], ["周二", "12:00", 82], ["周二", "18:00", 88],
+          ["周三", "00:00", 22], ["周三", "06:00", 48], ["周三", "12:00", 90], ["周三", "18:00", 92],
+          ["周四", "00:00", 15], ["周四", "06:00", 38], ["周四", "12:00", 85], ["周四", "18:00", 97],
+          ["周五", "00:00", 28], ["周五", "06:00", 55], ["周五", "12:00", 75], ["周五", "18:00", 86]
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "97",
+          "label": "周五 18:00 活跃度峰值",
+          "description": "工作日晚间是用户活跃高峰，适合推送关键内容与运营活动。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme02_chart_radar",
+      "props": {
+        "kicker": "能力雷达",
+        "title": "产品能力多维评估",
+        "indicators": [
+          { "name": "性能", "max": 100 },
+          { "name": "稳定性", "max": 100 },
+          { "name": "易用性", "max": 100 },
+          { "name": "扩展性", "max": 100 },
+          { "name": "安全性", "max": 100 }
+        ],
+        "data": [
+          { "name": "当前", "value": [85, 90, 78, 88, 82] },
+          { "name": "目标", "value": [95, 95, 90, 92, 95] }
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "84.6",
+          "label": "当前综合能力均分",
+          "description": "性能与稳定性表现突出，易用性仍有提升空间，建议优先优化交互流程。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme02_chart_gauge",
+      "props": {
+        "kicker": "达成率",
+        "title": "年度目标达成率",
+        "value": 78,
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "showInsight": true,
+        "insight": {
+          "value": "+22%",
+          "label": "较上月提升",
+          "description": "年度目标完成率已接近 80%，按当前增速预计下季度可超额达成。"
+        }
+      }
+    },
+    {
+      "role": "feature",
+      "layout": "theme02_feature_v1",
+      "props": {
+        "kicker": "产品特性",
+        "title": "为什么选择柠檬 PPT",
+        "subtitle": "从生成到交付，每个环节都更高效",
+        "features": [
+          { "title": "AI 一键生成", "description": "基于大模型自动理解需求，生成完整大纲与页面。" },
+          { "title": "主题系统", "description": "深色霓虹、浅色玻璃等多种风格，全局一键切换。" },
+          { "title": "数据可视化", "description": "内置 SVG 图表与洞察面板，数据表达更聚焦。" }
+        ]
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme02_process_v1",
+      "props": {
+        "kicker": "实施路径",
+        "title": "四步上线",
+        "subtitle": "从需求到交付的标准化流程",
+        "steps": [
+          { "title": "需求梳理", "description": "明确受众、目标与核心信息。" },
+          { "title": "AI 生成", "description": "输入主题，自动生成大纲与版式。" },
+          { "title": "视觉调优", "description": "切换配色、替换图片、微调文案。" },
+          { "title": "导出交付", "description": "一键导出 PPTX / PDF / 图片。" }
+        ]
+      }
+    },
+    {
+      "role": "roadmap",
+      "layout": "theme02_roadmap_v1",
+      "props": {
+        "kicker": "产品路线",
+        "title": "未来 12 个月规划",
+        "subtitle": "从基础能力到生态开放的清晰节奏",
+        "phases": [
+          { "phase": "Q1 基础能力", "items": ["编辑器内核重构", "主题系统 2.0", "PPTX 导出优化"] },
+          { "phase": "Q2 智能升级", "items": ["AI 多轮对话生成", "自动配图与数据联动", "协作评论"] },
+          { "phase": "Q3 企业场景", "items": ["品牌资产中心", "权限与版本管理", "私有部署"] },
+          { "phase": "Q4 生态开放", "items": ["模板市场", "开发者 SDK", "开放主题协议"] }
+        ]
+      }
+    },
+    {
+      "role": "comparison",
+      "layout": "theme02_comparison_v1",
+      "props": {
+        "kicker": "方案对比",
+        "title": "传统方式 vs 柠檬 PPT",
+        "subtitle": "从小时级到分钟级的效率跃迁",
+        "leftTitle": "传统 PPT 制作",
+        "rightTitle": "柠檬 PPT 生成",
+        "leftItems": ["手动排版耗时久", "风格难以统一", "协作版本混乱", "数据图表更新慢"],
+        "rightItems": ["AI 一键生成版式", "主题系统全局一致", "云端实时协作", "数据联动自动刷新"]
+      }
+    },
+    {
+      "role": "pricing",
+      "layout": "theme02_pricing_v1",
+      "props": {
+        "kicker": "定价方案",
+        "title": "选择适合你的方案",
+        "subtitle": "从个人创作者到企业团队，灵活扩展",
+        "tiers": [
+          { "name": "免费版", "price": "¥0", "period": "/ 月", "features": ["每月 10 次生成", "3 种基础主题", "PNG 导出"], "cta": "开始使用", "highlight": false },
+          { "name": "专业版", "price": "¥99", "period": "/ 月", "features": ["无限次生成", "全部主题与版式", "PPTX / PDF 导出", "优先客服"], "cta": "立即升级", "highlight": true },
+          { "name": "团队版", "price": "¥399", "period": "/ 月", "features": ["5 人协作", "品牌资产中心", "API 接入", "专属客户成功"], "cta": "联系销售", "highlight": false }
+        ]
+      }
+    },
+    {
+      "role": "gallery",
+      "layout": "theme02_gallery_v1",
+      "props": {
+        "kicker": "图集",
+        "title": "精选图片",
+        "subtitle": "用霓虹边框网格展示产品场景",
+        "images": [
+          { "url": "", "caption": "图片说明 1" },
+          { "url": "", "caption": "图片说明 2" },
+          { "url": "", "caption": "图片说明 3" },
+          { "url": "", "caption": "图片说明 4" }
+        ]
+      }
+    },
+    {
+      "role": "gallery",
+      "layout": "theme02_filmstrip_v1",
+      "props": {
+        "kicker": "影像长卷",
+        "title": "产品故事",
+        "subtitle": "用连续画面讲述关键历程",
+        "images": [
+          { "url": "", "caption": "阶段一" },
+          { "url": "", "caption": "阶段二" },
+          { "url": "", "caption": "阶段三" },
+          { "url": "", "caption": "阶段四" },
+          { "url": "", "caption": "阶段五" }
+        ]
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme02_image_v1",
+      "props": {
+        "kicker": "视觉呈现",
+        "title": "一张图讲清产品价值",
+        "subtitle": "上传高清大图，用霓虹渐变叠加打造科技感封面。",
+        "image": "",
+        "caption": "图注：产品界面示意图"
+      }
+    },
+    {
+      "role": "team",
+      "layout": "theme02_team_v1",
+      "props": {
+        "kicker": "核心团队",
+        "title": "我们是谁",
+        "subtitle": "一支相信技术与设计能改变演示的团队",
+        "members": [
+          { "name": "李雷", "role": "CEO", "bio": "连续创业者，前头部 SaaS 产品负责人。" },
+          { "name": "韩梅梅", "role": "CTO", "bio": "全栈工程师，专注 AI 与渲染引擎。" },
+          { "name": "林涛", "role": "设计总监", "bio": "十年品牌设计经验，深耕视觉系统。" },
+          { "name": "吉姆", "role": "增长负责人", "bio": "数据驱动增长，擅长 B2B 规模化获客。" }
+        ]
+      }
+    },
+    {
+      "role": "timeline",
+      "layout": "theme02_timeline_v1",
+      "props": {
+        "kicker": "里程碑",
+        "title": "发展历程",
+        "subtitle": "从想法到产品的关键节点",
+        "milestones": [
+          { "date": "2022.06", "title": "项目启动", "description": "柠檬 PPT 立项，聚焦 AI 演示生成。" },
+          { "date": "2023.03", "title": "产品上线", "description": "首个版本发布，支持一键生成完整大纲。" },
+          { "date": "2024.01", "title": "规模增长", "description": "累计用户突破 10 万，企业客户签约。" },
+          { "date": "2025.09", "title": "生态开放", "description": "开放主题与模板市场，共建创作者生态。" }
+        ]
+      }
+    },
+    {
+      "role": "quote",
+      "layout": "theme02_quote_v1",
+      "props": {
+        "kicker": "金句",
+        "quote": "好的演示不是信息的堆砌，而是观点的放大。",
+        "author": "柠檬团队",
+        "role": "产品理念",
+        "company": "lemonPPT"
+      }
+    },
+    {
+      "role": "quote",
+      "layout": "theme02_quote_v2",
+      "props": {
+        "quote": "设计不是装饰，而是让复杂信息瞬间被理解的桥梁。",
+        "author": "林涛",
+        "role": "设计总监",
+        "source": "lemonPPT 设计原则"
+      }
+    },
+    {
+      "role": "testimonial",
+      "layout": "theme02_testimonial_v1",
+      "props": {
+        "kicker": "客户评价",
+        "quote": "柠檬 PPT 帮助我们把汇报制作时间从 2 天缩短到 2 小时，团队可以把更多精力放在业务思考上。",
+        "author": "陈晓明",
+        "role": "产品总监",
+        "company": "未来科技有限公司",
+        "avatarUrl": ""
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme02_content_v1",
+      "props": {
+        "kicker": "要点总结",
+        "title": "内容标题",
+        "subtitle": "用霓虹 bullet 列表突出关键信息",
+        "bullets": [
+          "全栈 AI 演示生成，从大纲到成稿一键完成",
+          "双配色方案自由切换，适配不同品牌调性",
+          "SVG 图表 + 洞察面板，数据表达更聚焦"
+        ]
+      }
+    },
+    {
+      "role": "faq",
+      "layout": "theme02_faq_v1",
+      "props": {
+        "kicker": "常见问题",
+        "title": "你可能想知道的",
+        "subtitle": "快速了解柠檬 PPT 的核心能力与使用方式",
+        "items": [
+          { "q": "柠檬 PPT 适合什么场景？", "a": "融资路演、产品发布、季度汇报、培训课件等需要高质量演示的场合。" },
+          { "q": "生成后能否继续编辑？", "a": "可以。编辑器支持直接修改文字、替换图片、调整配色与版式。" },
+          { "q": "导出格式有哪些？", "a": "支持 PPTX、PDF 和高清图片导出，满足不同分发需求。" }
+        ]
+      }
+    },
+    {
+      "role": "partners",
+      "layout": "theme02_partners_v1",
+      "props": {
+        "kicker": "合作伙伴",
+        "title": "他们都在使用",
+        "subtitle": "与领先企业共同推动演示方式升级",
+        "partners": [
+          { "name": "云智科技", "logoUrl": "" },
+          { "name": "未来资本", "logoUrl": "" },
+          { "name": "星辰数据", "logoUrl": "" },
+          { "name": "蓝海传媒", "logoUrl": "" },
+          { "name": "红石咨询", "logoUrl": "" },
+          { "name": "极光设计", "logoUrl": "" },
+          { "name": "万象集团", "logoUrl": "" },
+          { "name": "银河创投", "logoUrl": "" }
+        ]
+      }
+    },
+    {
+      "role": "bento",
+      "layout": "theme02_bento_v1",
+      "props": {
+        "kicker": "Bento",
+        "title": "模块化数据展示",
+        "subtitle": "用不规则网格突出关键数字",
+        "items": [
+          { "label": "年度营收", "value": "1.2", "unit": "亿元", "size": "large" },
+          { "label": "用户增长", "value": "+320", "unit": "%", "size": "medium" },
+          { "label": "NPS", "value": "72", "unit": "分", "size": "small" },
+          { "label": "付费客户", "value": "1,200", "unit": "+", "size": "small" },
+          { "label": "模板数", "value": "150", "unit": "+", "size": "small" }
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "5",
+          "label": "核心增长引擎",
+          "description": "Bento 网格呈现的五项业务均保持双位数增长。"
+        }
+      }
+    },
+    {
+      "role": "table",
+      "layout": "theme02_table_v1",
+      "props": {
+        "kicker": "数据表",
+        "title": "方案对比一览",
+        "subtitle": "多维度评估，辅助决策",
+        "headers": ["维度", "传统方式", "柠檬 PPT"],
+        "rows": [
+          ["制作时间", "2-3 天", "10 分钟"],
+          ["风格一致性", "依赖设计师", "主题系统保证"],
+          ["数据更新", "手动修改", "联动刷新"],
+          ["协作效率", "版本混乱", "实时协作"],
+          ["导出格式", "单一", "PPTX / PDF / 图片"]
+        ],
+        "highlightFirstColumn": true
+      }
+    },
+    {
+      "role": "tags",
+      "layout": "theme02_tags_v1",
+      "props": {
+        "kicker": "标签墙",
+        "title": "关键词云",
+        "subtitle": "一眼看懂用户最关心的能力",
+        "tags": [
+          { "label": "AI", "value": 98, "tone": "accent" },
+          { "label": "自动化", "value": 85, "tone": "positive" },
+          { "label": "可视化", "value": 72 },
+          { "label": "协作", "value": 60 },
+          { "label": "云端", "value": 55 },
+          { "label": "效率", "value": 80, "tone": "positive" },
+          { "label": "设计", "value": 45 },
+          { "label": "品牌", "value": 38 },
+          { "label": "PPTX", "value": 65, "tone": "accent" },
+          { "label": "智能生成", "value": 70 }
+        ]
+      }
+    },
+    {
+      "role": "swot",
+      "layout": "theme02_swot_v1",
+      "props": {
+        "kicker": "战略分析",
+        "title": "SWOT 分析",
+        "subtitle": "看清内外部环境，制定下一步策略",
+        "strength": "AI 生成能力领先，主题系统可扩展，社区活跃度高。",
+        "weakness": "品牌知名度仍在建立，部分高级版式依赖人工设计。",
+        "opportunity": "企业数字化汇报需求增长，AI 工具接受度提升。",
+        "threat": "大厂同类产品布局加速，用户审美要求持续提高。"
+      }
+    },
+    {
+      "role": "pest",
+      "layout": "theme02_pest_v1",
+      "props": {
+        "kicker": "宏观分析",
+        "title": "PEST 分析",
+        "subtitle": "从政策、经济、社会、技术四维度洞察环境",
+        "political": "AI 内容生成监管框架逐步完善，合规化成为产品准入门槛。",
+        "economic": "企业降本增效需求强烈，数字化工具预算占比持续提升。",
+        "social": "远程协作常态化，对轻量化、可分享演示内容的需求激增。",
+        "technological": "大模型多模态能力快速进步，文本到幻灯片的生成质量显著提高。"
+      }
+    },
+    {
+      "role": "closing",
+      "layout": "theme02_closing_v1",
+      "props": {
+        "kicker": "感谢观看",
+        "title": "Let's Build Neon",
+        "subtitle": "用深色霓虹风格点亮下一场演示",
+        "cta": "开始使用",
+        "contact": "柠檬团队",
+        "email": "hello@lemonppt.dev",
+        "link": "lemonppt.dev"
+      }
+    }
+  ]
+}

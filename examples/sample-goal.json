@@ -3,13 +3,14 @@
   "goal": "向早期用户介绍 lemonPPT 的核心能力和使用方式",
   "audience": "AI 工具爱好者 / 内容创作者",
   "owner": "lemonPPT 团队",
-  "theme": "base",
+  "theme": "theme01",
   "language": "zh",
-  "pageCount": 13,
+  "pageCount": 20,
   "randomSeed": "lemon-intro-20260717-001",
   "slides": [
     {
-      "layout": "cover_v1",
+      "role": "cover",
+      "layout": "theme01_cover_v1",
       "props": {
         "kicker": "智能演示 · V0.1",
         "title": "lemonPPT",
@@ -19,9 +20,9 @@
       }
     },
     {
-      "layout": "table_of_contents_v1",
+      "role": "tableOfContents",
+      "layout": "theme01_table_of_contents_v1",
       "props": {
-        "kicker": "目录",
         "title": "今天聊什么",
         "items": [
           "产品定位与核心理念",
@@ -32,49 +33,89 @@
       }
     },
     {
-      "layout": "metric_v1",
+      "role": "metric",
+      "layout": "theme01_metric_v1",
       "props": {
-        "label": "效率提升",
         "value": "10",
         "unit": "倍",
         "description": "相比传统手动排版，制作时间平均缩短 10 倍"
       }
     },
     {
-      "layout": "metric_v2",
+      "role": "metric",
+      "layout": "theme01_metric_v2",
       "props": {
         "kicker": "核心能力",
-        "value": "3",
-        "unit": "步生成",
-        "description": "描述需求、选择主题、导出文件"
+        "title": "三步生成",
+        "metrics": [
+          { "value": "3", "unit": "步", "label": "极简流程" },
+          { "value": "50+", "unit": "版式", "label": "主题覆盖" },
+          { "value": "1", "unit": "键", "label": "导出 PPTX" }
+        ]
       }
     },
     {
-      "layout": "chart_v1",
+      "role": "chart",
+      "layout": "theme01_chart_v1",
       "props": {
         "kicker": "数据洞察",
         "title": "用户增长趋势",
+        "subtitle": "USER GROWTH TREND",
         "type": "bar",
         "labels": ["Q1", "Q2", "Q3", "Q4"],
         "data": [1200, 2100, 3400, 4800],
-        "unit": "人"
+        "unit": "人",
+        "showInsight": true,
+        "insight": {
+          "headline": "11,500",
+          "subheadline": "FULL-YEAR TOTAL",
+          "items": [
+            { "label": "Q4 环比", "value": "+41%" },
+            { "label": "平均季度", "value": "2,875" }
+          ],
+          "badge": { "text": "Q4 增长最快", "tone": "success" }
+        },
+        "footnote": "数据来源：lemonPPT 内部统计 · 2026"
       }
     },
     {
-      "layout": "content_v3",
+      "role": "chart",
+      "layout": "theme01_chart_funnel",
+      "props": {
+        "kicker": "资金集中度",
+        "title": "资金集中度 · 赢家通吃",
+        "subtitle": "CAPITAL CONCENTRATION",
+        "data": [
+          { "name": "全市场", "value": 970 },
+          { "name": "头部 10 家", "value": 232 },
+          { "name": "Top 3", "value": 181 },
+          { "name": "单笔最大", "value": 66 }
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "24%",
+          "label": "头部 10 家 = 全市场近 1/4",
+          "description": "少数独角兽反复获得巨额追加投资，头部格局已然确立。"
+        },
+        "footnote": "数据来源：lemonPPT 内部统计 · 2026"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme01_content_v3",
       "props": {
         "kicker": "产品亮点",
         "title": "AI 驱动的设计引擎",
-        "points": [
-          "自动匹配版式与配色",
-          "支持一键切换主题",
-          "导出可编辑 PPTX"
-        ],
-        "imageUrl": "https://images.unsplash.com/photo-1512314889357-e157c22f938d?w=1280&q=80"
+        "columns": [
+          { "title": "自动版式", "text": "根据内容语义匹配最佳版式，无需手动排版。" },
+          { "title": "主题一致", "text": "全片统一配色、字体与视觉语言。" },
+          { "title": "可编辑导出", "text": "生成后可在线编辑，一键导出 PPTX。" }
+        ]
       }
     },
     {
-      "layout": "content_v2",
+      "role": "content",
+      "layout": "theme01_content_v2",
       "props": {
         "kicker": "适用场景",
         "title": "谁适合用 lemonPPT？",
@@ -91,39 +132,36 @@
       }
     },
     {
-      "layout": "comparison_v2",
+      "role": "comparison",
+      "layout": "theme01_comparison_v2",
       "props": {
         "kicker": "对比",
         "title": "传统方式 vs lemonPPT",
-        "leftTitle": "传统方式",
-        "leftPoints": [
-          "手动排版耗时",
-          "设计门槛高",
-          "重复修改成本高"
-        ],
-        "rightTitle": "lemonPPT",
-        "rightPoints": [
-          "AI 自动排版",
-          "内置专业主题",
-          "可编辑 PPTX 导出"
+        "cards": [
+          { "label": "排版效率", "score": 60, "max": 100, "note": "传统手动排版" },
+          { "label": "设计一致性", "score": 50, "max": 100, "note": "传统方式难以统一" },
+          { "label": "AI 排版", "score": 95, "max": 100, "note": "lemonPPT 自动生成" },
+          { "label": "可编辑导出", "score": 90, "max": 100, "note": "lemonPPT 支持 PPTX" }
         ]
       }
     },
     {
-      "layout": "process_v2",
+      "role": "process",
+      "layout": "theme01_process_v1",
       "props": {
         "kicker": "使用流程",
         "title": "从想法到成稿",
         "steps": [
-          { "title": "输入需求", "description": "用自然语言描述你想表达的内容" },
-          { "title": "AI 生成", "description": "Agent 自动规划结构并选择版式" },
-          { "title": "在线编辑", "description": "在浏览器里调整文字、图片和主题" },
-          { "title": "导出文件", "description": "一键导出 PPTX 或 PDF" }
+          "用自然语言描述你想表达的内容",
+          "Agent 自动规划结构并选择版式",
+          "在浏览器里调整文字、图片和主题",
+          "一键导出 PPTX 或 PDF"
         ]
       }
     },
     {
-      "layout": "swot_v1",
+      "role": "swot",
+      "layout": "theme01_swot_v1",
       "props": {
         "title": "SWOT 分析",
         "strength": "AI 自动生成 + 可编辑，显著降低制作门槛",
@@ -133,7 +171,8 @@
       }
     },
     {
-      "layout": "pest_v1",
+      "role": "pest",
+      "layout": "theme01_pest_v1",
       "props": {
         "title": "PEST 分析",
         "political": "政策鼓励 AI 创新与应用落地",
@@ -143,7 +182,124 @@
       }
     },
     {
-      "layout": "quote_v2",
+      "role": "chart",
+      "layout": "theme01_trend_v1",
+      "props": {
+        "kicker": "用户增长",
+        "title": "月度活跃用户趋势",
+        "series": [
+          {
+            "name": "2025",
+            "data": [
+              { "label": "Q1", "value": 1200 },
+              { "label": "Q2", "value": 2100 },
+              { "label": "Q3", "value": 3400 },
+              { "label": "Q4", "value": 4800 }
+            ]
+          },
+          {
+            "name": "2026",
+            "data": [
+              { "label": "Q1", "value": 5000 },
+              { "label": "Q2", "value": 7200 },
+              { "label": "Q3", "value": 9100 },
+              { "label": "Q4", "value": 12000 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme01_ranking_v1",
+      "props": {
+        "kicker": "功能热度",
+        "title": "最受用户欢迎的功能 TOP5",
+        "unit": "分",
+        "items": [
+          { "label": "一键导出 PPTX", "value": 98 },
+          { "label": "AI 自动排版", "value": 95 },
+          { "label": "主题统一", "value": 88 },
+          { "label": "浏览器在线编辑", "value": 82 },
+          { "label": "多语言支持", "value": 76 }
+        ]
+      }
+    },
+    {
+      "role": "timeline",
+      "layout": "theme01_gantt_v1",
+      "props": {
+        "kicker": "产品路线图",
+        "title": "下半年关键里程碑",
+        "phases": ["7月", "8月", "9月", "10月", "11月", "12月"],
+        "tasks": [
+          { "name": "P0/P1 版式扩展", "start": 0, "end": 30 },
+          { "name": "PDF 导出优化", "start": 15, "end": 45 },
+          { "name": "在线协作", "start": 40, "end": 75 },
+          { "name": "企业版内测", "start": 70, "end": 100 }
+        ]
+      }
+    },
+    {
+      "role": "comparison",
+      "layout": "theme01_quadrant_v1",
+      "props": {
+        "kicker": "优先级矩阵",
+        "title": "功能优先级四象限",
+        "xAxis": "用户价值",
+        "yAxis": "实现成本",
+        "quadrants": [
+          { "label": "高价值 · 低成本", "items": ["一键导出", "主题切换", "自动排版"] },
+          { "label": "高价值 · 高成本", "items": ["实时协作", "AI 助手"] },
+          { "label": "低价值 · 低成本", "items": ["动画预设", "水印设置"] },
+          { "label": "低价值 · 高成本", "items": ["3D 图表", "语音输入"] }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme01_risk_v1",
+      "props": {
+        "kicker": "风险研判",
+        "title": "项目关键风险与应对",
+        "items": [
+          { "risk": "技术实现延期", "impact": "高", "response": "提前进行技术预研，设置缓冲里程碑" },
+          { "risk": "用户需求变化", "impact": "中", "response": "采用敏捷迭代，每两周收集反馈" },
+          { "risk": "竞品价格战", "impact": "中", "response": "强化差异化价值，聚焦企业级服务" },
+          { "risk": "第三方接口不稳定", "impact": "低", "response": "接入多家服务商，实现自动切换" }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme01_outlook_v1",
+      "props": {
+        "kicker": "投资展望",
+        "title": "下半年投资策略",
+        "items": [
+          { "title": "AI 能力", "trend": "大模型成本持续下降，应用层机会凸显", "action": "加大 AI 排版与生成能力投入" },
+          { "title": "企业市场", "trend": "B 端付费意愿增强，订阅模式成熟", "action": "推出企业协作与权限管理功能" },
+          { "title": "出海机会", "trend": "东南亚与拉美市场需求增长", "action": "增加多语言模板与本地化支持" }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme01_region_v1",
+      "props": {
+        "kicker": "地区分布",
+        "title": "用户市场分布",
+        "regions": [
+          { "name": "华东地区", "value": "42%", "change": "+3.2%", "note": "上海、杭州为核心城市" },
+          { "name": "华南地区", "value": "28%", "change": "+1.8%", "note": "深圳、广州增长稳健" },
+          { "name": "华北地区", "value": "18%", "change": "+0.9%", "note": "北京企业客户集中" },
+          { "name": "其他地区", "value": "12%", "change": "+2.1%", "note": "西部与海外市场潜力大" }
+        ]
+      }
+    },
+    {
+      "role": "quote",
+      "layout": "theme01_quote_v2",
       "props": {
         "quote": "最好的 PPT 不是炫技，而是把想法清楚有力地传递出去。",
         "author": "lemonPPT 团队",
@@ -151,7 +307,8 @@
       }
     },
     {
-      "layout": "closing_v2",
+      "role": "closing",
+      "layout": "theme01_closing_v2",
       "props": {
         "title": "开始创作",
         "subtitle": "把你的想法变成高质量演示",
