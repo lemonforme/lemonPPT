@@ -1,0 +1,191 @@
+{
+  "title": "theme05 光谱报告风演示",
+  "goal": "展示 theme05 首批 12 个核心版式",
+  "audience": "数据分析师、咨询顾问、市场研究团队",
+  "theme": "theme05",
+  "colorScheme": "coral",
+  "appearance": "dark",
+  "language": "zh",
+  "pageCount": 12,
+  "slides": [
+    {
+      "role": "cover",
+      "layout": "theme05_cover_v1",
+      "props": {
+        "tag": "DATA REPORT",
+        "title": "2026 全球 AI 大额融资年报",
+        "subtitle": "从资本热度看行业格局演变",
+        "metrics": [
+          { "value": "970", "unit": "亿美元", "label": "全年总额", "accent": true },
+          { "value": "97", "unit": "笔", "label": "大额事件" },
+          { "value": "×3", "unit": "", "label": "估值跃迁" },
+          { "value": "+41%", "unit": "", "label": "Q4 环比" }
+        ],
+        "footnoteLeft": "lemonPPT · 2026",
+        "footnoteRight": "01"
+      }
+    },
+    {
+      "role": "tableOfContents",
+      "layout": "theme05_table_of_contents_v1",
+      "props": {
+        "title": "目录",
+        "subtitle": "CONTENTS",
+        "items": [
+          { "title": "市场背景与机会", "page": "02" },
+          { "title": "产品方案与优势", "page": "04" },
+          { "title": "商业模式与增长", "page": "06" },
+          { "title": "团队与融资计划", "page": "08" }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_chapter_v1",
+      "props": {
+        "tag": "CHAPTER",
+        "number": "01",
+        "title": "核心发现",
+        "subtitle": "从数据到洞察的关键转折"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_content_v1",
+      "props": {
+        "kicker": "KEY POINTS",
+        "title": "核心要点总结",
+        "subtitle": "本章节提炼了三个关键结论",
+        "bullets": [
+          "全栈 AI 演示生成，从大纲到成稿一键完成",
+          "光谱报告风主题，数据表达更聚焦",
+          "双外观模式适配不同交付场景"
+        ],
+        "showConclusion": true,
+        "conclusion": {
+          "value": "+38%",
+          "label": "年度同比增长",
+          "description": "核心指标连续四个季度保持双位数增长。"
+        }
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme05_metric_v1",
+      "props": {
+        "kicker": "CORE METRIC",
+        "title": "年度融资总额",
+        "subtitle": "全年大额融资事件汇总",
+        "value": "970",
+        "unit": "亿美元",
+        "metrics": [
+          { "value": "97", "unit": "笔", "label": "事件笔数" },
+          { "value": "≈10 亿", "unit": "", "label": "平均单笔" },
+          { "value": "+41%", "unit": "", "label": "Q4 环比", "accent": true },
+          { "value": "Q2-Q3", "unit": "", "label": "高峰区间" }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_chart_v1",
+      "props": {
+        "kicker": "TREND",
+        "title": "季度融资额趋势",
+        "subtitle": "全年四个季度持续上扬",
+        "type": "bar",
+        "labels": ["Q1", "Q2", "Q3", "Q4"],
+        "data": [1200, 1850, 2400, 3100],
+        "unit": "亿美元",
+        "showConclusion": true,
+        "conclusion": {
+          "value": "+38%",
+          "label": "年度同比增长",
+          "description": "核心指标连续四个季度保持双位数增长，Q4 受节日营销推动创下新高。"
+        }
+      }
+    },
+    {
+      "role": "table",
+      "layout": "theme05_rank_v1",
+      "props": {
+        "kicker": "RANKING",
+        "title": "赛道融资额排名",
+        "subtitle": "按年度融资总额排序",
+        "rows": [
+          { "rank": 1, "name": "通用大模型", "value": "420 亿", "change": "+24%", "positive": true },
+          { "rank": 2, "name": "AI 基础设施", "value": "245 亿", "change": "+18%", "positive": true },
+          { "rank": 3, "name": "垂直应用", "value": "198 亿", "change": "+12%", "positive": true },
+          { "rank": 4, "name": "AI 芯片", "value": "97 亿", "change": "-5%", "positive": false },
+          { "rank": 5, "name": "其他", "value": "10 亿", "change": "+2%", "positive": true }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_heatmap_v1",
+      "props": {
+        "kicker": "HEATMAP",
+        "title": "月度融资热度矩阵",
+        "subtitle": "颜色越深代表当月融资事件越密集",
+        "months": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+        "values": [80, 65, 120, 180, 220, 260, 210, 190, 170, 200, 240, 310],
+        "peakLabel": "Q2 为全年融资高峰"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_waterfall_v1",
+      "props": {
+        "kicker": "WATERFALL",
+        "title": "年度利润贡献拆解",
+        "subtitle": "从营收到净利润的关键增减项",
+        "items": [
+          { "name": "营业收入", "value": 1200 },
+          { "name": "营业成本", "value": -420 },
+          { "name": "研发费用", "value": -180 },
+          { "name": "销售费用", "value": -120 },
+          { "name": "管理费用", "value": -80 },
+          { "name": "其他收益", "value": 60 }
+        ],
+        "totalLabel": "净利润"
+      }
+    },
+    {
+      "role": "quote",
+      "layout": "theme05_quote_v1",
+      "props": {
+        "quote": "数据不会撒谎，但它只回答你问过的问题。",
+        "source": "— 首席数据官 · 李明"
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme05_image_v1",
+      "props": {
+        "kicker": "SPOTLIGHT",
+        "title": "一张图讲清市场格局",
+        "subtitle": "上传高清大图，用数据标注突出关键信息。",
+        "annotation": {
+          "value": "43%",
+          "label": "头部企业市占率"
+        }
+      }
+    },
+    {
+      "role": "closing",
+      "layout": "theme05_closing_v1",
+      "props": {
+        "kicker": "CONCLUSION",
+        "claim": "AI 融资已进入头部集中、场景分化的成熟阶段。",
+        "points": [
+          { "value": "970 亿", "label": "全年融资总额" },
+          { "value": "97 笔", "label": "大额融资事件" },
+          { "value": "+38%", "label": "年度同比增长" }
+        ],
+        "footnoteLeft": "lemonPPT · 2026",
+        "footnoteRight": "THANK YOU"
+      }
+    }
+  ]
+}

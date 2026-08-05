@@ -1,0 +1,180 @@
+{
+  "title": "theme05 Phase C 新版式验证",
+  "goal": "验证 10 个新版式的 PPTX 导出",
+  "audience": "开发团队",
+  "theme": "theme05",
+  "colorScheme": "coral",
+  "appearance": "light",
+  "language": "zh",
+  "pageCount": 10,
+  "slides": [
+    {
+      "role": "content",
+      "layout": "theme05_bento_v1",
+      "props": {
+        "kicker": "BENTO",
+        "title": "一图速览",
+        "subtitle": "核心数据模块化呈现",
+        "items": [
+          { "title": "全年融资总额", "value": "970", "description": "亿美元，同比 +23%", "scheme": "coral", "span": "2" },
+          { "title": "大额事件", "value": "97", "description": "笔单笔超 5 亿美元交易", "scheme": "amber", "span": "1" },
+          { "title": "平均单笔", "value": "≈10", "description": "亿美元", "scheme": "teal", "span": "1" },
+          { "title": "头部集中度", "value": "68", "description": "TOP3 赛道占比", "scheme": "indigo", "span": "1" },
+          { "title": "晚期轮次", "value": "74", "description": "C 轮及以后占比", "scheme": "violet", "span": "1" }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_case_v1",
+      "props": {
+        "kicker": "CASE STUDY",
+        "title": "典型案例",
+        "subtitle": "从需求到落地的完整闭环",
+        "company": "Anthropic",
+        "metric": { "value": "9650", "label": "亿美元估值" },
+        "challenge": "如何在快速扩张的同时保持 AI 系统的安全性与可控性。",
+        "solution": "引入 Constitutional AI，通过自我监督与反馈机制训练更可解释的大模型。",
+        "result": "在一年内完成多轮大额融资，估值跃升至全球 AI 初创公司首位。"
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme05_editorial_v1",
+      "props": {
+        "kicker": "EDITORIAL",
+        "title": "深度特写：一场视觉叙事",
+        "subtitle": "用一张大图与一段引言，传递最有力的观点。",
+        "imageSide": "left",
+        "body": "杂志跨页适合用一段简洁有力的叙述，配合一张高质量大图，帮助受众快速建立情感连接与核心认知。",
+        "pullQuote": "「一张图胜过千言万语，而一句精准的话能让图更有力量。」"
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme05_gallery_v1",
+      "props": {
+        "kicker": "GALLERY",
+        "title": "项目现场一览",
+        "subtitle": "用一组高清图片直观呈现关键场景。",
+        "items": [
+          { "caption": "方案设计" },
+          { "caption": "实施过程" },
+          { "caption": "交付成果" }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_profile_v1",
+      "props": {
+        "kicker": "PROFILE",
+        "title": "核心人物",
+        "subtitle": "推动本轮融资的关键决策者",
+        "name": "Dario Amodei",
+        "role": "联合创始人兼 CEO",
+        "company": "Anthropic",
+        "quote": "可解释、可控的 AI 系统比单纯追求规模更符合长远利益。",
+        "facts": [
+          { "label": "任职时间", "value": "2021 年至今" },
+          { "label": "前雇主", "value": "OpenAI" },
+          { "label": "核心贡献", "value": "Constitutional AI" },
+          { "label": "教育背景", "value": "斯坦福、普林斯顿" }
+        ]
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme05_roadmap_v1",
+      "props": {
+        "kicker": "ROADMAP",
+        "title": "未来三年落地路线图",
+        "subtitle": "从试点验证到规模推广，分阶段推进。",
+        "phases": [
+          { "title": "试点验证", "period": "2025 Q1", "description": "聚焦核心场景，完成 MVP 验证与效果评估。", "scheme": "coral" },
+          { "title": "工具集成", "period": "2025 Q2-Q3", "description": "嵌入现有工作流，建立标准化交付模板。", "scheme": "amber" },
+          { "title": "规模推广", "period": "2025 Q4", "description": "复制到全团队，沉淀最佳实践与培训体系。", "scheme": "teal" },
+          { "title": "持续运营", "period": "2026 起", "description": "建立数据监测与迭代机制，保持长期增长。", "scheme": "indigo" }
+        ]
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme05_scorecards_v1",
+      "props": {
+        "kicker": "SCORECARDS",
+        "title": "资本风向标",
+        "subtitle": "四维度追踪市场核心指标",
+        "cards": [
+          { "label": "全年融资总额", "value": "970", "unit": "亿美元", "change": "+23%", "positive": true, "scheme": "coral" },
+          { "label": "大额事件数量", "value": "97", "unit": "笔", "change": "+12%", "positive": true, "scheme": "amber" },
+          { "label": "平均单笔规模", "value": "≈10", "unit": "亿", "change": "-5%", "positive": false, "scheme": "teal" },
+          { "label": "头部赛道集中度", "value": "68", "unit": "%", "change": "+8%", "positive": true, "scheme": "indigo" }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_donut_v1",
+      "props": {
+        "kicker": "DISTRIBUTION",
+        "title": "融资阶段分布",
+        "subtitle": "早期与成长期项目仍占主导",
+        "unit": "亿美元",
+        "items": [
+          { "name": "种子 / 天使", "value": 28, "scheme": "coral" },
+          { "name": "A 轮", "value": 35, "scheme": "amber" },
+          { "name": "B 轮", "value": 22, "scheme": "teal" },
+          { "name": "C 轮及以上", "value": 12, "scheme": "indigo" },
+          { "name": "战略融资", "value": 8, "scheme": "violet" }
+        ],
+        "showConclusion": true,
+        "conclusion": {
+          "value": "63%",
+          "label": "早期项目占比",
+          "description": "种子至 A 轮项目合计超过六成，市场仍处于快速孵化与验证阶段。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_radar_v1",
+      "props": {
+        "kicker": "RADAR",
+        "title": "产品能力雷达评估",
+        "subtitle": "多维度对比核心竞品能力分布",
+        "indicators": [
+          { "name": "技术领先性", "max": 100 },
+          { "name": "商业兑现", "max": 100 },
+          { "name": "生态规模", "max": 100 },
+          { "name": "易用性", "max": 100 },
+          { "name": "成本效率", "max": 100 },
+          { "name": "安全合规", "max": 100 }
+        ],
+        "series": [
+          { "name": "我方产品", "values": [85, 72, 68, 90, 78, 82], "scheme": "coral" },
+          { "name": "行业平均", "values": [68, 65, 75, 70, 72, 66], "scheme": "indigo" }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_treemap_v1",
+      "props": {
+        "kicker": "TREEMAP",
+        "title": "AI 赛道融资版图",
+        "subtitle": "矩形面积代表该赛道年度融资总额",
+        "items": [
+          { "name": "大模型", "value": 420, "scheme": "coral" },
+          { "name": "AI 基础设施", "value": 310, "scheme": "amber" },
+          { "name": "企业智能体", "value": 240, "scheme": "teal" },
+          { "name": "具身智能", "value": 180, "scheme": "indigo" },
+          { "name": "AI 安全", "value": 120, "scheme": "violet" },
+          { "name": "垂直应用", "value": 95, "scheme": "coral" },
+          { "name": "开发者工具", "value": 70, "scheme": "amber" },
+          { "name": "硬件算力", "value": 55, "scheme": "teal" }
+        ]
+      }
+    }
+  ]
+}

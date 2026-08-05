@@ -1,0 +1,1630 @@
+{
+  "title": "theme05 全量版式 PDF 验证",
+  "goal": "验证 theme05 所有版式的 PDF 导出渲染",
+  "audience": "内部验证",
+  "theme": "theme05",
+  "colorScheme": "coral",
+  "appearance": "dark",
+  "language": "zh",
+  "pageCount": 52,
+  "randomSeed": "theme05-pdf-audit",
+  "slides": [
+    {
+      "role": "cover",
+      "layout": "theme05_cover_ex_v1",
+      "props": {
+        "tag": "DATA REPORT",
+        "title": "2026 全球 AI 大额融资年报",
+        "subtitle": "从资本热度看行业格局演变",
+        "stats": [
+          {
+            "value": "970",
+            "unit": "亿美元",
+            "label": "年度融资总额",
+            "scheme": "coral"
+          },
+          {
+            "value": "128",
+            "unit": "笔",
+            "label": "大额交易数量",
+            "scheme": "amber"
+          },
+          {
+            "value": "+38%",
+            "unit": "",
+            "label": "年度同比增长",
+            "scheme": "teal"
+          },
+          {
+            "value": "12",
+            "unit": "家",
+            "label": "新晋独角兽",
+            "scheme": "indigo"
+          }
+        ],
+        "footnoteLeft": "lemonPPT · 2026",
+        "footnoteRight": "01"
+      }
+    },
+    {
+      "role": "cover",
+      "layout": "theme05_cover_ex_v2",
+      "props": {
+        "tag": "DATA REPORT",
+        "title": "2026 全球 AI 大额融资年报",
+        "subtitle": "从资本热度看行业格局演变",
+        "backgroundNumber": "2026",
+        "highlights": [
+          {
+            "text": "大额融资",
+            "scheme": "coral"
+          },
+          {
+            "text": "行业研究",
+            "scheme": "amber"
+          },
+          {
+            "text": "趋势洞察",
+            "scheme": "teal"
+          }
+        ],
+        "footnoteLeft": "lemonPPT · 2026",
+        "footnoteRight": "01"
+      }
+    },
+    {
+      "role": "cover",
+      "layout": "theme05_cover_hero_v1",
+      "props": {
+        "tag": "DATA REPORT",
+        "title": "2026 全球 AI 大额融资年报",
+        "subtitle": "从资本热度看行业格局演变",
+        "image": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221280%22%20height%3D%22720%22%20viewBox%3D%220%200%201280%20720%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23334155%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231e293b%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23g)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22rgba(255%2C255%2C255%2C0.06)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%2240%22%20fill%3D%22rgba(255%2C255%2C255%2C0.7)%22%3E%E7%82%B9%E5%87%BB%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+        "overlayScheme": "indigo",
+        "footnoteLeft": "lemonPPT · 2026",
+        "footnoteRight": "01"
+      }
+    },
+    {
+      "role": "cover",
+      "layout": "theme05_cover_v1",
+      "props": {
+        "tag": "DATA REPORT",
+        "title": "2026 全球 AI 大额融资年报",
+        "subtitle": "从资本热度看行业格局演变",
+        "metrics": [
+          {
+            "value": "970",
+            "unit": "亿美元",
+            "label": "全年总额",
+            "accent": true
+          },
+          {
+            "value": "97",
+            "unit": "笔",
+            "label": "大额事件"
+          },
+          {
+            "value": "×3",
+            "unit": "",
+            "label": "估值跃迁"
+          },
+          {
+            "value": "+41%",
+            "unit": "",
+            "label": "Q4 环比"
+          }
+        ],
+        "footnoteLeft": "lemonPPT · 2026",
+        "footnoteRight": "01"
+      }
+    },
+    {
+      "role": "tableOfContents",
+      "layout": "theme05_table_of_contents_v1",
+      "props": {
+        "title": "目录",
+        "subtitle": "CONTENTS",
+        "items": [
+          {
+            "title": "市场背景与机会",
+            "page": "02"
+          },
+          {
+            "title": "产品方案与优势",
+            "page": "04"
+          },
+          {
+            "title": "商业模式与增长",
+            "page": "06"
+          },
+          {
+            "title": "团队与融资计划",
+            "page": "08"
+          }
+        ]
+      }
+    },
+    {
+      "role": "tableOfContents",
+      "layout": "theme05_table_of_contents_v2",
+      "props": {
+        "title": "目录",
+        "subtitle": "CONTENTS",
+        "items": [
+          {
+            "title": "市场背景与机会",
+            "page": "02"
+          },
+          {
+            "title": "产品方案与优势",
+            "page": "04"
+          },
+          {
+            "title": "商业模式与增长",
+            "page": "06"
+          },
+          {
+            "title": "团队与融资计划",
+            "page": "08"
+          },
+          {
+            "title": "落地路径与里程碑",
+            "page": "10"
+          },
+          {
+            "title": "财务预测与愿景",
+            "page": "12"
+          }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_bento_v1",
+      "props": {
+        "kicker": "BENTO",
+        "title": "一图速览",
+        "subtitle": "核心数据模块化呈现",
+        "items": [
+          {
+            "title": "全年融资总额",
+            "value": "970",
+            "description": "亿美元，同比 +23%",
+            "scheme": "coral",
+            "span": "2"
+          },
+          {
+            "title": "大额事件",
+            "value": "97",
+            "description": "笔单笔超 5 亿美元交易",
+            "scheme": "amber",
+            "span": "1"
+          },
+          {
+            "title": "平均单笔",
+            "value": "≈10",
+            "description": "亿美元",
+            "scheme": "teal",
+            "span": "1"
+          },
+          {
+            "title": "头部集中度",
+            "value": "68",
+            "description": "TOP3 赛道占比",
+            "scheme": "indigo",
+            "span": "1"
+          },
+          {
+            "title": "晚期轮次",
+            "value": "74",
+            "description": "C 轮及以后占比",
+            "scheme": "violet",
+            "span": "1"
+          }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_case_v1",
+      "props": {
+        "kicker": "CASE STUDY",
+        "title": "典型案例",
+        "subtitle": "从需求到落地的完整闭环",
+        "company": "Anthropic",
+        "metric": {
+          "value": "9650",
+          "label": "亿美元估值"
+        },
+        "challenge": "如何在快速扩张的同时保持 AI 系统的安全性与可控性。",
+        "solution": "引入 Constitutional AI，通过自我监督与反馈机制训练更可解释的大模型。",
+        "result": "在一年内完成多轮大额融资，估值跃升至全球 AI 初创公司首位。"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_chapter_big_v1",
+      "props": {
+        "tag": "CHAPTER",
+        "title": "核心发现",
+        "subtitle": "从数据到洞察的关键转折"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_chapter_image_v1",
+      "props": {
+        "number": "01",
+        "title": "核心发现",
+        "subtitle": "从数据到洞察的关键转折",
+        "image": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221280%22%20height%3D%22720%22%20viewBox%3D%220%200%201280%20720%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23334155%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231e293b%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23g)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22rgba(255%2C255%2C255%2C0.06)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%2240%22%20fill%3D%22rgba(255%2C255%2C255%2C0.7)%22%3E%E7%82%B9%E5%87%BB%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_chapter_numbered_v1",
+      "props": {
+        "number": "01",
+        "title": "核心发现",
+        "subtitle": "从数据到洞察的关键转折"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_chapter_split_v1",
+      "props": {
+        "number": "01",
+        "title": "核心发现",
+        "subtitle": "从数据到洞察的关键转折"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_chapter_v1",
+      "props": {
+        "tag": "CHAPTER",
+        "number": "01",
+        "title": "核心发现",
+        "subtitle": "从数据到洞察的关键转折"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_content_v1",
+      "props": {
+        "kicker": "KEY POINTS",
+        "title": "核心要点总结",
+        "subtitle": "本章节提炼了三个关键结论",
+        "bullets": [
+          "全栈 AI 演示生成，从大纲到成稿一键完成",
+          "光谱报告风主题，数据表达更聚焦",
+          "双外观模式适配不同交付场景"
+        ],
+        "showConclusion": true,
+        "conclusion": {
+          "value": "+38%",
+          "label": "年度同比增长",
+          "description": "核心指标连续四个季度保持双位数增长。"
+        }
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_matrix_v1",
+      "props": {
+        "kicker": "定位矩阵",
+        "title": "{{赛道}}吸引力矩阵",
+        "subtitle": "按市场规模与竞争密度划分的四象限",
+        "xAxis": {
+          "low": "低规模",
+          "high": "高规模"
+        },
+        "yAxis": {
+          "low": "低密度",
+          "high": "高密度"
+        },
+        "items": [
+          {
+            "title": "明星赛道",
+            "description": "规模大、竞争密度高，资本持续加注。",
+            "scheme": "coral"
+          },
+          {
+            "title": "潜力赛道",
+            "description": "规模尚小但增速快，早期机会显著。",
+            "scheme": "teal"
+          },
+          {
+            "title": "成熟赛道",
+            "description": "规模大但格局稳定，增量空间有限。",
+            "scheme": "amber"
+          },
+          {
+            "title": "观望赛道",
+            "description": "规模与密度均低，仍需验证。",
+            "scheme": "indigo"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_profile_v1",
+      "props": {
+        "kicker": "PROFILE",
+        "title": "核心人物",
+        "subtitle": "推动本轮融资的关键决策者",
+        "name": "Dario Amodei",
+        "role": "联合创始人兼 CEO",
+        "company": "Anthropic",
+        "quote": "可解释、可控的 AI 系统比单纯追求规模更符合长远利益。",
+        "facts": [
+          {
+            "label": "任职时间",
+            "value": "2021 年至今"
+          },
+          {
+            "label": "前雇主",
+            "value": "OpenAI"
+          },
+          {
+            "label": "核心贡献",
+            "value": "Constitutional AI"
+          },
+          {
+            "label": "教育背景",
+            "value": "斯坦福、普林斯顿"
+          }
+        ],
+        "avatarUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22300%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2394a3b8%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2364748b%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23g)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22rgba(255%2C255%2C255%2C0.06)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%2214%22%20fill%3D%22rgba(255%2C255%2C255%2C0.7)%22%3E%E5%A4%B4%E5%83%8F%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme05_risk_v1",
+      "props": {
+        "kicker": "RISK ASSESSMENT",
+        "title": "关键风险与应对",
+        "subtitle": "识别潜在不确定性，提前准备缓冲方案。",
+        "items": [
+          {
+            "risk": "估值回调",
+            "impact": "高",
+            "response": "优先持有收入可验证资产，减少纯叙事敞口。",
+            "scheme": "coral"
+          },
+          {
+            "risk": "监管收紧",
+            "impact": "中",
+            "response": "布局合规工具链与模型审计能力。",
+            "scheme": "amber"
+          },
+          {
+            "risk": "技术迭代",
+            "impact": "高",
+            "response": "保持模型接口弹性，避免单点绑定。",
+            "scheme": "teal"
+          },
+          {
+            "risk": "人才竞争",
+            "impact": "中",
+            "response": "构建内部 AI 卓越中心，降低外部依赖。",
+            "scheme": "indigo"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme05_metric_capacity_v1",
+      "props": {
+        "kicker": "CAPACITY",
+        "title": "产能利用率对比",
+        "subtitle": "各业务线当前产能与目标产能对比",
+        "items": [
+          {
+            "name": "云端算力",
+            "value": 78,
+            "max": 100,
+            "unit": "%",
+            "scheme": "coral"
+          },
+          {
+            "name": "存储资源",
+            "value": 62,
+            "max": 100,
+            "unit": "%",
+            "scheme": "amber"
+          },
+          {
+            "name": "网络带宽",
+            "value": 45,
+            "max": 100,
+            "unit": "%",
+            "scheme": "teal"
+          },
+          {
+            "name": "人力投入",
+            "value": 91,
+            "max": 100,
+            "unit": "%",
+            "scheme": "indigo"
+          }
+        ]
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme05_metric_delta_v1",
+      "props": {
+        "kicker": "GROWTH",
+        "title": "年度融资同比增长",
+        "subtitle": "2026 年相较 2025 年实现显著增长",
+        "currentValue": "970",
+        "currentUnit": "亿美元",
+        "currentLabel": "2026 年",
+        "previousValue": "703",
+        "previousUnit": "亿美元",
+        "previousLabel": "2025 年",
+        "delta": "+38%",
+        "deltaLabel": "年度同比增长",
+        "labels": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
+        "data": [
+          180,
+          220,
+          260,
+          310
+        ]
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme05_metric_hero_v1",
+      "props": {
+        "kicker": "CORE METRIC",
+        "title": "年度融资总额",
+        "subtitle": "全年大额融资事件汇总",
+        "value": "970",
+        "unit": "亿美元",
+        "change": "+38%",
+        "changeLabel": "年度同比增长"
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme05_metric_v1",
+      "props": {
+        "kicker": "CORE METRIC",
+        "title": "年度融资总额",
+        "subtitle": "全年大额融资事件汇总",
+        "value": "970",
+        "unit": "亿美元",
+        "metrics": [
+          {
+            "value": "97",
+            "unit": "笔",
+            "label": "事件笔数"
+          },
+          {
+            "value": "≈10 亿",
+            "unit": "",
+            "label": "平均单笔"
+          },
+          {
+            "value": "+41%",
+            "unit": "",
+            "label": "Q4 环比",
+            "accent": true
+          },
+          {
+            "value": "Q2-Q3",
+            "unit": "",
+            "label": "高峰区间"
+          }
+        ]
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme05_scorecards_v1",
+      "props": {
+        "kicker": "SCORECARDS",
+        "title": "资本风向标",
+        "subtitle": "四维度追踪市场核心指标",
+        "cards": [
+          {
+            "label": "全年融资总额",
+            "value": "970",
+            "unit": "亿美元",
+            "change": "+23%",
+            "positive": true,
+            "scheme": "coral"
+          },
+          {
+            "label": "大额事件数量",
+            "value": "97",
+            "unit": "笔",
+            "change": "+12%",
+            "positive": true,
+            "scheme": "amber"
+          },
+          {
+            "label": "平均单笔规模",
+            "value": "≈10",
+            "unit": "亿",
+            "change": "-5%",
+            "positive": false,
+            "scheme": "teal"
+          },
+          {
+            "label": "头部赛道集中度",
+            "value": "68",
+            "unit": "%",
+            "change": "+8%",
+            "positive": true,
+            "scheme": "indigo"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_bubble_v1",
+      "props": {
+        "kicker": "估值分布",
+        "title": "{{AI 独角兽}}估值与增速分布",
+        "subtitle": "横轴为估值，纵轴为同比增速，气泡大小代表累计融资额",
+        "xAxisLabel": "估值（亿美元）",
+        "yAxisLabel": "同比增速（%）",
+        "unit": "亿美元",
+        "items": [
+          {
+            "name": "OpenAI",
+            "x": 1570,
+            "y": 41,
+            "value": 970,
+            "scheme": "coral"
+          },
+          {
+            "name": "Anthropic",
+            "x": 184,
+            "y": 120,
+            "value": 77,
+            "scheme": "teal"
+          },
+          {
+            "name": "xAI",
+            "x": 240,
+            "y": 300,
+            "value": 60,
+            "scheme": "indigo"
+          },
+          {
+            "name": "Databricks",
+            "x": 430,
+            "y": 25,
+            "value": 50,
+            "scheme": "amber"
+          },
+          {
+            "name": "CoreWeave",
+            "x": 70,
+            "y": 180,
+            "value": 35,
+            "scheme": "violet"
+          },
+          {
+            "name": "Scale AI",
+            "x": 138,
+            "y": 60,
+            "value": 25,
+            "scheme": "teal"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_chart_cumulative_v1",
+      "props": {
+        "kicker": "CUMULATIVE",
+        "title": "年度融资累计走势",
+        "subtitle": "全年融资额逐月累计增长",
+        "labels": [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月"
+        ],
+        "data": [
+          45,
+          52,
+          48,
+          61,
+          58,
+          72,
+          68,
+          75,
+          82,
+          79,
+          88,
+          95
+        ],
+        "unit": "亿美元",
+        "conclusion": {
+          "value": "970",
+          "label": "年度累计融资额",
+          "description": "截至年末，全年融资累计额达到历史新高。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_chart_curve_v1",
+      "props": {
+        "kicker": "CURVE",
+        "title": "融资额走势曲线",
+        "subtitle": "全年融资额呈现明显的波动上升趋势",
+        "labels": [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月"
+        ],
+        "data": [
+          45,
+          52,
+          48,
+          61,
+          58,
+          72,
+          68,
+          75,
+          82,
+          79,
+          88,
+          95
+        ],
+        "unit": "亿美元",
+        "smooth": true,
+        "showArea": true,
+        "conclusion": {
+          "value": "Q4 峰值",
+          "label": "单季融资额创新高",
+          "description": "年末融资额达到全年最高点，受大型并购和 IPO 前融资推动。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_chart_funnel_v1",
+      "props": {
+        "kicker": "CONVERSION",
+        "title": "从曝光到成交的转化漏斗",
+        "subtitle": "每一层的流失都代表可优化的空间",
+        "stages": [
+          {
+            "name": "曝光",
+            "value": 100000,
+            "scheme": "coral"
+          },
+          {
+            "name": "点击",
+            "value": 42000,
+            "scheme": "amber"
+          },
+          {
+            "name": "访问",
+            "value": 18000,
+            "scheme": "teal"
+          },
+          {
+            "name": "线索",
+            "value": 5600,
+            "scheme": "indigo"
+          },
+          {
+            "name": "成交",
+            "value": 1200,
+            "scheme": "violet"
+          }
+        ],
+        "showConclusion": true,
+        "conclusion": {
+          "value": "1.2%",
+          "label": "最终成交转化率",
+          "description": "从曝光到成交的整体转化率偏低，需重点优化访问到线索环节。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_chart_gauge_v1",
+      "props": {
+        "kicker": "GAUGE",
+        "title": "年度目标达成率",
+        "subtitle": "核心 KPI 当前完成进度",
+        "value": 78,
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "label": "达成率",
+        "scheme": "coral"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_chart_peak_v1",
+      "props": {
+        "kicker": "PEAK",
+        "title": "单季融资峰值",
+        "subtitle": "标注全年最高点及其驱动因素",
+        "labels": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
+        "data": [
+          155,
+          198,
+          234,
+          287
+        ],
+        "unit": "亿美元",
+        "peakIndex": 3,
+        "conclusion": {
+          "value": "Q4",
+          "label": "全年融资峰值",
+          "description": "四季度受大型并购和 IPO 前融资推动，单季融资额达到全年最高点。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_chart_peaktrough_v1",
+      "props": {
+        "kicker": "PEAK & TROUGH",
+        "title": "融资额峰谷波动",
+        "subtitle": "标注全年最高点与最低点",
+        "labels": [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月"
+        ],
+        "data": [
+          45,
+          52,
+          38,
+          61,
+          58,
+          72,
+          68,
+          75,
+          82,
+          79,
+          88,
+          95
+        ],
+        "unit": "亿美元",
+        "peakIndex": 11,
+        "troughIndex": 2,
+        "conclusion": {
+          "value": "3.2x",
+          "label": "峰谷差距",
+          "description": "最高点融资额是最低点的 3.2 倍，市场波动显著。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_chart_share_v1",
+      "props": {
+        "kicker": "SHARE",
+        "title": "市场占比分布",
+        "subtitle": "头部企业与长尾玩家的份额对比",
+        "unit": "%",
+        "items": [
+          {
+            "name": "头部企业",
+            "value": 42,
+            "scheme": "coral"
+          },
+          {
+            "name": "成长型企业",
+            "value": 28,
+            "scheme": "amber"
+          },
+          {
+            "name": "初创企业",
+            "value": 18,
+            "scheme": "teal"
+          },
+          {
+            "name": "其他",
+            "value": 12,
+            "scheme": "indigo"
+          }
+        ],
+        "conclusion": {
+          "value": "42%",
+          "label": "头部企业市占率",
+          "description": "头部企业占据超过四成市场份额，行业集中度持续提升。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_chart_stacked_v1",
+      "props": {
+        "kicker": "COMPOSITION",
+        "title": "季度资本构成",
+        "subtitle": "各阶段融资额在不同季度的堆叠分布",
+        "type": "bar",
+        "labels": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
+        "series": [
+          {
+            "name": "种子 / 天使",
+            "data": [
+              12,
+              14,
+              16,
+              18
+            ],
+            "scheme": "coral"
+          },
+          {
+            "name": "A 轮",
+            "data": [
+              18,
+              22,
+              25,
+              28
+            ],
+            "scheme": "amber"
+          },
+          {
+            "name": "B 轮",
+            "data": [
+              14,
+              16,
+              18,
+              22
+            ],
+            "scheme": "teal"
+          },
+          {
+            "name": "C 轮及以上",
+            "data": [
+              10,
+              12,
+              14,
+              16
+            ],
+            "scheme": "indigo"
+          }
+        ],
+        "unit": "亿美元",
+        "conclusion": {
+          "value": "+38%",
+          "label": "Q4 环比增长",
+          "description": "四季度各阶段融资额全面上升，成长期项目贡献最大增量。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_chart_v1",
+      "props": {
+        "kicker": "TREND",
+        "title": "季度融资额趋势",
+        "subtitle": "全年四个季度持续上扬",
+        "type": "bar",
+        "labels": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
+        "data": [
+          1200,
+          1850,
+          2400,
+          3100
+        ],
+        "unit": "亿美元",
+        "showConclusion": true,
+        "conclusion": {
+          "value": "+38%",
+          "label": "年度同比增长",
+          "description": "核心指标连续四个季度保持双位数增长，Q4 受节日营销推动创下新高。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_donut_v1",
+      "props": {
+        "kicker": "DISTRIBUTION",
+        "title": "融资阶段分布",
+        "subtitle": "早期与成长期项目仍占主导",
+        "unit": "亿美元",
+        "items": [
+          {
+            "name": "种子 / 天使",
+            "value": 28,
+            "scheme": "coral"
+          },
+          {
+            "name": "A 轮",
+            "value": 35,
+            "scheme": "amber"
+          },
+          {
+            "name": "B 轮",
+            "value": 22,
+            "scheme": "teal"
+          },
+          {
+            "name": "C 轮及以上",
+            "value": 12,
+            "scheme": "indigo"
+          },
+          {
+            "name": "战略融资",
+            "value": 8,
+            "scheme": "violet"
+          }
+        ],
+        "showConclusion": true,
+        "conclusion": {
+          "value": "63%",
+          "label": "早期项目占比",
+          "description": "种子至 A 轮项目合计超过六成，市场仍处于快速孵化与验证阶段。"
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_heatmap_v1",
+      "props": {
+        "kicker": "HEATMAP",
+        "title": "月度融资热度矩阵",
+        "subtitle": "颜色越深代表当月融资事件越密集",
+        "months": [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月"
+        ],
+        "values": [
+          80,
+          65,
+          120,
+          180,
+          220,
+          260,
+          210,
+          190,
+          170,
+          200,
+          240,
+          310
+        ],
+        "peakLabel": "Q2 为全年融资高峰"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_map_v1",
+      "props": {
+        "kicker": "地区分布",
+        "title": "{{AI 融资}}的区域分布",
+        "subtitle": "按融资金额排序的主要地区",
+        "unit": "亿美元",
+        "items": [
+          {
+            "name": "北美",
+            "value": 620,
+            "scheme": "coral"
+          },
+          {
+            "name": "中国",
+            "value": 180,
+            "scheme": "teal"
+          },
+          {
+            "name": "欧洲",
+            "value": 95,
+            "scheme": "indigo"
+          },
+          {
+            "name": "亚太其他",
+            "value": 48,
+            "scheme": "amber"
+          },
+          {
+            "name": "中东",
+            "value": 18,
+            "scheme": "violet"
+          },
+          {
+            "name": "拉美",
+            "value": 9,
+            "scheme": "teal"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_radar_v1",
+      "props": {
+        "kicker": "RADAR",
+        "title": "产品能力雷达评估",
+        "subtitle": "多维度对比核心竞品能力分布",
+        "indicators": [
+          {
+            "name": "技术领先性",
+            "max": 100
+          },
+          {
+            "name": "商业兑现",
+            "max": 100
+          },
+          {
+            "name": "生态规模",
+            "max": 100
+          },
+          {
+            "name": "易用性",
+            "max": 100
+          },
+          {
+            "name": "成本效率",
+            "max": 100
+          },
+          {
+            "name": "安全合规",
+            "max": 100
+          }
+        ],
+        "series": [
+          {
+            "name": "我方产品",
+            "values": [
+              85,
+              72,
+              68,
+              90,
+              78,
+              82
+            ],
+            "scheme": "coral"
+          },
+          {
+            "name": "行业平均",
+            "values": [
+              68,
+              65,
+              75,
+              70,
+              72,
+              66
+            ],
+            "scheme": "indigo"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_treemap_v1",
+      "props": {
+        "kicker": "TREEMAP",
+        "title": "AI 赛道融资版图",
+        "subtitle": "矩形面积代表该赛道年度融资总额",
+        "items": [
+          {
+            "name": "大模型",
+            "value": 420,
+            "scheme": "coral"
+          },
+          {
+            "name": "AI 基础设施",
+            "value": 310,
+            "scheme": "amber"
+          },
+          {
+            "name": "企业智能体",
+            "value": 240,
+            "scheme": "teal"
+          },
+          {
+            "name": "具身智能",
+            "value": 180,
+            "scheme": "indigo"
+          },
+          {
+            "name": "AI 安全",
+            "value": 120,
+            "scheme": "violet"
+          },
+          {
+            "name": "垂直应用",
+            "value": 95,
+            "scheme": "coral"
+          },
+          {
+            "name": "开发者工具",
+            "value": 70,
+            "scheme": "amber"
+          },
+          {
+            "name": "硬件算力",
+            "value": 55,
+            "scheme": "teal"
+          }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme05_waterfall_v1",
+      "props": {
+        "kicker": "WATERFALL",
+        "title": "年度利润贡献拆解",
+        "subtitle": "从营收到净利润的关键增减项",
+        "items": [
+          {
+            "name": "营业收入",
+            "value": 1200
+          },
+          {
+            "name": "营业成本",
+            "value": -420
+          },
+          {
+            "name": "研发费用",
+            "value": -180
+          },
+          {
+            "name": "销售费用",
+            "value": -120
+          },
+          {
+            "name": "管理费用",
+            "value": -80
+          },
+          {
+            "name": "其他收益",
+            "value": 60
+          }
+        ],
+        "totalLabel": "净利润"
+      }
+    },
+    {
+      "role": "table",
+      "layout": "theme05_rank_v1",
+      "props": {
+        "kicker": "RANKING",
+        "title": "赛道融资额排名",
+        "subtitle": "按年度融资总额排序",
+        "rows": [
+          {
+            "rank": 1,
+            "name": "通用大模型",
+            "value": "420 亿",
+            "change": "+24%",
+            "positive": true
+          },
+          {
+            "rank": 2,
+            "name": "AI 基础设施",
+            "value": "245 亿",
+            "change": "+18%",
+            "positive": true
+          },
+          {
+            "rank": 3,
+            "name": "垂直应用",
+            "value": "198 亿",
+            "change": "+12%",
+            "positive": true
+          },
+          {
+            "rank": 4,
+            "name": "AI 芯片",
+            "value": "97 亿",
+            "change": "-5%",
+            "positive": false
+          },
+          {
+            "rank": 5,
+            "name": "其他",
+            "value": "10 亿",
+            "change": "+2%",
+            "positive": true
+          }
+        ]
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme05_process_v1",
+      "props": {
+        "tag": "实施路径",
+        "tagLabel": "07",
+        "topRightMeta": "AI 助手落地 · 四步闭环",
+        "title": "四步让 {{AI 助手}} 融入工作流",
+        "subtitle": "从需求识别到规模推广，构建可复用的落地路径",
+        "steps": [
+          {
+            "title": "需求识别",
+            "description": "梳理高频、高价值的重复性工作场景。"
+          },
+          {
+            "title": "原型验证",
+            "description": "用小范围试点验证模型能力与提效空间。"
+          },
+          {
+            "title": "工具集成",
+            "description": "嵌入现有工作流，降低使用门槛。"
+          },
+          {
+            "title": "规模推广",
+            "description": "沉淀模板与最佳实践，复制到全团队。"
+          }
+        ],
+        "footnoteLeft": "lemonPPT · 2026",
+        "footnoteRight": "07"
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme05_process_v2",
+      "props": {
+        "kicker": "实施路径",
+        "title": "四步让 AI 助手融入工作流",
+        "subtitle": "从需求识别到规模推广，构建可复用的落地路径",
+        "steps": [
+          {
+            "title": "需求识别",
+            "description": "梳理高频、高价值的重复性工作场景。",
+            "scheme": "coral"
+          },
+          {
+            "title": "原型验证",
+            "description": "用小范围试点验证模型能力与提效空间。",
+            "scheme": "amber"
+          },
+          {
+            "title": "工具集成",
+            "description": "嵌入现有工作流，降低使用门槛。",
+            "scheme": "teal"
+          },
+          {
+            "title": "规模推广",
+            "description": "沉淀模板与最佳实践，复制到全团队。",
+            "scheme": "indigo"
+          }
+        ]
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme05_roadmap_v1",
+      "props": {
+        "kicker": "ROADMAP",
+        "title": "未来三年落地路线图",
+        "subtitle": "从试点验证到规模推广，分阶段推进。",
+        "phases": [
+          {
+            "title": "试点验证",
+            "period": "2025 Q1",
+            "description": "聚焦核心场景，完成 MVP 验证与效果评估。",
+            "scheme": "coral"
+          },
+          {
+            "title": "工具集成",
+            "period": "2025 Q2-Q3",
+            "description": "嵌入现有工作流，建立标准化交付模板。",
+            "scheme": "amber"
+          },
+          {
+            "title": "规模推广",
+            "period": "2025 Q4",
+            "description": "复制到全团队，沉淀最佳实践与培训体系。",
+            "scheme": "teal"
+          },
+          {
+            "title": "持续运营",
+            "period": "2026 起",
+            "description": "建立数据监测与迭代机制，保持长期增长。",
+            "scheme": "indigo"
+          }
+        ]
+      }
+    },
+    {
+      "role": "timeline",
+      "layout": "theme05_timeline_v1",
+      "props": {
+        "kicker": "投资展望 · 阶段性策略",
+        "title": "分三步走，{{穿越周期}}",
+        "subtitle": "不押注单点爆发，按时间窗口分阶段布局——用纪律穿越 AI 资本周期的起伏。",
+        "phases": [
+          {
+            "period": "2025 - 2026",
+            "badge": "观察 IPO",
+            "title": "观察 IPO 窗口",
+            "description": "盯头部公司 IPO 表现；若 OpenAI / Anthropic 上市破发，警惕全行业估值回调。",
+            "scheme": "coral"
+          },
+          {
+            "period": "2026 - 2027",
+            "badge": "收入曲线",
+            "title": "收入曲线验证",
+            "description": "关注垂直应用收入增长；优选 ARR ≥ 1 亿美元、续约率 > 120% 的标的。",
+            "scheme": "teal"
+          },
+          {
+            "period": "2027 年后",
+            "badge": "行业洗牌",
+            "title": "行业洗牌抄底",
+            "description": "若 AGI 突破未兑现，进入洗牌期，可逢低抄底被低估的技术资产。",
+            "scheme": "amber"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme05_editorial_v1",
+      "props": {
+        "kicker": "EDITORIAL",
+        "title": "深度特写：一场视觉叙事",
+        "subtitle": "用一张大图与一段引言，传递最有力的观点。",
+        "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22800%22%20viewBox%3D%220%200%20600%20800%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23475569%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23334155%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23g)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22rgba(255%2C255%2C255%2C0.06)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%2219%22%20fill%3D%22rgba(255%2C255%2C255%2C0.7)%22%3E%E7%82%B9%E5%87%BB%E4%B8%8A%E4%BC%A0%E5%A4%A7%E5%9B%BE%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+        "imageSide": "left",
+        "body": "杂志跨页适合用一段简洁有力的叙述，配合一张高质量大图，帮助受众快速建立情感连接与核心认知。高品质视觉素材能显著提升报告的专业感与信息密度。",
+        "pullQuote": "「一张图胜过千言万语，而一句精准的话能让图更有力量。」"
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme05_gallery_v1",
+      "props": {
+        "kicker": "GALLERY",
+        "title": "项目现场一览",
+        "subtitle": "用一组高清图片直观呈现关键场景。",
+        "items": [
+          {
+            "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22300%22%20viewBox%3D%220%200%20400%20300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2364748b%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23475569%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23g)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22rgba(255%2C255%2C255%2C0.06)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%2214%22%20fill%3D%22rgba(255%2C255%2C255%2C0.7)%22%3E%E5%9B%BE%E7%89%87%E5%8D%A0%E4%BD%8D%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+            "caption": "方案设计"
+          },
+          {
+            "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22300%22%20viewBox%3D%220%200%20400%20300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2364748b%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23475569%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23g)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22rgba(255%2C255%2C255%2C0.06)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%2214%22%20fill%3D%22rgba(255%2C255%2C255%2C0.7)%22%3E%E5%9B%BE%E7%89%87%E5%8D%A0%E4%BD%8D%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+            "caption": "实施过程"
+          },
+          {
+            "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22300%22%20viewBox%3D%220%200%20400%20300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2364748b%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23475569%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23g)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22rgba(255%2C255%2C255%2C0.06)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22system-ui%2C%20sans-serif%22%20font-size%3D%2214%22%20fill%3D%22rgba(255%2C255%2C255%2C0.7)%22%3E%E5%9B%BE%E7%89%87%E5%8D%A0%E4%BD%8D%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+            "caption": "交付成果"
+          }
+        ]
+      }
+    },
+    {
+      "role": "image",
+      "layout": "theme05_image_v1",
+      "props": {
+        "kicker": "SPOTLIGHT",
+        "title": "一张图讲清市场格局",
+        "subtitle": "上传高清大图，用数据标注突出关键信息。",
+        "annotation": {
+          "value": "43%",
+          "label": "头部企业市占率"
+        }
+      }
+    },
+    {
+      "role": "quote",
+      "layout": "theme05_quote_v1",
+      "props": {
+        "quote": "数据不会撒谎，但它只回答你问过的问题。",
+        "source": "— 首席数据官 · 李明"
+      }
+    },
+    {
+      "role": "quote",
+      "layout": "theme05_quote_v2",
+      "props": {
+        "quote": "数据不会撒谎，但它只回答你问过的问题。",
+        "author": "首席数据官 · 李明",
+        "source": "2026 数据领导力峰会",
+        "accentScheme": "coral"
+      }
+    },
+    {
+      "role": "comparison",
+      "layout": "theme05_comparison_v1",
+      "props": {
+        "kicker": "A / B 对比",
+        "title": "两种方案的关键差异",
+        "subtitle": "从成本、效率与风险三个维度比较",
+        "leftTitle": "方案 A",
+        "leftItems": [
+          "前期投入低",
+          "上线周期短",
+          "灵活可扩展",
+          "适合快速验证"
+        ],
+        "leftScheme": "coral",
+        "rightTitle": "方案 B",
+        "rightItems": [
+          "长期总拥有成本低",
+          "性能天花板高",
+          "依赖自建团队",
+          "适合规模化运营"
+        ],
+        "rightScheme": "indigo",
+        "vsLabel": "VS"
+      }
+    },
+    {
+      "role": "comparison",
+      "layout": "theme05_quadrant_v1",
+      "props": {
+        "kicker": "选题四象限 · 资本热度 × 商业兑现",
+        "title": "从「谁融得多」升级为{{「谁能兑现」}}",
+        "subtitle": "",
+        "xAxisLabel": "商业兑现度",
+        "xAxisLabels": [
+          "低 / 待验证",
+          "高"
+        ],
+        "yAxisLabel": "资本热度",
+        "yAxisLabels": [
+          "低",
+          "高"
+        ],
+        "quadrants": [
+          {
+            "title": "明星兑现区",
+            "description": "融资热度与收入确定性兼具，「卖铲子」逻辑成立。",
+            "tags": [
+              "CoreWeave",
+              "Databricks",
+              "Scale AI"
+            ],
+            "scheme": "coral"
+          },
+          {
+            "title": "叙事泡沫区",
+            "description": "巨额融资在手，商业兑现仍受成本与监管约束。",
+            "tags": [
+              "OpenAI",
+              "Anthropic",
+              "xAI"
+            ],
+            "scheme": "amber"
+          },
+          {
+            "title": "隐形价值区",
+            "description": "单笔不一定最大，但落地路径与留存更清晰。",
+            "tags": [
+              "Glean",
+              "Perplexity"
+            ],
+            "scheme": "teal"
+          },
+          {
+            "title": "等待验证区",
+            "description": "概念成立、规模未证，作为风险与边缘变量观察。",
+            "tags": [
+              "长尾工具链",
+              "AI 安全",
+              "早期硬件"
+            ],
+            "scheme": "indigo"
+          }
+        ],
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "comparison",
+      "layout": "theme05_versus_v1",
+      "props": {
+        "kicker": "横向对比",
+        "title": "{{基础设施}} vs 应用层",
+        "subtitle": "资金在两层之间的分布差异明显",
+        "left": {
+          "value": "420",
+          "unit": "亿美元",
+          "label": "基础设施层",
+          "scheme": "coral"
+        },
+        "right": {
+          "value": "180",
+          "unit": "亿美元",
+          "label": "应用层",
+          "scheme": "indigo"
+        },
+        "footnote": "数据来源：lemonPPT 研究 · 2026"
+      }
+    },
+    {
+      "role": "closing",
+      "layout": "theme05_closing_v1",
+      "props": {
+        "kicker": "CONCLUSION",
+        "claim": "AI 融资已进入头部集中、场景分化的成熟阶段。",
+        "points": [
+          {
+            "value": "970 亿",
+            "label": "全年融资总额"
+          },
+          {
+            "value": "97 笔",
+            "label": "大额融资事件"
+          },
+          {
+            "value": "+38%",
+            "label": "年度同比增长"
+          }
+        ],
+        "footnoteLeft": "lemonPPT · 2026",
+        "footnoteRight": "THANK YOU"
+      }
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "title": "lemonPPT 编辑器测试",
+  "goal": "测试在线编辑器对 theme01 版式的文字编辑、图片替换和导出功能",
+  "audience": "内部测试",
+  "owner": "lemonPPT 团队",
+  "theme": "theme01",
+  "language": "zh",
+  "pageCount": 10,
+  "randomSeed": "editor-test-20260722",
+  "slides": [
+    {
+      "role": "cover",
+      "layout": "theme01_cover_v1",
+      "props": {
+        "kicker": "智能演示 · V0.1",
+        "title": "lemonPPT",
+        "subtitle": "一句话生成可编辑的演示文稿",
+        "date": "2026.07"
+      }
+    },
+    {
+      "role": "tableOfContents",
+      "layout": "theme01_table_of_contents_v1",
+      "props": {
+        "kicker": "目录",
+        "title": "今天聊什么",
+        "items": [
+          "产品定位与核心理念",
+          "核心能力展示",
+          "典型使用场景",
+          "下一步规划"
+        ]
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme01_metric_big",
+      "props": {
+        "kicker": "核心指标",
+        "title": "全年融资额创历史新高",
+        "subtitle": "FULL-YEAR FUNDING",
+        "value": "970",
+        "unit": "亿美元",
+        "context": "占全美风险投资近三分之一，头部效应持续放大",
+        "metrics": [
+          { "value": "97", "label": "事件笔数" },
+          { "value": "≈10亿", "label": "平均单笔", "accent": true },
+          { "value": "43.3%", "label": "头部占比" }
+        ],
+        "footnote": "数据来源：灯塔研究院，2026"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme01_chart_v1",
+      "props": {
+        "kicker": "数据洞察",
+        "title": "用户增长趋势",
+        "subtitle": "季度新增用户稳步上升",
+        "type": "bar",
+        "labels": ["Q1", "Q2", "Q3", "Q4"],
+        "data": [1200, 2100, 3400, 4800],
+        "unit": "人",
+        "showInsight": true,
+        "insight": {
+          "headline": "11,500",
+          "subheadline": "FULL-YEAR TOTAL",
+          "items": [
+            { "label": "Q4 环比", "value": "+41%" },
+            { "label": "平均季度", "value": "2,875" }
+          ],
+          "badge": { "text": "Q4 增长最快", "tone": "success" }
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme01_chart_v1",
+      "props": {
+        "kicker": "趋势分析",
+        "title": "季度收入面积图",
+        "subtitle": "全年收入持续爬坡",
+        "type": "area",
+        "labels": ["Q1", "Q2", "Q3", "Q4"],
+        "data": [2100, 2800, 3900, 5200],
+        "unit": "万美元",
+        "showInsight": true,
+        "insight": {
+          "headline": "14,000",
+          "subheadline": "FULL-YEAR REVENUE",
+          "items": [
+            { "label": "H2 环比", "value": "+52%" },
+            { "label": "平均季度", "value": "3,500" }
+          ],
+          "badge": { "text": "H2 增速明显", "tone": "accent" }
+        }
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme01_chart_donut",
+      "props": {
+        "kicker": "结构分布",
+        "title": "赛道分布 · 融资额占比",
+        "subtitle": "97 笔大额融资的赛道归类",
+        "total": { "value": "970", "label": "亿美元" },
+        "segments": [
+          { "label": "通用大模型", "labelEn": "General LLM", "value": "420亿", "percent": "43.3%", "color": "var(--lp-blue)" },
+          { "label": "垂直应用", "labelEn": "Vertical Apps", "value": "245亿", "percent": "25.3%", "color": "var(--lp-green)" },
+          { "label": "AI 基础设施", "labelEn": "AI Infra", "value": "198亿", "percent": "16.3%", "color": "var(--lp-amber)" },
+          { "label": "AI 芯片", "labelEn": "AI Chips", "value": "97亿", "percent": "10.0%", "color": "var(--lp-red)" },
+          { "label": "其他", "labelEn": "Others", "value": "50亿", "percent": "5.1%", "color": "var(--lp-violet)" }
+        ],
+        "footnote": "分布背后的趋势：通用模型仍是最主要资金去向"
+      }
+    },
+    {
+      "role": "table",
+      "layout": "theme01_table_data",
+      "props": {
+        "kicker": "排行榜",
+        "title": "头部玩家 · 单笔融资 Top 5",
+        "subtitle": "单笔融资额最大的 5 家公司",
+        "columns": [
+          { "key": "rank", "label": "排名", "align": "center" },
+          { "key": "company", "label": "公司", "align": "left" },
+          { "key": "track", "label": "主要赛道", "align": "left" },
+          { "key": "amount", "label": "融资额", "align": "right" }
+        ],
+        "rows": [
+          { "rank": "1", "company": "OpenAI", "track": "通用大模型", "amount": "66 亿" },
+          { "rank": "2", "company": "Anthropic", "track": "通用大模型", "amount": "65 亿" },
+          { "rank": "3", "company": "xAI", "track": "通用大模型", "amount": "50 亿" },
+          { "rank": "4", "company": "CoreWeave", "track": "AI 基础设施", "amount": "30 亿" },
+          { "rank": "5", "company": "Cohere", "track": "企业大模型", "amount": "25 亿" }
+        ],
+        "highlightRows": [0, 1, 2],
+        "footnote": "数据来源：公开披露融资，截至 2026.06"
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme01_case_study",
+      "props": {
+        "kicker": "典型案例",
+        "title": "典型案例 · Anthropic",
+        "subtitle": "FROM CHALLENGER TO FRONTRUNNER",
+        "intro": "Anthropic 由前 OpenAI 研究团队创立，以 AI 安全研究为核心差异化，在 2024-2026 年间完成多轮大额融资，迅速跻身通用大模型第一梯队。",
+        "rounds": [
+          { "date": "2024.05", "round": "Series G", "valuation": "估值 600 亿", "amount": "280 亿" },
+          { "date": "2024.08", "round": "Series H 首轮", "valuation": "估值 830 亿", "amount": "180 亿" },
+          { "date": "2024.11", "round": "Series F+ 扩轮", "valuation": "估值 965 亿", "amount": "190 亿" },
+          { "date": "2026.06", "round": "递交 IPO", "valuation": "预计年内上市", "amount": "待定" }
+        ],
+        "quote": "我们不仅要让 AI 更强大，更要让它更可控、更值得信赖。",
+        "quoteAuthor": "Dario Amodei, CEO",
+        "footnote": "案例来源：公司公告与公开报道"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme01_chart_funnel",
+      "props": {
+        "kicker": "资金集中度",
+        "title": "资金集中度 · 赢家通吃",
+        "subtitle": "资金如何向头部集中",
+        "data": [
+          { "name": "全市场", "value": 970 },
+          { "name": "TOP 50", "value": 410 },
+          { "name": "TOP 20", "value": 232 },
+          { "name": "TOP 10", "value": 181 }
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "24%",
+          "label": "头部 10 家",
+          "description": "少数独角兽反复获得巨额追加投资，头部格局已然确立。"
+        },
+        "footnote": "关键流失集中在第二到第三步"
+      }
+    },
+    {
+      "role": "closing",
+      "layout": "theme01_closing_v2",
+      "props": {
+        "title": "开始创作",
+        "subtitle": "把你的想法变成高质量演示",
+        "contact": "lemonPPT 团队",
+        "email": "hello@lemonppt.dev",
+        "link": "www.lemonppt.dev"
+      }
+    }
+  ]
+}

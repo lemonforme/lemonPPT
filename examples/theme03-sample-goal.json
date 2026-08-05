@@ -1,0 +1,557 @@
+{
+  "title": "2024 开发者体验与 AI 编码助手调研报告",
+  "goal": "演示 theme03 代码编辑风主题的核心版式与视觉风格",
+  "audience": "工程师、技术管理者、开发者工具产品经理",
+  "theme": "theme03",
+  "colorScheme": "scheme-a",
+  "appearance": "dark",
+  "language": "zh",
+  "pageCount": 14,
+  "slides": [
+    {
+      "layout": "theme03_cover_v1",
+      "role": "cover",
+      "props": {
+        "tag": "调研报告",
+        "tagLabel": "2024",
+        "topRightMeta": "DEVEX // AI CODING ASSISTANTS",
+        "title": "2024 开发者体验与 {{AI 编码助手}} 调研报告",
+        "subtitle": "基于全球 1,200 名软件工程师的问卷与 30 家企业的深度访谈，解析 AI 编码助手如何重塑代码生产、审查与学习流程。",
+        "metricValue": "92",
+        "metricUnit": "%",
+        "metricLabel": "开发者已使用 AI 编码助手",
+        "metricDescription": "较 2023 年提升 37 个百分点 · 企业级渗透率超过 68%",
+        "stats": [
+          {
+            "value": "1,200",
+            "unit": "人",
+            "label": "受访工程师"
+          },
+          {
+            "value": "30",
+            "unit": "家",
+            "label": "深度访谈企业"
+          },
+          {
+            "value": "8",
+            "unit": "周",
+            "label": "平均上手周期"
+          }
+        ],
+        "footnoteLeft": "编制 · 2026.06    口径 · 全球软件工程师在线问卷",
+        "footnoteRight": "仅供研究参考"
+      }
+    },
+    {
+      "layout": "theme03_chapter_v1",
+      "role": "content",
+      "props": {
+        "tag": "章节",
+        "tagLabel": "SECTION 01",
+        "topRightMeta": "STRUCTURE // CHAPTER",
+        "number": "01",
+        "numberEnglish": "CHAPTER ONE",
+        "title": "开发者体验的 {{三重维度}}",
+        "description": "从代码产出效率、交付质量稳定性，到工程师学习曲线与满意度，立体评估 AI 助手对工作流的改变。",
+        "items": [
+          {
+            "number": "01",
+            "title": "效率：代码产出与任务完成速度"
+          },
+          {
+            "number": "02",
+            "title": "质量：缺陷率、审查与可维护性"
+          },
+          {
+            "number": "03",
+            "title": "体验：满意度、心流状态与倦怠感"
+          }
+        ],
+        "footnoteLeft": "编制 · 2026.06    方法 · 问卷 + 访谈 + 工具埋点",
+        "footnoteRight": "仅供研究参考"
+      }
+    },
+    {
+      "layout": "theme03_content_v1",
+      "role": "content",
+      "props": {
+        "tag": "研究方法",
+        "tagLabel": "METHOD",
+        "topRightMeta": "DEVEX // AI CODING ASSISTANTS",
+        "title": "三维评估框架：如何量化 {{AI 助手}} 的价值",
+        "subtitle": "结合定量问卷、定性访谈与真实工具埋点数据，从三个层面建立可复现的评估体系。",
+        "columns": [
+          {
+            "title": "定量 · 问卷调研",
+            "points": [
+              {
+                "value": "覆盖代码生成、补全、解释、重构四类场景"
+              },
+              {
+                "value": "统计周均使用时长、接受率与迭代次数"
+              },
+              {
+                "value": "识别高频痛点与未被满足的需求"
+              }
+            ]
+          },
+          {
+            "title": "定性 · 企业访谈",
+            "points": [
+              {
+                "value": "访谈工程负责人、Tech Lead 与一线开发者"
+              },
+              {
+                "value": "梳理落地流程、治理策略与安全规范"
+              },
+              {
+                "value": "提炼团队级采用路径与最佳实践"
+              }
+            ]
+          },
+          {
+            "title": "客观 · 工具埋点",
+            "points": [
+              {
+                "value": "接入 IDE 插件日志与 CI/CD 构建数据"
+              },
+              {
+                "value": "对比 AI 辅助前后代码提交密度与缺陷率"
+              },
+              {
+                "value": "输出可验证的效率与质量假设"
+              }
+            ]
+          }
+        ],
+        "footnoteLeft": "编制 · 2026.06    方法论 · 混合研究方法",
+        "footnoteRight": "仅供研究参考"
+      }
+    },
+    {
+      "layout": "theme03_metric_big",
+      "role": "metric",
+      "props": {
+        "tag": "核心数据",
+        "tagLabel": "KEY FIGURE",
+        "topRightMeta": "2024 · GLOBAL · DEVEX",
+        "value": "46",
+        "unit": "%",
+        "label": "受访团队代码库中由 AI 生成的代码占比",
+        "description": "在以 AI 助手为核心的团队中，近半数新增代码由模型辅助生成，人类工程师更多承担架构设计与审查角色。",
+        "showInsight": true,
+        "insight": {
+          "label": "关键影响",
+          "value": "+34%",
+          "description": "高频使用者的周均任务完成量较对照组提升 34%，同时单测覆盖率提升 12 个百分点。"
+        },
+        "metrics": [
+          {
+            "value": "55",
+            "unit": "%",
+            "label": "重复性代码由 AI 生成"
+          },
+          {
+            "value": "28",
+            "unit": "%",
+            "label": "审查时间平均缩短"
+          },
+          {
+            "value": "41",
+            "unit": "%",
+            "label": "新手上手周期缩短"
+          }
+        ],
+        "footnoteLeft": "来源 · 1,200 人问卷 / 30 家企业访谈    口径 · 近 3 个月均值",
+        "footnoteRight": "仅供研究参考"
+      }
+    },
+    {
+      "layout": "theme03_ranking_v1",
+      "role": "metric",
+      "props": {
+        "tag": "横向透视",
+        "tagLabel": "04",
+        "topRightMeta": "AI 编码助手周活跃使用率 · 单位：%",
+        "title": "{{主流工具}} 周活跃使用率排名",
+        "subtitle": "基于受访工程师过去 30 天内在主力项目中使用各工具的周活跃比例。",
+        "unit": "%",
+        "items": [
+          {
+            "rank": "01",
+            "name": "GitHub Copilot",
+            "category": "通用补全",
+            "value": "67",
+            "maxValue": "67"
+          },
+          {
+            "rank": "02",
+            "name": "Cursor",
+            "category": "编辑器",
+            "value": "42",
+            "maxValue": "67"
+          },
+          {
+            "rank": "03",
+            "name": "JetBrains AI",
+            "category": "IDE 内置",
+            "value": "28",
+            "maxValue": "67"
+          },
+          {
+            "rank": "04",
+            "name": "Codeium",
+            "category": "免费补全",
+            "value": "19",
+            "maxValue": "67"
+          },
+          {
+            "rank": "05",
+            "name": "Amazon Q",
+            "category": "云端助手",
+            "value": "12",
+            "maxValue": "67"
+          },
+          {
+            "rank": "06",
+            "name": "Tabnine",
+            "category": "隐私优先",
+            "value": "9",
+            "maxValue": "67"
+          }
+        ],
+        "insightLabel": "集中度",
+      "insightText": "TOP 2 工具合计覆盖 79% 的周活跃用户，市场头部效应显著，开发者对编辑器原生体验要求提升。",
+      "footnoteLeft": "来源 · 1,200 人问卷    口径 · 主力项目周活跃使用",
+      "footnoteRight": "仅供研究参考"
+    }
+  },
+  {
+    "layout": "theme03_chart_donut",
+    "role": "chart",
+    "props": {
+      "tag": "场景分布",
+      "tagLabel": "05",
+      "topRightMeta": "AI 编码助手使用场景 · 单位：%",
+      "title": "{{场景分布}}：开发者把 AI 助手用在哪里",
+      "subtitle": "基于受访工程师过去 30 天内的主力项目使用情况，按周活跃使用场景统计。",
+      "total": {
+        "value": "1,200",
+        "label": "受访工程师"
+      },
+      "segments": [
+        {
+          "label": "代码生成 / 补全",
+          "labelEn": "Code Generation",
+          "value": "41",
+          "percent": "41%"
+        },
+        {
+          "label": "代码解释 / 重构",
+          "labelEn": "Refactoring",
+          "value": "26",
+          "percent": "26%"
+        },
+        {
+          "label": "测试与调试",
+          "labelEn": "Testing & Debug",
+          "value": "17",
+          "percent": "17%"
+        },
+        {
+          "label": "文档与注释",
+          "labelEn": "Documentation",
+          "value": "10",
+          "percent": "10%"
+        },
+        {
+          "label": "其他",
+          "labelEn": "Others",
+          "value": "6",
+          "percent": "6%"
+        }
+      ],
+      "showInsight": true,
+      "insight": {
+        "value": "41%",
+        "label": "代码生成场景占比最高",
+        "description": "代码生成与补全合计占开发者使用场景的 67%，是 AI 编码助手最核心的价值洼地。"
+      },
+      "footnoteLeft": "来源 · 1,200 人问卷    口径 · 主力项目周活跃场景",
+      "footnoteRight": "仅供研究参考"
+    }
+  },
+  {
+    "layout": "theme03_chart_bar",
+    "role": "chart",
+    "props": {
+      "tag": "季度趋势",
+      "tagLabel": "06",
+      "topRightMeta": "AI 编码助手收入 · 单位：百万美元",
+      "title": "{{季度增长}}：AI 助手商业化加速",
+      "subtitle": "基于公开财报与行业访谈整理的 2023-2024 年代表性 AI 编码助手商业化收入趋势。",
+      "unit": "USD M",
+      "bars": [
+        {
+          "label": "Q1 23",
+          "labelEn": "2023 Q1",
+          "value": "120"
+        },
+        {
+          "label": "Q2 23",
+          "labelEn": "2023 Q2",
+          "value": "185"
+        },
+        {
+          "label": "Q3 23",
+          "labelEn": "2023 Q3",
+          "value": "290"
+        },
+        {
+          "label": "Q4 23",
+          "labelEn": "2023 Q4",
+          "value": "420"
+        },
+        {
+          "label": "Q1 24",
+          "labelEn": "2024 Q1",
+          "value": "580"
+        },
+        {
+          "label": "Q2 24",
+          "labelEn": "2024 Q2",
+          "value": "760"
+        }
+      ],
+      "showInsight": true,
+      "insight": {
+        "value": "+127%",
+        "label": "Q4 环比增长",
+        "description": "下半年企业客户采购推动收入连续两个季度翻倍，付费坐席渗透率达到 34%。"
+      },
+      "footnoteLeft": "来源 · 公开财报 / 行业访谈    口径 · 估算收入",
+      "footnoteRight": "仅供研究参考"
+    }
+  },
+  {
+    "layout": "theme03_quote_v1",
+    "role": "quote",
+      "props": {
+        "tag": "结论",
+        "tagLabel": "QUOTE",
+        "topRightMeta": "2024 · GLOBAL · DEVEX",
+        "quote": "AI 不会取代工程师，但使用 {{AI 的工程师}} 会取代不使用 AI 的工程师。",
+        "author": "Satya Nadella",
+        "title": "CEO, Microsoft",
+        "source": "Microsoft Build 2024",
+        "footnoteLeft": "编制 · 2026.06",
+        "footnoteRight": "仅供研究参考"
+      }
+    },
+    {
+      "layout": "theme03_case_v1",
+      "role": "content",
+      "props": {
+        "tag": "典型案例",
+        "tagLabel": "CASE",
+        "topRightMeta": "DEVEX // AI CODING ASSISTANTS",
+        "title": "{{Cursor}}：从编辑器到智能协作环境",
+        "subtitle": "一个基于 VS Code 分叉的新锐编辑器，如何用「上下文感知」撕开传统 IDE 的缺口。",
+        "description": "Cursor 由 Anysphere 团队于 2023 年推出，核心差异在于将整个代码库作为上下文，让 AI 不仅能补单行，还能跨文件推理、生成测试与重构模块。",
+        "milestones": [
+          {
+            "date": "2023.03",
+            "title": "产品发布",
+            "description": "基于 VS Code 分叉，定位 AI-first 编辑器"
+          },
+          {
+            "date": "2023.08",
+            "title": "Composer 上线",
+            "description": "支持多文件生成与自动冲突解决"
+          },
+          {
+            "date": "2024.05",
+            "title": " rapid growth",
+            "description": "周活跃用户突破 100 万，成为增长最快的 AI 编码工具"
+          }
+        ],
+        "footnote": "Cursor 2024 年企业版客户中，70% 在 3 个月内将 AI 生成代码接受率提升至 35% 以上。",
+        "footnoteLeft": "来源 · 公开披露与企业访谈",
+        "footnoteRight": "仅供研究参考"
+      }
+    },
+    {
+    "layout": "theme03_process_v1",
+    "role": "process",
+    "props": {
+      "tag": "实施路径",
+      "tagLabel": "07",
+      "topRightMeta": "AI 助手落地 · 四步闭环",
+      "title": "四步让 {{AI 助手}} 融入工作流",
+      "subtitle": "从试点到规模化落地，企业引入 AI 编码助手的关键路径。",
+      "steps": [
+        {
+          "title": "试点选型",
+          "description": "在 1-2 个典型团队试用 2-3 款工具，评估补全率、接受率与开发者满意度。"
+        },
+        {
+          "title": "规则建立",
+          "description": "制定 AI 生成代码的审查规范、安全红线与知识产权声明流程。"
+        },
+        {
+          "title": "培训推广",
+          "description": "围绕提示工程、上下文管理与审查技巧开展内部培训，降低使用门槛。"
+        },
+        {
+          "title": "度量优化",
+          "description": "持续追踪任务完成速度、缺陷率与开发者 NPS，迭代工具配置与使用规范。"
+        }
+      ],
+      "footnoteLeft": "来源 · 30 家企业访谈    方法 · 最佳实践提炼",
+      "footnoteRight": "仅供研究参考"
+    }
+  },
+    {
+    "layout": "theme03_timeline_v1",
+    "role": "timeline",
+    "props": {
+      "tag": "发展脉络",
+      "tagLabel": "08",
+      "topRightMeta": "AI 编码助手演进 · 2019-2024",
+      "title": "{{六年}}：AI 助手从玩具到基础设施",
+      "subtitle": "从 GPT-2 时代的代码补全实验，到 2024 年企业级 AI 编码助手成为工程团队标配。",
+      "milestones": [
+        {
+          "date": "2019",
+          "title": "代码补全实验",
+          "description": "IDE 插件开始尝试基于统计语言的简单补全，接受率不足 15%。"
+        },
+        {
+          "date": "2021",
+          "title": "大模型涌现",
+          "description": "GPT-3/Codex 展示跨语言生成能力，GitHub Copilot 进入技术预览。"
+        },
+        {
+          "date": "2022",
+          "title": "商业化起步",
+          "description": "Copilot 正式发售，开发者付费意愿初显，企业开始试点。"
+        },
+        {
+          "date": "2023",
+          "title": "编辑器重构",
+          "description": "Cursor、Codeium 等 AI-first 编辑器崛起，上下文感知成为新战场。"
+        },
+        {
+          "date": "2024",
+          "title": "企业标配",
+          "description": "超过 90% 的科技公司将 AI 编码助手纳入标准工具栈，治理框架成熟。"
+        }
+      ],
+      "footnoteLeft": "来源 · 公开资料与行业访谈    口径 · 代表性事件",
+      "footnoteRight": "仅供研究参考"
+    }
+  },
+    {
+    "layout": "theme03_roadmap_v1",
+    "role": "roadmap",
+    "props": {
+      "tag": "产品路线",
+      "tagLabel": "09",
+      "topRightMeta": "ROADMAP // 2025-2026",
+      "title": "{{未来 12 个月}}：从工具到平台",
+      "subtitle": "AI 编码助手下一阶段的关键能力与商业化节奏。",
+      "phases": [
+        {
+          "phase": "Q1 基础能力",
+          "items": [
+            { "value": "多模型上下文感知补全" },
+            { "value": "企业级代码安全审查" },
+            { "value": "团队使用度量仪表盘" }
+          ]
+        },
+        {
+          "phase": "Q2 智能升级",
+          "items": [
+            { "value": "Agent 式跨文件重构" },
+            { "value": "自然语言生成测试用例" },
+            { "value": "CI/CD 缺陷预测联动" }
+          ]
+        },
+        {
+          "phase": "Q3 企业场景",
+          "items": [
+            { "value": "私有化部署与合规审计" },
+            { "value": "知识库与内部 SDK 对接" },
+            { "value": "权限治理与成本分摊" }
+          ]
+        },
+        {
+          "phase": "Q4 生态开放",
+          "items": [
+            { "value": "插件市场与 API 生态" },
+            { "value": "开发者社区与模板共享" },
+            { "value": "跨 IDE 统一体验" }
+          ]
+        }
+      ],
+      "footnoteLeft": "来源 · 公开披露与行业访谈    口径 · 产品规划方向",
+      "footnoteRight": "仅供研究参考"
+    }
+  },
+    {
+    "layout": "theme03_swot_v1",
+    "role": "swot",
+    "props": {
+      "tag": "战略分析",
+      "tagLabel": "10",
+      "topRightMeta": "STRATEGY // SWOT",
+      "title": "{{SWOT}}：看清内外部环境",
+      "subtitle": "以 AI 编码助手市场为例，分析领先工具所处的竞争位置。",
+      "strength": "开发者接受度高，周活跃使用率超过 60%；头部工具已建立生态与品牌心智；企业付费意愿在 2024 年显著增强。",
+      "weakness": "代码安全与知识产权风险仍存争议；部分企业审查流程尚未适配 AI 生成代码；长尾语言与垂直场景覆盖不足。",
+      "opportunity": "企业级市场渗透率仅 34%，存在翻倍空间；多模态与 Agent 能力可扩展至代码审查、测试生成等高频场景。",
+      "threat": "大厂免费工具加剧价格战；开源模型降低进入门槛；监管与合规要求可能提高市场准入成本。",
+      "footnoteLeft": "来源 · 1,200 人问卷 / 30 家企业访谈    口径 · 市场观察",
+      "footnoteRight": "仅供研究参考"
+    }
+  },
+    {
+    "layout": "theme03_closing_v1",
+    "role": "closing",
+      "props": {
+        "tag": "数据来源",
+        "tagLabel": "COLOPHON",
+        "topRightMeta": "DEVEX // AI CODING ASSISTANTS",
+        "title": "感谢阅读",
+        "subtitle": "本报告基于公开数据、问卷与访谈整理，不构成投资或采购建议。",
+        "leftColumnTitle": "数据来源",
+        "leftColumnItems": [
+          {
+            "value": "1,200 名软件工程师在线问卷"
+          },
+          {
+            "value": "30 家企业深度访谈纪要"
+          },
+          {
+            "value": "各工具官方发布与用户社区数据"
+          }
+        ],
+        "rightColumnTitle": "研究提示",
+        "rightColumnItems": [
+          {
+            "value": "口径为全球软件工程师，覆盖中美欧三地"
+          },
+          {
+            "value": "数据收集时间为 2024 年 9 月至 11 月"
+          },
+          {
+            "value": "部分指标基于受访者主观评估"
+          }
+        ],
+        "contact": "反馈请联系：research@lemonppt.example",
+        "footnoteLeft": "编制 · 2026.06    方法 · 混合研究方法",
+        "footnoteRight": "仅供研究参考"
+      }
+    }
+  ]
+}

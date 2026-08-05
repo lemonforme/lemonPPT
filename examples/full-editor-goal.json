@@ -1,0 +1,329 @@
+{
+  "title": "lemonPPT 全组件编辑器测试",
+  "goal": "覆盖 theme01 主要版式与 ECharts 图表，验证编辑器渲染与切页",
+  "audience": "内部测试",
+  "owner": "lemonPPT 团队",
+  "theme": "theme01",
+  "language": "zh",
+  "pageCount": 22,
+  "randomSeed": "full-editor-20260723",
+  "slides": [
+    {
+      "role": "cover",
+      "layout": "theme01_cover_v1",
+      "props": {
+        "kicker": "智能演示 · V0.1",
+        "title": "lemonPPT",
+        "subtitle": "一句话生成可编辑的演示文稿",
+        "date": "2026.07"
+      }
+    },
+    {
+      "role": "tableOfContents",
+      "layout": "theme01_table_of_contents_v1",
+      "props": {
+        "kicker": "目录",
+        "title": "今天聊什么",
+        "items": [
+          "产品定位与核心理念",
+          "核心能力展示",
+          "典型使用场景",
+          "下一步规划"
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme01_content_v1",
+      "props": {
+        "title": "核心能力",
+        "bullets": [
+          "AI 自动规划页面结构与版式",
+          "浏览器内直接编辑文字与图片",
+          "一键导出 PPTX / PDF / goal.json"
+        ]
+      }
+    },
+    {
+      "role": "feature",
+      "layout": "theme01_feature_v2",
+      "props": {
+        "kicker": "# 典型案例",
+        "title": "核心竞争力 · Anthropic",
+        "subtitle": "WHAT SETS IT APART 为何能从追赶到反超",
+        "imageUrl": "",
+        "imageAlt": "案例配图",
+        "items": [
+          { "title": "安全对齐 · 信任壁垒", "description": "技术路线聚焦「安全对齐」，在企业客户中建立长期信任优势。" },
+          { "title": "Claude 模型能力", "description": "Claude 系列在代码生成、长文本理解等任务上表现突出。" },
+          { "title": "云巨头深度合作", "description": "与 Amazon、Google 等云巨头深度绑定，渠道覆盖迅速。" }
+        ],
+        "footer": "*/ 要点 · 三条护城河支撑估值反超 /*"
+      }
+    },
+    {
+      "role": "metric",
+      "layout": "theme01_metric_v1",
+      "props": {
+        "value": "128,000",
+        "unit": "人",
+        "description": "较去年同期增长 42%，月活跃用户持续攀升"
+      }
+    },
+    {
+      "role": "stats",
+      "layout": "theme01_stats_v1",
+      "props": {
+        "title": "核心数据",
+        "stats": [
+          { "label": "用户", "value": "120K" },
+          { "label": "收入", "value": "¥3.2M" },
+          { "label": "满意度", "value": "96%" }
+        ]
+      }
+    },
+    {
+      "role": "content",
+      "layout": "theme01_chapter_v3",
+      "props": {
+        "kicker": "章节",
+        "title": "视觉叙事",
+        "subtitle": "用图片增强信息传达",
+        "imageUrl": "",
+        "imageAlt": "章节配图"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme01_chart_v1",
+      "props": {
+        "kicker": "数据洞察",
+        "title": "用户增长趋势",
+        "subtitle": "USER GROWTH TREND",
+        "type": "bar",
+        "labels": ["Q1", "Q2", "Q3", "Q4"],
+        "data": [1200, 2100, 3400, 4800],
+        "unit": "人",
+        "showInsight": true,
+        "insight": {
+          "headline": "11,500",
+          "subheadline": "FULL-YEAR TOTAL",
+          "items": [
+            { "label": "Q4 环比", "value": "+41%" },
+            { "label": "平均季度", "value": "2,875" }
+          ],
+          "badge": { "text": "Q4 增长最快", "tone": "success" }
+        },
+        "footnote": "数据来源：lemonPPT 内部统计 · 2026"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme01_chart_funnel",
+      "props": {
+        "kicker": "资金集中度",
+        "title": "资金集中度 · 赢家通吃",
+        "subtitle": "CAPITAL CONCENTRATION",
+        "data": [
+          { "name": "全市场", "value": 970 },
+          { "name": "头部 10 家", "value": 232 },
+          { "name": "Top 3", "value": 181 },
+          { "name": "单笔最大", "value": 66 }
+        ],
+        "showInsight": true,
+        "insight": {
+          "value": "24%",
+          "label": "头部 10 家 = 全市场近 1/4",
+          "description": "少数独角兽反复获得巨额追加投资，头部格局已然确立。"
+        },
+        "footnote": "数据来源：lemonPPT 内部统计 · 2026"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme01_chart_graph",
+      "props": {
+        "kicker": "关系图",
+        "title": "系统架构关联",
+        "nodes": [
+          { "name": "平台", "value": 80, "category": 0 },
+          { "name": "用户端", "value": 50, "category": 1 },
+          { "name": "管理端", "value": 45, "category": 1 },
+          { "name": "数据中台", "value": 60, "category": 2 },
+          { "name": "AI 引擎", "value": 70, "category": 2 },
+          { "name": "渲染器", "value": 55, "category": 2 },
+          { "name": "模板库", "value": 40, "category": 1 }
+        ],
+        "links": [
+          { "source": "平台", "target": "用户端", "value": 5 },
+          { "source": "平台", "target": "管理端", "value": 5 },
+          { "source": "平台", "target": "数据中台", "value": 8 },
+          { "source": "数据中台", "target": "AI 引擎", "value": 6 },
+          { "source": "AI 引擎", "target": "渲染器", "value": 4 },
+          { "source": "管理端", "target": "模板库", "value": 3 },
+          { "source": "用户端", "target": "渲染器", "value": 4 }
+        ],
+        "categories": [
+          { "name": "核心" },
+          { "name": "产品" },
+          { "name": "技术" }
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme01_chart_heatmap",
+      "props": {
+        "kicker": "热力图",
+        "title": "用户活跃度热力",
+        "xLabels": ["周一", "周二", "周三", "周四", "周五"],
+        "yLabels": ["00:00", "06:00", "12:00", "18:00"],
+        "data": [
+          [0, 0, 120], [0, 1, 80], [0, 2, 320], [0, 3, 280],
+          [1, 0, 90], [1, 1, 60], [1, 2, 350], [1, 3, 300],
+          [2, 0, 100], [2, 1, 70], [2, 2, 380], [2, 3, 340],
+          [3, 0, 110], [3, 1, 75], [3, 2, 360], [3, 3, 310],
+          [4, 0, 130], [4, 1, 85], [4, 2, 400], [4, 3, 360]
+        ]
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme01_chart_bar3d",
+      "props": {
+        "kicker": "3D 柱状图",
+        "title": "季度收入构成",
+        "labels": ["Q1", "Q2", "Q3", "Q4"],
+        "data": [320, 450, 580, 690]
+      }
+    },
+    {
+      "role": "comparison",
+      "layout": "theme01_comparison_v1",
+      "props": {
+        "kicker": "对比",
+        "title": "lemonPPT 与传统工具",
+        "leftTitle": "lemonPPT",
+        "leftPoints": ["AI 生成大纲与版式", "浏览器内直接编辑", "一键导出多种格式", "开源可扩展"],
+        "rightTitle": "传统工具",
+        "rightPoints": ["手动搭建结构", "多软件来回切换", "导出步骤繁琐", "闭源受限"]
+      }
+    },
+    {
+      "role": "process",
+      "layout": "theme01_process_v1",
+      "props": {
+        "kicker": "流程",
+        "title": "三步生成演示",
+        "steps": ["输入目标与受众", "AI 自动规划并生成", "在线编辑后导出"]
+      }
+    },
+    {
+      "role": "timeline",
+      "layout": "theme01_timeline_v1",
+      "props": {
+        "kicker": "里程碑",
+        "title": "产品发展历程",
+        "events": [
+          { "date": "2026 Q1", "title": "立项", "description": "确定产品方向" },
+          { "date": "2026 Q2", "title": "MVP", "description": "完成核心功能" },
+          { "date": "2026 Q3", "title": "公测", "description": "收集用户反馈" }
+        ]
+      }
+    },
+    {
+      "role": "quote",
+      "layout": "theme01_quote_v1",
+      "props": {
+        "quote": "简单是终极的复杂。",
+        "author": "列奥纳多·达·芬奇",
+        "role": "艺术家"
+      }
+    },
+    {
+      "role": "testimonial",
+      "layout": "theme01_testimonial_v1",
+      "props": {
+        "quote": "lemonPPT 让我们的汇报效率提升了 3 倍，团队终于能把时间花在内容本身。",
+        "author": "张三",
+        "role": "产品经理"
+      }
+    },
+    {
+      "role": "gallery",
+      "layout": "theme01_gallery_v1",
+      "props": {
+        "kicker": "图集",
+        "title": "产品掠影",
+        "images": [
+          { "url": "", "caption": "编辑器界面" },
+          { "url": "", "caption": "导出 PPTX" },
+          { "url": "", "caption": "主题切换" },
+          { "url": "", "caption": "图表渲染" }
+        ]
+      }
+    },
+    {
+      "role": "team",
+      "layout": "theme01_team_v1",
+      "props": {
+        "kicker": "团队",
+        "title": "认识我们",
+        "members": [
+          { "name": "李明", "role": "创始人", "bio": "10 年 SaaS 产品经验" },
+          { "name": "王芳", "role": "技术负责人", "bio": "全栈工程师，开源爱好者" },
+          { "name": "张伟", "role": "设计师", "bio": "专注数据可视化与品牌设计" }
+        ]
+      }
+    },
+    {
+      "role": "pricing",
+      "layout": "theme01_pricing_v1",
+      "props": {
+        "kicker": "定价",
+        "title": "选择适合你的方案",
+        "tiers": [
+          { "name": "免费版", "price": "¥0", "period": "/月", "features": ["每月 10 次生成", "3 套主题", "基础导出"], "cta": "开始使用" },
+          { "name": "专业版", "price": "¥99", "period": "/月", "features": ["无限生成", "全部主题", "高清导出"], "cta": "立即升级" },
+          { "name": "企业版", "price": "¥299", "period": "/月", "features": ["私有化部署", "专属客服", "定制主题"], "cta": "联系销售" }
+        ]
+      }
+    },
+    {
+      "role": "faq",
+      "layout": "theme01_faq_v1",
+      "props": {
+        "kicker": "FAQ",
+        "title": "常见问题",
+        "items": [
+          { "q": "是否支持导出 PPTX？", "a": "支持，可直接导出 .pptx 并在 Office 中二次编辑。" },
+          { "q": "能否离线使用？", "a": "可下载 editor.html，在浏览器中离线编辑与导出。" },
+          { "q": "是否开源？", "a": "核心代码采用 AGPL-3.0-or-later 协议开源。" }
+        ]
+      }
+    },
+    {
+      "role": "swot",
+      "layout": "theme01_swot_v1",
+      "props": {
+        "kicker": "SWOT",
+        "title": "产品 SWOT 分析",
+        "strengths": ["AI 生成速度快", "版式覆盖全"],
+        "weaknesses": ["品牌知名度低", "模板数量待扩充"],
+        "opportunities": ["企业汇报自动化需求增长", "开源社区贡献"],
+        "threats": ["传统工具功能壁垒", "大模型 API 成本波动"]
+      }
+    },
+    {
+      "role": "closing",
+      "layout": "theme01_closing_v2",
+      "props": {
+        "title": "开始创作",
+        "subtitle": "把你的想法变成高质量演示",
+        "contact": "lemonPPT 团队",
+        "email": "hello@lemonppt.dev",
+        "link": "www.lemonppt.dev"
+      }
+    }
+  ]
+}
