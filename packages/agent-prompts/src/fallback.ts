@@ -102,7 +102,36 @@ function inferSellingPoints(input: string): string[] {
     .filter((s) => s.length >= 4 && s.length <= 30 && !/^面向/.test(s));
   if (clauses.length >= 2) return clauses.slice(0, 4);
 
-  return ['核心优势一', '核心优势二', '核心优势三', '持续迭代'];
+  // 基于主题关键词生成更自然的默认卖点（优先匹配更具体的垂直领域）
+  const lowered = input.toLowerCase();
+  if (lowered.includes('ai') || lowered.includes('人工智能') || lowered.includes('智能')) {
+    return ['智能化决策支持', '自动化流程处理', '数据驱动洞察', '持续学习优化'];
+  }
+  if (lowered.includes('教育') || lowered.includes('培训') || lowered.includes('学习')) {
+    return ['个性化学习路径', '互动式教学体验', '学习效果追踪', '优质内容沉淀'];
+  }
+  if (lowered.includes('医疗') || lowered.includes('健康')) {
+    return ['全病程管理', '数据互联互通', '智能辅助决策', '患者体验升级'];
+  }
+  if (lowered.includes('金融') || lowered.includes('财务') || lowered.includes('支付')) {
+    return ['合规风控体系', '实时资金流转', '智能对账核算', '多场景覆盖'];
+  }
+  if (lowered.includes('电商') || lowered.includes('零售') || lowered.includes('供应链')) {
+    return ['全渠道运营', '智能选品补货', '库存精益管理', '消费者精准运营'];
+  }
+  if (lowered.includes('数据') || lowered.includes('分析') || lowered.includes('大数据')) {
+    return ['全域数据采集', '实时分析看板', '智能预测预警', '决策可视呈现'];
+  }
+  if (lowered.includes('营销') || lowered.includes('增长') || lowered.includes('获客')) {
+    return ['精准用户触达', '全链路转化追踪', '内容智能分发', 'ROI 持续提升'];
+  }
+  if (lowered.includes('团队') || lowered.includes('协作') || lowered.includes('办公')) {
+    return ['信息实时同步', '任务高效协同', '知识沉淀复用', '流程透明可控'];
+  }
+  if (lowered.includes('云') || lowered.includes('saas') || lowered.includes('平台')) {
+    return ['弹性扩展能力', '降低运维成本', '快速部署上线', '多端协同支持'];
+  }
+  return ['显著提升效率', '降低综合成本', '优化用户体验', '支撑持续增长'];
 }
 
 function extractNumbers(input: string): number[] {
@@ -145,22 +174,35 @@ function buildCandidateSlides(
   title: string,
   audience: string,
   points: string[],
-  numbers: number[]
+  numbers: number[],
+  pageCount: number
 ): CandidateSlide[] {
   const [sp1 = '核心优势一', sp2 = '核心优势二', sp3 = '核心优势三', sp4 = '持续迭代'] = points;
   const metric = inferMetric(input, numbers);
   const chart = inferChartData(input, numbers);
   const kw = detectKeywords(input);
 
-  const slides: CandidateSlide[] = [
-    {
-      layout: 'cover_v1',
-      props: {
-        kicker: '产品发布',
-        title,
-        subtitle: `面向${audience}的演示方案`,
-      },
+  const cover: CandidateSlide = {
+    layout: 'cover_v1',
+    props: {
+      kicker: '产品发布',
+      title,
+      subtitle: `面向${audience}的演示方案`,
     },
+  };
+
+  const closing: CandidateSlide = {
+    layout: 'closing_v2',
+    props: {
+      title: '开启新篇章',
+      subtitle: title,
+      contact: '产品团队',
+      email: 'hello@lemonppt.dev',
+      link: 'https://lemonppt.dev',
+    },
+  };
+
+  const requiredMiddle: CandidateSlide[] = [
     {
       layout: 'table_of_contents_v1',
       props: {
@@ -178,55 +220,79 @@ function buildCandidateSlides(
         rightPoints: [sp3, sp4],
       },
     },
-  ];
-
-  if (kw.feature) {
-    slides.push({
-      layout: 'feature_v2',
-      props: {
-        kicker: '产品特性',
-        title: '核心能力一览',
-        features: [
-          { title: sp1, description: '为业务场景深度优化的关键能力', icon: '◆' },
-          { title: sp2, description: '显著提升效率与体验的差异化优势', icon: '◆' },
-          { title: sp3, description: '面向未来扩展的长期价值支撑', icon: '◆' },
-        ],
-      },
-    });
-  } else {
-    slides.push({
-      layout: 'content_v3',
-      props: {
-        kicker: '方案介绍',
-        title,
-        points: [sp1, sp2, sp3],
-      },
-    });
-  }
-
-  slides.push({
-    layout: numbers.length > 0 ? 'metric_v1' : 'metric_v3',
-    props:
-      numbers.length > 0
-        ? {
-            kicker: '关键数据',
-            label: metric.label,
-            value: metric.value,
-            unit: metric.unit,
-            description: metric.description,
-          }
-        : {
-            kicker: '关键数据',
-            title: '核心增长指标',
-            metrics: [
-              { label: '效率提升', value: '10', unit: '倍', change: '+35%' },
-              { label: '客户覆盖', value: '50+', unit: '家', change: '+120%' },
+    kw.feature
+      ? {
+          layout: 'feature_v2',
+          props: {
+            kicker: '产品特性',
+            title: '核心能力一览',
+            features: [
+              { title: sp1, description: '为业务场景深度优化的关键能力', icon: '◆' },
+              { title: sp2, description: '显著提升效率与体验的差异化优势', icon: '◆' },
+              { title: sp3, description: '面向未来扩展的长期价值支撑', icon: '◆' },
             ],
           },
-  });
+        }
+      : {
+          layout: 'content_v3',
+          props: {
+            kicker: '方案介绍',
+            title,
+            points: [sp1, sp2, sp3],
+          },
+        },
+    {
+      layout: numbers.length > 0 ? 'metric_v1' : 'metric_v3',
+      props:
+        numbers.length > 0
+          ? {
+              kicker: '关键数据',
+              label: metric.label,
+              value: metric.value,
+              unit: metric.unit,
+              description: metric.description,
+            }
+          : {
+              kicker: '关键数据',
+              title: '核心增长指标',
+              metrics: [
+                { label: '效率提升', value: '10', unit: '倍', change: '+35%' },
+                { label: '客户覆盖', value: '50+', unit: '家', change: '+120%' },
+              ],
+            },
+    },
+    {
+      layout: 'process_v1',
+      props: {
+        kicker: '实施流程',
+        title: '三步落地',
+        steps: ['需求调研', '方案落地', '持续运营'],
+      },
+    },
+    {
+      layout: 'chart_v1',
+      props: {
+        kicker: '数据洞察',
+        title: '增长趋势',
+        type: 'bar',
+        labels: chart.labels,
+        data: chart.data,
+        unit: chart.unit,
+      },
+    },
+    {
+      layout: 'quote_v2',
+      props: {
+        quote: '让技术真正服务于人，让每一次表达都更有力量。',
+        author: '产品团队',
+        role: '产品理念',
+      },
+    },
+  ];
 
+  const optionalMiddle: CandidateSlide[] = [];
   if (kw.timeline) {
-    slides.push({
+    optionalMiddle.push({
       layout: 'timeline_v2',
       props: {
         kicker: '发展历程',
@@ -239,9 +305,8 @@ function buildCandidateSlides(
       },
     });
   }
-
   if (kw.roadmap) {
-    slides.push({
+    optionalMiddle.push({
       layout: 'roadmap_v2',
       props: {
         kicker: '产品路线图',
@@ -254,9 +319,8 @@ function buildCandidateSlides(
       },
     });
   }
-
   if (kw.team) {
-    slides.push({
+    optionalMiddle.push({
       layout: 'team_v2',
       props: {
         kicker: '团队介绍',
@@ -270,9 +334,8 @@ function buildCandidateSlides(
       },
     });
   }
-
   if (kw.pricing) {
-    slides.push({
+    optionalMiddle.push({
       layout: 'pricing_v2',
       props: {
         kicker: '价格方案',
@@ -286,102 +349,43 @@ function buildCandidateSlides(
     });
   }
 
-  slides.push({
-    layout: 'process_v2',
-    props: {
-      kicker: '实施流程',
-      title: '三步落地',
-      steps: [
-        { title: '需求调研', description: '梳理业务场景与关键痛点' },
-        { title: '方案落地', description: '快速部署并接入现有工作流' },
-        { title: '持续运营', description: '基于使用数据不断优化效果' },
-      ],
-    },
-  });
+  // 按页数裁剪：优先保留必选页，再插入关键词匹配的可选页
+  const middle: CandidateSlide[] = [];
+  const maxMiddle = Math.max(0, pageCount - 2);
+  for (const slide of requiredMiddle) {
+    if (middle.length >= maxMiddle) break;
+    middle.push(slide);
+  }
+  for (const slide of optionalMiddle) {
+    if (middle.length >= maxMiddle) break;
+    // 避免与已选页面角色重复导致叙事单调
+    const exists = middle.some((s) => s.layout.split('_')[0] === slide.layout.split('_')[0]);
+    if (!exists) middle.push(slide);
+  }
 
-  slides.push({
-    layout: 'chart_v1',
-    props: {
-      kicker: '数据洞察',
-      title: '增长趋势',
-      type: 'bar',
-      labels: chart.labels,
-      data: chart.data,
-      unit: chart.unit,
-    },
-  });
+  // 若仍不足，用内容页补齐
+  while (middle.length < maxMiddle) {
+    middle.push({
+      layout: 'content_v3',
+      props: {
+        kicker: `深入解读`,
+        title,
+        points: [`围绕“${title}”进一步展开价值`, '结合场景说明落地路径', '强调对目标受众的差异化收益'],
+      },
+    });
+  }
 
-  slides.push({
-    layout: 'quote_v2',
-    props: {
-      quote: '让技术真正服务于人，让每一次表达都更有力量。',
-      author: '产品团队',
-      role: '产品理念',
-    },
-  });
-
-  slides.push({
-    layout: 'swot_v1',
-    props: {
-      title: 'SWOT 简析',
-      strength: sp1,
-      weakness: '品牌知名度仍需建设',
-      opportunity: `${audience}的数字化需求持续增长`,
-      threat: '同类产品竞争日益激烈',
-    },
-  });
-
-  slides.push({
-    layout: 'closing_v2',
-    props: {
-      title: '开启新篇章',
-      subtitle: title,
-      contact: '产品团队',
-      email: 'hello@lemonppt.dev',
-      link: 'https://lemonppt.dev',
-    },
-  });
-
-  return slides;
+  return [cover, ...middle, closing];
 }
 
 export function createFallbackGoal(options: FallbackOptions): DeckGoal {
-  const { input, pageCount = 5, theme = 'base', language = 'zh' } = options;
+  const { input, pageCount = 5, theme = 'theme01', language = 'zh' } = options;
   const title = extractTitle(input);
   const audience = inferAudience(input);
   const points = inferSellingPoints(input);
   const numbers = extractNumbers(input);
 
-  const candidates = buildCandidateSlides(input, title, audience, points, numbers);
-
-  // 保证封面开头、结尾结尾
-  const cover = candidates[0]!;
-  const closing = candidates[candidates.length - 1]!;
-  const middle = candidates.slice(1, -1);
-
-  const selected: CandidateSlide[] = [cover];
-
-  if (pageCount <= 2) {
-    selected.push(closing);
-  } else {
-    const middleCount = pageCount - 2;
-    if (middle.length >= middleCount) {
-      selected.push(...middle.slice(0, middleCount));
-    } else {
-      selected.push(...middle);
-      while (selected.length < pageCount - 1) {
-        selected.push({
-          layout: 'content_v3',
-          props: {
-            kicker: `补充页 ${selected.length}`,
-            title: '更多内容',
-            points: [`围绕“${title}”进一步展开`, '可替换为 AI 生成的要点', '保持叙事一致性'],
-          },
-        });
-      }
-    }
-    selected.push(closing);
-  }
+  const selected = buildCandidateSlides(input, title, audience, points, numbers, pageCount);
 
   const slides = selected.map((s) => ({ role: layoutToRole(s.layout), layout: s.layout, props: s.props }));
 

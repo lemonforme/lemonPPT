@@ -7,11 +7,18 @@ import type { DeckGoal } from '@lemonppt/core';
 import {
   exportGoalToPdf,
   exportGoalToPptx,
+  inspectLayout,
+  listThemes,
+  queryLayouts,
   readGoalFromFile,
   renderGoalToDir,
+  scaffoldGoalToFile,
+  validateGoalSpec,
+  writeSafePropsToFile,
 } from '@lemonppt/cli';
 import { getTheme } from '@lemonppt/themes';
 import express, { type Express, type NextFunction, type Request, type Response } from 'express';
+import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { log } from './logger.js';
@@ -102,8 +109,8 @@ export function createServer(options: ServerOptions): Express {
     try {
       const samplePath = path.join(rootDir, 'examples/sample-goal.json');
       const goal = await readGoalFromFile(samplePath);
-      const themeId = String(req.query.theme || goal.theme || 'base');
-      goal.theme = getTheme(themeId) ? themeId : 'base';
+      const themeId = String(req.query.theme || goal.theme || 'theme01');
+      goal.theme = getTheme(themeId) ? themeId : 'theme01';
 
       await renderGoalToDir(goal, { outDir: options.outputDir, editable: true });
 
@@ -114,10 +121,119 @@ export function createServer(options: ServerOptions): Express {
     }
   });
 
+  // 列出可用主题
+  app.get('/api/list-themes', (_req, res) => {
+    try {
+      res.json({ success: true, themes: listThemes() });
+    } catch (err) {
+      handleError(err, _req, res);
+    }
+  });
+
+  // 按主题与角色查询候选版式
+  app.post('/api/layout-query', (req, res) => {
+    try {
+      const { theme, role, keyword, needsMedia, limit, seed } = req.body;
+      if (!theme || !role) {
+        res.status(400).json({ success: false, error: '缺少 theme 或 role 参数' });
+        return;
+      }
+      const result = queryLayouts({ theme, role, keyword, needsMedia, limit, seed });
+      res.json({ success: true, ...result });
+    } catch (err) {
+      handleError(err, req, res);
+    }
+  });
+
+  // 查看指定版式的字段契约
+  app.post('/api/inspect-layout', (req, res) => {
+    try {
+      const { layoutId } = req.body;
+      if (!layoutId) {
+        res.status(400).json({ success: false, error: '缺少 layoutId 参数' });
+        return;
+      }
+      const info = inspectLayout(layoutId);
+      if (!info) {
+        res.status(404).json({ success: false, error: `未找到版式 ${layoutId}` });
+        return;
+      }
+      res.json({ success: true, ...info });
+    } catch (err) {
+      handleError(err, req, res);
+    }
+  });
+
+  // 生成 goal.json 骨架
+  app.post('/api/goal-scaffold', async (req, res) => {
+    try {
+      const { title, goal, audience, owner, theme, pages, language, seed } = req.body;
+      if (!title || !goal) {
+        res.status(400).json({ success: false, error: '缺少 title 或 goal 参数' });
+        return;
+      }
+      const result = await scaffoldGoalToFile({
+        title,
+        goal,
+        audience,
+        owner,
+        theme,
+        pages,
+        language,
+        seed,
+      });
+      res.json({ success: true, goal: result });
+    } catch (err) {
+      handleError(err, req, res);
+    }
+  });
+
+  // 规范化 goal.json 的 props
+  app.post('/api/write-safe-props', async (req, res) => {
+    try {
+      const { goal } = req.body;
+      if (!goal) {
+        res.status(400).json({ success: false, error: '缺少 goal 参数' });
+        return;
+      }
+      const tmpPath = path.join(options.outputDir, '.tmp-goal.json');
+      await writeFile(tmpPath, JSON.stringify(goal, null, 2), 'utf-8');
+      const result = await writeSafePropsToFile({ goalPath: tmpPath, write: true });
+      res.json({ success: true, ...result });
+    } catch (err) {
+      handleError(err, req, res);
+    }
+  });
+
+  // 独立校验 goal.json 规范
+  app.post('/api/validate-goal-spec', async (req, res) => {
+    try {
+      const { goal, strict = false } = req.body;
+      if (!goal) {
+        res.status(400).json({ success: false, error: '缺少 goal 参数' });
+        return;
+      }
+      const tmpPath = path.join(options.outputDir, '.tmp-goal.json');
+      await writeFile(tmpPath, JSON.stringify(goal, null, 2), 'utf-8');
+      const result = await validateGoalSpec(tmpPath, strict);
+      res.json({ success: true, ...result });
+    } catch (err) {
+      handleError(err, req, res);
+    }
+  });
+
   // 生成 goal.json
   app.post('/api/generate-goal', async (req, res) => {
     try {
-      const { input, pageCount = 8, theme = 'base', language = 'zh', apiKey } = req.body;
+      const {
+        input,
+        pageCount = 8,
+        theme = 'theme01',
+        language = 'zh',
+        apiKey,
+        baseUrl,
+        model,
+      } = req.body;
 
       const result = await generateGoal({
         input,
@@ -126,8 +242,8 @@ export function createServer(options: ServerOptions): Express {
         language,
         llm: {
           apiKey: apiKey || process.env.OPENAI_API_KEY,
-          baseUrl: process.env.OPENAI_BASE_URL,
-          model: process.env.OPENAI_MODEL,
+          baseUrl: baseUrl || process.env.OPENAI_BASE_URL,
+          model: model || process.env.OPENAI_MODEL,
         },
       });
 

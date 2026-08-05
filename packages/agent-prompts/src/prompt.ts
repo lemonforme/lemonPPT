@@ -90,7 +90,7 @@ const ROLE_CATALOG = `
 `;
 
 export function buildPrompt(context: PromptContext): string {
-  const { input, pageCount = 8, theme = 'base', language = 'zh' } = context;
+  const { input, pageCount = 8, theme = 'theme01', language = 'zh' } = context;
 
   return `你是一个专业的演示文稿规划助手。请根据用户的需求，生成一份符合 lemonPPT 格式的 goal.json。
 
@@ -103,14 +103,41 @@ ${ROLE_CATALOG}
 - slides 数组长度必须等于 pageCount。
 - 每个 slide 必须包含 role（从上述角色中选择）和 props（对应角色的字段）。
 - 不要输出 layout 字段；系统会自动根据 role 选择最合适的版式。
-- 如果某些内容特别适合某款具体版式，可以额外提供 layout 字段，否则不要提供。
+- 不要输出 _slideIdx、_pageCount 等内部字段。
 - 根据每页内容角色选择角色：封面用 cover，目录用 tableOfContents，数据/大数字用 metric/stats，图表用 chart，对比用 comparison，流程/时间线/路线用 process/timeline/roadmap，团队用 team，价格用 pricing，引用用 quote/testimonial，产品亮点/场景展示用 feature/content，FAQ 用 faq，合作伙伴墙用 partners，图片集用 gallery/image，分析用 swot/pest，结尾用 closing。
 - 尽量多样化使用角色，避免连续多页使用同一个角色。
-- 内容应围绕用户主题，自然、有逻辑，并符合 ${language === 'zh' ? '中文' : language} 表达习惯。
-- 为需要图片的角色（cover、image、gallery、content、feature、team、partners、testimonial 等）提供高质量图片 URL，使用 https://images.unsplash.com/photo-<id>?w=1920&q=80 形式，id 应选用与主题相关、看起来真实存在的 Unsplash 图片编号，并确保图片风格与整体主题一致。
-- chart 请提供真实、合理的 data 数组与 labels，labels 数量与 data 数量一致。
+- 内容应围绕用户主题，自然、有逻辑，并符合 ${language === 'zh' ? '中文' : language} 表达习惯。禁止返回通用占位文案，如"一句话描述价值"、"补充说明"、"待替换"、"更多信息"等。
+- 如果用户输入中包含数字、百分比、金额、季度、增长率等，优先用于 metric/stats/chart 角色，不要忽略。
+- 为需要图片的角色（cover、image、gallery、content_v3、feature_v3、team、partners、testimonial 等）可以提供高质量图片 URL（如 https://images.unsplash.com/photo-<id>?w=1920&q=80）；若无法确保 URL 真实有效，请直接省略该图片字段，系统会自动填充占位图。
+- 所有字符串字段禁止返回空字符串；所有数组字段禁止返回空数组或只包含空对象的数组。
+- cover/closing/content/feature/process/timeline/roadmap/faq/pricing/partners/gallery/stats/chart/tableOfContents 必须提供 title。
+- metric 角色必须提供 label 与 value（或 metrics 数组），不要提供 title。
+- quote/testimonial 必须提供非空 quote 字段。
+- stats 必须提供 title 与 stats 数组。
+- chart 请提供真实、合理的 data 数组与 labels，labels 数量与 data 数量一致；若使用 chart_v2 数据集，labels 数量与各 dataset.data 数量也必须一致。
+- stats/process/timeline/roadmap/feature/faq/team/partners/pricing/gallery/tableOfContents 等角色对应的数组字段必须非空，且每个元素的关键字段不得为空。
+- swot 必须提供 strength/weakness/opportunity/threat 中的至少一个；pest 必须提供 political/economic/social/technological 中的至少一个。
 - 从第 2 页开始展开核心论点，最后一页使用 closing 角色做总结或行动号召。
 - randomSeed 使用一个稳定的字符串，例如 "lemon-<日期>-<序号>"。
+
+版式字段详细说明（按 role 汇总，系统会按这些 schema 自动匹配版式）：
+- content: content_v1 用 points: string[]；content_v2 用 leftPoints/rightPoints: string[]；content_v3 用 points: string[] + imageUrl: string；content_v4 用 cards: {title, description}[]。
+- comparison: comparison_v1/v2 用 leftTitle/rightTitle/leftPoints/rightPoints；comparison_v3 用 leftTitle/rightTitle/rows: {feature, left, right}[]。
+- metric: metric_v1/v2 用 value/unit/label/description；metric_v3 用 title + metrics: {label, value, unit, change}[]。
+- chart: chart_v1 用 type/labels/data/unit；chart_v2 用 labels/datasets: {label, data, color?}[]/unit。
+- process: process_v1 用 steps: string[]；process_v2/v3 用 steps: {title, description}[]。
+- timeline: timeline_v1/v2 用 milestones: {date, title, description}[]；timeline_v3 用 events: {date, title, description}[]。
+- roadmap: roadmap_v1 用 phases: {title, description, status}[]；roadmap_v2 用 phases: {phase, goals: string[]}[]。
+- pricing: pricing_v1 用 tiers: {name, price, period, features: string[], cta}[]；pricing_v2 用 plans: {name, price, period, features: string[], highlighted}[]。
+- team: team_v1 用 members: {name, role, bio, imageUrl}[]；team_v2 用 members: {name, role, bio, avatar}[]。
+- feature: feature_v1/v2/v3 用 features: {title, description, icon?}[]；feature_v3 额外需要 image: string。
+- image: image_v1 用 title/subtitle/imageUrl；image_v2 用 title/body/image/caption。
+- gallery: images: {url, caption?}[]。
+- partners: partners: {name, logoUrl?}[]。
+- testimonial: quote/author/role/company/avatarUrl（或 avatar/logoUrl 视版式而定）。
+- faq: items: {q, a}[]。
+- swot: title + strength/weakness/opportunity/threat。
+- pest: title + political/economic/social/technological。
 
 用户需求：
 """

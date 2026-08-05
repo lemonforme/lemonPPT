@@ -11,12 +11,12 @@ const sampleGoal: DeckGoal = {
   title: '测试渲染',
   goal: '测试',
   audience: '开发者',
-  theme: 'base',
+  theme: 'theme01',
   language: 'zh',
   pageCount: 2,
   slides: [
     { role: 'cover' as const, layout: 'cover_v1', props: { title: '封面' } },
-    { role: 'closing' as const, layout: 'closing_v1', props: { title: '结尾' } },
+    { role: 'closing' as const, layout: 'closing_v2', props: { title: '结尾' } },
   ],
 };
 
@@ -43,6 +43,6 @@ describe('server', () => {
     const res = await request(app).post('/api/render').send(sampleGoal);
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.assets).toContain('./assets/base.css');
+    expect(res.body.assets).toContain('./assets/theme01.css');
   });
 });
