@@ -7,19 +7,35 @@ lemonPPT 是一个基于 AI 的演示文稿生成与渲染引擎。它接收自�
 ## 特性
 
 - **自然语言生成**：输入一句话需求，AI 自动输出 `goal.json` 页面规划。
-- **主题系统**：内置极简白、深色科技、暖色商务三套主题，支持一键切换。
-- **丰富版式**：封面、目录、核心数字、图文、对比、流程、引用、结尾、SWOT、PEST、图表等 18+ 版式。
+- **混合架构**：共享版式组件 + 主题 Token + CSS 变量；每个页面角色按 `(role, theme)` 二维索引注册专属版式，新增主题只需补 token + CSS。
+- **多主题内置**：6 套原创主题（每套均支持 light/dark 与多种色彩方案）
+  - `theme01` 浅色玻璃质感
+  - `theme02` 深色霓虹科技（scheme-a/b）
+  - `theme03` 代码编辑器风（scheme-a/b + light/dark）
+  - `theme04` 玻璃糖果风（green/yellow/blue/pink + light/dark）
+  - `theme05` 光谱报告风（coral/amber/teal/indigo/violet + light/dark）
+  - `theme06` 深色图谱风（volt/magma/nebula/nova + light/dark，88 个版式）
+- **丰富版式**：覆盖封面、目录、核心数字、统计、图表、对比、流程、时间线、路线图、引用、客户证言、FAQ、图文、分屏、特性、团队、合作伙伴、价格、图库、SWOT、PEST、结尾等 23 个页面角色，注册版式 402 个。
 - **浏览器编辑**：在线修改文字、替换图片、撤销/重做、自动保存到 localStorage。
 - **导出能力**：一键导出可编辑 PPTX 与 PDF。
-- **可扩展**：版式与主题均为插件化注册，易于新增。
+- **本地字体集成**：内置 Anton、Archivo、Caveat、IBM Plex Sans、Inter、JetBrains Mono、Newsreader、Space Grotesk、Space Mono 9 款英文字体，以及 Noto Sans SC、Noto Serif SC 2 款中文字体，均来自 Google Fonts 并使用 SIL Open Font License 1.1。
+- **可扩展**：版式、主题、主题专属变体均为插件化注册，易于新增。
 
 ## 技术栈
 
 - **Monorepo**：pnpm workspace
-- **前端渲染**：React 18 + TypeScript + Tailwind CSS（主题使用纯 CSS）
+- **前端渲染**：React 18 + TypeScript + Tailwind CSS（主题样式使用纯 CSS）
 - **后端服务**：Express + tsx
 - **导出**：pptxgenjs（PPTX）、Playwright（PDF）
 - **AI**：OpenAI-compatible LLM API
+
+## 字体与许可证
+
+项目字体资源位于 [`packages/renderer/assets/fonts`](packages/renderer/assets/fonts)，通过 `@font-face` 在浏览器渲染和 PDF 导出中加载。
+
+- 英文字体：Anton、Archivo、Caveat、IBM Plex Sans、Inter、JetBrains Mono、Newsreader、Space Grotesk、Space Mono（均来自 Google Fonts 官方仓库）。
+- 中文字体：Noto Sans SC、Noto Serif SC（来自 Google Fonts 官方仓库）。
+- 所有字体均使用 [SIL Open Font License 1.1](https://scripts.sil.org/OFL) 开源许可证，详见 [`packages/renderer/assets/fonts/LICENSE.md`](packages/renderer/assets/fonts/LICENSE.md)。
 
 ## 目录结构
 
@@ -31,13 +47,14 @@ lemonPPT/
 │   ├── agent-prompts/   # AI prompt 与 goal.json 生成
 │   ├── core/            # 核心类型与协议
 │   ├── renderer/        # HTML/PPTX/PDF 渲染
-│   ├── templates/       # 版式组件注册
+│   ├── templates/       # 共享版式组件与主题专属变体注册
 │   └── themes/          # 主题 tokens 与 CSS
 ├── docs/                # 项目文档
 │   ├── plans/           # 规划文档
 │   ├── analysis/        # 方案分析
 │   └── progress.md      # 进度记录
-├── examples/            # 示例 goal.json
+├── examples/            # 示例 goal.json 与导出的 PPTX
+├── output/              # 本地生成的 HTML/PPTX/PDF/gallery
 ├── scripts/             # CLI 脚本
 ├── SKILL.md             # AI Agent 使用协议
 ├── LICENSE              # AGPL-3.0 协议
@@ -63,13 +80,13 @@ COREPACK_INTEGRITY_KEYS=0 corepack pnpm install
 
 ```bash
 # 生成 goal.json
-npx @lemonppt/cli generate "AI 产品发布会" --pages 8 --out ./goal.json
+npx @lemonppt/cli@0.2.0 generate "AI 产品发布会" --pages 8 --out ./goal.json
 
 # 导出 PPTX
-npx @lemonppt/cli export ./goal.json --pptx ./output.pptx
+npx @lemonppt/cli@0.2.0 export ./goal.json --pptx ./output.pptx
 
 # 安装 AI Agent skill
-npx @lemonppt/cli install-skill
+npx @lemonppt/cli@0.2.0 install-skill
 ```
 
 ### 启动服务
@@ -84,8 +101,6 @@ COREPACK_INTEGRITY_KEYS=0 corepack pnpm --filter @lemonppt/server dev
 
 打开 `http://127.0.0.1:5300/editor`。
 
-切换主题：`http://127.0.0.1:5300/editor?theme=dark-tech`
-
 ### 生成 goal.json
 
 ```bash
@@ -96,29 +111,53 @@ OPENAI_API_KEY=your-key OPENAI_BASE_URL=https://api.openai.com/v1 OPENAI_MODEL=g
 ### 导出 PPTX / PDF
 
 ```bash
-node scripts/render.mjs examples/sample-goal.json
-node scripts/export-pptx.mjs examples/sample-goal.json
-node scripts/export-pdf.mjs examples/sample-goal.json
+# 示例：theme01 主题
+node scripts/export-pptx.mjs examples/sample-goal.json examples/sample-goal.pptx
+
+# 导出 PDF
+node scripts/export-pdf.mjs examples/sample-goal.json output/sample-goal.pdf
 ```
+
+示例文件：
+
+- [`examples/sample-goal.json`](examples/sample-goal.json) —— theme01 示例
+- [`output/gallery/theme01`](output/gallery/theme01) —— theme01 版式预览
+- [`output/snapshots`](output/snapshots) —— 视觉回归基线与当前快照
 
 ## API 列表
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
 | GET | `/api/health` | 健康检查 |
+| GET | `/api/list-themes` | 列出所有可用主题与色彩方案 |
 | POST | `/api/generate-goal` | 根据需求生成 goal.json |
+| POST | `/api/layout-query` | 按 `theme + role + keyword` 查询候选版式 |
+| POST | `/api/inspect-layout` | 查看指定版式的字段契约、默认值与媒体槽位 |
+| POST | `/api/goal-scaffold` | 生成只含 role 的 goal.json 骨架 |
+| POST | `/api/write-safe-props` | 规范化 props、填充默认值、报告未知字段 |
+| POST | `/api/validate-goal-spec` | 独立校验 goal.json 规范 |
 | POST | `/api/render` | 渲染为 HTML |
 | POST | `/api/render-editor` | 渲染可编辑 HTML |
 | POST | `/api/export/pptx` | 导出 PPTX |
 | POST | `/api/export/pdf` | 导出 PDF |
 | GET | `/editor` | 打开编辑器 |
 
+> 对应 CLI 子命令：`generate / export / render / list-themes / layout-query / inspect-layout / goal-scaffold / write-safe-props / validate-goal-spec / install-skill / serve`。Agent YAML 接口定义见 [`packages/cli/agents/`](packages/cli/agents/)。
+
 ## 新增版式
 
-1. 在 `packages/templates/src/base/` 创建新的 React 组件。
-2. 定义 `LayoutMeta` 并导出组件（`theme` 建议使用 `'base'`）。
+1. 在 `packages/templates/src/themes/<theme>/` 下创建新的 React 组件。
+2. 定义 `LayoutMeta` 并导出组件（`theme` 建议设置为目标主题，如 `'theme01'`）。
 3. 在 `packages/templates/src/registry.tsx` 中注册。
-4. 在三套主题的 CSS 中添加对应样式。
+4. 在对应主题的 CSS 中添加样式。
+5. 在 `packages/renderer/src/export-pptx.ts` 中补充 PPTX 导出映射。
+
+## 新增主题专属变体
+
+1. 在 `packages/templates/src/themes/<theme>/` 下创建变体组件。
+2. 设置 `LayoutMeta.theme` 为目标主题，`role` 为对应页面角色。
+3. 使用 `registerLayout` 注册到 `(role, theme)` 二维索引。
+4. 在 `packages/renderer/src/export-pptx.ts` 中补充 `(role, theme)` 的 PPTX 覆盖。
 
 ## 新增主题
 
