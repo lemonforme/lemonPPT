@@ -41,5 +41,8 @@ jobs:
       - name: Layout export audit
         run: pnpm audit:layouts
 
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: Agent smoke test
         run: pnpm agent:test
