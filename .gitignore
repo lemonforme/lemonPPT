@@ -32,5 +32,11 @@ packages/cli/SKILL.md
 *.swp
 *.swo
 
+# IDE working files (internal planning docs, not for public repo)
+.trae/
+
+# Local presentation artifact (regenerated, do not commit)
+Presentation.pptx
+
 # Logs
 *.log
