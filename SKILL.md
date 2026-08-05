@@ -1,87 +1,131 @@
 # lemonPPT
 
-根据一句话主题或需求，自动生成精美 PPT（goal.json/HTML/PPTX/PDF）。
+根据一句话主题、结构化需求或已有的 `goal.json`，生成精美、可编辑的 PPT（HTML/PPTX/PDF）。
 
-> **协议声明**：lemonPPT 采用 AGPL-3.0 开源协议。若你通过 AI Agent 向第三方提供基于 lemonPPT 的服务，请遵守 AGPL-3.0 的源代码公开义务。lemonPPT 与 Dashi PPT 无代码或资产依赖关系。详见项目根目录 `LICENSE` 与 `docs/LEGAL.md`。
+> **协议声明**：lemonPPT 采用 AGPL-3.0-or-later 开源协议。若你通过 AI Agent 向第三方提供基于 lemonPPT 的服务，请遵守 AGPL-3.0 的源代码公开义务。详见项目根目录 `LICENSE` 与 `docs/LEGAL.md`。
 
-## 能力
+---
 
-- 接受用户输入（主题、目标页数、主题风格、语言）
-- 生成结构化演示文稿规划（goal.json）
-- 渲染为可浏览的 HTML
-- 导出为 PPTX 或 PDF
+## 能力边界
+
+lemonPPT 是**结构化 goal.json → 视觉 PPT** 的渲染与导出引擎：
+
+- ✅ 将 `goal.json` 渲染为可离线打开的 HTML deck（支持浏览器内编辑）
+- ✅ 导出可编辑 PPTX 或截图 PDF
+- ✅ 根据 `role` 自动挑选合适版式
+- ✅ 内置自然语言 → `goal.json` 生成（`lemonppt generate`）
+- ❌ **不直接解析外部文档**（Word/PDF/Markdown）；如需“上传文档生成 PPT”，外层 Agent 需先提取文本/结构，再交给 lemonPPT
+- ❌ 不联网抓取网页；不生成图片/图表数据本身，但可渲染你提供的数据
+
+---
 
 ## 使用流程
 
-用户说"帮我做一份 PPT"时，按以下步骤执行：
-
-### 0. 收集关键信息（可选但强烈建议）
-
-如果用户只给了一句话主题，先追问以下信息，让最终 PPT 更贴合：
-
-- **演示目标**（goal）：这场 PPT 希望达成什么？（如融资路演、产品发布、内部汇报）
-- **目标受众**（audience）：听众是谁？（如投资人、客户、内部团队）
-- **核心卖点/关键数据**：有没有必须突出的指标、功能或案例？
-- **页数**：建议 6~20 页
-- **主题风格**：`base`（极简商务）、`dark-tech`（深色科技）、`warm-business`（温暖商务）
-- **语言**：`zh` 或 `en`
-- **API Key**：如果有 OpenAI 兼容 API Key，生成内容会更贴合主题；没有则使用内置 fallback 示例
-
-### 1. 生成 goal.json
+### 方式一：一句话端到端生成（最简单）
 
 ```bash
-lemonppt generate "<主题>" --pages <页数> --theme <主题> --language zh --out ./goal.json
-```
+# 1. 生成 goal.json
+lemonppt generate "面向企业客户的 AI 助手产品发布会，强调效率提升 10 倍、支持私有化部署、已有 50 家客户" \
+  --pages 8 --theme theme01 --language zh --out ./goal.json
 
-- `--pages`：页数，建议 6~20 页
-- `--theme`：主题 ID，可选 `base`、`dark-tech`、`warm-business`
-- `--language`：`zh` 或 `en`
-- `--api-key`：可选，OpenAI 兼容 API Key；不传则使用内置 fallback 示例
-
-**生成前，把收集到的信息组织成更具体的主题描述**。例如：
-
-```bash
-lemonppt generate "面向企业客户的 AI 助手产品发布会，强调效率提升 10 倍、支持私有化部署、已有 50 家客户" --pages 8 --theme base --language zh --out ./goal.json
-```
-
-### 2. 导出 PPTX / PDF
-
-```bash
+# 2. 导出 PPTX / PDF
 lemonppt export ./goal.json --pptx ./deck.pptx --pdf ./deck.pdf
+
+# 3. （可选）渲染可编辑 HTML 预览
+lemonppt render ./goal.json --out ./output --editable
 ```
 
-至少传 `--pptx` 或 `--pdf` 之一。
+参数说明：
 
-### 3. 交付文件
+- `--pages`：页数，建议 5~20 页
+- `--theme`：主题 ID，见下方「可用主题」
+- `--language`：`zh` 或 `en`
+- `--api-key` / `--base-url` / `--model`：可选，OpenAI 兼容 API；不传则使用内置 fallback 示例
 
-把生成的 `goal.json`、`deck.pptx`、`deck.pdf` 以及 `output/index.html` 展示给用户。
+### 方式二：Agent 精细编排
 
-如果用户只需要文件，交付 PPTX/PDF；如果用户想在线预览，交付 HTML。
+当外层 Agent 需要控制每一页的结构、版式、数据时：
 
-**交付时说明内容来源**：
-- 如果使用了 API Key："内容已根据你的主题自动生成，可进一步编辑。"
-- 如果没有 API Key："当前使用内置示例内容生成，结构和版式完整。如需更贴合主题的文案，请提供 OpenAI 兼容 API Key 后重新生成。"
+```bash
+# 1. 查看可用主题
+lemonppt list-themes
+
+# 2. 按角色查询候选版式
+lemonppt layout-query --theme theme06 --role metric --limit 5
+
+# 3. 查看版式字段契约
+lemonppt inspect-layout theme06_metric_hero_v1
+
+# 4. 生成只含 role 的骨架
+lemonppt goal-scaffold --title "AI 产业投资图谱" --goal "..." --theme theme06 --pages 10 --out ./goal.json
+
+# 5. 外层 Agent 填充 props 后，规范化默认值并校验未知字段
+lemonppt write-safe-props ./goal.json --write
+
+# 6. 校验 goal.json 规范
+lemonppt validate-goal-spec ./goal.json
+
+# 7. 渲染与导出
+lemonppt render ./goal.json --out ./output
+lemonppt export ./goal.json --pptx ./deck.pptx
+```
+
+### 方式三：HTTP API 服务
+
+```bash
+lemonppt serve --port 3456
+```
+
+接口：
+
+- `POST /api/generate-goal`：自然语言 → `goal.json`
+- `POST /api/render`：`goal.json` → HTML
+- `POST /api/export/pptx`：`goal.json` → PPTX
+- `POST /api/export/pdf`：`goal.json` → PDF
+- `POST /api/layout-query`：候选版式查询
+- `POST /api/inspect-layout`：版式字段契约
+- `POST /api/goal-scaffold`：生成骨架
+- `POST /api/write-safe-props`：规范化 props
+- `POST /api/validate-goal-spec`：校验 goal.json
+
+---
+
+## 可用主题
+
+| 主题 ID | 风格 | 配色/外观 |
+|---|---|---|
+| `theme01` | 浅色玻璃质感 | light / dark |
+| `theme02` | 深色霓虹科技 | scheme-a / scheme-b |
+| `theme03` | 代码编辑器风 | scheme-a / scheme-b + light / dark |
+| `theme04` | 玻璃糖果风 | green / yellow / blue / pink + light / dark |
+| `theme05` | 光谱报告风 | coral / amber / teal / indigo / violet + light / dark |
+| `theme06` | 深色图谱风 | volt / magma / nebula / nova + light / dark |
+
+默认主题：`theme01`。
+
+---
 
 ## goal.json 格式
 
 ```json
 {
   "title": "演示文稿标题",
-  "goal": "演示目标",
+  "goal": "这场 PPT 希望达成什么？",
   "audience": "目标受众",
   "owner": "汇报人",
-  "theme": "base",
+  "theme": "theme01",
+  "colorScheme": "light",
+  "appearance": "light",
   "language": "zh",
   "pageCount": 8,
   "randomSeed": "可选种子",
   "slides": [
     {
       "role": "cover",
-      "layout": "cover_v1",
+      "layout": "theme01_cover_v1",
       "props": {
         "title": "标题",
-        "subtitle": "副标题",
-        "date": "2026-07-18"
+        "subtitle": "副标题"
       }
     }
   ]
@@ -97,96 +141,144 @@ lemonppt export ./goal.json --pptx ./deck.pptx --pdf ./deck.pdf
 | `audience` | 是 | 受众描述 |
 | `owner` | 否 | 汇报人 |
 | `theme` | 是 | 主题 ID |
+| `colorScheme` | 否 | 主题专用配色方案，见「可用主题」 |
+| `appearance` | 否 | `light` / `dark`，部分主题支持 |
 | `language` | 否 | `zh` 或 `en`，默认 `zh` |
 | `pageCount` | 是 | 总页数，必须等于 `slides.length` |
-| `randomSeed` | 否 | 随机种子，保证结果可复现 |
+| `randomSeed` | 否 | 随机种子，保证选页可复现 |
 | `slides` | 是 | 幻灯片数组 |
 
 每个 slide：
 
 | 字段 | 必填 | 说明 |
 |---|---|---|
-| `role` | 是 | 页面角色，见下方角色表 |
+| `role` | 是 | 页面角色，见下方「页面角色」 |
 | `layout` | 否 | 具体版式 ID；留空时系统按 role 自动选择 |
 | `props` | 是 | 该版式所需数据 |
 
-## 可用主题
+---
 
-| 主题 ID | 风格 |
+## 页面角色
+
+Agent 选页时优先只指定 `role`，由系统根据当前主题自动挑选合适版式。只有在明确需要某一款版式时才填 `layout`。
+
+| role | 用途 |
 |---|---|
-| `base` | 极简商务 |
-| `dark-tech` | 深色科技 |
-| `warm-business` | 温暖商务 |
+| `cover` | 封面 |
+| `tableOfContents` | 目录 |
+| `metric` | 关键数字/指标 |
+| `stats` | 统计摘要 |
+| `chart` | 数据图表 |
+| `comparison` | 对比页 |
+| `pricing` | 价格方案 |
+| `process` | 流程步骤 |
+| `timeline` | 时间线 |
+| `roadmap` | 路线图 |
+| `quote` | 金句引用 |
+| `testimonial` | 客户评价 |
+| `content` | 图文内容 |
+| `faq` | 问答 |
+| `feature` | 产品特性 |
+| `team` | 团队介绍 |
+| `partners` | 合作伙伴墙 |
+| `image` | 单图页 |
+| `gallery` | 图片画廊 |
+| `bento` | 模块化概览 |
+| `table` | 表格 |
+| `tags` | 标签云 |
+| `filmstrip` | 胶片条 |
+| `swot` | SWOT 分析 |
+| `pest` | PEST 分析 |
+| `closing` | 结尾/感谢 |
 
-## 页面角色与版式
-
-Agent 选页时只需指定 `role`，系统会根据角色自动挑选合适版式。只有在明确需要某一款版式时才填 `layout`。
-
-| role | 用途 | 可用版式 |
-|---|---|---|
-| `cover` | 封面 | `cover_v1` |
-| `tableOfContents` | 目录 | `table_of_contents_v1` |
-| `metric` | 关键指标 | `metric_v1`, `metric_v2`, `metric_v3` |
-| `stats` | 2x2 统计网格 | `stats_v1` |
-| `chart` | 数据图表 | `chart_v1`, `chart_v2` |
-| `comparison` | 对比 | `comparison_v1`, `comparison_v2` |
-| `pricing` | 价格方案 | `pricing_v1`, `pricing_v2` |
-| `process` | 流程步骤 | `process_v1`, `process_v2` |
-| `timeline` | 时间线 | `timeline_v1`, `timeline_v2` |
-| `roadmap` | 路线图 | `roadmap_v1`, `roadmap_v2` |
-| `quote` | 金句引用 | `quote_v1`, `quote_v2` |
-| `testimonial` | 客户评价 | `testimonial_v1`, `testimonial_v2` |
-| `content` | 内容页 | `content_v1`, `content_v2`, `content_v3`, `split_v1` |
-| `faq` | 问答 | `faq_v1` |
-| `feature` | 产品特性 | `feature_v1`, `feature_v2` |
-| `team` | 团队介绍 | `team_v1`, `team_v2` |
-| `partners` | 合作伙伴墙 | `partners_v1` |
-| `image` | 全屏图片 | `image_v1` |
-| `gallery` | 图片画廊 | `gallery_v1`, `gallery_v2` |
-| `swot` | SWOT 分析 | `swot_v1` |
-| `pest` | PEST 分析 | `pest_v1` |
-| `closing` | 结尾页 | `closing_v1`, `closing_v2` |
+---
 
 ## 常见 props 字段
 
 - `title`：页面主标题
 - `kicker`：小标题/标签
 - `subtitle`：副标题
-- `items`：列表项数组
-- `points`：要点数组
-- `stats`：指标数组，元素含 `label`、`value`、`unit`、`change`
-- `image` / `imageUrl`：图片 URL（远程 URL 在 PPTX 中可能显示占位符）
+- `items` / `points` / `bullets`：列表项数组
+- `stats` / `metrics`：指标数组，元素通常含 `label`、`value`、`unit`、`change`
+- `image` / `imageUrl`：图片 URL（远程 URL 在 PPTX 中可能显示占位符，建议用本地图片或 base64）
 - `cta` / `contact` / `email` / `link`：结尾页联系方式
+- `showInsight` + `insight`：图表/数据页的重点强调面板
+
+具体字段请用 `lemonppt inspect-layout <layoutId>` 查看。
+
+---
+
+## CLI 命令速查
+
+```bash
+# 生成
+lemonppt generate "<主题>" [--pages N] [--theme <id>] [--language zh|en] [--out goal.json] [--api-key KEY]
+
+# 渲染
+lemonppt render <goal.json> [--out ./output] [--editable]
+
+# 导出
+lemonppt export <goal.json> --pptx out.pptx [--pdf out.pdf]
+
+# 本地服务
+lemonppt serve [<dir>] [--port N]
+
+# 主题/版式查询
+lemonppt list-themes
+lemonppt layout-query --theme <id> --role <role> [--limit N] [--seed S] [--keyword K]
+lemonppt inspect-layout <layoutId> [--compact]
+
+# 骨架/校验
+lemonppt goal-scaffold --title T --goal G --theme <id> --pages N --out goal.json
+lemonppt write-safe-props <goal.json> [--write]
+lemonppt validate-goal-spec <goal.json>
+
+# 安装到 Agent 技能目录
+lemonppt install-skill [--claude] [--codex] [--cursor] [--all]
+```
+
+---
 
 ## 常见错误处理
 
-1. **没有 API Key**：`lemonppt generate` 会 fallback 到内置示例内容，仍可生成完整文件。但示例内容可能偏通用，无法紧密贴合你的主题。建议提供 `--api-key` 以获得更专业的文案。
-2. **生成内容偏离主题**：把主题描述写得更具体，补充目标受众、核心卖点、关键数据。例如不要只写 `"AI 助手"`，而是写 `"面向企业客户的 AI 助手产品发布会，强调效率提升 10 倍、支持私有化部署"`。
+1. **没有 API Key**：`lemonppt generate` 会 fallback 到内置示例内容，仍可生成完整文件。如需更贴合主题的文案，提供 `--api-key`。
+2. **生成内容偏离主题**：把主题描述写得更具体，补充目标受众、核心卖点、关键数据。
 3. **页数太少**：建议封面 + 目录 + 3~5 页内容 + 结尾，最少 5 页。
 4. **远程图片在 PPTX 中不显示**：PPTX 导出优先使用本地图片或 base64；远程 URL 会显示占位符。
-5. **生成失败**：检查 JSON 是否合法、`slides.length` 是否等于 `pageCount`。
+5. **校验失败**：检查 `slides.length === pageCount`、必填字段、未知 props 字段。
+6. **版式不存在**：使用 `lemonppt layout-query` 查询当前主题下可用版式。
 
-## 完整示例
+---
 
-### 示例 1：有 API Key（推荐）
+## Agent 调用示例
 
-```bash
-lemonppt generate "面向企业客户的 AI 助手产品发布会，核心卖点：效率提升 10 倍、支持私有化部署、服务 50+ 标杆客户" --pages 8 --theme base --language zh --api-key $OPENAI_API_KEY --out ./ai-launch.json
-lemonppt render ./ai-launch.json --out ./output
-lemonppt export ./ai-launch.json --pptx ./ai-launch.pptx --pdf ./ai-launch.pdf
-```
+### 例 1：用户说“帮我做一份 PPT”
 
-### 示例 2：无 API Key（结构和版式完整，内容偏通用）
+1. 先追问：主题、目标、受众、页数、主题风格、语言。
+2. 调用 `lemonppt generate "<完整主题>" --pages N --theme <id> --language zh --out ./goal.json`。
+3. 调用 `lemonppt export ./goal.json --pptx ./deck.pptx --pdf ./deck.pdf`。
+4. 交付文件并说明来源。
 
-```bash
-lemonppt generate "AI 助手产品发布会" --pages 8 --theme base --language zh --out ./ai-launch.json
-lemonppt render ./ai-launch.json --out ./output
-lemonppt export ./ai-launch.json --pptx ./ai-launch.pptx --pdf ./ai-launch.pdf
-```
+### 例 2：用户上传了一份文档
+
+1. 外层 Agent 自行解析文档，提取标题、摘要、章节、数据、图片。
+2. 调用 `lemonppt goal-scaffold` 生成骨架。
+3. 按 `lemonppt inspect-layout` 的字段契约，将文档内容映射为每页 `props`。
+4. 调用 `lemonppt write-safe-props` 规范化，`lemonppt validate-goal-spec` 校验。
+5. 渲染并导出。
+
+### 例 3：用户指定某一页要“团队介绍”
+
+1. 查看候选版式：`lemonppt layout-query --theme <id> --role team --limit 3`。
+2. 查看契约：`lemonppt inspect-layout theme01_team_v1`。
+3. 修改 `goal.json` 中对应 slide 的 `role` 为 `team`，按契约填充 `props`。
+4. 重新渲染/导出。
+
+---
 
 ## 注意事项
 
-- 不要手动指定每个 slide 的 `layout`，优先只写 `role`。
+- 优先只写 `role`，不要手动指定每个 slide 的 `layout`，除非用户明确要求某一款版式。
 - `goal.json` 是核心协议，生成后可以直接交给用户修改再导出。
-- 一句话主题生成的内容可能偏通用；如需专业文案，补充目标受众、核心卖点、关键数据，或传入 `--api-key`。
+- 同一 deck 中建议不要重复使用完全相同的 `layout`。
 - 所有命令在 lemonPPT 项目根目录执行；CLI 入口为 `packages/cli/dist/cli.js` 或安装后的 `lemonppt`。

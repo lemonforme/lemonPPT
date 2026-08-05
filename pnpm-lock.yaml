@@ -17,19 +17,37 @@ importers:
       '@lemonppt/renderer':
         specifier: workspace:*
         version: link:packages/renderer
+      jquery:
+        specifier: ^3.7.0
+        version: 3.7.1
+      jquery.scrollbar:
+        specifier: ^0.2.11
+        version: 0.2.11
     devDependencies:
       '@lemonppt/composer':
-        specifier: ^0.1.6
-        version: 0.1.6
+        specifier: workspace:*
+        version: link:packages/composer
       '@lemonppt/templates':
         specifier: workspace:*
         version: link:packages/templates
+      '@types/pixelmatch':
+        specifier: ^5.2.6
+        version: 5.2.6
+      '@types/pngjs':
+        specifier: ^6.0.5
+        version: 6.0.5
       '@types/supertest':
         specifier: ^7.2.1
         version: 7.2.1
+      pixelmatch:
+        specifier: ^7.2.0
+        version: 7.2.0
       playwright:
         specifier: ^1.61.1
         version: 1.61.1
+      pngjs:
+        specifier: ^7.0.0
+        version: 7.0.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -174,6 +192,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.7(@types/react@18.3.31)
+      esbuild:
+        specifier: ^0.28.1
+        version: 0.28.1
       typescript:
         specifier: ^5.5.0
         version: 5.9.3
@@ -186,6 +207,9 @@ importers:
       '@lemonppt/themes':
         specifier: workspace:*
         version: link:../themes
+      echarts:
+        specifier: ^6.1.0
+        version: 6.1.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -387,21 +411,6 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
 
-  '@lemonppt/composer@0.1.6':
-    resolution: {integrity: sha512-ZphjlH1pOem9oBJGxUZEtPCrWlHYNqUAS9GPejWlNh4rvN2IchRka6P911MY8YosMZULLxuBWAN9VCz3xTu3hQ==}
-
-  '@lemonppt/core@0.1.6':
-    resolution: {integrity: sha512-7QAjhShEKKh1K9Jz93JEAfot5jAaL8S3FJBqilQkDRoI6M1/Py7ddN5zeVy68sl9LPXuMlKPKw5fWKwRKiocZA==}
-
-  '@lemonppt/templates@0.1.6':
-    resolution: {integrity: sha512-zGv4eHzF6WsaQtbfeoOXHg5fQaDJfyOUJJf6jRN/aJJnfjRKz0hfvR+zA/Tr9OBcKZAatI9uS46IKU8I3XnXog==}
-
-  '@lemonppt/themes@0.1.6':
-    resolution: {integrity: sha512-fGpk8ryEuyLxtmTUKQK7ew4eD754B2oRkR23KTB8rEAD1/SunsYxFWCZ8YE04w8GlWTg4/ZRdl6d2Q6q4EfJKg==}
-
-  '@lemonppt/view-model@0.1.6':
-    resolution: {integrity: sha512-syFlHMFnGDrXlp48AvEeJit0qLt3yx9MS2zDw+utKUT1Uar4chrugAy0UY1mqel640OXwi0b7p3vtAEtETKLZg==}
-
   '@napi-rs/wasm-runtime@1.1.6':
     resolution: {integrity: sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg==}
     peerDependencies:
@@ -554,6 +563,12 @@ packages:
 
   '@types/node@20.19.43':
     resolution: {integrity: sha512-6oYBAi5ikg4Pl+kGsoYtawUMBT2zZMCvPNF7pVLnHZfd1zf38DRiWn/gT01RYCdUqkv7Fhr+C9ot4/tb+2sVvA==}
+
+  '@types/pixelmatch@5.2.6':
+    resolution: {integrity: sha512-wC83uexE5KGuUODn6zkm9gMzTwdY5L0chiK+VrKcDfEjzxh1uadlWTvOmAbCpnM9zx/Ww3f8uKlYQVnO/TrqVg==}
+
+  '@types/pngjs@6.0.5':
+    resolution: {integrity: sha512-0k5eKfrA83JOZPppLtS2C7OUtyNAl2wKNxfyYl9Q5g9lPkgBl/9hNyAu6HuEH2J4XmIv2znEpkDd0SaZVxW6iQ==}
 
   '@types/prop-types@15.7.15':
     resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
@@ -731,6 +746,9 @@ packages:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
 
+  echarts@6.1.0:
+    resolution: {integrity: sha512-q0yaFPggC9FUdsWH4blavRWFmxdrIodbkoKNAjJudAI6CA9gNPxHtV2RcZNEepZVlk4yvBYkOkbk6HIVpIyHZA==}
+
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
@@ -877,6 +895,12 @@ packages:
 
   isarray@1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
+
+  jquery.scrollbar@0.2.11:
+    resolution: {integrity: sha512-EpnIzDbbCcy4WAmnw4YK0oUOiApzK2UeccU4QCTmKKiaVGNhmroJtTzo2x1JhBcT6FebDDS90TheaHXLkZM/Xg==}
+
+  jquery@3.7.1:
+    resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -1047,6 +1071,10 @@ packages:
     resolution: {integrity: sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A==}
     engines: {node: '>=12'}
 
+  pixelmatch@7.2.0:
+    resolution: {integrity: sha512-xhcb4yHu9sM/G7foGzoLtXYcC0zHEaOXXjRKhGup0fw78Nf2Tkiapv4EQyMzrbcmQPsllAI7DbFY2UT7PlI9Pg==}
+    hasBin: true
+
   playwright-core@1.61.1:
     resolution: {integrity: sha512-h7Qlt6m4REp25qvIdvbDtVmD4LqVXfpRxhORv9L0jzETM05p4fuPJ3dKyuSXQxDSbXnmS79HAgi9589lGSpLkg==}
     engines: {node: '>=18'}
@@ -1056,6 +1084,10 @@ packages:
     resolution: {integrity: sha512-DWnY5o3YbLWK4GovuAVwpqL+1VwGNdUGrRr++8j8PtQQzvAVZUIMjKQ90fY689sEJZJBbZVw1rXaOKSTitkzPQ==}
     engines: {node: '>=18'}
     hasBin: true
+
+  pngjs@7.0.0:
+    resolution: {integrity: sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==}
+    engines: {node: '>=14.19.0'}
 
   postcss@8.5.19:
     resolution: {integrity: sha512-Mz8SaolMd8nB+G13WkORcxQKHZ/NE4xXevtkJHVuG+guo9/wYKlIMTKAqGdEmYOXR2ijPjTYNHssizdaVSUNdQ==}
@@ -1192,6 +1224,9 @@ packages:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}
     engines: {node: '>=0.6'}
 
+  tslib@2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
@@ -1325,6 +1360,9 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
+  zrender@6.1.0:
+    resolution: {integrity: sha512-oEGMDB6pOP2S6OwRR4PdVv610zrjnA3Bh+JnSG12fYJlBKjtNAoEb5fSUoCOOINlH96I2fU38/A2UpRKs67xYQ==}
+
 snapshots:
 
   '@emnapi/core@1.11.1':
@@ -1422,30 +1460,6 @@ snapshots:
     optional: true
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
-
-  '@lemonppt/composer@0.1.6':
-    dependencies:
-      '@lemonppt/core': 0.1.6
-      '@lemonppt/templates': 0.1.6
-      '@lemonppt/view-model': 0.1.6
-
-  '@lemonppt/core@0.1.6':
-    dependencies:
-      zod: 3.25.76
-
-  '@lemonppt/templates@0.1.6':
-    dependencies:
-      '@lemonppt/core': 0.1.6
-      '@lemonppt/themes': 0.1.6
-      react: 18.3.1
-
-  '@lemonppt/themes@0.1.6':
-    dependencies:
-      '@lemonppt/core': 0.1.6
-
-  '@lemonppt/view-model@0.1.6':
-    dependencies:
-      '@lemonppt/core': 0.1.6
 
   '@napi-rs/wasm-runtime@1.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)':
     dependencies:
@@ -1567,6 +1581,14 @@ snapshots:
   '@types/node@20.19.43':
     dependencies:
       undici-types: 6.21.0
+
+  '@types/pixelmatch@5.2.6':
+    dependencies:
+      '@types/node': 20.19.43
+
+  '@types/pngjs@6.0.5':
+    dependencies:
+      '@types/node': 20.19.43
 
   '@types/prop-types@15.7.15': {}
 
@@ -1747,6 +1769,11 @@ snapshots:
       call-bind-apply-helpers: 1.0.2
       es-errors: 1.3.0
       gopd: 1.2.0
+
+  echarts@6.1.0:
+    dependencies:
+      tslib: 2.3.0
+      zrender: 6.1.0
 
   ee-first@1.1.1: {}
 
@@ -1944,6 +1971,10 @@ snapshots:
 
   isarray@1.0.0: {}
 
+  jquery.scrollbar@0.2.11: {}
+
+  jquery@3.7.1: {}
+
   js-tokens@4.0.0: {}
 
   jszip@3.10.1:
@@ -2064,6 +2095,10 @@ snapshots:
 
   picomatch@4.0.5: {}
 
+  pixelmatch@7.2.0:
+    dependencies:
+      pngjs: 7.0.0
+
   playwright-core@1.61.1: {}
 
   playwright@1.61.1:
@@ -2071,6 +2106,8 @@ snapshots:
       playwright-core: 1.61.1
     optionalDependencies:
       fsevents: 2.3.2
+
+  pngjs@7.0.0: {}
 
   postcss@8.5.19:
     dependencies:
@@ -2269,6 +2306,8 @@ snapshots:
 
   toidentifier@1.0.1: {}
 
+  tslib@2.3.0: {}
+
   tslib@2.8.1:
     optional: true
 
@@ -2345,3 +2384,7 @@ snapshots:
   wrappy@1.0.2: {}
 
   zod@3.25.76: {}
+
+  zrender@6.1.0:
+    dependencies:
+      tslib: 2.3.0
