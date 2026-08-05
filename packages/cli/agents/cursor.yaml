@@ -1,0 +1,47 @@
+# lemonPPT - AI-powered presentation generation
+# Copyright (c) 2026 lemonforme
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: lemonppt
+description: |
+  Cursor Agent 调用 lemonPPT 的参考配置。
+  建议将以下内容写入项目根目录的 .cursorrules 文件，或作为 Cursor Composer 的 system prompt 片段使用。
+
+cursorrules: |
+  # lemonPPT Skill 调用规范
+
+  lemonPPT 是一个结构化 goal.json → 视觉 PPT 的渲染与导出引擎。
+
+  ## 能力边界
+  - ✅ 将 `goal.json` 渲染为可离线打开的 HTML deck（支持浏览器内编辑）
+  - ✅ 导出可编辑 PPTX 或截图 PDF
+  - ✅ 根据 `role` 自动挑选合适版式
+  - ✅ 内置自然语言 → `goal.json` 生成（`lemonppt generate`）
+  - ✅ 程序化选页（`lemonppt layout-query`）、查看版式契约（`lemonppt inspect-layout`）
+  - ✅ goal.json 规范化（`lemonppt write-safe-props`）与校验（`lemonppt validate-goal-spec`）
+  - ❌ 不直接解析外部文档（Word/PDF/Markdown）；如需“上传文档生成 PPT”，外层 Agent 需先提取文本/结构，再交给 lemonPPT
+
+  ## 推荐调用流程
+
+  ### 方式 1：一句话端到端
+  ```bash
+  lemonppt generate "面向企业客户的 AI 助手产品发布会..." --pages 8 --theme theme01 --language zh --out ./goal.json
+  lemonppt export ./goal.json --pptx ./deck.pptx --pdf ./deck.pdf
+  ```
+
+  ### 方式 2：精细编排
+  ```bash
+  lemonppt list-themes
+  lemonppt layout-query --theme theme06 --role metric --limit 5
+  lemonppt inspect-layout theme06_metric_hero_v1
+  lemonppt goal-scaffold --title "AI 产业投资图谱" --goal "..." --theme theme06 --pages 10 --out ./goal.json
+  # 外层 Agent 填充 props 后
+  lemonppt write-safe-props ./goal.json --write
+  lemonppt validate-goal-spec ./goal.json
+  lemonppt export ./goal.json --pptx ./deck.pptx
+  ```
+
+  ## 关键约束
+  - 不要直接为 slide 指定 `layout`；优先只提供 `role` 与 `props`，由系统自动选版式。
+  - 所有字符串字段必须非空，数组字段必须非空且元素关键字段非空。
+  - theme 默认值是 theme01；如需 theme06 请在 generate 或 goal-scaffold 时显式指定。

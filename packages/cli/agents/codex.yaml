@@ -1,0 +1,99 @@
+# lemonPPT - AI-powered presentation generation
+# Copyright (c) 2026 lemonforme
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: lemonppt
+description: |
+  lemonPPT 结构化 goal.json → 视觉 PPT 渲染与导出引擎。
+  提供端到端生成、版式查询与字段契约查看、goal.json 规范化与校验能力。
+
+tools:
+  - name: lemonppt-generate-goal
+    description: 根据一句话需求生成完整 goal.json
+    command: |
+      lemonppt generate "{{input}}" --pages {{pageCount}} --theme {{theme}} --language {{language}}
+    parameters:
+      input:
+        type: string
+        required: true
+      pageCount:
+        type: integer
+        default: 8
+      theme:
+        type: string
+        default: theme01
+      language:
+        type: string
+        default: zh
+
+  - name: lemonppt-list-themes
+    description: 列出所有可用主题
+    command: lemonppt list-themes
+
+  - name: lemonppt-layout-query
+    description: 按主题与角色查询候选版式
+    command: |
+      lemonppt layout-query --theme {{theme}} --role {{role}} --limit {{limit}}{% if keyword %} --keyword {{keyword}}{% endif %}{% if needsMedia %} --needs-media{% endif %}
+    parameters:
+      theme:
+        type: string
+        required: true
+      role:
+        type: string
+        required: true
+      keyword:
+        type: string
+      needsMedia:
+        type: boolean
+      limit:
+        type: integer
+        default: 8
+
+  - name: lemonppt-inspect-layout
+    description: 查看指定版式的字段契约
+    command: lemonppt inspect-layout {{layoutId}}
+    parameters:
+      layoutId:
+        type: string
+        required: true
+
+  - name: lemonppt-goal-scaffold
+    description: 生成只含 role 的 goal.json 骨架
+    command: |
+      lemonppt goal-scaffold --title "{{title}}" --goal "{{goal}}" --theme {{theme}} --pages {{pages}} --language {{language}} --out ./goal.json
+    parameters:
+      title:
+        type: string
+        required: true
+      goal:
+        type: string
+        required: true
+      theme:
+        type: string
+        default: theme01
+      pages:
+        type: integer
+        default: 8
+      language:
+        type: string
+        default: zh
+
+  - name: lemonppt-write-safe-props
+    description: 规范化 goal.json 的 props
+    command: lemonppt write-safe-props ./goal.json --write
+
+  - name: lemonppt-validate-goal-spec
+    description: 校验 goal.json 是否符合规范
+    command: lemonppt validate-goal-spec ./goal.json
+
+  - name: lemonppt-export-pptx
+    description: 导出 PPTX
+    command: lemonppt export ./goal.json --pptx ./deck.pptx
+
+  - name: lemonppt-export-pdf
+    description: 导出 PDF
+    command: lemonppt export ./goal.json --pdf ./deck.pdf
+
+instructions: |
+  当用户需要生成 PPT 时，优先使用 lemonppt-generate-goal 端到端生成。
+  当用户需要控制每一页版式或查看字段契约时，使用 layout-query、inspect-layout、goal-scaffold 等工具精细编排。

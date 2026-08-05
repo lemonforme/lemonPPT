@@ -6,6 +6,7 @@ import type { DeckGoal } from '@lemonppt/core';
 import { validateRawGoal } from '@lemonppt/core';
 import { composeDeckFromRaw, recomposeDeck } from '@lemonppt/composer';
 import { createFallbackGoal } from './fallback.js';
+import { patchGoalContent } from './patch.js';
 import { callOpenAICompatible, type LlmOptions } from './llm.js';
 import { buildPrompt, type PromptContext } from './prompt.js';
 
@@ -42,7 +43,7 @@ export async function generateGoal(
   // 无 API Key 时直接 fallback
   const apiKey = llm?.apiKey ?? process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    const goal = recomposeDeck(createFallbackGoal({ input, pageCount, theme, language }));
+    const goal = patchGoalContent(composeDeckFromRaw(createFallbackGoal({ input, pageCount, theme, language })));
     return { goal, source: 'fallback' };
   }
 
@@ -62,7 +63,7 @@ export async function generateGoal(
     throw new Error(`goal.json 校验失败: ${JSON.stringify(validation.errors?.format())}`);
   }
 
-  const goal = recomposeDeck(composeDeckFromRaw(validation.data));
+  const goal = patchGoalContent(recomposeDeck(composeDeckFromRaw(validation.data)));
   return { goal, source: 'llm', raw };
 }
 

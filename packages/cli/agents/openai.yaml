@@ -1,0 +1,176 @@
+# lemonPPT - AI-powered presentation generation
+# Copyright (c) 2026 lemonforme
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: lemonppt
+description: |
+  lemonPPT 是一个结构化 goal.json → 视觉 PPT 的渲染与导出引擎。
+  支持自然语言生成 PPT、按角色自动选版式、导出 PPTX/PDF，以及程序化选页与字段校验。
+
+functions:
+  - name: generate_goal
+    description: 根据一句话需求生成完整的 goal.json（端到端入口）
+    parameters:
+      type: object
+      properties:
+        input:
+          type: string
+          description: 用户的 PPT 需求描述
+        pageCount:
+          type: integer
+          description: 期望页数，默认 8
+          default: 8
+        theme:
+          type: string
+          description: 主题 ID，如 theme01、theme06
+          default: theme01
+        language:
+          type: string
+          enum: [zh, en]
+          description: 输出语言
+          default: zh
+      required: [input]
+
+  - name: render_goal
+    description: 将 goal.json 渲染为离线可打开的 HTML deck
+    parameters:
+      type: object
+      properties:
+        goal:
+          type: object
+          description: 符合 lemonPPT 规范的 DeckGoal 对象
+        editable:
+          type: boolean
+          description: 是否生成浏览器端可编辑版本
+          default: false
+      required: [goal]
+
+  - name: export_pptx
+    description: 将 goal.json 导出为可编辑 PPTX
+    parameters:
+      type: object
+      properties:
+        goal:
+          type: object
+          description: 符合 lemonPPT 规范的 DeckGoal 对象
+      required: [goal]
+
+  - name: export_pdf
+    description: 将 goal.json 导出为截图 PDF
+    parameters:
+      type: object
+      properties:
+        goal:
+          type: object
+          description: 符合 lemonPPT 规范的 DeckGoal 对象
+      required: [goal]
+
+  - name: list_themes
+    description: 列出所有可用主题
+    parameters:
+      type: object
+      properties: {}
+
+  - name: layout_query
+    description: 按主题与角色查询候选版式，供 Agent 程序化选页
+    parameters:
+      type: object
+      properties:
+        theme:
+          type: string
+          description: 主题 ID
+        role:
+          type: string
+          description: 页面角色，如 cover、metric、chart、process
+        keyword:
+          type: string
+          description: 关键词过滤
+        needsMedia:
+          type: boolean
+          description: 是否只返回需要媒体的版式
+        limit:
+          type: integer
+          description: 返回数量上限
+          default: 8
+      required: [theme, role]
+
+  - name: inspect_layout
+    description: 查看指定版式的字段契约、默认值与媒体槽位
+    parameters:
+      type: object
+      properties:
+        layoutId:
+          type: string
+          description: 完整版式 ID，如 theme06_metric_hero_v1
+      required: [layoutId]
+
+  - name: goal_scaffold
+    description: 生成只含 role 的 goal.json 骨架，由外层 Agent 填充内容
+    parameters:
+      type: object
+      properties:
+        title:
+          type: string
+          description: PPT 标题
+        goal:
+          type: string
+          description: PPT 目标/核心信息
+        audience:
+          type: string
+          description: 目标受众
+        owner:
+          type: string
+          description: 作者或团队
+        theme:
+          type: string
+          description: 主题 ID
+          default: theme01
+        pages:
+          type: integer
+          description: 页数
+          default: 8
+        language:
+          type: string
+          enum: [zh, en]
+          description: 语言
+          default: zh
+      required: [title, goal]
+
+  - name: write_safe_props
+    description: 规范化 goal.json 的 props，填充默认值并校验未知字段
+    parameters:
+      type: object
+      properties:
+        goal:
+          type: object
+          description: DeckGoal 对象
+      required: [goal]
+
+  - name: validate_goal_spec
+    description: 独立校验 goal.json 是否符合规范
+    parameters:
+      type: object
+      properties:
+        goal:
+          type: object
+          description: DeckGoal 对象
+        strict:
+          type: boolean
+          description: 是否将内容警告视为错误
+          default: false
+      required: [goal]
+
+usage:
+  - |
+    端到端生成：
+    1. generate_goal(input="面向企业客户的 AI 助手产品发布会...", pageCount=8, theme="theme01")
+    2. export_pptx(goal=result.goal)
+  - |
+    精细编排：
+    1. list_themes()
+    2. layout_query(theme="theme06", role="metric", limit=3)
+    3. inspect_layout(layoutId="theme06_metric_hero_v1")
+    4. goal_scaffold(title="...", goal="...", theme="theme06", pages=10)
+    5. write_safe_props(goal=...)
+    6. validate_goal_spec(goal=...)
+    7. export_pptx(goal=...)

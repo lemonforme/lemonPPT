@@ -159,9 +159,12 @@
           <div class="field">
             <label for="theme">主题风格</label>
             <select id="theme">
-              <option value="minimal">Minimal</option>
-              <option value="dark-tech">Dark Tech</option>
-              <option value="warm-business">Warm Business</option>
+              <option value="theme01">Theme 01</option>
+              <option value="theme02">Theme 02</option>
+              <option value="theme03">Theme 03</option>
+              <option value="theme04">Theme 04</option>
+              <option value="theme05">Theme 05</option>
+              <option value="theme06">Theme 06</option>
             </select>
           </div>
         </div>
@@ -173,11 +176,16 @@
           </select>
         </div>
         <div class="field">
-          <span class="api-key-toggle" id="apiKeyToggle">+ 使用自己的 OpenAI API Key（可选）</span>
+          <span class="api-key-toggle" id="apiKeyToggle">+ 使用自己的 LLM API Key（可选）</span>
           <div id="apiKeyWrap">
-            <label for="apiKey">OpenAI API Key</label>
+            <label for="apiKey">API Key</label>
             <input type="password" id="apiKey" placeholder="sk-..." />
-            <p class="hint">留空则使用服务端配置，无 Key 时会返回示例内容。</p>
+            <label for="baseUrl" style="margin-top: 14px;">API 基础地址</label>
+            <input type="url" id="baseUrl" placeholder="https://api.openai.com/v1" />
+            <p class="hint">兼容 OpenAI、DeepSeek、Moonshot、Zhipu 等。留空则使用服务端配置。</p>
+            <label for="model" style="margin-top: 14px;">模型名称</label>
+            <input type="text" id="model" placeholder="gpt-4o-mini" />
+            <p class="hint">留空则使用服务端配置或默认模型。</p>
           </div>
         </div>
         <button type="submit" id="submitBtn">开始生成</button>
@@ -193,17 +201,23 @@
     const apiKeyToggle = document.getElementById('apiKeyToggle');
     const apiKeyWrap = document.getElementById('apiKeyWrap');
     const apiKeyInput = document.getElementById('apiKey');
+    const baseUrlInput = document.getElementById('baseUrl');
+    const modelInput = document.getElementById('model');
 
     const savedKey = localStorage.getItem('lemonppt_api_key');
-    if (savedKey) {
-      apiKeyInput.value = savedKey;
+    const savedBaseUrl = localStorage.getItem('lemonppt_base_url');
+    const savedModel = localStorage.getItem('lemonppt_model');
+    if (savedKey || savedBaseUrl || savedModel) {
+      if (savedKey) apiKeyInput.value = savedKey;
+      if (savedBaseUrl) baseUrlInput.value = savedBaseUrl;
+      if (savedModel) modelInput.value = savedModel;
       apiKeyWrap.classList.add('show');
-      apiKeyToggle.textContent = '- 收起 API Key';
+      apiKeyToggle.textContent = '- 收起 LLM 配置';
     }
 
     apiKeyToggle.addEventListener('click', () => {
       apiKeyWrap.classList.toggle('show');
-      apiKeyToggle.textContent = apiKeyWrap.classList.contains('show') ? '- 收起 API Key' : '+ 使用自己的 OpenAI API Key（可选）';
+      apiKeyToggle.textContent = apiKeyWrap.classList.contains('show') ? '- 收起 LLM 配置' : '+ 使用自己的 LLM API Key（可选）';
     });
 
     function showError(msg) {
@@ -216,14 +230,52 @@
       submitBtn.innerHTML = loading ? '<span class="spinner"></span>生成中...' : '开始生成';
     }
 
+    // 将后端/OpenAI 原始错误转换为用户友好的中文提示
+    function formatError(raw) {
+      const text = typeof raw === 'string' ? raw : String(raw);
+
+      // OpenAI / 通用 LLM 错误码映射
+      if (text.includes('insufficient_quota')) {
+        return '当前 API Key 额度已用完，请更换 Key、充值，或留空使用服务端配置。';
+      }
+      if (text.includes('invalid_api_key') || text.includes('Unauthorized') || text.includes('401')) {
+        return 'API Key 无效或未授权，请检查 Key 是否正确。';
+      }
+      if (text.includes('rate_limit_exceeded') || text.includes('429')) {
+        return '请求太频繁，请稍后再试。';
+      }
+      if (text.includes('context_length_exceeded')) {
+        return '输入内容过长，请缩短主题描述。';
+      }
+      if (text.includes('timeout') || text.includes('ETIMEDOUT') || text.includes('ECONNABORTED')) {
+        return '请求超时，请检查网络后重试。';
+      }
+      if (text.includes('ENOTFOUND') || text.includes('ECONNREFUSED') || text.includes('Failed to fetch') || text.includes('fetch failed')) {
+        return '无法连接到 LLM 服务，请检查 API 基础地址是否正确。';
+      }
+      if (text.includes('500') || text.includes('502') || text.includes('503')) {
+        return '服务暂时不可用，请稍后再试。';
+      }
+
+      // 兜底：保留原始信息，避免信息丢失
+      return text || '请求出错，请稍后重试';
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorBox.classList.remove('show');
       setLoading(true);
 
       const apiKey = apiKeyInput.value.trim();
+      const baseUrl = baseUrlInput.value.trim();
+      const model = modelInput.value.trim();
+
       if (apiKey) localStorage.setItem('lemonppt_api_key', apiKey);
       else localStorage.removeItem('lemonppt_api_key');
+      if (baseUrl) localStorage.setItem('lemonppt_base_url', baseUrl);
+      else localStorage.removeItem('lemonppt_base_url');
+      if (model) localStorage.setItem('lemonppt_model', model);
+      else localStorage.removeItem('lemonppt_model');
 
       const payload = {
         input: document.getElementById('input').value.trim(),
@@ -231,6 +283,8 @@
         theme: document.getElementById('theme').value,
         language: document.getElementById('language').value,
         apiKey: apiKey || undefined,
+        baseUrl: baseUrl || undefined,
+        model: model || undefined,
       };
 
       try {
@@ -241,7 +295,7 @@
         });
         const genData = await genRes.json();
         if (!genRes.ok || !genData.success) {
-          throw new Error(genData.error || '生成失败');
+          throw new Error(formatError(genData.error) || '生成失败');
         }
 
         const renderRes = await fetch('/api/render-editor', {
@@ -251,12 +305,12 @@
         });
         const renderData = await renderRes.json();
         if (!renderRes.ok || !renderData.success) {
-          throw new Error(renderData.error || '渲染失败');
+          throw new Error(formatError(renderData.error) || '渲染失败');
         }
 
         window.location.href = '/deck/editor.html';
       } catch (err) {
-        showError(err.message || '请求出错，请稍后重试');
+        showError(formatError(err.message));
         setLoading(false);
       }
     });

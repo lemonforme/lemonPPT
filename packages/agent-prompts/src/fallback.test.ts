@@ -27,8 +27,8 @@ describe('fallback', () => {
   });
 
   it('should apply theme and language options', () => {
-    const goal = createFallbackGoal({ input: '测试', theme: 'dark-tech', language: 'en' });
-    expect(goal.theme).toBe('dark-tech');
+    const goal = createFallbackGoal({ input: '测试', theme: 'theme01', language: 'en' });
+    expect(goal.theme).toBe('theme01');
     expect(goal.language).toBe('en');
   });
 
