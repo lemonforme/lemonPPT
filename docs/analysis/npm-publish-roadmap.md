@@ -1,6 +1,6 @@
 # lemonPPT npm 发布与后续路线图
 
-> 基于 `lemonPPT-skill-distribution-plan.md`、`lemonPPT-theme-strategy.md` 与当前项目进度整理的执行方案。
+> 基于 `docs/plans/skill-distribution.md`、`docs/plans/theme-architecture-evolution.md` 与当前项目进度整理的执行方案。
 > 更新日期：2026-07-19
 
 ---
@@ -11,7 +11,7 @@
 
 | 文件 | 解决什么问题 | 核心产出 |
 |------|-------------|---------|
-| `lemonPPT-theme-strategy.md` | 视觉系统怎么扩展 | Token 化主题、布局/主题解耦、工业化新增主题的路径 |
+| `docs/plans/theme-architecture-evolution.md` | 视觉系统怎么扩展 | Token 化主题、布局/主题解耦、工业化新增主题的路径、混合架构演进方案 |
 | `lemonPPT-skill-distribution-plan.md` | 怎么让用户/AI Agent 用上 | `npx lemonppt@latest` 安装器、SKILL.md 协议、Agent 技能目录 |
 
 两者是**互补关系**：主题方案管"里面长什么样"，Skill 分发方案管"外面怎么用"。
@@ -22,7 +22,7 @@
 |------|-------------|---------------|---------|
 | 主题 Token 系统 | 必须有 | 间接需要 | 已完成：`packages/themes/src/*/tokens.ts` |
 | 布局组件 | MVP 5-8 个 | 越多越好 | 已完成：30 个布局，22 个 role |
-| 布局/主题解耦 | 必须解耦 | 希望解耦 | 已完成：`theme` 改为 `'base'`，layout ID 去掉 `minimal_` 前缀，目录重命名为 `base/` |
+| 布局/主题解耦 | 必须解耦 | 希望解耦 | 已完成：用户侧统一为 `theme01` 专属版式；`base` 通用版式池、`dark-tech`、`warm-business` 已完全移除 |
 | role→layout | 需要 | 需要 | 已完成：`packages/composer` |
 | PPTX 导出映射 | 需要 | 需要 | 已完成：30 个 layout 全部映射 |
 | CLI 工具 | 脚本调用 | 核心入口 | 已完成：`@lemonppt/cli` |
@@ -38,10 +38,10 @@
 - 但这也带来隐患：如果每新增一个主题都要重做 30 个布局变体，工作量不可持续。
 
 **发现 2：布局与主题命名已解耦**
-- layout meta 的 `theme` 已改为 `'base'`，表示通用版式。
-- layout ID 已去掉 `minimal_` 前缀（如 `cover_v1`）。
-- 目录已从 `packages/templates/src/minimal/` 重命名为 `packages/templates/src/base/`。
-- 为兼容旧 `goal.json`，在 `@lemonppt/core` 中增加了 `normalizeDeckGoal`，自动把 `minimal_xxx_v1` 映射为 `xxx_v1`、`minimal` 主题映射为 `base`。
+- layout meta 的 `theme` 已统一为具体主题 ID（当前全部为 `theme01`），不再保留通用版式。
+- layout ID 已统一为 `theme01_xxx_v1` 格式。
+- 目录结构为 `packages/templates/src/themes/<theme>/`。
+- 为兼容旧 `goal.json`，在 `@lemonppt/core` 中增加了 `normalizeDeckGoal`，自动把 `minimal_xxx_v1` 映射为 `theme01_xxx_v1`、`minimal` / `base` 主题映射为 `theme01`。
 
 **发现 3：Skill 分发已打通**
 - `SKILL.md` 已随 `@lemonppt/cli` 发布包分发。
@@ -176,8 +176,8 @@ npx @lemonppt/skill@latest
    ```
    改为：
    ```ts
-   theme: 'base'        // 或 'universal'
-   id: 'cover_v1'
+   theme: 'theme01'
+   id: 'theme01_cover_v1'
    ```
 
 2. **修改 composer 的角色映射**

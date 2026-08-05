@@ -2,6 +2,7 @@
 
 > 基于 Dashi PPT 架构拆解，为 lemonPPT 制定的自研替代方案。
 > 核心原则：**参考架构方向，不复制代码、主题、导出引擎**。
+> 项目协议：AGPL-3.0-or-later。
 
 ---
 
@@ -76,16 +77,19 @@ Dashi 的 PPTX 导出引擎是专有软件，非 AGPL：
 ### 2.2 仓库结构
 
 ```
-lemonppt/
+lemonPPT/
 ├── apps/
-│   ├── web/                 # 用户端：创建/编辑/预览 deck
-│   └── server/              # 可选：AI 生成、导出任务队列
+│   └── server/              # 本地预览与导出服务（Node）
 ├── packages/
-│   ├── core/                # goal.json 类型、校验、编排逻辑
-│   ├── renderer/            # React 页面组件 + 主题
+│   ├── agent-prompts/       # Agent prompt 与 fallback 内容生成
+│   ├── cli/                 # 命令行工具与 SKILL.md 分发
+│   ├── composer/            # 基于 role 的版式选择、页码注入、默认 props
+│   ├── core/                # goal.json 类型、schema、校验
+│   ├── renderer/            # React SSR 渲染引擎 + PPTX/PDF 导出
+│   ├── templates/           # 版式组件库（共享组件，多主题 CSS 变量适配）
 │   ├── themes/              # 设计 token、原始样式
-│   ├── export-pptx/         # 自研 PPTX 导出（基于 pptxgenjs）
-│   └── export-pdf/          # 截图 PDF（Playwright）
+│   └── view-model/          # props 规范化、截断、数组字段补齐
+├── scripts/                 # 开发脚本（gallery、snapshot、agent-test、audit-layouts 等）
 └── goal.json                # 示例/测试用 deck 计划
 ```
 
@@ -127,16 +131,33 @@ lemonppt/
 
 ### 2.5 主题与模板样式系统
 
-MVP 阶段采用 **1 个主题 × 5~8 个基础布局**，避免 Dashi 式的庞大主题矩阵。
+当前已实现 **3 个主题 × 50 个共享版式 + 5 个主题专属变体**，避免 Dashi 式的庞大主题矩阵。
 
 | 布局 | 用途 |
 |---|---|
-| `cover_v1` | 封面 |
-| `toc_v1` | 目录 |
-| `content_v1` | 图文内容 |
-| `metric_v1` | 大数字 |
-| `quote_v1` | 金句/观点 |
-| `ending_v1` | 封底/CTA |
+| `cover_v1/v2` | 封面 |
+| `table_of_contents_v1` | 目录 |
+| `metric_v1/v2/v3` | 核心数字/指标 |
+| `stats_v1/v2` | 统计摘要 |
+| `chart_v1/v2` | 图表页 |
+| `comparison_v1/v2/v3` | 对比页 |
+| `process_v1/v2/v3` | 流程页 |
+| `timeline_v1/v2/v3` | 时间线 |
+| `roadmap_v1/v2` | 路线图 |
+| `quote_v1/v2/v3` | 引用/观点 |
+| `testimonial_v1/v2/v3` | 客户证言 |
+| `faq_v1` | 问答 |
+| `content_v1/v2/v3/v4` | 图文内容 |
+| `split_v1` | 分栏内容 |
+| `feature_v1/v2/v3` | 产品特性 |
+| `team_v1/v2` | 团队介绍 |
+| `partners_v1` | 合作伙伴 |
+| `pricing_v1/v2` | 价格方案 |
+| `gallery_v1/v2/v3` | 图片墙 |
+| `image_v1/v2` | 单图页 |
+| `swot_v1` | SWOT 分析 |
+| `pest_v1` | PEST 分析 |
+| `closing_v1/v2` | 结尾/感谢 |
 
 每个布局是一个独立 React 组件：
 

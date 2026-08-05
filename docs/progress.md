@@ -1,7 +1,382 @@
 # lemonPPT 项目进度
 
 > 记录迁移清理、MVP 功能开发与验证状态。
-> 最新更新：2026-07-20
+> 最新更新：2026-08-04
+
+---
+
+## 2026-08-04（低优先级打磨 pass）
+
+### 已完成
+
+- **页脚英文双语标注**
+  - 在 [`packages/themes/src/theme06/styles.css`](../../packages/themes/src/theme06/styles.css) 新增 `.lp-theme06-footer-bilingual`、`.lp-theme06-footer-cn`、`.lp-theme06-footer-en` 布局与字重样式。
+  - 为以下版式新增 `footnote` Props/Schema，并统一使用 `splitBilingual('中文 / ENGLISH')` 在页脚左侧显示中文、右侧显示英文：
+    - `theme06_process_v1`：[`packages/templates/src/themes/theme06/process-v1.tsx`](../../packages/templates/src/themes/theme06/process-v1.tsx)
+    - `theme06_timeline_v1`：[`packages/templates/src/themes/theme06/timeline-v1.tsx`](../../packages/templates/src/themes/theme06/timeline-v1.tsx)
+    - `theme06_risk_v1`：[`packages/templates/src/themes/theme06/risk-v1.tsx`](../../packages/templates/src/themes/theme06/risk-v1.tsx)
+    - `theme06_risk_v2`：[`packages/templates/src/themes/theme06/risk-v2.tsx`](../../packages/templates/src/themes/theme06/risk-v2.tsx)
+    - `theme06_case_v2`：[`packages/templates/src/themes/theme06/case-v2.tsx`](../../packages/templates/src/themes/theme06/case-v2.tsx)
+  - 同步更新 [`scripts/lib/sample-props.mjs`](../../scripts/lib/sample-props.mjs)，为上述版式提供默认 `footnote`（如 `4 段 / FLOW`、`4 项风险 / 4 RISKS`）。
+  - PPTX 导出层新增 `splitBilingual` 与 `addTheme06FooterBilingual` 辅助函数（[`packages/renderer/src/export-pptx.ts`](../../packages/renderer/src/export-pptx.ts)），并在 `renderTheme06ProcessV1`、`renderTheme06TimelineV1`、`renderTheme06RiskV1` 中渲染双语页脚。
+
+- **装饰性箭头与徽章工具类**
+  - 新增 `.lp-theme06-arrow-right`（带箭头符号的强调文字链接）与 `.lp-theme06-badge`（圆角胶囊标签）工具类。
+  - 为章节页、内容编号页等提供可复用的原子样式，避免每个版式重复实现。
+
+- **字体字重不一致修复**
+  - 统一 theme06 标题类 `font-weight: 800`，标签 / kicker / 编号类 `font-weight: 700`，正文与辅助文字保持 `400/500/600` 层级。
+  - 受影响选择器集中在 [`packages/themes/src/theme06/styles.css`](../../packages/themes/src/theme06/styles.css)。
+
+### 验证结果
+
+- `corepack pnpm -r typecheck` ✅
+- `corepack pnpm -r build` ✅
+- `corepack pnpm gallery` + `corepack pnpm snapshot theme06` ✅（theme06 全部 88 个版式快照生成成功）
+- `node scripts/generate-theme06-goal.mjs && node scripts/export-pptx.mjs examples/theme06-audit-goal.json output/theme06-audit.pptx` ✅（88 页 PPTX 导出成功）
+
+---
+
+## 2026-08-04（中优先级对齐 pass）
+
+### 已完成
+
+- **通用卡片样式增强**
+  - [`packages/themes/src/theme06/styles.css`](../../packages/themes/src/theme06/styles.css) `.lp-theme06-card` 新增顶部 2px accent 线（`::before` 伪元素）。
+  - 新增 `.lp-theme06-card--no-topline` 修饰符与 `.lp-theme06-card-meta` 底部元数据样式。
+  - 所有现有使用 `.lp-theme06-card` 的版式自动获得顶部强调线。
+
+- **新增 `theme06_risk_v2` 版式**
+  - 组件 [`packages/templates/src/themes/theme06/risk-v2.tsx`](../../packages/templates/src/themes/theme06/risk-v2.tsx)：左侧 01/02/03/04 编号风险卡片 + 右侧 `DROP IMAGE` 占位区 + 传导说明。
+  - 样式 `.lp-theme06-risk-v2-*`。
+  - PPTX 导出 [`packages/renderer/src/export-pptx.ts`](../../packages/renderer/src/export-pptx.ts) `renderTheme06RiskV2`。
+
+- **新增 `theme06_case_v2` 版式**
+  - 组件 [`packages/templates/src/themes/theme06/case-v2.tsx`](../../packages/templates/src/themes/theme06/case-v2.tsx)：左侧编号案例卡片 + 右侧图片占位区 + 公司/一句话说明/传导说明。
+  - 样式 `.lp-theme06-case-v2-*`。
+  - PPTX 导出 `renderTheme06CaseV2`。
+
+- **背景网格**
+  - 新增 `.lp-theme06-bg-grid` 工具类，使用极淡竖线网格强化「图谱风」质感。
+
+- **注册与集成**
+  - [`packages/templates/src/registry.tsx`](../../packages/templates/src/registry.tsx) 注册两个新版式。
+  - [`packages/templates/src/index.ts`](../../packages/templates/src/index.ts) 导出新版式。
+  - [`packages/composer/src/index.ts`](../../packages/composer/src/index.ts) `ROLE_LAYOUT_CANDIDATES.content` 加入 `theme06_risk_v2`、`theme06_case_v2`。
+  - [`scripts/lib/sample-props.mjs`](../../scripts/lib/sample-props.mjs) 为新版式提供默认数据。
+
+### 待完成
+
+- [ ] 通用卡片顶部线对部分版式可能有轻微视觉影响，需根据 snapshot 基线决定是否保留或调整。
+- [ ] 背景网格目前为可选工具类，如效果良好可默认应用到所有 theme06 幻灯片。
+- [ ] 评估 theme06 亮色模式是否必要，必要时单独规划。
+
+---
+
+## 2026-08-04
+
+### 已完成
+
+- **theme06 所有子页面统一支持可选背景图**
+  - 新增通用背景图层组件 [`packages/templates/src/themes/theme06/slide-bg.tsx`](../../packages/templates/src/themes/theme06/slide-bg.tsx)。
+  - 新增通用背景图样式 [`packages/themes/src/theme06/styles.css`](../../packages/themes/src/theme06/styles.css)（`.lp-theme06-slide-bg*`）。
+  - 批量为 80 个 theme06 子页面增加 `imageUrl` 字段、`needsMedia: true`、Schema「背景图片」字段与 `<Theme06SlideBg />` 渲染层。
+  - 已排除已有专属图片逻辑的版式：`theme06_cover_v1`、`theme06_chapter_v1`、`theme06_closing_v1`、`theme06_chapter_image_v1`。
+  - PPTX 导出层统一处理背景图：
+    - [`packages/renderer/src/export-pptx.ts`](../../packages/renderer/src/export-pptx.ts) `renderSlideToPptx` 在 theme06 非 cover/chapter-image 版式且有 `imageUrl` 时全屏渲染背景图。
+  - 同步更新 [`scripts/lib/sample-props.mjs`](../../scripts/lib/sample-props.mjs)，所有 theme06 版式默认返回 `imageUrl: ''`。
+  - 临时 PPTX 导出验证：给 `theme06_content_v1` 设置本地图片路径后导出成功，背景图正常显示。
+
+- **theme06 瀑布图配色对齐 Dashi 风格**
+  - React 组件 [`packages/templates/src/themes/theme06/chart-waterfall-v1.tsx`](../../packages/templates/src/themes/theme06/chart-waterfall-v1.tsx)：
+    - 首柱、末柱使用 accent（电光青柠）。
+    - 中间正向柱改为半透明灰 `rgba(255,255,255,0.16)`。
+    - 中间负向柱改为柔和红 `rgba(232,93,78,0.65)`。
+  - PPTX 导出 [`packages/renderer/src/export-pptx.ts`](../../packages/renderer/src/export-pptx.ts) `renderTheme06ChartWaterfallV1`：正向柱同步改为中灰，保持导出一致。
+
+- **theme06 与 Dashi 参考对齐审计**
+  - 抽样对比 Dashi theme06 参考页（003、010、017、025、030、035、040、048、050、058、060、070、079 等）与项目当前快照。
+  - 形成对齐计划文档：[`docs/plans/theme06-dashi-alignment-plan.md`](../../docs/plans/theme06-dashi-alignment-plan.md)。
+  - 识别高优先级差距：章节页结构、内容编号卡片列表、大图/高客单价页占位区、亮色模式。
+
+- **theme06 高优先级版式重设计 pass**
+  - 章节页 `theme06_chapter_v1` 结构对齐 Dashi：
+    - Props/Schema 新增 `topLeftLabel`、`topRightLabel`、`enSubtitle`、`tags`、`nextHint`。
+    - 视觉改为顶部双标签、实心大号数字、底部要点标签胶囊、右下角下转提示。
+    - 组件 [`packages/templates/src/themes/theme06/chapter-v1.tsx`](../../packages/templates/src/themes/theme06/chapter-v1.tsx)，样式 [`packages/themes/src/theme06/styles.css`](../../packages/themes/src/theme06/styles.css) `.lp-theme06-chapter-*`。
+    - PPTX 导出 [`packages/renderer/src/export-pptx.ts`](../../packages/renderer/src/export-pptx.ts) `renderTheme06ChapterV1` 同步更新。
+  - 新增 `theme06_content_numbered_v1`：
+    - 左侧标题 + 右侧 01/02/03/04 编号卡片列表，支持高亮当前项。
+    - 组件 [`packages/templates/src/themes/theme06/content-numbered-v1.tsx`](../../packages/templates/src/themes/theme06/content-numbered-v1.tsx)。
+    - 样式 `.lp-theme06-content-numbered-*`。
+    - PPTX 导出 `renderTheme06ContentNumberedV1`。
+  - 新增 `theme06_vertical_bar_v1`：
+    - 左侧大数字与支撑指标 + 右侧水平分段条形图，适合垂直赛道/高客单价分析。
+    - 组件 [`packages/templates/src/themes/theme06/vertical-bar-v1.tsx`](../../packages/templates/src/themes/theme06/vertical-bar-v1.tsx)。
+    - 样式 `.lp-theme06-vertical-bar-*`。
+    - PPTX 导出 `renderTheme06VerticalBarV1`。
+  - 统一注册与导出：
+    - [`packages/templates/src/registry.tsx`](../../packages/templates/src/registry.tsx) 注册两个新版式。
+    - [`packages/templates/src/index.ts`](../../packages/templates/src/index.ts) 导出新版式。
+    - [`packages/composer/src/index.ts`](../../packages/composer/src/index.ts) `ROLE_LAYOUT_CANDIDATES.content` 加入 `theme06_content_numbered_v1`。
+  - 示例数据：[`scripts/lib/sample-props.mjs`](../../scripts/lib/sample-props.mjs) 为 `theme06_chapter_v1`、`theme06_content_numbered_v1`、`theme06_vertical_bar_v1` 提供默认数据。
+
+### 验证结果
+
+- `corepack pnpm -r typecheck` ✅
+- `corepack pnpm -r build` ✅
+- `node scripts/gallery.mjs theme06` + `node scripts/snapshot.mjs theme06` ✅（包含 `theme06_content_numbered_v1`、`theme06_vertical_bar_v1`）
+- `node scripts/export-pptx.mjs examples/theme06-audit-goal.json output/theme06-audit-redesign.pptx` ✅（80 页导出成功）
+
+### 待完成
+
+- [ ] 通用卡片增加顶部 accent 线与底部元数据标注（中优先级）。
+- [ ] 评估 theme06 亮色模式是否必要，必要时单独规划。
+- [ ] 继续维护 theme06 gallery/snapshot 基线。
+
+---
+
+## 2026-08-03
+
+### 已完成
+
+- **外部 AI / Agent 调用能力对齐（方案 B）**
+  - 制定并保存 [`docs/plans/agent-invocation-alignment-plan.md`](docs/plans/agent-invocation-alignment-plan.md)。
+  - 重写 [`SKILL.md`](SKILL.md)：明确能力边界、更新主题/角色/CLI 命令、给出 Agent 调用示例。
+  - 新增 5 个独立脚本：
+    - [`scripts/layout-query.mjs`](scripts/layout-query.mjs)：按 theme + role + keyword 查询候选版式。
+    - [`scripts/inspect-layout.mjs`](scripts/inspect-layout.mjs)：查看版式字段契约、默认值与媒体槽位。
+    - [`scripts/goal-scaffold.mjs`](scripts/goal-scaffold.mjs)：生成只含 role 的 goal.json 骨架。
+    - [`scripts/write-safe-props.mjs`](scripts/write-safe-props.mjs)：规范化 props、填充默认值、报告未知字段。
+    - [`scripts/validate-goal-spec.mjs`](scripts/validate-goal-spec.mjs)：独立校验 goal.json 规范。
+  - CLI 暴露新增子命令：`list-themes`、`layout-query`、`inspect-layout`、`goal-scaffold`、`write-safe-props`、`validate-goal-spec`。
+  - Server 新增 5 个 API 路由：
+    - `GET /api/list-themes`
+    - `POST /api/layout-query`
+    - `POST /api/inspect-layout`
+    - `POST /api/goal-scaffold`
+    - `POST /api/write-safe-props`
+    - `POST /api/validate-goal-spec`
+  - 新增 Agent 接口定义文件：
+    - [`packages/cli/agents/openai.yaml`](packages/cli/agents/openai.yaml)
+    - [`packages/cli/agents/codex.yaml`](packages/cli/agents/codex.yaml)
+    - [`packages/cli/agents/cursor.yaml`](packages/cli/agents/cursor.yaml)
+  - 根目录 [`package.json`](package.json) 新增 npm scripts：`layout:query`、`inspect:layout`、`goal:scaffold`、`props:safe`、`validate:goal-spec`。
+  - [`packages/cli/package.json`](packages/cli/package.json) `files` 字段加入 `agents` 目录，确保发布时包含。
+  - 更新 [`apps/server/src/public/create.html`](apps/server/src/public/create.html)：主题下拉框加入 `theme06`。
+
+- **修复 theme01 process_v1 PPTX 导出崩溃**
+  - 问题：`agent-test.mjs` 在无 API Key 场景下失败，错误 `newObject.text.forEach is not a function`。
+  - 根因：`generateGoal` fallback 使用 `process_v2` 布局并生成 `{title, description}[]` 的 `steps`，而 `composer` 为 theme01 选择 `theme01_process_v1`（要求 `steps: string[]`）；`patchSlideContentForLayout` 只匹配无主题前缀的 `process_v1`，导致对象数组未转换。
+  - 修复：
+    - [`packages/agent-prompts/src/fallback.ts`](packages/agent-prompts/src/fallback.ts)：fallback 流程页改为 `process_v1` + `steps: string[]`。
+    - [`packages/agent-prompts/src/patch.ts`](packages/agent-prompts/src/patch.ts)：新增 `normalizeLayoutId()`，将 `theme01_process_v1` 等带主题前缀的 layout ID 还原为版式 ID，使所有版式判断正确生效。
+  - 验证：`node scripts/agent-test.mjs` 6 个用例全部通过（1 个因无 API Key 跳过）。
+
+### 验证结果
+
+- `node scripts/agent-test.mjs`：5 通过 / 1 跳过（无 API Key），0 失败。
+- Server API 手动 curl 验证：
+  - `GET /api/list-themes` 返回 6 个主题。
+  - `POST /api/layout-query` 返回 theme06 metric 候选版式。
+  - `POST /api/inspect-layout` 返回 `theme06_metric_hero_v1` schema。
+  - `POST /api/goal-scaffold` 返回 5 页 goal.json 骨架。
+  - `POST /api/write-safe-props` 与 `POST /api/validate-goal-spec` 按预期工作。
+- `node_modules/.bin/tsc -p packages/agent-prompts/tsconfig.json` 通过。
+- `node_modules/.bin/tsc -p packages/cli/tsconfig.json` 通过。
+- `node_modules/.bin/tsc -p apps/server/tsconfig.json` 通过。
+
+### 待完成
+
+- [ ] 在 Claude/Codex/Cursor 中实测新的 Agent YAML 接口定义效果。
+- [ ] 继续推进 theme06 Phase 3/4 剩余版式开发（进度未受本次方案 B 影响）。
+- [ ] 视觉回归：维护 gallery/snapshot 基线。
+
+---
+
+## 2026-07-29
+
+### 已完成
+
+- **theme04 缺失版式对照分析与下一步计划**
+  - 基于 `docs/analysis/dashi-theme04-analysis.md` 与当前代码库，整理 theme04 已实现 33 个版式、Dashi PPT 74 个 slot 中仍缺失约 41 个 slot 的对照清单。
+  - 新增分析文档：[docs/analysis/theme04-missing-layouts.md](docs/analysis/theme04-missing-layouts.md)。
+    - 列出全部 33 个已实现版式及其对应 Dashi slot。
+    - 按业务类型分组列出 74 个 Dashi slot 的覆盖状态。
+    - 将缺失版式分为高/中/低三个优先级，共 42 个候选版式。
+    - 制定 Phase 1/2/3/4 执行计划，明确每阶段目标。
+  - 更新实施计划：[.trae/documents/theme04-implementation-plan.md](.trae/documents/theme04-implementation-plan.md)。
+    - 将实施范围从 MVP 8 个版式更新为当前 33 个版式。
+    - 标记 yellow/blue/pink 多色调切换与 20+ 版式扩展为已完成。
+    - 在「后续可扩展项」中引用新的缺失版式清单，并列出 Phase 1 建议优先实现的 12 个高优先级版式。
+  - 确认当前 33 个 theme04 版式均已：
+    - 在 `packages/templates/src/registry.tsx` 注册；
+    - 在 `packages/renderer/src/export-pptx.ts` 实现 PPTX 导出；
+    - 在 `scripts/lib/sample-props.mjs` 提供示例数据；
+    - 在 `packages/composer/src/index.ts` 完成角色候选映射。
+  - 确认 theme04 已支持 4 套糖果色调（green/yellow/blue/pink）与 light/dark 双外观切换，`render.tsx` 已提供对应编辑器按钮。
+  - 建议下一步最小化行动：优先实现 `theme04_cards_v1`、`theme04_gauges_v1`、`theme04_cover_ghost_v1`。
+
+---
+
+## 2026-07-28
+
+### 已完成
+
+- **新增 theme02 高冲击力版式**
+  - `theme02_cover_v2`：全屏大字号标题 + 动态霓虹背景渐变 + 光球/网格装饰，支持背景图叠加。
+  - `theme02_chapter_v2`：居中布局 + 霓虹描边超大章节号 + 旋转环形背景装饰。
+  - `theme02_quote_v2`：居中玻璃卡片 + 霓虹引号装饰 + 扫光 hover 动效。
+  - `theme02_number_showcase_v1`：单个大数字霓虹发光 + 标题/单位/解读说明，适合核心指标冲击展示。
+  - 组件文件：
+    - `packages/templates/src/themes/theme02/cover-v2.tsx`
+    - `packages/templates/src/themes/theme02/chapter-v2.tsx`
+    - `packages/templates/src/themes/theme02/quote-v2.tsx`
+    - `packages/templates/src/themes/theme02/number-showcase-v1.tsx`
+  - 注册到 `packages/templates/src/registry.tsx` 与 `packages/templates/src/index.ts`。
+  - 补充 `packages/themes/src/theme02/styles.css`：新增 `lp-theme02-gradient-shift`、`lp-theme02-ring-rotate`、`lp-theme02-number-pulse` 等关键帧与高冲击力版式样式。
+  - 同步更新 `packages/renderer/src/export-pptx.ts`：新增 `renderTheme02ChapterV2`、`renderTheme02QuoteV2`、`renderTheme02NumberShowcaseV1` 并注册对应 layout renderer。
+  - 更新 `examples/theme02-sample-goal.json`：新增 4 页示例，pageCount 从 35 调整为 39。
+  - 重新生成 `output/theme02-editor.html`、`output/editor.html`、`output/gallery/theme02/index.html`。
+  - 运行 `corepack pnpm -r typecheck` 与 `corepack pnpm -r build` 通过。
+  - 运行 `corepack pnpm test`：8 个测试文件 / 53 个用例全部通过。
+  - 运行 `corepack pnpm gallery` + `node scripts/snapshot.mjs theme02` + `corepack pnpm regression:update`，新增版式快照已纳入基线。
+
+- **幻灯片默认切换效果改为无动画**
+  - 将 renderer 与 editor-script 中所有 `slide.props.transition` 的默认值从 `'slide'` 改为 `'none'`。
+  - 涉及文件：
+    - `packages/renderer/src/render.tsx`（渲染 slide wrapper 与 `goTo` fallback）
+    - `packages/renderer/src/editor-script.ts`（编辑器 `goTo` fallback、重建 slide wrapper、右侧属性面板默认选中）
+  - 效果：新建/未显式设置切换动画的幻灯片默认直接切换，不滑动、无淡入淡出/缩放等效果；编辑器右侧「切换动画」下拉框默认显示「无动画」。
+  - 已重新构建并重新生成 `output/editor.html` 与 `output/theme02-editor.html`。
+  - `corepack pnpm -r typecheck`、`corepack pnpm -r build`、`corepack pnpm test` 均通过。
+
+- **“无动画”切换效果优化为类淡入淡出**
+  - 将“无动画”从完全直接跳变改为极短（80ms）的 opacity 淡入淡出，视觉上更柔和但仍无明显动画感。
+  - 关键改动：
+    - `packages/themes/src/theme01/styles.css` 与 `packages/themes/src/theme02/styles.css`：`.lp-deck[data-lp-transition="none"] .lp-slide-wrapper` 的 `transition` 从 `none` 改为 `opacity 80ms ease`。
+    - `packages/renderer/src/render.tsx`：
+      - deck 默认渲染 `data-lp-transition="none"`。
+      - `goTo` 的 none 分支显式设置 deck 的 `data-lp-transition="none"`。
+      - `resetTransitionState` 结束后将 deck 重置为 `data-lp-transition="none"`，避免回到 slide 动画。
+    - `packages/renderer/src/editor-script.ts`：
+      - `goTo` 的 none 分支显式设置 deck 的 `data-lp-transition="none"`。
+      - `resetTransitionState` 结束后将 deck 重置为 `data-lp-transition="none"`。
+  - 已重新构建并重新生成 `output/editor.html` 与 `output/theme02-editor.html`。
+  - `corepack pnpm -r typecheck`、`corepack pnpm -r build`、`corepack pnpm test` 均通过。
+
+- **theme02 PPTX 导出细节对齐**
+  - 在 `packages/renderer/src/export-pptx.ts` 中：
+    - 为 theme02 新增 `addTheme02Background()` 辅助函数，给每页添加深色线性渐变背景（从 `#080A0E` 到 `#0F1218`），与网页端 theme02 渐变风格对齐。
+    - 新增 `addTheme02Card()` 辅助函数，统一为卡片/面板添加深色表面、细边框与柔和阴影，提升玻璃拟物感。
+    - 在 `exportDeckToPptx` 中，当 `goal.theme === 'theme02'` 时自动调用背景函数。
+    - 为 `renderTheme02ChapterV2`、`renderTheme02QuoteV2`、`renderTheme02NumberShowcaseV1`、`renderTheme02DeltaV1`、`renderTheme02BentoV1` 的关键卡片应用 `addTheme02Card()`。
+  - 验证 `node scripts/export-pptx.mjs examples/theme02-sample-goal.json output/theme02-sample.pptx` 成功导出 39 页。
+  - `corepack pnpm -r typecheck`、`corepack pnpm -r build`、`corepack pnpm test` 均通过。
+
+- **theme02 编辑器体验优化**
+  - 图片占位符（`packages/renderer/src/render.tsx`）：
+    - 背景与边框改为基于 `--lp-ink` 的 `color-mix`，在深色主题下仍保持可见。
+    - hover 状态使用 `--lp-accent` 强调色，图标放大 1.08 倍，提升交互反馈。
+  - 选中高亮（`packages/renderer/src/render.tsx`）：
+    - `.lp-selected` 轮廓色从固定蓝色改为 `var(--lp-accent)`。
+    - 增加 4px 的柔和光晕阴影，使选中状态在深色主题下更明显。
+  - 字段中文标签（`packages/renderer/src/editor-script.ts`）：
+    - 补充 `FIELD_LABELS`：脚注、来源、序号、上下文、重点强调、洞察面板、原/现数值、最大值、色调、占比、颜色、排名、公司、赛道、金额、高亮行/列、左右侧标题/数值/标签、尺寸、图标、页码、图片、头像、Logo 等。
+    - 补充 `LAYOUT_LABELS`：指标墙、今昔对照、对比分析、进度条、数字秀、推荐语、结束页等 theme02 版式中文名。
+  - 已重新构建并重新生成 `output/editor.html`、`output/theme02-editor.html`、`output/gallery/theme02/index.html`。
+  - 运行 `node scripts/snapshot.mjs theme02` + `corepack pnpm regression:update`，更新 110 张基线快照。
+  - `corepack pnpm -r typecheck`、`corepack pnpm -r build`、`corepack pnpm test` 均通过。
+
+- **修复 theme02_image_v1 背景图上传占位区**
+  - 问题：`theme02_image_v1` 版式在没有 `image` 数据时直接不渲染图片元素，画布中没有可点击上传背景图的占位区。
+  - 修复：
+    - `packages/templates/src/themes/theme02/image-v1.tsx`：改用 `LpEditableImage` 组件替代原生 `<img>`，无图时渲染全屏占位区，提示文字为「点击上传背景图」。
+    - `packages/themes/src/theme02/styles.css`：新增 `.lp-theme02-image-placeholder` 样式，使其绝对铺满整个幻灯片，背景半透明，hover 使用强调色。
+    - `packages/themes/src/theme02/styles.css`：为 `.lp-theme02-image-overlay` 增加 `pointer-events: none;`，避免渐变遮罩遮挡下方的占位区点击事件。
+  - 已重新构建、生成 gallery、生成 theme02 快照并更新回归基线。
+  - `corepack pnpm -r typecheck`、`corepack pnpm -r build`、`corepack pnpm test` 均通过。
+
+- **theme02 图表组件补充重点强调模块**
+  - 为环形图（`chart-donut`）、热力图（`chart-heatmap`）、雷达图（`chart-radar`）、仪表盘（`chart-gauge`）统一添加 `showInsight` 开关与 `insight` 数据面板。
+  - 调整图表布局：当 `showInsight=true` 时，图表区域自动收缩，右侧显示主数值、说明与解读文字，避免图例/图表与 insight 面板重叠。
+  - 同步更新 PPTX 导出（`packages/renderer/src/export-pptx.ts`）：为上述图表渲染 insight 形状与文本，保持与 HTML 预览一致的左右/上下布局。
+  - 运行 `corepack pnpm regression:update` 更新 theme02 图表快照基线。
+
+- **编辑器左侧缩略图拖拽排序（PowerPoint 式体验）**
+  - 缩略图元素从 `<button>` 改为 `<div role="button" tabindex="0" draggable="true">`，支持整张缩略图按住拖动。
+  - 拖拽手柄保留为左上角视觉提示，设置 `pointer-events: none`，点击/拖动时事件冒泡到缩略图容器。
+  - 拖拽过程中视觉反馈：
+    - 被拖拽缩略图半透明 + 蓝色虚线边框（`.dragging`）。
+    - 目标位置缩略图绿色高亮（`.drag-over`）。
+    - 插入位置显示蓝色指示线（`.lp-thumbnail-drop-indicator`）。
+  - 状态同步：拖拽释放后更新 `goal.slides` 顺序，调用 `recordHistory()`、`autoSave()`、`rebuildSlidesAndThumbnails()`，并自动跟随当前活动幻灯片。
+  - 键盘可访问性：为 `role="button"` 的缩略图补充 `Enter` / `Space` 选中跳转。
+  - 边界处理：
+    - 只有 1 张幻灯片时不显示拖拽手柄且不可拖拽。
+    - 幻灯片切换动画期间禁止拖拽。
+    - 点击删除按钮区域不触发拖拽。
+
+- **撤销/重做与 localStorage 恢复修复**
+  - 修复 `restoreGoal()` 中幻灯片顺序变化判断：从对象引用比较改为 `slide.layout` 比较，使撤销/重做排序正确生效。
+  - 修复从 `localStorage` 恢复时顺序变化未重建 DOM 的问题：当检测到顺序变化时设置 `needsDomRebuild = true`，调用 `rebuildSlidesAndThumbnails()` 而非仅同步文本。
+
+- **重新生成预览与验证**
+  - 重新构建 workspace：`corepack pnpm -r build` 通过。
+  - 重新生成 `output/editor.html` 与 `output/theme02-editor.html`。
+  - 运行 `corepack pnpm test`：8 个测试文件 / 53 个用例全部通过。
+  - 使用 Playwright 做端到端拖拽验证：确认原生 `dragstart` / `drop` 事件触发，幻灯片顺序正确更新。
+
+- **theme03 Phase 2：深浅模式与编辑器集成**
+  - 扩展核心类型与 Schema：
+    - `packages/core/src/types.ts`：`DeckGoal` / `RawDeckGoal` 新增 `appearance?: 'light' | 'dark'`。
+    - `packages/core/src/schema.ts`：`deckGoalSchema` / `rawDeckGoalSchema` 增加 `appearance` 枚举校验。
+    - `packages/core/src/normalize.ts`：为 theme03 默认设置 `appearance: 'dark'`。
+  - 扩展 theme03 Token：
+    - `packages/themes/src/theme03/tokens.ts` 与 `packages/templates/src/themes/theme03/tokens.ts` 同步支持 `scheme × appearance` 组合。
+    - `generateTheme03CssVariablesWithSchemes()` 生成四组 CSS 变量，覆盖 scheme-a/b × dark/light。
+  - 渲染层：
+    - `packages/renderer/src/render.tsx`：theme03 输出 `<html data-theme="..." data-appearance="...">`；编辑器顶栏在 theme03 下显示「浅色 / 深色」切换按钮。
+  - 编辑器客户端：
+    - `packages/renderer/src/editor-script.ts`：新增 `syncAppearanceFromGoal()`，在初始化、外观切换、undo/redo 时同步 `data-theme`、`data-appearance` 与按钮 active 状态；theme03 下持久化 `goal.appearance`。
+  - PPTX 导出：
+    - `packages/renderer/src/export-pptx.ts`：`resolveThemeConfig()` 增加 `appearance` 参数；theme03 按 `appearance` 选择深浅底色，按 `colorScheme` 覆盖强调色。
+  - Gallery：
+    - `scripts/gallery.mjs` 注入 theme03 默认 `appearance: 'dark'`，生成 `output/gallery/theme03/index.html`。
+  - 验证：
+    - `corepack pnpm -r typecheck`、`corepack pnpm -r build`、`corepack pnpm test` 全部通过。
+    - 生成 `output/theme03-editor.html`；浏览器验证浅色/深色按钮切换、localStorage 刷新保持、undo/redo 同步均正常。
+    - 导出 `output/theme03.pptx`（dark）与 `output/theme03-light.pptx`（light），背景色分别为 `#0D0E12` 与 `#F0F1F5`。
+    - 运行 `node scripts/snapshot.mjs theme03` + `corepack pnpm regression:update`，新增 theme03 8 张基线快照；回归测试通过。
+
+- **theme03 示例文案与数据更新**
+  - 将 `examples/theme03-sample-goal.json` 的主题从「2024 美国大额融资 AI 公司调研报告」更换为「2024 开发者体验与 AI 编码助手调研报告」。
+  - 所有 8 页版式文案与数据全部重写，更贴合 theme03 代码编辑器风视觉：
+    - 封面：核心指标改为「92% 开发者已使用 AI 编码助手」。
+    - 章节页：围绕「效率 / 质量 / 体验」三重维度展开。
+    - 内容页：改为「问卷 + 访谈 + 工具埋点」三维评估框架。
+    - 大数字页：核心指标改为「46% 代码由 AI 生成」，洞察面板展示效率提升。
+    - 排名页：改为 GitHub Copilot / Cursor / JetBrains AI 等工具周活跃使用率排名。
+    - 金句页：改为 Satya Nadella 关于 AI 辅助编程的论断。
+    - 案例页：改为 Cursor 从编辑器到智能协作环境的发展历程。
+    - 封底：更新为 DevEx 调研数据来源与研究提示。
+  - 重新生成 `output/theme03-editor.html`、`output/theme03.pptx`、`output/gallery/theme03/index.html` 与 theme03 快照。
+  - 运行 `corepack pnpm -r typecheck`、`corepack pnpm -r build`、`corepack pnpm test` 全部通过。
+  - 更新视觉回归基线，118 张快照全部通过。
+
+- **修复右侧栏数组滑块越拖越少的问题**
+  - 问题：当版式 Schema 未声明 `maxItems` 时，`createSchemaArraySection` 将 slider 的 `max` 回退为当前数组长度。用户减少条目后 `max` 同步缩小，导致无法恢复原有数量，也无法继续增加。
+  - 修复：在 `packages/renderer/src/editor-script.ts` 中，未声明 `maxItems` 时使用 `Math.max(array.length, minItems, 6)` 作为默认上限，保证 slider 范围不会随数组缩短而收缩。
+  - 验证：
+    - 使用 Playwright 复现：初始 3 项，点击到 2 后 `max` 变为 2，点击到 1 后 `max` 变为 1，无法回到 3。
+    - 修复后：初始 `max` 为 6，可在 1–6 之间自由拖动/点击，减少后可恢复，增加也可生效。
+    - `corepack pnpm -r build`、`corepack pnpm test` 全部通过。
+
+### 待完成
+
+- [ ] 继续补充 theme01/theme02 剩余版式的 Props Schema 精修（如表格二维编辑、复杂图表 data 结构细化）。
+- [ ] 视觉回归：继续维护 gallery/snapshot 基线，防止后续主题/版式改动破坏既有渲染效果。
+- [ ] 编辑器稳定性：持续验证 contenteditable 在 React 18 异步渲染下的稳定性。
 
 ---
 
@@ -357,3 +732,165 @@
 ### 当前状态
 
 Phase 2 已完成；Phase 3 核心任务基本完成。Phase A/B/C（npm 发布、Skill 安装器、命名解耦）已全部完成。下一步进入 Agent 实测与工程债务清理阶段。
+
+---
+
+## 2026-07-23（编辑器添加幻灯片弹窗改造）
+
+### 已完成
+
+- **交互改造**
+  - 将编辑器顶部原来的「版式下拉框 + 添加按钮」改为：保留「＋ 添加幻灯片」按钮，点击后弹出版式选择弹窗。
+  - 弹窗标题：「请选择你想添加的幻灯片版式」。
+  - 弹窗内容从项目注册表动态拉取所有 `theme01` 版式，按 role 排序平铺展示。
+
+- **弹窗样式**
+  - 深色背景（`#1e1e1e`）、圆角、遮罩 + 毛玻璃效果。
+  - 每个版式选项包含：左侧灰色图标块（SVG）+ 右侧版式名称。
+  - 悬停状态：卡片背景变亮、图标块高亮。
+  - 选中状态：绿色边框（`#34d399`）、绿色文字、图标块变为绿色。
+  - 底部「添加幻灯片」按钮：未选择时置灰；选中后高亮绿色。
+  - 右上角关闭按钮，点击遮罩层也可关闭。
+
+- **实现文件**
+  - [`packages/renderer/src/render.tsx`](packages/renderer/src/render.tsx)：
+    - 移除顶部 `lp-add-slide-layout` 下拉框。
+    - 新增 `buildAddSlideModalMarkup()`，从 `@lemonppt/templates` 的 `listLayouts()` 动态读取 theme01 版式并生成弹窗 HTML。
+    - 新增弹窗 CSS（`.lp-add-slide-modal*` 系列）。
+  - [`packages/renderer/src/editor-script.ts`](packages/renderer/src/editor-script.ts)：
+    - 绑定「添加幻灯片」按钮打开弹窗。
+    - 绑定选项点击选中/取消，控制底部按钮高亮/置灰。
+    - 绑定关闭按钮、遮罩关闭。
+    - 点击弹窗内「添加幻灯片」按钮后，调用 `createDefaultSlide()` 添加新幻灯片并重新渲染。
+
+- **重新生成预览**
+  - 重新生成 `output/editor.html`。
+
+### 验证
+
+- `corepack pnpm -r build` 通过。
+- `corepack pnpm test`：8 个测试文件 / 51 个用例全部通过。
+- `corepack pnpm audit:layouts`：64 / 64 版式覆盖。
+- `curl` 检查 `output/editor.html` 包含 73 个版式选项。
+- 弹窗打开后未选择时底部按钮置灰，选择后高亮，符合截图要求。
+
+### 2026-07-23（弹窗宽度与自定义滚动条优化）
+
+### 已完成
+
+- **弹窗宽度优化**
+  - 弹窗最大宽度从 920px 调整为 1080px，确保一行可容纳 6 个版式选项。
+  - 弹窗网格使用 `repeat(6, minmax(0, 1fr))` 并显式设置 `overflow-x: hidden`，避免产生横向滚动条。
+
+- **jQuery 自定义滚动条**
+  - 安装 `jquery@3.7.1` 与 `jquery.scrollbar@0.2.11`。
+  - 在 [`packages/renderer/src/render.tsx`](packages/renderer/src/render.tsx) 中引入 jQuery、滚动条 CSS/JS，并为所有滚动容器添加 `data-scrollbar` 标记：
+    - 编辑器左侧面板 `.lp-editor-left-panel`
+    - 编辑器右侧面板 `.lp-editor-right-panel`
+    - 添加幻灯片弹窗网格 `.lp-add-slide-grid`
+    - 版式横向滚动容器 `.lp-filmstrip-v1-track`
+  - 在 [`packages/renderer/src/editor-script.ts`](packages/renderer/src/editor-script.ts) 中初始化 `$('[data-scrollbar]').scrollbar()`。
+  - 在 [`packages/cli/src/index.ts`](packages/cli/src/index.ts) 中复制 jQuery 与滚动条资源到输出目录 `assets/`；同时修复 `resolvePackagePath` 对主入口位于包根目录的第三方包（如 `jquery.scrollbar`）的解析。
+  - 覆盖滚动条颜色：编辑器与弹窗使用浅色半透明滚动条，`filmstrip` 版式使用深色半透明滚动条，同时支持水平和垂直方向。
+
+- **重新生成预览**
+  - 重新生成 `output/editor.html`。
+
+### 验证
+
+- `corepack pnpm -r build` 通过。
+- `corepack pnpm test`：8 个测试文件 / 51 个用例全部通过。
+- `corepack pnpm audit:layouts`：64 / 64 版式覆盖。
+- 输出目录 `output/editor/assets/` 包含 `jquery.min.js`、`jquery.scrollbar.min.js`、`jquery.scrollbar.css`。
+- `output/editor.html` 包含 5 处 `data-scrollbar` 标记，覆盖所有已知滚动容器。
+
+### 2026-07-23（修复滚动条导致的布局错乱）
+
+### 问题
+- 使用 `jquery.scrollbar` 插件会强制包裹 DOM 并修改容器宽度/盒模型，导致弹窗网格（Grid 布局）内容消失、页面布局错乱。
+
+### 修复
+- 移除 `jquery.scrollbar` 插件（CSS/JS 及资源复制）。
+- 改为 **CSS `::-webkit-scrollbar` + Firefox `scrollbar-*` 属性** 自定义滚动条样式。
+- 保留 jQuery，在 DOM Ready 时通过 `$('[data-scrollbar]').addClass('lp-custom-scrollbar')` 为所有滚动容器统一添加样式类。
+- 分别定义深色主题（编辑器/弹窗）与浅色主题（filmstrip 版式）两套滚动条颜色，同时支持水平和垂直方向。
+- 更新文件：
+  - [`packages/renderer/src/render.tsx`](packages/renderer/src/render.tsx)：移除 jquery.scrollbar 引用，新增 `lp-custom-scrollbar` CSS。
+  - [`packages/renderer/src/editor-script.ts`](packages/renderer/src/editor-script.ts)：改为用 jQuery 添加 `lp-custom-scrollbar` 类。
+  - [`packages/cli/src/index.ts`](packages/cli/src/index.ts)：停止复制 jquery.scrollbar 资源，仅保留 jQuery。
+
+### 验证
+- `corepack pnpm -r build` 通过。
+- `corepack pnpm test`：51 个用例通过。
+- `curl` 检查 `output/editor.html` 弹窗内仍包含 73 个版式选项，`jquery.scrollbar` 引用数为 0，`lp-custom-scrollbar` 样式存在。
+
+### 2026-07-23（Dashi 模式主题扩展：阶段一基础设施）
+
+### 已完成
+
+- **方案文档**
+  - 保存 [`docs/plans/dashi-style-theme-evolution-plan.md`](docs/plans/dashi-style-theme-evolution-plan.md)，明确走向 Dashi 模式所需的基础设施、实施阶段、成本与红线。
+
+- **Props Schema 类型**
+  - 在 [`packages/core/src/types.ts`](packages/core/src/types.ts) 中新增：
+    - `PropsFieldType` 联合类型
+    - `PropsField` 字段定义（支持 text/textarea/number/boolean/select/image/color/array/object）
+    - `PropsSchema` 版式 Schema
+  - 扩展 `LayoutMeta`，新增 `tags` 和 `contentShape` 字段供 Agent 选页使用。
+
+- **Registry 改造**
+  - 在 [`packages/templates/src/registry.tsx`](packages/templates/src/registry.tsx) 中：
+    - `RegisteredLayout` 接口新增可选 `schema?: PropsSchema`
+    - 新增 `getLayoutSchema(id)` 查询函数
+
+- **编辑器属性面板 schema 渲染**
+  - 在 [`packages/renderer/src/render.tsx`](packages/renderer/src/render.tsx) 的 `buildEditorScriptMarkup` 中注入 `window.__lemonPPT_layoutSchemas`。
+  - 在 [`packages/renderer/src/editor-script.ts`](packages/renderer/src/editor-script.ts) 中：
+    - 读取 `window.__lemonPPT_layoutSchemas`
+    - 新增 `createColorField`、`createSchemaFieldControl`、`createSchemaArraySection`、`renderSchemaFields` 等函数
+    - `renderSlidePanel` 优先按 schema 渲染属性面板，无 schema 时回退到 legacy 通用推断
+
+### 验证
+- `corepack pnpm -r build` 通过。
+- `corepack pnpm test`：8 个测试文件 / 51 个用例通过。
+- `corepack pnpm audit:layouts`：64 / 64 版式覆盖。
+- 当前未为任何版式注册 schema，编辑器仍使用 legacy 通用推断，行为与之前一致。
+
+### 2026-07-23（Dashi 模式主题扩展：阶段二 theme01 Schema 迁移）
+
+### 已完成
+
+- **为 theme01 全部 63 个版式组件生成 Props Schema**
+  - 在每个 [`packages/templates/src/themes/theme01/*.tsx`](packages/templates/src/themes/theme01) 组件中新增 `theme01XxxSchema: PropsSchema` 导出。
+  - Schema 覆盖每个版式的全部 props 字段（跳过 `_slideIdx`、`_editable`、索引签名）。
+  - 常见字段按语义推断类型：
+    - `image`/`imageUrl`/`url`/`logoUrl`/`avatarUrl` → `image`
+    - `description`/`bio`/`quote`/`subtitle` → `textarea`
+    - `type`（bar/line/pie） → `select`
+    - `status` → `select`
+    - `number` → `number`，`boolean` → `boolean`
+    - `string[]` → `array` of text
+    - `number[]` → `array` of number
+    - `Array<{...}>` → `array` of object，并递归生成 itemSchema
+
+- **Registry 注册时传入 schema**
+  - 在 [`packages/templates/src/registry.tsx`](packages/templates/src/registry.tsx) 中：
+    - 每个 theme01 组件的 import 新增 schema 导入。
+    - 每个 `registerLayout` 调用新增 `schema: theme01XxxSchema`。
+  - 所有 64 个注册版式均已附带 schema。
+
+- **编辑器验证**
+  - 重新生成 `output/editor.html`。
+  - 确认 `window.__lemonPPT_layoutSchemas` 已注入且包含 `theme01_cover_v1` 等版式 schema。
+
+### 验证
+- `corepack pnpm -r build` 通过。
+- `corepack pnpm test`：8 个测试文件 / 51 个用例通过。
+- `corepack pnpm audit:layouts`：64 / 64 版式覆盖。
+- `corepack pnpm render:editor` 成功生成 `output/editor.html`。
+
+### 后续可优化
+- 部分版式的 schema 是自动生成的最小实现，以下字段可后续精修：
+  - `table-v1` 的 `rows` 是 `string[][]`，当前退化为 text array，需支持二维表格编辑。
+  - 一些未收录在中文标签映射中的字段名（如 `image`、`highlightFirstColumn`）显示为原字段名。
+  - 复杂图表（treemap、sunburst、gauge 等）的内部 `data` 结构可进一步细化 itemSchema。

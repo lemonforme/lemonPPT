@@ -1,9 +1,9 @@
 # lemonPPT 项目规划文档
 
-> **项目定位**：完全自研的 AI PPT 生成 Agent 工作流项目，不依赖 `dashi-ppt-skill` 代码，后续以宽松开源协议开源。
+> **项目定位**：完全自研的 AI PPT 生成 Agent 工作流项目，不依赖 `dashi-ppt-skill` 代码。
 > **当前存放位置**：`/Users/apple/工作/lemonPPT/`
-> **版本**：v0.1.0（规划版）
-> **建议开源协议**：MIT 或 Apache-2.0
+> **版本**：v0.1.6
+> **开源协议**：AGPL-3.0-or-later
 
 ---
 
@@ -11,7 +11,7 @@
 
 | 对比项 | 基于 dashi-ppt 二次开发 | 完全自研（lemonPPT） |
 |---|---|---|
-| 协议约束 | AGPL-3.0 传染性，商用需开源全部 | 自主决定，推荐 MIT/Apache-2.0 |
+| 协议约束 | AGPL-3.0 传染性，网络服务需开源全部 | 采用 AGPL-3.0-or-later，独立可控 |
 | 导出引擎 | `html-deck-to-pptx` 专有，不能复用 | 自研 PPTX 导出，无侵权风险 |
 | 商业化自由度 | 受限 | 完全自由 |
 | 短视频分享 | 容易引发协议争议 | 可安全展示全部代码与使用过程 |
@@ -33,8 +33,8 @@
 
 ### 质量目标
 
-- 初期：1 套主题 + 8~12 个版式，覆盖常见汇报场景。
-- 中期：3~5 套主题，50+ 版式，覆盖 10 个页面角色。
+- 初期：1 套主题 + 8~12 个版式，覆盖常见汇报场景。（已完成）
+- 中期：3 套主题，50+ 版式，覆盖 20 个页面角色。（当前：3 主题 / 50 个共享版式 + 5 个主题专属变体 / 约 23 角色）
 - 长期：8~12 套主题，100+ 版式，支持多种图表与分析模型。
 
 ---
@@ -78,18 +78,17 @@ goal.json（slides[].layout + props）
 ```
 lemonPPT/
 ├── apps/
-│   ├── editor/                 # 浏览器端编辑器（React）
 │   └── server/                 # 本地预览与导出服务（Node）
 ├── packages/
+│   ├── agent-prompts/          # Agent prompt 与 fallback 内容生成
+│   ├── cli/                    # 命令行工具与 SKILL.md 分发
+│   ├── composer/               # 基于 role 的版式选择、页码注入、默认 props
 │   ├── core/                   # goal.json 类型、schema、校验
-│   ├── renderer/               # HTML 渲染引擎
-│   ├── templates/              # 版式组件库
+│   ├── renderer/               # HTML 渲染引擎 + PPTX/PDF 导出
+│   ├── templates/              # 版式组件库（共享组件，多主题 CSS 变量适配）
 │   ├── themes/                 # 主题样式与 token
-│   ├── pptx-export/            # PPTX 导出引擎（自研核心）
-│   ├── pdf-export/             # PDF 导出
-│   └── agent-prompts/          # Agent 技能描述与 prompt
-├── assets/
-│   └── fonts/                  # 可商用字体
+│   └── view-model/             # props 规范化、截断、数组字段补齐
+├── scripts/                    # 开发脚本（gallery、snapshot、agent-test、audit-layouts 等）
 ├── docs/
 │   ├── plans/                  # 项目规划文档
 │   ├── analysis/               # 方案分析与复盘
@@ -153,24 +152,39 @@ lemonPPT/
 
 ## 六、模板库开发策略
 
-### 页面角色（初期）
+### 页面角色（当前已覆盖）
 
-| 角色 | 说明 | 初期版式数 |
+| 角色 | 说明 | 当前版式数 |
 |---|---|---|
 | cover | 封面 | 2 |
 | tableOfContents | 目录 | 1 |
-| metric | 核心数字/指标 | 2 |
+| metric | 核心数字/指标 | 3 |
+| stats | 统计摘要 | 2 |
 | chart | 图表页 | 2 |
-| comparison | 对比页 | 1 |
-| process | 流程/时间线 | 1 |
-| quote | 引用/观点 | 1 |
-| closing | 结尾/感谢 | 1 |
+| comparison | 对比页 | 3 |
+| process | 流程/时间线 | 3 |
+| timeline | 时间线 | 3 |
+| roadmap | 路线图 | 2 |
+| quote | 引用/观点 | 3 |
+| testimonial | 客户证言 | 3 |
+| faq | 问答 | 1 |
+| content | 图文内容 | 4 |
+| split | 分栏内容 | 1 |
+| feature | 产品特性 | 3 |
+| team | 团队介绍 | 2 |
+| partners | 合作伙伴 | 1 |
+| pricing | 价格方案 | 2 |
+| gallery | 图片墙 | 3 |
+| image | 单图页 | 2 |
+| swot | SWOT 分析 | 1 |
+| pest | PEST 分析 | 1 |
+| closing | 结尾/感谢 | 2 |
 
 ### 主题系统
 
-- 每套主题独立目录：`packages/themes/minimal/`、`packages/themes/dark-tech/`。
+- 用户侧统一暴露 `theme01`，`base` 通用版式池、`dark-tech`、`warm-business` 已完全移除。
+- 每个页面角色均注册 `theme01` 专属版式，实现视觉完全统一；新增主题时按 `packages/themes/src/<theme>/` + `packages/templates/src/themes/<theme>/` 目录扩展，并在 `(role, theme)` 注册表中为每个角色注册专属版式。
 - 使用 CSS 变量定义颜色、字体、间距、圆角。
-- 版式组件通过 `data-theme="minimal"` 自动应用主题样式。
 
 ### 视觉资产要求
 

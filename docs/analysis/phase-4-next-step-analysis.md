@@ -9,15 +9,17 @@
 
 | 维度 | 状态 |
 |---|---|
-| **npm 发布** | 8 个包已发布到 `0.1.3`，`npx @lemonppt/cli@0.1.3` 可正常使用 |
-| **Skill 分发** | CLI 内置 `install-skill` 已支持 Claude/Codex/Cursor，`SKILL.md` 已迭代两版 |
-| **布局/主题解耦** | 完成，`minimal` → `base`，旧 ID 有兼容映射 |
-| **Agent 实测** | 已在本环境完成两轮测试，发现并修复标题截断、fallback 内容泛化问题 |
+| **npm 发布** | 8 个包已发布到 `0.1.6`，`npx @lemonppt/cli@0.1.6` 可正常使用；待发布 `0.1.7` |
+| **Skill 分发** | CLI 内置 `install-skill` 已支持 Claude/Codex/Cursor，`SKILL.md` 已迭代多版 |
+| **布局/主题解耦** | 完成，`minimal` → `base`，旧 ID 有兼容映射；当前 3 主题 × 50 个共享版式 + 5 个主题专属变体，已验证混合架构 |
+| **Agent 实测** | 已在本环境完成多轮测试，修复标题截断、fallback 内容泛化、PPTX 主题化等问题 |
 | **核心功能** | generate → render → export（PPTX/PDF/HTML）全链路可用 |
 | **编辑器** | 浏览器端可编辑、换图、主题切换、撤销重做、导出 |
-| **测试** | 47 个单元测试通过 |
+| **测试** | 102 个单元测试通过；新增 `pnpm agent:test`、`pnpm snapshot`、`pnpm audit:layouts` |
 
 **关键结论**：MVP + npm + Skill 分发的基础建设已基本完成，接下来进入**规模化与生态建设阶段**。
+
+> **后续状态**：Phase 4 已执行完毕，当前进入 [Phase 5：社区开放与发布准备](../plans/phase-5-community-plan.md)。
 
 ---
 
@@ -41,15 +43,15 @@
 
 | 子任务 | 说明 | 预估工作量 |
 |---|---|---|
-| 版式开发脚手架 | 新增 `pnpm create-layout <role> <name>` 或脚本，自动生成组件、注册、PPTX 映射、测试模板 | 1 天 |
-| 主题开发模板 | 新增 `pnpm create-theme <id>`，生成 token + CSS + 示例 goal | 0.5 天 |
-| 验证现有 30 个版式跨主题兼容性 | 确保 `base` / `dark-tech` / `warm-business` 都能正常渲染 | 1 天 |
-| 补充高价值版式 | 如 `timeline_v2`、`roadmap_v2`、`testimonial_v2`、`pricing_v2` 等 | 2-3 天 |
+| 版式开发脚手架 | 新增 `node scripts/create-layout.mjs <name>`，自动生成组件、注册、PPTX 映射、测试模板 | 1 天 |
+| 主题开发模板 | 新增 `node scripts/create-theme <id>`，生成 token + CSS + 示例 goal | 0.5 天 |
+| 验证 theme01 全部专属版式渲染与导出 | 确保每个页面角色的 `theme01` 专属版式在 HTML、PPTX、PDF 链路正常 | 1 天 |
+| 补充高价值版式与新增主题 | theme01 专属版式已覆盖全部角色；后续可按同样机制扩展 `theme02` 等新主题 | 2-3 天 |
 | 编写 `CONTRIBUTING.md` | 版式/主题/文档贡献规范 | 0.5 天 |
 | 建立 issue/PR 模板 | 社区化基础设施 | 0.5 天 |
 
 **收益**：
-- 解决 `theme-strategy.md` 中提到的"每新增主题要重做 30 个布局"的隐患
+- 解决 `docs/plans/theme-architecture-evolution.md` 中提到的"每新增主题要重做 30 个布局"的隐患
 - 为开源和社区贡献做准备
 - 提升产品长期竞争力
 
@@ -142,7 +144,7 @@
 **首选：选项 A（启动 Phase 4 规模化）**，理由：
 
 1. 当前 npm + Skill 分发已可用，0.1.3 的 fallback 也已修复到可用水平，继续微调 SKILL.md 的边际收益递减。
-2. `theme-strategy.md` 明确警告：如果每新增一个主题都要重做 30 个布局，工作量不可持续。Phase 4 的工业化脚手架能解决这个问题。
+2. `docs/plans/theme-architecture-evolution.md` 明确警告：如果每新增一个主题都要重做 30 个布局，工作量不可持续。Phase 4 的工业化脚手架能解决这个问题。
 3. Phase 4 的 CONTRIBUTING.md 和模板能自然带动选项 C（Agent 实测可以由社区反馈补充）。
 4. 选项 B（独立 skill 包）可以在 Phase 4 中作为"分发形态"的一个子任务快速决策，不必单独作为一个大阶段。
 
