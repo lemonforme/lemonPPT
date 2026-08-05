@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Theme04AuroraBg } from './aurora-bg.js';
 
 export interface Theme04CoverV1Metric {
   value: string;
@@ -97,7 +98,8 @@ export function Theme04CoverV1(props: Theme04CoverV1Props): ReactNode {
   };
 
   return (
-    <div className="lp-slide lp-theme04-cover">
+    <div className="lp-slide lp-theme04-cover lp-theme04-has-aurora">
+      <Theme04AuroraBg />
       <div className="lp-theme04-cover-top">
         {(tag || tagLabel) && (
           <div className="lp-theme04-tag">

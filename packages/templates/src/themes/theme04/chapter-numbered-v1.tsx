@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Theme04AuroraBg } from './aurora-bg.js';
 
 export interface Theme04ChapterNumberedV1Props {
   tag?: string;
@@ -40,7 +41,8 @@ export function Theme04ChapterNumberedV1(props: Theme04ChapterNumberedV1Props): 
   const { tag, number, title, subtitle, _slideIdx, _editable } = props;
 
   return (
-    <div className="lp-slide lp-theme04-chapter-numbered">
+    <div className="lp-slide lp-theme04-chapter-numbered lp-theme04-has-aurora">
+      <Theme04AuroraBg />
       <div className="lp-theme04-chapter-numbered-main lp-rise">
         <EditableField prop="number" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-theme04-chapter-numbered-number" aria-hidden="true">{number}</EditableField>
         <div className="lp-theme04-chapter-numbered-text">

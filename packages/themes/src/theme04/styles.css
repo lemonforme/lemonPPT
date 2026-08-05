@@ -60,6 +60,94 @@
   transform: translateX(0);
   z-index: 2;
 }
+
+/* ---- 动态背景实验：封面 / 章节页 Aurora + 网格 ---- */
+.lp-theme04-aurora-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.lp-theme04-aurora-bg::before,
+.lp-theme04-aurora-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+}
+.lp-theme04-aurora-bg::before {
+  width: 70%;
+  height: 70%;
+  top: -20%;
+  right: -15%;
+  background: radial-gradient(circle at 30% 30%, var(--lp-glow-accent-strong), transparent 60%);
+}
+.lp-theme04-aurora-bg::after {
+  width: 60%;
+  height: 60%;
+  bottom: -15%;
+  left: -10%;
+  background: radial-gradient(circle at 70% 70%, var(--lp-glow-cool-strong), transparent 60%);
+}
+.lp-theme04-grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(to right, var(--lp-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--lp-border) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.18;
+  mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+}
+.lp-theme04-noise-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 封面 / 章节页 Aurora 背景（DOM 元素，可被 PPTX 导出） */
+.lp-theme04-aurora-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.lp-theme04-aurora-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+}
+.lp-theme04-aurora-orb--accent {
+  width: 70%;
+  height: 70%;
+  top: -20%;
+  right: -15%;
+  background: radial-gradient(circle at 30% 30%, var(--lp-glow-accent-strong), transparent 60%);
+}
+.lp-theme04-aurora-orb--cool {
+  width: 60%;
+  height: 60%;
+  bottom: -15%;
+  left: -10%;
+  background: radial-gradient(circle at 70% 70%, var(--lp-glow-cool-strong), transparent 60%);
+}
+.lp-theme04-has-aurora {
+  position: relative;
+}
+.lp-theme04-has-aurora > * {
+  position: relative;
+  z-index: 1;
+}
 .lp-deck:not([data-lp-transition]) .lp-slide-wrapper.prev,
 .lp-deck[data-lp-transition="slide"] .lp-slide-wrapper.prev {
   opacity: 0;

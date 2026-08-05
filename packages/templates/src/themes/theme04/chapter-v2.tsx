@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Theme04AuroraBg } from './aurora-bg.js';
 
 export interface Theme04ChapterV2Props {
   number?: string;
@@ -57,7 +58,8 @@ export function Theme04ChapterV2(props: Theme04ChapterV2Props): ReactNode {
   const { number, kicker, title, subtitle, description, _slideIdx, _editable } = props;
 
   return (
-    <div className="lp-slide lp-theme04-chapter-v2">
+    <div className="lp-slide lp-theme04-chapter-v2 lp-theme04-has-aurora">
+      <Theme04AuroraBg />
       <div className="lp-theme04-chapter-v2-left lp-rise">
         {kicker && <div className="lp-theme04-kicker">{kicker}</div>}
         {renderTitle(title || '', _slideIdx, _editable)}

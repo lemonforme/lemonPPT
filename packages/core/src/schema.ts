@@ -63,7 +63,7 @@ export const deckGoalSchema = z.object({
   audience: z.string().min(1),
   owner: z.string().optional(),
   theme: z.string().min(1),
-  colorScheme: z.enum(['light', 'dark', 'scheme-a', 'scheme-b', 'green', 'yellow', 'blue', 'pink']).default('light'),
+  colorScheme: z.enum(['light', 'dark', 'scheme-a', 'scheme-b', 'green', 'yellow', 'blue', 'pink', 'coral', 'amber', 'teal', 'indigo', 'violet', 'volt', 'magma', 'nebula', 'nova']).default('light'),
   appearance: z.enum(['light', 'dark']).optional(),
   language: z.enum(['zh', 'en']).default('zh'),
   pageCount: z.number().int().min(1).max(200),
@@ -83,7 +83,7 @@ export const rawDeckGoalSchema = z.object({
   audience: z.string().min(1),
   owner: z.string().optional(),
   theme: z.string().min(1),
-  colorScheme: z.enum(['light', 'dark', 'scheme-a', 'scheme-b', 'green', 'yellow', 'blue', 'pink']).default('light'),
+  colorScheme: z.enum(['light', 'dark', 'scheme-a', 'scheme-b', 'green', 'yellow', 'blue', 'pink', 'coral', 'amber', 'teal', 'indigo', 'violet', 'volt', 'magma', 'nebula', 'nova']).default('light'),
   appearance: z.enum(['light', 'dark']).optional(),
   language: z.enum(['zh', 'en']).default('zh'),
   pageCount: z.number().int().min(1).max(200),
@@ -139,6 +139,71 @@ export function validateSlideContent(slide: Slide, index?: number): string[] {
   const layoutId = slide.layout ?? '';
 
   // theme04 部分版式使用自定义字段名，优先按 layoutId 校验以避免误报。
+  if (layoutId.startsWith('theme05_')) {
+    const theme05Checks: Record<string, () => void> = {
+      theme05_heatmap_v1: () => {
+        if (arr('values').length === 0) add('heatmap values missing');
+        if (arr('months').length === 0) add('heatmap months missing');
+      },
+      theme05_waterfall_v1: () => {
+        if (arr('items').length === 0) add('waterfall items missing');
+      },
+      theme05_closing_v1: () => {
+        if (!props.claim) add('closing claim missing');
+      },
+      theme05_roadmap_v1: () => {
+        if (arr('phases').length === 0) add('roadmap phases missing');
+      },
+      theme05_scorecards_v1: () => {
+        if (arr('cards').length === 0) add('scorecards missing');
+      },
+      theme05_donut_v1: () => {
+        if (arr('items').length === 0) add('donut items missing');
+      },
+      theme05_radar_v1: () => {
+        if (arr('indicators').length === 0) add('radar indicators missing');
+        if (arr('series').length === 0) add('radar series missing');
+      },
+      theme05_treemap_v1: () => {
+        if (arr('items').length === 0) add('treemap items missing');
+      },
+      theme05_metric_delta_v1: () => {
+        if (!props.currentValue && !props.previousValue && !props.delta) {
+          add('metric delta values missing');
+        }
+        if (arr('labels').length === 0) add('metric trend labels missing');
+        if (arr('data').length === 0) add('metric trend data missing');
+      },
+      theme05_bubble_v1: () => {
+        if (arr('items').length === 0) add('bubble items missing');
+      },
+      theme05_map_v1: () => {
+        if (arr('items').length === 0) add('map items missing');
+      },
+      theme05_chart_funnel_v1: () => {
+        if (arr('stages').length === 0) add('funnel stages missing');
+      },
+      theme05_chart_gauge_v1: () => {
+        if (props.value === undefined || props.value === '') add('gauge value missing');
+      },
+      theme05_chart_share_v1: () => {
+        if (arr('items').length === 0) add('share items missing');
+      },
+      theme05_chart_stacked_v1: () => {
+        if (arr('labels').length === 0) add('stacked labels missing');
+        if (arr('series').length === 0) add('stacked series missing');
+      },
+      theme05_timeline_v1: () => {
+        if (arr('phases').length === 0) add('timeline phases missing');
+      },
+    };
+    const check = theme05Checks[layoutId];
+    if (check) {
+      check();
+      return errors;
+    }
+  }
+
   if (layoutId.startsWith('theme04_')) {
     const theme04Checks: Record<string, () => void> = {
       theme04_gauges_v1: () => {
