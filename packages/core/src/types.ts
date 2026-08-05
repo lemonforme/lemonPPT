@@ -28,6 +28,10 @@ export type SlideRole =
   | 'partners'
   | 'image'
   | 'gallery'
+  | 'bento'
+  | 'table'
+  | 'tags'
+  | 'filmstrip'
   | 'swot'
   | 'pest'
   | 'closing';
@@ -75,6 +79,55 @@ export interface MediaSlot {
   filled?: boolean;
 }
 
+/** 属性字段类型 */
+export type PropsFieldType =
+  | 'text'
+  | 'textarea'
+  | 'number'
+  | 'slider'
+  | 'boolean'
+  | 'select'
+  | 'image'
+  | 'color'
+  | 'array'
+  | 'object';
+
+/** 属性字段定义，用于编辑器属性面板按版式精确渲染控件 */
+export interface PropsField {
+  /** 字段路径，支持点号嵌套，如 items.0.title */
+  key: string;
+  /** 显示标签 */
+  label: string;
+  /** 控件类型 */
+  type: PropsFieldType;
+  /** 选项，仅 type === 'select' 时有效 */
+  options?: { value: string; label: string }[];
+  /** 默认值 */
+  defaultValue?: unknown;
+  /** 最小值，仅 type === 'number' | 'slider' 时有效 */
+  min?: number;
+  /** 最大值，仅 type === 'number' | 'slider' 时有效 */
+  max?: number;
+  /** 是否支持在画布上直接编辑（如简单文本） */
+  inlineEditable?: boolean;
+  /** 字段分组名，用于在属性面板中折叠展示 */
+  group?: string;
+  /** 数组项的字段定义，仅 type === 'array' 时有效 */
+  itemSchema?: PropsField[];
+  /** 数组最小条目数，仅 type === 'array' 时有效 */
+  minItems?: number;
+  /** 数组最大条目数，仅 type === 'array' 时有效 */
+  maxItems?: number;
+  /** 可见性条件，依赖另一个布尔字段的值 */
+  visibleWhen?: { key: string; value: boolean };
+}
+
+/** 版式 Props Schema，描述该版式可编辑的内容字段 */
+export interface PropsSchema {
+  /** 字段列表 */
+  fields: PropsField[];
+}
+
 /** 版式元数据 */
 export interface LayoutMeta {
   /** 版式唯一 ID */
@@ -91,6 +144,10 @@ export interface LayoutMeta {
   needsMedia: boolean;
   /** 媒体槽位 */
   mediaSlots?: MediaSlot[];
+  /** 语义标签，供 Agent 选页使用，如 ['hero', 'data-heavy'] */
+  tags?: string[];
+  /** 内容形状描述，如 'single-stat', '3-column-cards' */
+  contentShape?: string;
 }
 
 /** 整个 PPT 目标 */
@@ -103,8 +160,12 @@ export interface DeckGoal {
   audience: string;
   /** 汇报人/团队 */
   owner?: string;
-  /** 主题 */
+  /** 主题，由生成阶段根据 prompt 关键词决定，编辑器内不可切换 */
   theme: ThemeId;
+  /** 外观模式：浅色 / 深色 / 主题 02 双配色方案 / 主题 04 糖果色调 / 主题 05 光谱强调色 */
+  colorScheme?: 'light' | 'dark' | 'scheme-a' | 'scheme-b' | 'green' | 'yellow' | 'blue' | 'pink' | 'coral' | 'amber' | 'teal' | 'indigo' | 'violet' | 'volt' | 'magma' | 'nebula' | 'nova';
+  /** 深浅外观模式（theme03 专用） */
+  appearance?: 'light' | 'dark';
   /** 语言 */
   language?: 'zh' | 'en';
   /** 页数 */

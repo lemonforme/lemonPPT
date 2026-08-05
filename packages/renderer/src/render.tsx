@@ -12,6 +12,8 @@ import {
   generateTheme02CssVariablesWithSchemes,
   generateTheme03CssVariablesWithSchemes,
   generateTheme04CssVariablesWithTonesAndAppearance,
+  generateTheme05CssVariablesWithSchemesAndAppearance,
+  generateTheme06CssVariablesWithSchemesAndAppearance,
 } from '@lemonppt/templates';
 import ReactDOMServer from 'react-dom/server';
 import { editorScript } from './editor-script.js';
@@ -124,8 +126,8 @@ ${scriptMarkup}
     : `${slidesMarkup}${navMarkup}${scriptMarkup}`;
 
   const theme = goal.theme || 'theme01';
-  const colorScheme = goal.colorScheme || (theme === 'theme02' || theme === 'theme03' ? 'scheme-a' : theme === 'theme04' ? 'green' : 'light');
-  const appearance = goal.appearance || (theme === 'theme03' || theme === 'theme04' ? 'dark' : undefined);
+  const colorScheme = goal.colorScheme || (theme === 'theme02' || theme === 'theme03' ? 'scheme-a' : theme === 'theme04' ? 'green' : theme === 'theme05' ? 'coral' : theme === 'theme06' ? 'volt' : 'light');
+  const appearance = goal.appearance || (theme === 'theme03' || theme === 'theme04' || theme === 'theme05' || theme === 'theme06' ? 'dark' : undefined);
   const appearanceAttr = appearance ? ` data-appearance="${appearance}"` : '';
   const themeCssVars = theme === 'theme01'
     ? generateThemeCssVariablesWithDark()
@@ -135,7 +137,11 @@ ${scriptMarkup}
         ? generateTheme03CssVariablesWithSchemes()
         : theme === 'theme04'
           ? generateTheme04CssVariablesWithTonesAndAppearance()
-          : '';
+          : theme === 'theme05'
+            ? generateTheme05CssVariablesWithSchemesAndAppearance()
+            : theme === 'theme06'
+              ? generateTheme06CssVariablesWithSchemesAndAppearance()
+              : '';
 
   const html = `<!DOCTYPE html>
 <html lang="${goal.language ?? 'zh'}" data-theme="${colorScheme}"${appearanceAttr}>
@@ -893,7 +899,7 @@ ${themeCssVars}
     }
     .lp-property-slider-ruler {
       position: relative;
-      padding: 18px 14px 10px;
+      padding: 18px 18px 10px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
@@ -903,6 +909,17 @@ ${themeCssVars}
     .lp-property-slider-ruler:hover {
       background: rgba(255, 255, 255, 0.07);
       border-color: rgba(255, 255, 255, 0.14);
+    }
+    .lp-property-slider-ruler::before {
+      content: '';
+      position: absolute;
+      top: 22px;
+      left: 18px;
+      right: 18px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 1px;
+      pointer-events: none;
     }
     .lp-property-slider {
       width: 100%;
@@ -971,8 +988,10 @@ ${themeCssVars}
     }
     .lp-property-slider-scale {
       position: relative;
-      height: 28px;
+      height: 34px;
       margin-top: 10px;
+      margin-left: 0;
+      margin-right: 0;
     }
     .lp-property-slider-tick {
       position: absolute;
@@ -983,8 +1002,9 @@ ${themeCssVars}
       align-items: center;
       gap: 5px;
       cursor: pointer;
-      padding: 0 4px;
+      padding: 0 6px;
       transition: transform 0.15s ease;
+      min-width: 20px;
     }
     .lp-property-slider-tick:hover {
       transform: translateX(-50%) scale(1.15);
@@ -992,24 +1012,26 @@ ${themeCssVars}
     .lp-property-slider-tick::before {
       content: '';
       width: 2px;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.35);
+      height: 12px;
+      background: rgba(255, 255, 255, 0.65);
       border-radius: 1px;
       transition: background 0.2s ease, height 0.15s ease;
     }
     .lp-property-slider-tick:hover::before {
-      background: rgba(255, 255, 255, 0.7);
-      height: 12px;
+      background: #fff;
+      height: 16px;
     }
     .lp-property-slider-tick-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.55);
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.85);
       line-height: 1;
       transition: color 0.2s ease;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      white-space: nowrap;
     }
     .lp-property-slider-tick:hover .lp-property-slider-tick-label {
-      color: rgba(255, 255, 255, 0.9);
+      color: #fff;
     }
     .lp-property-array {
       display: flex;
@@ -1021,6 +1043,17 @@ ${themeCssVars}
       border-bottom: 1px solid #383838;
       border-radius: 8px;
       padding: 10px 10px 20px 10px;
+    }
+    .lp-property-array-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--lp-font-mono, ui-monospace, monospace);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--lp-accent, #888);
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
     }
     .lp-property-array-header {
       display: flex;
@@ -1496,8 +1529,10 @@ function buildEditorBarMarkup(goal: DeckGoal): string {
   const isTheme02 = theme === 'theme02';
   const isTheme03 = theme === 'theme03';
   const isTheme04 = theme === 'theme04';
-  const colorScheme = goal.colorScheme || (isTheme02 || isTheme03 ? 'scheme-a' : isTheme04 ? 'green' : 'light');
-  const appearance = goal.appearance || ((isTheme03 || isTheme04) ? 'dark' : undefined);
+  const isTheme05 = theme === 'theme05';
+  const isTheme06 = theme === 'theme06';
+  const colorScheme = goal.colorScheme || (isTheme02 || isTheme03 ? 'scheme-a' : isTheme04 ? 'green' : isTheme05 ? 'coral' : isTheme06 ? 'volt' : 'light');
+  const appearance = goal.appearance || ((isTheme03 || isTheme04 || isTheme05 || isTheme06) ? 'dark' : undefined);
 
   let appearanceButtons = '';
   if (isTheme02) {
@@ -1527,6 +1562,37 @@ function buildEditorBarMarkup(goal: DeckGoal): string {
     <button class="lp-appearance-btn ${colorScheme === 'pink' ? 'lp-appearance-active' : ''}" data-theme="pink" title="糖果粉" aria-pressed="${colorScheme === 'pink'}">
       糖果粉
     </button>`;
+  } else if (isTheme05) {
+    const scheme = String(colorScheme);
+    appearanceButtons = `<button class="lp-appearance-btn ${scheme === 'coral' ? 'lp-appearance-active' : ''}" data-theme="coral" title="珊瑚红" aria-pressed="${scheme === 'coral'}">
+      珊瑚红
+    </button>
+    <button class="lp-appearance-btn ${scheme === 'amber' ? 'lp-appearance-active' : ''}" data-theme="amber" title="琥珀黄" aria-pressed="${scheme === 'amber'}">
+      琥珀黄
+    </button>
+    <button class="lp-appearance-btn ${scheme === 'teal' ? 'lp-appearance-active' : ''}" data-theme="teal" title="青绿" aria-pressed="${scheme === 'teal'}">
+      青绿
+    </button>
+    <button class="lp-appearance-btn ${scheme === 'indigo' ? 'lp-appearance-active' : ''}" data-theme="indigo" title="靛蓝" aria-pressed="${scheme === 'indigo'}">
+      靛蓝
+    </button>
+    <button class="lp-appearance-btn ${scheme === 'violet' ? 'lp-appearance-active' : ''}" data-theme="violet" title="紫罗兰" aria-pressed="${scheme === 'violet'}">
+      紫罗兰
+    </button>`;
+  } else if (isTheme06) {
+    const scheme = String(colorScheme);
+    appearanceButtons = `<button class="lp-appearance-btn ${scheme === 'volt' ? 'lp-appearance-active' : ''}" data-theme="volt" title="电光青柠" aria-pressed="${scheme === 'volt'}">
+      电光青柠
+    </button>
+    <button class="lp-appearance-btn ${scheme === 'magma' ? 'lp-appearance-active' : ''}" data-theme="magma" title="熔岩珊瑚" aria-pressed="${scheme === 'magma'}">
+      熔岩珊瑚
+    </button>
+    <button class="lp-appearance-btn ${scheme === 'nebula' ? 'lp-appearance-active' : ''}" data-theme="nebula" title="星云蓝紫" aria-pressed="${scheme === 'nebula'}">
+      星云蓝紫
+    </button>
+    <button class="lp-appearance-btn ${scheme === 'nova' ? 'lp-appearance-active' : ''}" data-theme="nova" title="新星金黄" aria-pressed="${scheme === 'nova'}">
+      新星金黄
+    </button>`;
   } else {
     appearanceButtons = `<button class="lp-appearance-btn ${colorScheme === 'light' ? 'lp-appearance-active' : ''}" data-appearance="light" title="浅色" aria-pressed="${colorScheme === 'light'}">
       浅色
@@ -1537,7 +1603,7 @@ function buildEditorBarMarkup(goal: DeckGoal): string {
   }
 
   let lightDarkButtons = '';
-  if (isTheme04) {
+  if (isTheme04 || isTheme05 || isTheme06) {
     lightDarkButtons = `<div class="lp-appearance-switcher lp-appearance-switcher--lightdark" role="group" aria-label="深浅模式">
       <button class="lp-appearance-btn ${appearance === 'light' ? 'lp-appearance-active' : ''}" data-appearance="light" title="浅色" aria-pressed="${appearance === 'light'}">
         浅色
@@ -1839,6 +1905,7 @@ function buildScriptMarkup(): string {
 })();
 </script>
 <script src="./assets/client-render.js"></script>
+<script src="./assets/theme-echarts.js"></script>
 <script>
 (function () {
   if (typeof window.__lemonPPT_initECharts === 'function') {
@@ -1859,6 +1926,7 @@ function buildEditorScriptMarkup(goal: DeckGoal): string {
   });
   const schemasJson = JSON.stringify(schemas).replace(/</g, '\\u003c');
   return `<script src="./assets/client-render.js"></script>
+<script src="./assets/theme-echarts.js"></script>
 <script>
 window.__lemonPPT_goal = ${goalJson};
 window.__lemonPPT_layoutSchemas = ${schemasJson};

@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Theme04AuroraBg } from './aurora-bg.js';
 
 export interface Theme04CoverBentoV1Item {
   label: string;
@@ -118,7 +119,8 @@ export function Theme04CoverBentoV1(props: Theme04CoverBentoV1Props): ReactNode 
   const validItems = (items || []).slice(0, 4);
 
   return (
-    <div className="lp-slide lp-theme04-cover-bento">
+    <div className="lp-slide lp-theme04-cover-bento lp-theme04-has-aurora">
+      <Theme04AuroraBg />
       <div className="lp-theme04-cover-bento-top">
         {(tag || tagLabel) && (
           <div className="lp-theme04-tag">

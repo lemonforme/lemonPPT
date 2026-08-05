@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Theme04AuroraBg } from './aurora-bg.js';
 import { LpEditableImage } from '../../editable-image.js';
 
 export interface Theme04ChapterSplitV1Props {
@@ -41,7 +42,8 @@ export function Theme04ChapterSplitV1(props: Theme04ChapterSplitV1Props): ReactN
   const { number, title, subtitle, image, _slideIdx, _editable } = props;
 
   return (
-    <div className="lp-slide lp-theme04-chapter-split">
+    <div className="lp-slide lp-theme04-chapter-split lp-theme04-has-aurora">
+      <Theme04AuroraBg />
       <div className="lp-theme04-chapter-split-visual lp-rise">
         <LpEditableImage
           className="lp-theme04-chapter-split-image"

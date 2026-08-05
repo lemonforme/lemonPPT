@@ -11,9 +11,9 @@ describe('normalize', () => {
     expect(normalizeLayoutId('cover_v1')).toBe('cover_v1');
   });
 
-  it('should map minimal theme to base', () => {
-    expect(normalizeThemeId('minimal')).toBe('base');
-    expect(normalizeThemeId('dark-tech')).toBe('dark-tech');
+  it('should map minimal theme to theme01', () => {
+    expect(normalizeThemeId('minimal')).toBe('theme01');
+    expect(normalizeThemeId('theme01')).toBe('theme01');
   });
 
   it('should normalize old goal.json naming', () => {
@@ -31,7 +31,7 @@ describe('normalize', () => {
     };
 
     const normalized = normalizeDeckGoal(goal);
-    expect(normalized.theme).toBe('base');
+    expect(normalized.theme).toBe('theme01');
     expect(normalized.slides[0].layout).toBe('cover_v1');
     expect(normalized.slides[1].layout).toBe('content_v1');
   });
@@ -41,7 +41,7 @@ describe('normalize', () => {
       title: '测试',
       goal: '测试',
       audience: '测试',
-      theme: 'base',
+      theme: 'theme01',
       language: 'zh' as const,
       pageCount: 1,
       slides: [{ role: 'cover' as const, layout: 'cover_v1', props: {} }],

@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Theme04AuroraBg } from './aurora-bg.js';
 
 export interface Theme04CoverIndexV1Item {
   number: string;
@@ -89,7 +90,8 @@ export function Theme04CoverIndexV1(props: Theme04CoverIndexV1Props): ReactNode 
   const safeItems = (items ?? []).slice(0, 4);
 
   return (
-    <div className="lp-slide lp-theme04-cover-index">
+    <div className="lp-slide lp-theme04-cover-index lp-theme04-has-aurora">
+      <Theme04AuroraBg />
       <div className="lp-theme04-cover-index-top lp-rise">
         <div className="lp-theme04-cover-index-tag">
           {tag && <span className="lp-theme04-cover-index-tag-main">{tag}</span>}

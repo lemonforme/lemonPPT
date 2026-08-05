@@ -10,12 +10,12 @@ const sampleGoal: DeckGoal = {
   title: '测试渲染',
   goal: '测试',
   audience: '开发者',
-  theme: 'base',
+  theme: 'theme01',
   language: 'zh',
   pageCount: 2,
   slides: [
     { role: 'cover' as const, layout: 'cover_v1', props: { title: '封面' } },
-    { role: 'closing' as const, layout: 'closing_v1', props: { title: '结尾' } },
+    { role: 'closing' as const, layout: 'closing_v2', props: { title: '结尾' } },
   ],
 };
 
@@ -24,7 +24,7 @@ describe('renderDeck', () => {
     const result = renderDeck(sampleGoal);
     expect(result.html).toContain('<!DOCTYPE html>');
     expect(result.html).toContain('测试渲染');
-    expect(result.assets).toContain('./assets/base.css');
+    expect(result.assets).toContain('./assets/theme01.css');
   });
 
   it('should render correct number of slide wrappers', () => {

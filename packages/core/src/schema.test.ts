@@ -10,12 +10,12 @@ describe('schema', () => {
     title: '测试演示',
     goal: '验证 schema 校验',
     audience: '开发者',
-    theme: 'base',
+    theme: 'theme01',
     language: 'zh',
     pageCount: 2,
     slides: [
       { role: 'cover' as const, layout: 'cover_v1', props: { title: '封面' } },
-      { role: 'closing' as const, layout: 'closing_v1', props: { title: '结尾' } },
+      { role: 'closing' as const, layout: 'closing_v2', props: { title: '结尾' } },
     ],
   };
 

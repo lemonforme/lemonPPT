@@ -89,23 +89,25 @@ export function normalizeSlide(
     props.content = truncateText(props.content, opts.maxDescriptionLength);
   }
 
-  // 确保常见数组字段存在且长度受控
-  const arrayFields = [
-    'points',
-    'leftPoints',
-    'rightPoints',
-    'items',
-    'steps',
-    'features',
-    'milestones',
-    'phases',
-    'tiers',
-    'images',
-    'partners',
-    'stats',
-    'members',
-  ];
-  for (const key of arrayFields) {
+  // 按角色确保相关数组字段存在，同时保留已自定义的数组字段
+  const roleArrayFields: Record<string, string[]> = {
+    content: ['points', 'leftPoints', 'rightPoints'],
+    tableOfContents: ['items'],
+    faq: ['items'],
+    process: ['steps'],
+    feature: ['features'],
+    timeline: ['milestones'],
+    roadmap: ['phases'],
+    pricing: ['plans', 'tiers'],
+    gallery: ['images'],
+    partners: ['partners'],
+    stats: ['stats'],
+    team: ['members'],
+    metric: ['metrics'],
+  };
+  const existingArrayFields = Object.keys(props).filter((key) => Array.isArray(props[key]));
+  const fieldsToNormalize = new Set([...(roleArrayFields[slide.role] ?? []), ...existingArrayFields]);
+  for (const key of fieldsToNormalize) {
     normalizeArrayField(props, key, opts.maxPoints, opts.maxPointLength);
   }
 

@@ -56,8 +56,12 @@ declare module 'pptxgenjs' {
     h: number;
     chartColors?: string[];
     showValue?: boolean;
+    showLegend?: boolean;
     dataLabelColor?: string;
     dataLabelFontSize?: number;
+    holeSize?: number;
+    barGrouping?: 'clustered' | 'stacked' | 'percentStacked';
+    barDir?: 'col' | 'bar';
   }
 
   export interface ChartSeries {
@@ -70,7 +74,7 @@ declare module 'pptxgenjs' {
     addText(text: string | Array<{ text: string; options?: Record<string, unknown> }>, options: TextOptions): void;
     addShape(shape: string, options: ShapeOptions): void;
     addImage(options: ImageOptions): void;
-    addChart(type: 'bar' | 'line' | 'pie', data: ChartSeries[], options: ChartOptions): void;
+    addChart(type: 'bar' | 'line' | 'pie' | 'doughnut' | 'radar', data: ChartSeries[], options: ChartOptions): void;
   }
 
   export default class PptxGenJS {

@@ -1576,6 +1576,846 @@ import {
   theme04LedgerV1Schema,
   type Theme04LedgerV1Props,
 } from './themes/theme04/ledger-v1.js';
+import {
+  Theme05ChapterV1,
+  theme05ChapterV1Meta,
+  theme05ChapterV1Schema,
+  type Theme05ChapterV1Props,
+} from './themes/theme05/chapter-v1.js';
+import {
+  Theme05ChartV1,
+  theme05ChartV1Meta,
+  theme05ChartV1Schema,
+  type Theme05ChartV1Props,
+} from './themes/theme05/chart-v1.js';
+import {
+  Theme05ClosingV1,
+  theme05ClosingV1Meta,
+  theme05ClosingV1Schema,
+  type Theme05ClosingV1Props,
+} from './themes/theme05/closing-v1.js';
+import {
+  Theme05ContentV1,
+  theme05ContentV1Meta,
+  theme05ContentV1Schema,
+  type Theme05ContentV1Props,
+} from './themes/theme05/content-v1.js';
+import {
+  Theme05CoverV1,
+  theme05CoverV1Meta,
+  theme05CoverV1Schema,
+  type Theme05CoverV1Props,
+} from './themes/theme05/cover-v1.js';
+import {
+  Theme05HeatmapV1,
+  theme05HeatmapV1Meta,
+  theme05HeatmapV1Schema,
+  type Theme05HeatmapV1Props,
+} from './themes/theme05/heatmap-v1.js';
+import {
+  Theme05ImageV1,
+  theme05ImageV1Meta,
+  theme05ImageV1Schema,
+  type Theme05ImageV1Props,
+} from './themes/theme05/image-v1.js';
+import {
+  Theme05MatrixV1,
+  theme05MatrixV1Meta,
+  theme05MatrixV1Schema,
+  type Theme05MatrixV1Props,
+} from './themes/theme05/matrix-v1.js';
+import {
+  Theme05MetricV1,
+  theme05MetricV1Meta,
+  theme05MetricV1Schema,
+  type Theme05MetricV1Props,
+} from './themes/theme05/metric-v1.js';
+import {
+  Theme05BubbleV1,
+  theme05BubbleV1Meta,
+  theme05BubbleV1Schema,
+  type Theme05BubbleV1Props,
+} from './themes/theme05/bubble-v1.js';
+import {
+  Theme05MapV1,
+  theme05MapV1Meta,
+  theme05MapV1Schema,
+  type Theme05MapV1Props,
+} from './themes/theme05/map-v1.js';
+import {
+  Theme05ProcessV1,
+  theme05ProcessV1Meta,
+  theme05ProcessV1Schema,
+  type Theme05ProcessV1Props,
+} from './themes/theme05/process-v1.js';
+import {
+  Theme05QuoteV1,
+  theme05QuoteV1Meta,
+  theme05QuoteV1Schema,
+  type Theme05QuoteV1Props,
+} from './themes/theme05/quote-v1.js';
+import {
+  Theme05QuadrantV1,
+  theme05QuadrantV1Meta,
+  theme05QuadrantV1Schema,
+  type Theme05QuadrantV1Props,
+} from './themes/theme05/quadrant-v1.js';
+import {
+  Theme05RankV1,
+  theme05RankV1Meta,
+  theme05RankV1Schema,
+  type Theme05RankV1Props,
+} from './themes/theme05/rank-v1.js';
+import {
+  Theme05DonutV1,
+  theme05DonutV1Meta,
+  theme05DonutV1Schema,
+  type Theme05DonutV1Props,
+} from './themes/theme05/donut-v1.js';
+import {
+  Theme05RadarV1,
+  theme05RadarV1Meta,
+  theme05RadarV1Schema,
+  type Theme05RadarV1Props,
+} from './themes/theme05/radar-v1.js';
+import {
+  Theme05RiskV1,
+  theme05RiskV1Meta,
+  theme05RiskV1Schema,
+  type Theme05RiskV1Props,
+} from './themes/theme05/risk-v1.js';
+import {
+  Theme05TableOfContentsV1,
+  theme05TableOfContentsV1Meta,
+  theme05TableOfContentsV1Schema,
+  type Theme05TableOfContentsV1Props,
+} from './themes/theme05/table-of-contents-v1.js';
+import {
+  Theme05TreemapV1,
+  theme05TreemapV1Meta,
+  theme05TreemapV1Schema,
+  type Theme05TreemapV1Props,
+} from './themes/theme05/treemap-v1.js';
+import {
+  Theme05TimelineV1,
+  theme05TimelineV1Meta,
+  theme05TimelineV1Schema,
+  type Theme05TimelineV1Props,
+} from './themes/theme05/timeline-v1.js';
+import {
+  Theme05VersusV1,
+  theme05VersusV1Meta,
+  theme05VersusV1Schema,
+  type Theme05VersusV1Props,
+} from './themes/theme05/versus-v1.js';
+import {
+  Theme05WaterfallV1,
+  theme05WaterfallV1Meta,
+  theme05WaterfallV1Schema,
+  type Theme05WaterfallV1Props,
+} from './themes/theme05/waterfall-v1.js';
+import {
+  Theme05ScorecardsV1,
+  theme05ScorecardsV1Meta,
+  theme05ScorecardsV1Schema,
+  type Theme05ScorecardsV1Props,
+} from './themes/theme05/scorecards-v1.js';
+import {
+  Theme05ProfileV1,
+  theme05ProfileV1Meta,
+  theme05ProfileV1Schema,
+  type Theme05ProfileV1Props,
+} from './themes/theme05/profile-v1.js';
+import {
+  Theme05CaseV1,
+  theme05CaseV1Meta,
+  theme05CaseV1Schema,
+  type Theme05CaseV1Props,
+} from './themes/theme05/case-v1.js';
+import {
+  Theme05BentoV1,
+  theme05BentoV1Meta,
+  theme05BentoV1Schema,
+  type Theme05BentoV1Props,
+} from './themes/theme05/bento-v1.js';
+import {
+  Theme05GalleryV1,
+  theme05GalleryV1Meta,
+  theme05GalleryV1Schema,
+  type Theme05GalleryV1Props,
+} from './themes/theme05/gallery-v1.js';
+import {
+  Theme05RoadmapV1,
+  theme05RoadmapV1Meta,
+  theme05RoadmapV1Schema,
+  type Theme05RoadmapV1Props,
+} from './themes/theme05/roadmap-v1.js';
+import {
+  Theme05EditorialV1,
+  theme05EditorialV1Meta,
+  theme05EditorialV1Schema,
+  type Theme05EditorialV1Props,
+} from './themes/theme05/editorial-v1.js';
+import {
+  Theme05CoverExV1,
+  theme05CoverExV1Meta,
+  theme05CoverExV1Schema,
+  type Theme05CoverExV1Props,
+} from './themes/theme05/cover-ex-v1.js';
+import {
+  Theme05CoverExV2,
+  theme05CoverExV2Meta,
+  theme05CoverExV2Schema,
+  type Theme05CoverExV2Props,
+} from './themes/theme05/cover-ex-v2.js';
+import {
+  Theme05CoverHeroV1,
+  theme05CoverHeroV1Meta,
+  theme05CoverHeroV1Schema,
+  type Theme05CoverHeroV1Props,
+} from './themes/theme05/cover-hero-v1.js';
+import {
+  Theme05ChapterBigV1,
+  theme05ChapterBigV1Meta,
+  theme05ChapterBigV1Schema,
+  type Theme05ChapterBigV1Props,
+} from './themes/theme05/chapter-big-v1.js';
+import {
+  Theme05ChapterSplitV1,
+  theme05ChapterSplitV1Meta,
+  theme05ChapterSplitV1Schema,
+  type Theme05ChapterSplitV1Props,
+} from './themes/theme05/chapter-split-v1.js';
+import {
+  Theme05ChapterNumberedV1,
+  theme05ChapterNumberedV1Meta,
+  theme05ChapterNumberedV1Schema,
+  type Theme05ChapterNumberedV1Props,
+} from './themes/theme05/chapter-numbered-v1.js';
+import {
+  Theme05ChapterImageV1,
+  theme05ChapterImageV1Meta,
+  theme05ChapterImageV1Schema,
+  type Theme05ChapterImageV1Props,
+} from './themes/theme05/chapter-image-v1.js';
+import {
+  Theme05MetricHeroV1,
+  theme05MetricHeroV1Meta,
+  theme05MetricHeroV1Schema,
+  type Theme05MetricHeroV1Props,
+} from './themes/theme05/metric-hero-v1.js';
+import {
+  Theme05MetricDeltaV1,
+  theme05MetricDeltaV1Meta,
+  theme05MetricDeltaV1Schema,
+  type Theme05MetricDeltaV1Props,
+} from './themes/theme05/metric-delta-v1.js';
+import {
+  Theme05MetricCapacityV1,
+  theme05MetricCapacityV1Meta,
+  theme05MetricCapacityV1Schema,
+  type Theme05MetricCapacityV1Props,
+} from './themes/theme05/metric-capacity-v1.js';
+import {
+  Theme05ChartShareV1,
+  theme05ChartShareV1Meta,
+  theme05ChartShareV1Schema,
+  type Theme05ChartShareV1Props,
+} from './themes/theme05/chart-share-v1.js';
+import {
+  Theme05ChartStackedV1,
+  theme05ChartStackedV1Meta,
+  theme05ChartStackedV1Schema,
+  type Theme05ChartStackedV1Props,
+} from './themes/theme05/chart-stacked-v1.js';
+import {
+  Theme05ChartCurveV1,
+  theme05ChartCurveV1Meta,
+  theme05ChartCurveV1Schema,
+  type Theme05ChartCurveV1Props,
+} from './themes/theme05/chart-curve-v1.js';
+import {
+  Theme05ChartPeakV1,
+  theme05ChartPeakV1Meta,
+  theme05ChartPeakV1Schema,
+  type Theme05ChartPeakV1Props,
+} from './themes/theme05/chart-peak-v1.js';
+import {
+  Theme05ChartPeaktroughV1,
+  theme05ChartPeaktroughV1Meta,
+  theme05ChartPeaktroughV1Schema,
+  type Theme05ChartPeaktroughV1Props,
+} from './themes/theme05/chart-peaktrough-v1.js';
+import {
+  Theme05ChartCumulativeV1,
+  theme05ChartCumulativeV1Meta,
+  theme05ChartCumulativeV1Schema,
+  type Theme05ChartCumulativeV1Props,
+} from './themes/theme05/chart-cumulative-v1.js';
+import {
+  Theme05TableOfContentsV2,
+  theme05TableOfContentsV2Meta,
+  theme05TableOfContentsV2Schema,
+  type Theme05TableOfContentsV2Props,
+} from './themes/theme05/table-of-contents-v2.js';
+import {
+  Theme05ProcessV2,
+  theme05ProcessV2Meta,
+  theme05ProcessV2Schema,
+  type Theme05ProcessV2Props,
+} from './themes/theme05/process-v2.js';
+import {
+  Theme05ComparisonV1,
+  theme05ComparisonV1Meta,
+  theme05ComparisonV1Schema,
+  type Theme05ComparisonV1Props,
+} from './themes/theme05/comparison-v1.js';
+import {
+  Theme05ChartFunnelV1,
+  theme05ChartFunnelV1Meta,
+  theme05ChartFunnelV1Schema,
+  type Theme05ChartFunnelV1Props,
+} from './themes/theme05/chart-funnel-v1.js';
+import {
+  Theme05QuoteV2,
+  theme05QuoteV2Meta,
+  theme05QuoteV2Schema,
+  type Theme05QuoteV2Props,
+} from './themes/theme05/quote-v2.js';
+import {
+  Theme05ChartGaugeV1,
+  theme05ChartGaugeV1Meta,
+  theme05ChartGaugeV1Schema,
+  type Theme05ChartGaugeV1Props,
+} from './themes/theme05/chart-gauge-v1.js';
+import {
+  Theme06CoverV1,
+  theme06CoverV1Meta,
+  theme06CoverV1Schema,
+  type Theme06CoverV1Props,
+} from './themes/theme06/cover-v1.js';
+import {
+  Theme06ChapterV1,
+  theme06ChapterV1Meta,
+  theme06ChapterV1Schema,
+  type Theme06ChapterV1Props,
+} from './themes/theme06/chapter-v1.js';
+import {
+  Theme06ContentV1,
+  theme06ContentV1Meta,
+  theme06ContentV1Schema,
+  type Theme06ContentV1Props,
+} from './themes/theme06/content-v1.js';
+import {
+  Theme06ContentNumberedV1,
+  theme06ContentNumberedV1Meta,
+  theme06ContentNumberedV1Schema,
+  type Theme06ContentNumberedV1Props,
+} from './themes/theme06/content-numbered-v1.js';
+import {
+  Theme06MetricHeroV1,
+  theme06MetricHeroV1Meta,
+  theme06MetricHeroV1Schema,
+  type Theme06MetricHeroV1Props,
+} from './themes/theme06/metric-hero-v1.js';
+import {
+  Theme06VerticalBarV1,
+  theme06VerticalBarV1Meta,
+  theme06VerticalBarV1Schema,
+  type Theme06VerticalBarV1Props,
+} from './themes/theme06/vertical-bar-v1.js';
+import {
+  Theme06ChartV1,
+  theme06ChartV1Meta,
+  theme06ChartV1Schema,
+  type Theme06ChartV1Props,
+} from './themes/theme06/chart-v1.js';
+import {
+  Theme06QuoteV1,
+  theme06QuoteV1Meta,
+  theme06QuoteV1Schema,
+  type Theme06QuoteV1Props,
+} from './themes/theme06/quote-v1.js';
+import {
+  Theme06MetricGridV1,
+  theme06MetricGridV1Meta,
+  theme06MetricGridV1Schema,
+  type Theme06MetricGridV1Props,
+} from './themes/theme06/metric-grid-v1.js';
+import {
+  Theme06RankV1,
+  theme06RankV1Meta,
+  theme06RankV1Schema,
+  type Theme06RankV1Props,
+} from './themes/theme06/rank-v1.js';
+import {
+  Theme06MatrixV1,
+  theme06MatrixV1Meta,
+  theme06MatrixV1Schema,
+  type Theme06MatrixV1Props,
+} from './themes/theme06/matrix-v1.js';
+import {
+  Theme06ChartRadarV1,
+  theme06ChartRadarV1Meta,
+  theme06ChartRadarV1Schema,
+  type Theme06ChartRadarV1Props,
+} from './themes/theme06/chart-radar-v1.js';
+import {
+  Theme06ChartWaterfallV1,
+  theme06ChartWaterfallV1Meta,
+  theme06ChartWaterfallV1Schema,
+  type Theme06ChartWaterfallV1Props,
+} from './themes/theme06/chart-waterfall-v1.js';
+import {
+  Theme06ChartPeakV1,
+  theme06ChartPeakV1Meta,
+  theme06ChartPeakV1Schema,
+  type Theme06ChartPeakV1Props,
+} from './themes/theme06/chart-peak-v1.js';
+import {
+  Theme06ProcessV1,
+  theme06ProcessV1Meta,
+  theme06ProcessV1Schema,
+  type Theme06ProcessV1Props,
+} from './themes/theme06/process-v1.js';
+import {
+  Theme06TimelineV1,
+  theme06TimelineV1Meta,
+  theme06TimelineV1Schema,
+  type Theme06TimelineV1Props,
+} from './themes/theme06/timeline-v1.js';
+import {
+  Theme06CaseV1,
+  theme06CaseV1Meta,
+  theme06CaseV1Schema,
+  type Theme06CaseV1Props,
+} from './themes/theme06/case-v1.js';
+import {
+  Theme06CaseV2,
+  theme06CaseV2Meta,
+  theme06CaseV2Schema,
+  type Theme06CaseV2Props,
+} from './themes/theme06/case-v2.js';
+import {
+  Theme06RiskV1,
+  theme06RiskV1Meta,
+  theme06RiskV1Schema,
+  type Theme06RiskV1Props,
+} from './themes/theme06/risk-v1.js';
+import {
+  Theme06RiskV2,
+  theme06RiskV2Meta,
+  theme06RiskV2Schema,
+  type Theme06RiskV2Props,
+} from './themes/theme06/risk-v2.js';
+import {
+  Theme06ChartGraphV1,
+  theme06ChartGraphV1Meta,
+  theme06ChartGraphV1Schema,
+  type Theme06ChartGraphV1Props,
+} from './themes/theme06/chart-graph-v1.js';
+import {
+  Theme06MapV1,
+  theme06MapV1Meta,
+  theme06MapV1Schema,
+  type Theme06MapV1Props,
+} from './themes/theme06/map-v1.js';
+import {
+  Theme06TableOfContentsV1,
+  theme06TableOfContentsV1Meta,
+  theme06TableOfContentsV1Schema,
+  type Theme06TableOfContentsV1Props,
+} from './themes/theme06/table-of-contents-v1.js';
+import {
+  Theme06SummaryV1,
+  theme06SummaryV1Meta,
+  theme06SummaryV1Schema,
+  type Theme06SummaryV1Props,
+} from './themes/theme06/summary-v1.js';
+import {
+  Theme06ClosingV1,
+  theme06ClosingV1Meta,
+  theme06ClosingV1Schema,
+  type Theme06ClosingV1Props,
+} from './themes/theme06/closing-v1.js';
+import {
+  Theme06SourcesV1,
+  theme06SourcesV1Meta,
+  theme06SourcesV1Schema,
+  type Theme06SourcesV1Props,
+} from './themes/theme06/sources-v1.js';
+import {
+  Theme06ChartHeatmapV1,
+  theme06ChartHeatmapV1Meta,
+  theme06ChartHeatmapV1Schema,
+  type Theme06ChartHeatmapV1Props,
+} from './themes/theme06/chart-heatmap-v1.js';
+import {
+  Theme06BentoV1,
+  theme06BentoV1Meta,
+  theme06BentoV1Schema,
+  type Theme06BentoV1Props,
+} from './themes/theme06/bento-v1.js';
+import {
+  Theme06ComparisonV1,
+  theme06ComparisonV1Meta,
+  theme06ComparisonV1Schema,
+  type Theme06ComparisonV1Props,
+} from './themes/theme06/comparison-v1.js';
+import {
+  Theme06SectorSpotlightV1,
+  theme06SectorSpotlightV1Meta,
+  theme06SectorSpotlightV1Schema,
+  type Theme06SectorSpotlightV1Props,
+} from './themes/theme06/sector-spotlight-v1.js';
+import {
+  Theme06TechLandscapeV1,
+  theme06TechLandscapeV1Meta,
+  theme06TechLandscapeV1Schema,
+  type Theme06TechLandscapeV1Props,
+} from './themes/theme06/tech-landscape-v1.js';
+import {
+  Theme06CompanyProfileV1,
+  theme06CompanyProfileV1Meta,
+  theme06CompanyProfileV1Schema,
+  type Theme06CompanyProfileV1Props,
+} from './themes/theme06/company-profile-v1.js';
+import {
+  Theme06ChainFlowV1,
+  theme06ChainFlowV1Meta,
+  theme06ChainFlowV1Schema,
+  type Theme06ChainFlowV1Props,
+} from './themes/theme06/chain-flow-v1.js';
+import {
+  Theme06QuarterTableV1,
+  theme06QuarterTableV1Meta,
+  theme06QuarterTableV1Schema,
+  type Theme06QuarterTableV1Props,
+} from './themes/theme06/quarter-table-v1.js';
+import {
+  Theme06MetricShowcaseV1,
+  theme06MetricShowcaseV1Meta,
+  theme06MetricShowcaseV1Schema,
+  type Theme06MetricShowcaseV1Props,
+} from './themes/theme06/metric-showcase-v1.js';
+import {
+  Theme06MilestoneV1,
+  theme06MilestoneV1Meta,
+  theme06MilestoneV1Schema,
+  type Theme06MilestoneV1Props,
+} from './themes/theme06/milestone-v1.js';
+import {
+  Theme06RiskMatrixV1,
+  theme06RiskMatrixV1Meta,
+  theme06RiskMatrixV1Schema,
+  type Theme06RiskMatrixV1Props,
+} from './themes/theme06/risk-matrix-v1.js';
+import {
+  Theme06SectorComparisonV1,
+  theme06SectorComparisonV1Meta,
+  theme06SectorComparisonV1Schema,
+  type Theme06SectorComparisonV1Props,
+} from './themes/theme06/sector-comparison-v1.js';
+import {
+  Theme06GeoDistributionV1,
+  theme06GeoDistributionV1Meta,
+  theme06GeoDistributionV1Schema,
+  type Theme06GeoDistributionV1Props,
+} from './themes/theme06/geo-distribution-v1.js';
+import {
+  Theme06GeoHeatmapV1,
+  theme06GeoHeatmapV1Meta,
+  theme06GeoHeatmapV1Schema,
+  type Theme06GeoHeatmapV1Props,
+} from './themes/theme06/geo-heatmap-v1.js';
+import {
+  Theme06EcosystemGraphV1,
+  theme06EcosystemGraphV1Meta,
+  theme06EcosystemGraphV1Schema,
+  type Theme06EcosystemGraphV1Props,
+} from './themes/theme06/ecosystem-graph-v1.js';
+import {
+  Theme06CoverProductV1,
+  theme06CoverProductV1Meta,
+  theme06CoverProductV1Schema,
+  type Theme06CoverProductV1Props,
+} from './themes/theme06/cover-product-v1.js';
+import {
+  Theme06CoverBusinessV1,
+  theme06CoverBusinessV1Meta,
+  theme06CoverBusinessV1Schema,
+  type Theme06CoverBusinessV1Props,
+} from './themes/theme06/cover-business-v1.js';
+import {
+  Theme06ChapterNumberedV1,
+  theme06ChapterNumberedV1Meta,
+  theme06ChapterNumberedV1Schema,
+  type Theme06ChapterNumberedV1Props,
+} from './themes/theme06/chapter-numbered-v1.js';
+import {
+  Theme06ChapterSplitV1,
+  theme06ChapterSplitV1Meta,
+  theme06ChapterSplitV1Schema,
+  type Theme06ChapterSplitV1Props,
+} from './themes/theme06/chapter-split-v1.js';
+import {
+  Theme06TrendV1,
+  theme06TrendV1Meta,
+  theme06TrendV1Schema,
+  type Theme06TrendV1Props,
+} from './themes/theme06/trend-v1.js';
+import {
+  Theme06CumulativeV1,
+  theme06CumulativeV1Meta,
+  theme06CumulativeV1Schema,
+  type Theme06CumulativeV1Props,
+} from './themes/theme06/cumulative-v1.js';
+import {
+  Theme06QuadrantV1,
+  theme06QuadrantV1Meta,
+  theme06QuadrantV1Schema,
+  type Theme06QuadrantV1Props,
+} from './themes/theme06/quadrant-v1.js';
+import {
+  Theme06OutlookV1,
+  theme06OutlookV1Meta,
+  theme06OutlookV1Schema,
+  type Theme06OutlookV1Props,
+} from './themes/theme06/outlook-v1.js';
+import {
+  Theme06RecapV1,
+  theme06RecapV1Meta,
+  theme06RecapV1Schema,
+  type Theme06RecapV1Props,
+} from './themes/theme06/recap-v1.js';
+import {
+  Theme06CompanyRoundsV1,
+  theme06CompanyRoundsV1Meta,
+  theme06CompanyRoundsV1Schema,
+  type Theme06CompanyRoundsV1Props,
+} from './themes/theme06/company-rounds-v1.js';
+import {
+  Theme06CompanyInvestorsV1,
+  theme06CompanyInvestorsV1Meta,
+  theme06CompanyInvestorsV1Schema,
+  type Theme06CompanyInvestorsV1Props,
+} from './themes/theme06/company-investors-v1.js';
+import {
+  Theme06CompanyComparisonV1,
+  theme06CompanyComparisonV1Meta,
+  theme06CompanyComparisonV1Schema,
+  type Theme06CompanyComparisonV1Props,
+} from './themes/theme06/company-comparison-v1.js';
+import {
+  Theme06GeoCitiesV1,
+  theme06GeoCitiesV1Meta,
+  theme06GeoCitiesV1Schema,
+  type Theme06GeoCitiesV1Props,
+} from './themes/theme06/geo-cities-v1.js';
+import {
+  Theme06AgentV1,
+  theme06AgentV1Meta,
+  theme06AgentV1Schema,
+  type Theme06AgentV1Props,
+} from './themes/theme06/agent-v1.js';
+import {
+  Theme06SearchV1,
+  theme06SearchV1Meta,
+  theme06SearchV1Schema,
+  type Theme06SearchV1Props,
+} from './themes/theme06/search-v1.js';
+import {
+  Theme06CoverManufacturingV1,
+  theme06CoverManufacturingV1Meta,
+  theme06CoverManufacturingV1Schema,
+  type Theme06CoverManufacturingV1Props,
+} from './themes/theme06/cover-manufacturing-v1.js';
+import {
+  Theme06CoverBrandV1,
+  theme06CoverBrandV1Meta,
+  theme06CoverBrandV1Schema,
+  type Theme06CoverBrandV1Props,
+} from './themes/theme06/cover-brand-v1.js';
+import {
+  Theme06MethodV1,
+  theme06MethodV1Meta,
+  theme06MethodV1Schema,
+  type Theme06MethodV1Props,
+} from './themes/theme06/method-v1.js';
+import {
+  Theme06QuarterQ1V1,
+  theme06QuarterQ1V1Meta,
+  theme06QuarterQ1V1Schema,
+  type Theme06QuarterQ1V1Props,
+} from './themes/theme06/quarter-q1-v1.js';
+import {
+  Theme06QuarterQ2V1,
+  theme06QuarterQ2V1Meta,
+  theme06QuarterQ2V1Schema,
+  type Theme06QuarterQ2V1Props,
+} from './themes/theme06/quarter-q2-v1.js';
+import {
+  Theme06QuarterQ3V1,
+  theme06QuarterQ3V1Meta,
+  theme06QuarterQ3V1Schema,
+  type Theme06QuarterQ3V1Props,
+} from './themes/theme06/quarter-q3-v1.js';
+import {
+  Theme06QuarterQ4V1,
+  theme06QuarterQ4V1Meta,
+  theme06QuarterQ4V1Schema,
+  type Theme06QuarterQ4V1Props,
+} from './themes/theme06/quarter-q4-v1.js';
+import {
+  Theme06BigNumberV1,
+  theme06BigNumberV1Meta,
+  theme06BigNumberV1Schema,
+  type Theme06BigNumberV1Props,
+} from './themes/theme06/big-number-v1.js';
+import {
+  Theme06ChapterFocusV1,
+  theme06ChapterFocusV1Meta,
+  theme06ChapterFocusV1Schema,
+  type Theme06ChapterFocusV1Props,
+} from './themes/theme06/chapter-focus-v1.js';
+import {
+  Theme06ChapterImageV1,
+  theme06ChapterImageV1Meta,
+  theme06ChapterImageV1Schema,
+  type Theme06ChapterImageV1Props,
+} from './themes/theme06/chapter-image-v1.js';
+import {
+  Theme06ChapterMinimalV1,
+  theme06ChapterMinimalV1Meta,
+  theme06ChapterMinimalV1Schema,
+  type Theme06ChapterMinimalV1Props,
+} from './themes/theme06/chapter-minimal-v1.js';
+import {
+  Theme06DealMapV1,
+  theme06DealMapV1Meta,
+  theme06DealMapV1Schema,
+  type Theme06DealMapV1Props,
+} from './themes/theme06/deal-map-v1.js';
+import {
+  Theme06SizeSplitV1,
+  theme06SizeSplitV1Meta,
+  theme06SizeSplitV1Schema,
+  type Theme06SizeSplitV1Props,
+} from './themes/theme06/size-split-v1.js';
+import {
+  Theme06TriadV1,
+  theme06TriadV1Meta,
+  theme06TriadV1Schema,
+  type Theme06TriadV1Props,
+} from './themes/theme06/triad-v1.js';
+import {
+  Theme06CapitalFlowV1,
+  theme06CapitalFlowV1Meta,
+  theme06CapitalFlowV1Schema,
+  type Theme06CapitalFlowV1Props,
+} from './themes/theme06/capital-flow-v1.js';
+import {
+  Theme06LegalV1,
+  theme06LegalV1Meta,
+  theme06LegalV1Schema,
+  type Theme06LegalV1Props,
+} from './themes/theme06/legal-v1.js';
+import {
+  Theme06OpenRiskV1,
+  theme06OpenRiskV1Meta,
+  theme06OpenRiskV1Schema,
+  type Theme06OpenRiskV1Props,
+} from './themes/theme06/open-risk-v1.js';
+import {
+  Theme06RegionRiskV1,
+  theme06RegionRiskV1Meta,
+  theme06RegionRiskV1Schema,
+  type Theme06RegionRiskV1Props,
+} from './themes/theme06/region-risk-v1.js';
+import {
+  Theme06RevenueRiskV1,
+  theme06RevenueRiskV1Meta,
+  theme06RevenueRiskV1Schema,
+  type Theme06RevenueRiskV1Props,
+} from './themes/theme06/revenue-risk-v1.js';
+import {
+  Theme06AvgTicketV1,
+  theme06AvgTicketV1Meta,
+  theme06AvgTicketV1Schema,
+  type Theme06AvgTicketV1Props,
+} from './themes/theme06/avg-ticket-v1.js';
+import {
+  Theme06IndustryVerticalV1,
+  theme06IndustryVerticalV1Meta,
+  theme06IndustryVerticalV1Schema,
+  type Theme06IndustryVerticalV1Props,
+} from './themes/theme06/industry-vertical-v1.js';
+import {
+  Theme06IndustryFinanceV1,
+  theme06IndustryFinanceV1Meta,
+  theme06IndustryFinanceV1Schema,
+  type Theme06IndustryFinanceV1Props,
+} from './themes/theme06/industry-finance-v1.js';
+import {
+  Theme06IndustryGrowthV1,
+  theme06IndustryGrowthV1Meta,
+  theme06IndustryGrowthV1Schema,
+  type Theme06IndustryGrowthV1Props,
+} from './themes/theme06/industry-growth-v1.js';
+import {
+  Theme06IndustryInfrastructureV1,
+  theme06IndustryInfrastructureV1Meta,
+  theme06IndustryInfrastructureV1Schema,
+  type Theme06IndustryInfrastructureV1Props,
+} from './themes/theme06/industry-infrastructure-v1.js';
+import {
+  Theme06IndustrySafetyV1,
+  theme06IndustrySafetyV1Meta,
+  theme06IndustrySafetyV1Schema,
+  type Theme06IndustrySafetyV1Props,
+} from './themes/theme06/industry-safety-v1.js';
+import {
+  Theme06CompanySpotlightV1,
+  theme06CompanySpotlightV1Meta,
+  theme06CompanySpotlightV1Schema,
+  type Theme06CompanySpotlightV1Props,
+} from './themes/theme06/company-spotlight-v1.js';
+import {
+  Theme06IpoWatchV1,
+  theme06IpoWatchV1Meta,
+  theme06IpoWatchV1Schema,
+  type Theme06IpoWatchV1Props,
+} from './themes/theme06/ipo-watch-v1.js';
+import {
+  Theme06StatementV1,
+  theme06StatementV1Meta,
+  theme06StatementV1Schema,
+  type Theme06StatementV1Props,
+} from './themes/theme06/statement-v1.js';
+import {
+  Theme06AllianceV1,
+  theme06AllianceV1Meta,
+  theme06AllianceV1Schema,
+  type Theme06AllianceV1Props,
+} from './themes/theme06/alliance-v1.js';
+import {
+  Theme06ComputeV1,
+  theme06ComputeV1Meta,
+  theme06ComputeV1Schema,
+  type Theme06ComputeV1Props,
+} from './themes/theme06/compute-v1.js';
+import {
+  Theme06DealStructureV1,
+  theme06DealStructureV1Meta,
+  theme06DealStructureV1Schema,
+  type Theme06DealStructureV1Props,
+} from './themes/theme06/deal-structure-v1.js';
+import {
+  Theme06MegadealsV1,
+  theme06MegadealsV1Meta,
+  theme06MegadealsV1Schema,
+  type Theme06MegadealsV1Props,
+} from './themes/theme06/megadeals-v1.js';
 
 export interface RegisteredLayout<P extends Record<string, unknown>> {
   meta: LayoutMeta;
@@ -2164,4 +3004,156 @@ registerLayout<Theme04SpreadV1Props>({ meta: theme04SpreadV1Meta, component: The
 registerLayout<Theme04ChaintableV1Props>({ meta: theme04ChaintableV1Meta, component: Theme04ChaintableV1, schema: theme04ChaintableV1Schema });
 registerLayout<Theme04ChainflowV1Props>({ meta: theme04ChainflowV1Meta, component: Theme04ChainflowV1, schema: theme04ChainflowV1Schema });
 registerLayout<Theme04LedgerV1Props>({ meta: theme04LedgerV1Meta, component: Theme04LedgerV1, schema: theme04LedgerV1Schema });
+
+// Theme05 光谱报告风版式
+registerLayout<Theme05CoverV1Props>({ meta: theme05CoverV1Meta, component: Theme05CoverV1, schema: theme05CoverV1Schema });
+registerLayout<Theme05TableOfContentsV1Props>({ meta: theme05TableOfContentsV1Meta, component: Theme05TableOfContentsV1, schema: theme05TableOfContentsV1Schema });
+registerLayout<Theme05ChapterV1Props>({ meta: theme05ChapterV1Meta, component: Theme05ChapterV1, schema: theme05ChapterV1Schema });
+registerLayout<Theme05ContentV1Props>({ meta: theme05ContentV1Meta, component: Theme05ContentV1, schema: theme05ContentV1Schema });
+registerLayout<Theme05MetricV1Props>({ meta: theme05MetricV1Meta, component: Theme05MetricV1, schema: theme05MetricV1Schema });
+registerLayout<Theme05ChartV1Props>({ meta: theme05ChartV1Meta, component: Theme05ChartV1, schema: theme05ChartV1Schema });
+registerLayout<Theme05BubbleV1Props>({ meta: theme05BubbleV1Meta, component: Theme05BubbleV1, schema: theme05BubbleV1Schema });
+registerLayout<Theme05MapV1Props>({ meta: theme05MapV1Meta, component: Theme05MapV1, schema: theme05MapV1Schema });
+registerLayout<Theme05RankV1Props>({ meta: theme05RankV1Meta, component: Theme05RankV1, schema: theme05RankV1Schema });
+registerLayout<Theme05HeatmapV1Props>({ meta: theme05HeatmapV1Meta, component: Theme05HeatmapV1, schema: theme05HeatmapV1Schema });
+registerLayout<Theme05WaterfallV1Props>({ meta: theme05WaterfallV1Meta, component: Theme05WaterfallV1, schema: theme05WaterfallV1Schema });
+registerLayout<Theme05QuoteV1Props>({ meta: theme05QuoteV1Meta, component: Theme05QuoteV1, schema: theme05QuoteV1Schema });
+registerLayout<Theme05ImageV1Props>({ meta: theme05ImageV1Meta, component: Theme05ImageV1, schema: theme05ImageV1Schema });
+registerLayout<Theme05VersusV1Props>({ meta: theme05VersusV1Meta, component: Theme05VersusV1, schema: theme05VersusV1Schema });
+registerLayout<Theme05ProcessV1Props>({ meta: theme05ProcessV1Meta, component: Theme05ProcessV1, schema: theme05ProcessV1Schema });
+registerLayout<Theme05TimelineV1Props>({ meta: theme05TimelineV1Meta, component: Theme05TimelineV1, schema: theme05TimelineV1Schema });
+registerLayout<Theme05MatrixV1Props>({ meta: theme05MatrixV1Meta, component: Theme05MatrixV1, schema: theme05MatrixV1Schema });
+registerLayout<Theme05QuadrantV1Props>({ meta: theme05QuadrantV1Meta, component: Theme05QuadrantV1, schema: theme05QuadrantV1Schema });
+registerLayout<Theme05RiskV1Props>({ meta: theme05RiskV1Meta, component: Theme05RiskV1, schema: theme05RiskV1Schema });
+registerLayout<Theme05DonutV1Props>({ meta: theme05DonutV1Meta, component: Theme05DonutV1, schema: theme05DonutV1Schema });
+registerLayout<Theme05TreemapV1Props>({ meta: theme05TreemapV1Meta, component: Theme05TreemapV1, schema: theme05TreemapV1Schema });
+registerLayout<Theme05RadarV1Props>({ meta: theme05RadarV1Meta, component: Theme05RadarV1, schema: theme05RadarV1Schema });
+registerLayout<Theme05ClosingV1Props>({ meta: theme05ClosingV1Meta, component: Theme05ClosingV1, schema: theme05ClosingV1Schema });
+registerLayout<Theme05ScorecardsV1Props>({ meta: theme05ScorecardsV1Meta, component: Theme05ScorecardsV1, schema: theme05ScorecardsV1Schema });
+registerLayout<Theme05ProfileV1Props>({ meta: theme05ProfileV1Meta, component: Theme05ProfileV1, schema: theme05ProfileV1Schema });
+registerLayout<Theme05CaseV1Props>({ meta: theme05CaseV1Meta, component: Theme05CaseV1, schema: theme05CaseV1Schema });
+registerLayout<Theme05BentoV1Props>({ meta: theme05BentoV1Meta, component: Theme05BentoV1, schema: theme05BentoV1Schema });
+registerLayout<Theme05GalleryV1Props>({ meta: theme05GalleryV1Meta, component: Theme05GalleryV1, schema: theme05GalleryV1Schema });
+registerLayout<Theme05RoadmapV1Props>({ meta: theme05RoadmapV1Meta, component: Theme05RoadmapV1, schema: theme05RoadmapV1Schema });
+registerLayout<Theme05EditorialV1Props>({ meta: theme05EditorialV1Meta, component: Theme05EditorialV1, schema: theme05EditorialV1Schema });
+
+// Theme05 Phase A 新增版式
+registerLayout<Theme05CoverExV1Props>({ meta: theme05CoverExV1Meta, component: Theme05CoverExV1, schema: theme05CoverExV1Schema });
+registerLayout<Theme05CoverExV2Props>({ meta: theme05CoverExV2Meta, component: Theme05CoverExV2, schema: theme05CoverExV2Schema });
+registerLayout<Theme05CoverHeroV1Props>({ meta: theme05CoverHeroV1Meta, component: Theme05CoverHeroV1, schema: theme05CoverHeroV1Schema });
+registerLayout<Theme05ChapterBigV1Props>({ meta: theme05ChapterBigV1Meta, component: Theme05ChapterBigV1, schema: theme05ChapterBigV1Schema });
+registerLayout<Theme05ChapterSplitV1Props>({ meta: theme05ChapterSplitV1Meta, component: Theme05ChapterSplitV1, schema: theme05ChapterSplitV1Schema });
+registerLayout<Theme05ChapterNumberedV1Props>({ meta: theme05ChapterNumberedV1Meta, component: Theme05ChapterNumberedV1, schema: theme05ChapterNumberedV1Schema });
+registerLayout<Theme05ChapterImageV1Props>({ meta: theme05ChapterImageV1Meta, component: Theme05ChapterImageV1, schema: theme05ChapterImageV1Schema });
+registerLayout<Theme05MetricHeroV1Props>({ meta: theme05MetricHeroV1Meta, component: Theme05MetricHeroV1, schema: theme05MetricHeroV1Schema });
+registerLayout<Theme05MetricDeltaV1Props>({ meta: theme05MetricDeltaV1Meta, component: Theme05MetricDeltaV1, schema: theme05MetricDeltaV1Schema });
+registerLayout<Theme05MetricCapacityV1Props>({ meta: theme05MetricCapacityV1Meta, component: Theme05MetricCapacityV1, schema: theme05MetricCapacityV1Schema });
+registerLayout<Theme05ChartShareV1Props>({ meta: theme05ChartShareV1Meta, component: Theme05ChartShareV1, schema: theme05ChartShareV1Schema });
+registerLayout<Theme05ChartStackedV1Props>({ meta: theme05ChartStackedV1Meta, component: Theme05ChartStackedV1, schema: theme05ChartStackedV1Schema });
+registerLayout<Theme05ChartCurveV1Props>({ meta: theme05ChartCurveV1Meta, component: Theme05ChartCurveV1, schema: theme05ChartCurveV1Schema });
+registerLayout<Theme05ChartPeakV1Props>({ meta: theme05ChartPeakV1Meta, component: Theme05ChartPeakV1, schema: theme05ChartPeakV1Schema });
+registerLayout<Theme05ChartPeaktroughV1Props>({ meta: theme05ChartPeaktroughV1Meta, component: Theme05ChartPeaktroughV1, schema: theme05ChartPeaktroughV1Schema });
+registerLayout<Theme05ChartCumulativeV1Props>({ meta: theme05ChartCumulativeV1Meta, component: Theme05ChartCumulativeV1, schema: theme05ChartCumulativeV1Schema });
+
+// Phase B 新版式
+registerLayout<Theme05TableOfContentsV2Props>({ meta: theme05TableOfContentsV2Meta, component: Theme05TableOfContentsV2, schema: theme05TableOfContentsV2Schema });
+registerLayout<Theme05ProcessV2Props>({ meta: theme05ProcessV2Meta, component: Theme05ProcessV2, schema: theme05ProcessV2Schema });
+registerLayout<Theme05ComparisonV1Props>({ meta: theme05ComparisonV1Meta, component: Theme05ComparisonV1, schema: theme05ComparisonV1Schema });
+registerLayout<Theme05ChartFunnelV1Props>({ meta: theme05ChartFunnelV1Meta, component: Theme05ChartFunnelV1, schema: theme05ChartFunnelV1Schema });
+registerLayout<Theme05QuoteV2Props>({ meta: theme05QuoteV2Meta, component: Theme05QuoteV2, schema: theme05QuoteV2Schema });
+registerLayout<Theme05ChartGaugeV1Props>({ meta: theme05ChartGaugeV1Meta, component: Theme05ChartGaugeV1, schema: theme05ChartGaugeV1Schema });
+
+// Theme06 深色图谱风版式（Phase 1）
+registerLayout<Theme06CoverV1Props>({ meta: theme06CoverV1Meta, component: Theme06CoverV1, schema: theme06CoverV1Schema });
+registerLayout<Theme06ChapterV1Props>({ meta: theme06ChapterV1Meta, component: Theme06ChapterV1, schema: theme06ChapterV1Schema });
+registerLayout<Theme06ContentV1Props>({ meta: theme06ContentV1Meta, component: Theme06ContentV1, schema: theme06ContentV1Schema });
+registerLayout<Theme06ContentNumberedV1Props>({ meta: theme06ContentNumberedV1Meta, component: Theme06ContentNumberedV1, schema: theme06ContentNumberedV1Schema });
+registerLayout<Theme06MetricHeroV1Props>({ meta: theme06MetricHeroV1Meta, component: Theme06MetricHeroV1, schema: theme06MetricHeroV1Schema });
+registerLayout<Theme06VerticalBarV1Props>({ meta: theme06VerticalBarV1Meta, component: Theme06VerticalBarV1, schema: theme06VerticalBarV1Schema });
+registerLayout<Theme06ChartV1Props>({ meta: theme06ChartV1Meta, component: Theme06ChartV1, schema: theme06ChartV1Schema });
+registerLayout<Theme06QuoteV1Props>({ meta: theme06QuoteV1Meta, component: Theme06QuoteV1, schema: theme06QuoteV1Schema });
+// Theme06 深色图谱风版式（Phase 2）
+registerLayout<Theme06MetricGridV1Props>({ meta: theme06MetricGridV1Meta, component: Theme06MetricGridV1, schema: theme06MetricGridV1Schema });
+registerLayout<Theme06RankV1Props>({ meta: theme06RankV1Meta, component: Theme06RankV1, schema: theme06RankV1Schema });
+registerLayout<Theme06MatrixV1Props>({ meta: theme06MatrixV1Meta, component: Theme06MatrixV1, schema: theme06MatrixV1Schema });
+registerLayout<Theme06ChartRadarV1Props>({ meta: theme06ChartRadarV1Meta, component: Theme06ChartRadarV1, schema: theme06ChartRadarV1Schema });
+registerLayout<Theme06ChartWaterfallV1Props>({ meta: theme06ChartWaterfallV1Meta, component: Theme06ChartWaterfallV1, schema: theme06ChartWaterfallV1Schema });
+registerLayout<Theme06ChartPeakV1Props>({ meta: theme06ChartPeakV1Meta, component: Theme06ChartPeakV1, schema: theme06ChartPeakV1Schema });
+// Theme06 深色图谱风版式（Phase 3）
+registerLayout<Theme06ProcessV1Props>({ meta: theme06ProcessV1Meta, component: Theme06ProcessV1, schema: theme06ProcessV1Schema });
+registerLayout<Theme06TimelineV1Props>({ meta: theme06TimelineV1Meta, component: Theme06TimelineV1, schema: theme06TimelineV1Schema });
+registerLayout<Theme06CaseV1Props>({ meta: theme06CaseV1Meta, component: Theme06CaseV1, schema: theme06CaseV1Schema });
+registerLayout<Theme06CaseV2Props>({ meta: theme06CaseV2Meta, component: Theme06CaseV2, schema: theme06CaseV2Schema });
+registerLayout<Theme06RiskV1Props>({ meta: theme06RiskV1Meta, component: Theme06RiskV1, schema: theme06RiskV1Schema });
+registerLayout<Theme06RiskV2Props>({ meta: theme06RiskV2Meta, component: Theme06RiskV2, schema: theme06RiskV2Schema });
+registerLayout<Theme06ChartGraphV1Props>({ meta: theme06ChartGraphV1Meta, component: Theme06ChartGraphV1, schema: theme06ChartGraphV1Schema });
+registerLayout<Theme06MapV1Props>({ meta: theme06MapV1Meta, component: Theme06MapV1, schema: theme06MapV1Schema });
+registerLayout<Theme06TableOfContentsV1Props>({ meta: theme06TableOfContentsV1Meta, component: Theme06TableOfContentsV1, schema: theme06TableOfContentsV1Schema });
+registerLayout<Theme06SummaryV1Props>({ meta: theme06SummaryV1Meta, component: Theme06SummaryV1, schema: theme06SummaryV1Schema });
+registerLayout<Theme06ClosingV1Props>({ meta: theme06ClosingV1Meta, component: Theme06ClosingV1, schema: theme06ClosingV1Schema });
+registerLayout<Theme06SourcesV1Props>({ meta: theme06SourcesV1Meta, component: Theme06SourcesV1, schema: theme06SourcesV1Schema });
+registerLayout<Theme06ChartHeatmapV1Props>({ meta: theme06ChartHeatmapV1Meta, component: Theme06ChartHeatmapV1, schema: theme06ChartHeatmapV1Schema });
+registerLayout<Theme06BentoV1Props>({ meta: theme06BentoV1Meta, component: Theme06BentoV1, schema: theme06BentoV1Schema });
+registerLayout<Theme06ComparisonV1Props>({ meta: theme06ComparisonV1Meta, component: Theme06ComparisonV1, schema: theme06ComparisonV1Schema });
+// Theme06 深色图谱风版式（扩展）
+registerLayout<Theme06SectorSpotlightV1Props>({ meta: theme06SectorSpotlightV1Meta, component: Theme06SectorSpotlightV1, schema: theme06SectorSpotlightV1Schema });
+registerLayout<Theme06TechLandscapeV1Props>({ meta: theme06TechLandscapeV1Meta, component: Theme06TechLandscapeV1, schema: theme06TechLandscapeV1Schema });
+registerLayout<Theme06CompanyProfileV1Props>({ meta: theme06CompanyProfileV1Meta, component: Theme06CompanyProfileV1, schema: theme06CompanyProfileV1Schema });
+registerLayout<Theme06ChainFlowV1Props>({ meta: theme06ChainFlowV1Meta, component: Theme06ChainFlowV1, schema: theme06ChainFlowV1Schema });
+registerLayout<Theme06QuarterTableV1Props>({ meta: theme06QuarterTableV1Meta, component: Theme06QuarterTableV1, schema: theme06QuarterTableV1Schema });
+registerLayout<Theme06MetricShowcaseV1Props>({ meta: theme06MetricShowcaseV1Meta, component: Theme06MetricShowcaseV1, schema: theme06MetricShowcaseV1Schema });
+registerLayout<Theme06MilestoneV1Props>({ meta: theme06MilestoneV1Meta, component: Theme06MilestoneV1, schema: theme06MilestoneV1Schema });
+registerLayout<Theme06RiskMatrixV1Props>({ meta: theme06RiskMatrixV1Meta, component: Theme06RiskMatrixV1, schema: theme06RiskMatrixV1Schema });
+registerLayout<Theme06SectorComparisonV1Props>({ meta: theme06SectorComparisonV1Meta, component: Theme06SectorComparisonV1, schema: theme06SectorComparisonV1Schema });
+registerLayout<Theme06GeoDistributionV1Props>({ meta: theme06GeoDistributionV1Meta, component: Theme06GeoDistributionV1, schema: theme06GeoDistributionV1Schema });
+registerLayout<Theme06GeoHeatmapV1Props>({ meta: theme06GeoHeatmapV1Meta, component: Theme06GeoHeatmapV1, schema: theme06GeoHeatmapV1Schema });
+registerLayout<Theme06EcosystemGraphV1Props>({ meta: theme06EcosystemGraphV1Meta, component: Theme06EcosystemGraphV1, schema: theme06EcosystemGraphV1Schema });
+registerLayout<Theme06CoverProductV1Props>({ meta: theme06CoverProductV1Meta, component: Theme06CoverProductV1, schema: theme06CoverProductV1Schema });
+registerLayout<Theme06CoverBusinessV1Props>({ meta: theme06CoverBusinessV1Meta, component: Theme06CoverBusinessV1, schema: theme06CoverBusinessV1Schema });
+registerLayout<Theme06ChapterNumberedV1Props>({ meta: theme06ChapterNumberedV1Meta, component: Theme06ChapterNumberedV1, schema: theme06ChapterNumberedV1Schema });
+registerLayout<Theme06ChapterSplitV1Props>({ meta: theme06ChapterSplitV1Meta, component: Theme06ChapterSplitV1, schema: theme06ChapterSplitV1Schema });
+registerLayout<Theme06TrendV1Props>({ meta: theme06TrendV1Meta, component: Theme06TrendV1, schema: theme06TrendV1Schema });
+registerLayout<Theme06CumulativeV1Props>({ meta: theme06CumulativeV1Meta, component: Theme06CumulativeV1, schema: theme06CumulativeV1Schema });
+registerLayout<Theme06QuadrantV1Props>({ meta: theme06QuadrantV1Meta, component: Theme06QuadrantV1, schema: theme06QuadrantV1Schema });
+registerLayout<Theme06OutlookV1Props>({ meta: theme06OutlookV1Meta, component: Theme06OutlookV1, schema: theme06OutlookV1Schema });
+registerLayout<Theme06RecapV1Props>({ meta: theme06RecapV1Meta, component: Theme06RecapV1, schema: theme06RecapV1Schema });
+registerLayout<Theme06CompanyRoundsV1Props>({ meta: theme06CompanyRoundsV1Meta, component: Theme06CompanyRoundsV1, schema: theme06CompanyRoundsV1Schema });
+registerLayout<Theme06CompanyInvestorsV1Props>({ meta: theme06CompanyInvestorsV1Meta, component: Theme06CompanyInvestorsV1, schema: theme06CompanyInvestorsV1Schema });
+registerLayout<Theme06CompanyComparisonV1Props>({ meta: theme06CompanyComparisonV1Meta, component: Theme06CompanyComparisonV1, schema: theme06CompanyComparisonV1Schema });
+registerLayout<Theme06GeoCitiesV1Props>({ meta: theme06GeoCitiesV1Meta, component: Theme06GeoCitiesV1, schema: theme06GeoCitiesV1Schema });
+registerLayout<Theme06AgentV1Props>({ meta: theme06AgentV1Meta, component: Theme06AgentV1, schema: theme06AgentV1Schema });
+registerLayout<Theme06SearchV1Props>({ meta: theme06SearchV1Meta, component: Theme06SearchV1, schema: theme06SearchV1Schema });
+registerLayout<Theme06CoverManufacturingV1Props>({ meta: theme06CoverManufacturingV1Meta, component: Theme06CoverManufacturingV1, schema: theme06CoverManufacturingV1Schema });
+registerLayout<Theme06CoverBrandV1Props>({ meta: theme06CoverBrandV1Meta, component: Theme06CoverBrandV1, schema: theme06CoverBrandV1Schema });
+registerLayout<Theme06MethodV1Props>({ meta: theme06MethodV1Meta, component: Theme06MethodV1, schema: theme06MethodV1Schema });
+registerLayout<Theme06QuarterQ1V1Props>({ meta: theme06QuarterQ1V1Meta, component: Theme06QuarterQ1V1, schema: theme06QuarterQ1V1Schema });
+registerLayout<Theme06QuarterQ2V1Props>({ meta: theme06QuarterQ2V1Meta, component: Theme06QuarterQ2V1, schema: theme06QuarterQ2V1Schema });
+registerLayout<Theme06QuarterQ3V1Props>({ meta: theme06QuarterQ3V1Meta, component: Theme06QuarterQ3V1, schema: theme06QuarterQ3V1Schema });
+registerLayout<Theme06QuarterQ4V1Props>({ meta: theme06QuarterQ4V1Meta, component: Theme06QuarterQ4V1, schema: theme06QuarterQ4V1Schema });
+registerLayout<Theme06BigNumberV1Props>({ meta: theme06BigNumberV1Meta, component: Theme06BigNumberV1, schema: theme06BigNumberV1Schema });
+registerLayout<Theme06ChapterFocusV1Props>({ meta: theme06ChapterFocusV1Meta, component: Theme06ChapterFocusV1, schema: theme06ChapterFocusV1Schema });
+registerLayout<Theme06ChapterImageV1Props>({ meta: theme06ChapterImageV1Meta, component: Theme06ChapterImageV1, schema: theme06ChapterImageV1Schema });
+registerLayout<Theme06ChapterMinimalV1Props>({ meta: theme06ChapterMinimalV1Meta, component: Theme06ChapterMinimalV1, schema: theme06ChapterMinimalV1Schema });
+registerLayout<Theme06DealMapV1Props>({ meta: theme06DealMapV1Meta, component: Theme06DealMapV1, schema: theme06DealMapV1Schema });
+registerLayout<Theme06SizeSplitV1Props>({ meta: theme06SizeSplitV1Meta, component: Theme06SizeSplitV1, schema: theme06SizeSplitV1Schema });
+registerLayout<Theme06TriadV1Props>({ meta: theme06TriadV1Meta, component: Theme06TriadV1, schema: theme06TriadV1Schema });
+registerLayout<Theme06CapitalFlowV1Props>({ meta: theme06CapitalFlowV1Meta, component: Theme06CapitalFlowV1, schema: theme06CapitalFlowV1Schema });
+registerLayout<Theme06LegalV1Props>({ meta: theme06LegalV1Meta, component: Theme06LegalV1, schema: theme06LegalV1Schema });
+registerLayout<Theme06OpenRiskV1Props>({ meta: theme06OpenRiskV1Meta, component: Theme06OpenRiskV1, schema: theme06OpenRiskV1Schema });
+registerLayout<Theme06RegionRiskV1Props>({ meta: theme06RegionRiskV1Meta, component: Theme06RegionRiskV1, schema: theme06RegionRiskV1Schema });
+registerLayout<Theme06RevenueRiskV1Props>({ meta: theme06RevenueRiskV1Meta, component: Theme06RevenueRiskV1, schema: theme06RevenueRiskV1Schema });
+// Theme06 深色图谱风版式（继续补充）
+registerLayout<Theme06AvgTicketV1Props>({ meta: theme06AvgTicketV1Meta, component: Theme06AvgTicketV1, schema: theme06AvgTicketV1Schema });
+registerLayout<Theme06IndustryVerticalV1Props>({ meta: theme06IndustryVerticalV1Meta, component: Theme06IndustryVerticalV1, schema: theme06IndustryVerticalV1Schema });
+registerLayout<Theme06IndustryInfrastructureV1Props>({ meta: theme06IndustryInfrastructureV1Meta, component: Theme06IndustryInfrastructureV1, schema: theme06IndustryInfrastructureV1Schema });
+registerLayout<Theme06IndustryFinanceV1Props>({ meta: theme06IndustryFinanceV1Meta, component: Theme06IndustryFinanceV1, schema: theme06IndustryFinanceV1Schema });
+registerLayout<Theme06IndustryGrowthV1Props>({ meta: theme06IndustryGrowthV1Meta, component: Theme06IndustryGrowthV1, schema: theme06IndustryGrowthV1Schema });
+registerLayout<Theme06IndustrySafetyV1Props>({ meta: theme06IndustrySafetyV1Meta, component: Theme06IndustrySafetyV1, schema: theme06IndustrySafetyV1Schema });
+registerLayout<Theme06CompanySpotlightV1Props>({ meta: theme06CompanySpotlightV1Meta, component: Theme06CompanySpotlightV1, schema: theme06CompanySpotlightV1Schema });
+registerLayout<Theme06IpoWatchV1Props>({ meta: theme06IpoWatchV1Meta, component: Theme06IpoWatchV1, schema: theme06IpoWatchV1Schema });
+registerLayout<Theme06StatementV1Props>({ meta: theme06StatementV1Meta, component: Theme06StatementV1, schema: theme06StatementV1Schema });
+registerLayout<Theme06AllianceV1Props>({ meta: theme06AllianceV1Meta, component: Theme06AllianceV1, schema: theme06AllianceV1Schema });
+registerLayout<Theme06ComputeV1Props>({ meta: theme06ComputeV1Meta, component: Theme06ComputeV1, schema: theme06ComputeV1Schema });
+registerLayout<Theme06DealStructureV1Props>({ meta: theme06DealStructureV1Meta, component: Theme06DealStructureV1, schema: theme06DealStructureV1Schema });
+registerLayout<Theme06MegadealsV1Props>({ meta: theme06MegadealsV1Meta, component: Theme06MegadealsV1, schema: theme06MegadealsV1Schema });
 

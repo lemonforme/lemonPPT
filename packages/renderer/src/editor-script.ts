@@ -470,8 +470,8 @@ export const editorScript = `
 
   function syncAppearanceFromGoal() {
     const t = goal.theme || 'theme01';
-    if (t === 'theme04') {
-      const scheme = goal.colorScheme || 'green';
+    if (t === 'theme04' || t === 'theme05' || t === 'theme06') {
+      const scheme = goal.colorScheme || (t === 'theme05' ? 'coral' : t === 'theme06' ? 'volt' : 'green');
       const appearance = goal.appearance || 'dark';
       document.documentElement.setAttribute('data-theme', scheme);
       document.documentElement.setAttribute('data-appearance', appearance);
@@ -492,9 +492,9 @@ export const editorScript = `
       if (!appearanceValue && !themeValue) return;
 
       let active = false;
-      if (t === 'theme04') {
+      if (t === 'theme04' || t === 'theme05' || t === 'theme06') {
         if (themeValue) {
-          active = themeValue === (goal.colorScheme || 'green');
+          active = themeValue === (goal.colorScheme || (t === 'theme05' ? 'coral' : t === 'theme06' ? 'volt' : 'green'));
         } else if (appearanceValue) {
           active = appearanceValue === (goal.appearance || 'dark');
         }
@@ -511,7 +511,7 @@ export const editorScript = `
   function applyAppearanceClientSide(newMode) {
     const t = goal.theme || 'theme01';
 
-    if (t === 'theme04') {
+    if (t === 'theme04' || t === 'theme05' || t === 'theme06') {
       if (newMode === goal.appearance) return;
       recordHistory();
       goal.appearance = newMode;
@@ -542,7 +542,7 @@ export const editorScript = `
 
   function applyToneClientSide(newTone) {
     const t = goal.theme || 'theme01';
-    if (t !== 'theme04') return;
+    if (t !== 'theme04' && t !== 'theme05' && t !== 'theme06') return;
     if (newTone === goal.colorScheme) return;
     recordHistory();
     goal.colorScheme = newTone;
@@ -1822,6 +1822,78 @@ export const editorScript = `
   }
   attachThumbnailListeners();
 
+  // 缩略图虚拟滚动：用 IntersectionObserver 卸载视口外 slide 渲染 DOM，仅保留占位框架与文字信息。
+  const thumbnailRenderCache = {};
+  let thumbnailObserver = null;
+
+  function getThumbnailCacheKey(thumb) {
+    return 'thumb-' + thumb.dataset.index;
+  }
+
+  function mountThumbnailRender(thumb) {
+    const render = thumb.querySelector('.lp-thumbnail-render');
+    if (!render) return;
+    if (thumb.dataset.lpThumbMounted === 'true') return;
+    const key = getThumbnailCacheKey(thumb);
+    const html = thumbnailRenderCache[key];
+    if (html != null) {
+      render.innerHTML = html;
+    }
+    thumb.dataset.lpThumbMounted = 'true';
+  }
+
+  function unmountThumbnailRender(thumb) {
+    const render = thumb.querySelector('.lp-thumbnail-render');
+    if (!render) return;
+    if (thumb.dataset.lpThumbMounted === 'false') return;
+    const key = getThumbnailCacheKey(thumb);
+    thumbnailRenderCache[key] = render.innerHTML;
+    render.innerHTML = '';
+    thumb.dataset.lpThumbMounted = 'false';
+  }
+
+  function initThumbnailVirtualScroll() {
+    const container = document.querySelector('.lp-editor-left-panel');
+    if (!container || !('IntersectionObserver' in window)) return;
+
+    if (thumbnailObserver) {
+      thumbnailObserver.disconnect();
+      thumbnailObserver = null;
+    }
+
+    // 默认所有缩略图处于挂载状态
+    thumbnails.forEach((thumb) => {
+      thumb.dataset.lpThumbMounted = 'true';
+    });
+
+    thumbnailObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const thumb = entry.target;
+        const index = Number(thumb.dataset.index);
+        // 当前激活页始终保留渲染，避免切换时白屏
+        if (index === current || entry.isIntersecting) {
+          mountThumbnailRender(thumb);
+        } else {
+          unmountThumbnailRender(thumb);
+        }
+      });
+    }, {
+      root: container,
+      rootMargin: '200px 0px 200px 0px',
+      threshold: 0,
+    });
+
+    thumbnails.forEach((thumb) => thumbnailObserver.observe(thumb));
+  }
+
+  function disconnectThumbnailVirtualScroll() {
+    if (thumbnailObserver) {
+      thumbnailObserver.disconnect();
+      thumbnailObserver = null;
+    }
+  }
+  initThumbnailVirtualScroll();
+
   function attachDragAndDropListeners() {
     const container = document.querySelector('.lp-editor-thumbnails');
     if (!container) return;
@@ -2240,6 +2312,10 @@ export const editorScript = `
         '</div>';
       }).join('');
       thumbnailsContainer.innerHTML = buttonsHtml;
+      // 缩略图 DOM 重建后清空虚拟滚动缓存，避免旧 HTML 与新索引错位
+      Object.keys(thumbnailRenderCache).forEach((key) => {
+        delete thumbnailRenderCache[key];
+      });
     }
 
     // 同步页码计数器
@@ -2255,6 +2331,7 @@ export const editorScript = `
     attachThumbnailListeners();
     updateClasses();
     renderAllSlidesToRoot();
+    initThumbnailVirtualScroll();
     // #region debug-point D:rebuild
     __dbg('D', 'editor-script.ts:rebuildSlidesAndThumbnails', 'done', { current, slidesLength: slides.length });
     // #endregion
@@ -2613,6 +2690,30 @@ export const editorScript = `
     return wrap;
   }
 
+  function renderSliderTicks(ruler, min, max) {
+    const scale = createEl('div', 'lp-property-slider-scale', ruler);
+    const span = max - min;
+    if (span <= 0) return scale;
+    // 刻度步长：范围小时每个整数一个刻度，范围大时均匀取 6~10 个
+    const desiredTicks = 8;
+    const step = span <= desiredTicks ? 1 : Math.max(1, Math.round(span / desiredTicks));
+    for (let i = min; i <= max; i += step) {
+      const tick = createEl('div', 'lp-property-slider-tick', scale);
+      tick.style.left = ((i - min) / span) * 100 + '%';
+      const label = createEl('div', 'lp-property-slider-tick-label', tick);
+      label.textContent = String(i);
+      tick.addEventListener('click', () => {
+        const input = ruler.querySelector('input[type="range"]');
+        if (input) {
+          input.value = String(i);
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    }
+    return scale;
+  }
+
   function createSliderField(field, value, onChange) {
     const wrap = createEl('div', 'lp-property-slider-field');
     const header = createEl('div', 'lp-property-section-header', wrap);
@@ -2633,16 +2734,7 @@ export const editorScript = `
     range.max = String(max);
     range.value = String(initialValue);
     ruler.appendChild(range);
-
-    const scale = createEl('div', 'lp-property-slider-scale', ruler);
-    const stepCount = Math.max(1, max - min);
-    for (let i = min; i <= max; i++) {
-      const tick = createEl('div', 'lp-property-slider-tick', scale);
-      const leftPct = ((i - min) / stepCount) * 100;
-      tick.style.left = leftPct + '%';
-      const tickLabel = createEl('span', 'lp-property-slider-tick-label', tick);
-      tickLabel.textContent = String(i);
-    }
+    renderSliderTicks(ruler, min, max);
 
     range.addEventListener('input', () => {
       const num = Number(range.value);
@@ -2835,16 +2927,7 @@ export const editorScript = `
     range.max = String(maxItems);
     range.value = String(currentCount);
     ruler.appendChild(range);
-
-    const scale = createEl('div', 'lp-property-slider-scale', ruler);
-    const stepCount = Math.max(1, maxItems - minItems);
-    for (let i = minItems; i <= maxItems; i++) {
-      const tick = createEl('div', 'lp-property-slider-tick', scale);
-      const leftPct = ((i - minItems) / stepCount) * 100;
-      tick.style.left = leftPct + '%';
-      const label = createEl('span', 'lp-property-slider-tick-label', tick);
-      label.textContent = String(i);
-    }
+    renderSliderTicks(ruler, minItems, maxItems);
 
     function setArrayLength(newLength) {
       const slide = goal.slides[selectedSlideIdx];
@@ -2920,6 +3003,28 @@ export const editorScript = `
       const list = createEl('div', 'lp-property-array', section);
       array.forEach((item, index) => {
         const itemWrap = createEl('div', 'lp-property-array-item', list);
+
+        const itemHeader = createEl('div', 'lp-property-array-item-header', itemWrap);
+        const itemIndexLabel = createEl('span', '', itemHeader);
+        itemIndexLabel.textContent = '#' + (index + 1);
+        const deleteBtn = createEl('button', 'lp-property-btn-danger', itemHeader);
+        deleteBtn.type = 'button';
+        deleteBtn.title = '删除该项';
+        deleteBtn.textContent = '×';
+        deleteBtn.disabled = array.length <= minItems;
+        deleteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          const slide = goal.slides[selectedSlideIdx];
+          if (!slide) return;
+          const arr = getProp(slide.props, path);
+          if (!Array.isArray(arr)) return;
+          arr.splice(index, 1);
+          refreshCurrentSlide();
+          recordHistory();
+          autoSave();
+          renderSlidePanel();
+        });
 
         if (isPrimitiveItem) {
           const subField = field.itemSchema[0];
@@ -3151,7 +3256,7 @@ export const editorScript = `
   function initActiveSlideECharts() {
     const activeWrapper = document.querySelector('.lp-slide-wrapper.active');
     if (activeWrapper && typeof window.__lemonPPT_initECharts === 'function') {
-      window.__lemonPPT_initECharts(activeWrapper);
+      window.__lemonPPT_initECharts(goal.theme || 'theme01', activeWrapper);
     }
   }
 

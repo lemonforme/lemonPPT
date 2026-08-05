@@ -8,7 +8,7 @@ import { composeDeck, composeDeckFromRaw, selectLayoutForRole } from './index.js
 describe('selectLayoutForRole', () => {
   it('returns a registered layout for cover', () => {
     const layout = selectLayoutForRole('cover');
-    expect(layout).toBe('cover_v1');
+    expect(layout).toMatch(/^theme01_cover_v/);
   });
 
   it('is deterministic with the same seed and index', () => {
@@ -20,17 +20,27 @@ describe('selectLayoutForRole', () => {
   it('can return different layouts for the same role with different seeds', () => {
     const a = selectLayoutForRole('closing', 'seed-a', 0);
     const b = selectLayoutForRole('closing', 'seed-b', 0);
-    expect([a, b].every((l) => l.startsWith('closing'))).toBe(true);
+    expect([a, b].every((l) => l.startsWith('theme01_closing'))).toBe(true);
   });
 
   it('covers stats role', () => {
     const layout = selectLayoutForRole('stats');
-    expect(layout).toBe('stats_v1');
+    expect(layout).toMatch(/^theme01_stats_v/);
   });
 
   it('covers team role', () => {
     const layout = selectLayoutForRole('team');
-    expect(layout.startsWith('team')).toBe(true);
+    expect(layout.startsWith('theme01_team')).toBe(true);
+  });
+
+  it('can select theme02 layouts when theme is specified', () => {
+    const layout = selectLayoutForRole('cover', undefined, 0, 'theme02');
+    expect(layout.startsWith('theme02_')).toBe(true);
+  });
+
+  it('covers theme02 content role', () => {
+    const layout = selectLayoutForRole('content', undefined, 0, 'theme02');
+    expect(layout.startsWith('theme02_')).toBe(true);
   });
 });
 
@@ -40,7 +50,7 @@ describe('composeDeck', () => {
       title: '测试',
       goal: '测试目标',
       audience: '测试受众',
-      theme: 'base',
+      theme: 'theme01',
       language: 'zh',
       randomSeed: 'test',
       slides: [
@@ -53,7 +63,7 @@ describe('composeDeck', () => {
     expect(goal.slides.length).toBe(3);
     expect(goal.pageCount).toBe(3);
     expect(goal.slides[0]?.role).toBe('cover');
-    expect(goal.slides[0]?.layout.startsWith('cover')).toBe(true);
+    expect(goal.slides[0]?.layout.includes('cover')).toBe(true);
     expect(goal.slides[1]?.role).toBe('content');
     expect(goal.slides[2]?.role).toBe('closing');
     expect(goal.slides[0]?.props._slideIdx).toBe(1);
@@ -65,7 +75,7 @@ describe('composeDeck', () => {
       title: '测试',
       goal: '测试目标',
       audience: '测试受众',
-      theme: 'base',
+      theme: 'theme01',
       slides: [{ role: 'cover', layout: 'chart_v1', props: { title: 'T' } }],
     });
 
@@ -78,7 +88,7 @@ describe('composeDeck', () => {
       title: '测试',
       goal: '测试目标',
       audience: '测试受众',
-      theme: 'base',
+      theme: 'theme01',
       pageCount: 99,
       slides: [{ role: 'cover' }],
     });
@@ -93,7 +103,7 @@ describe('composeDeckFromRaw', () => {
       title: '测试',
       goal: '测试目标',
       audience: '测试受众',
-      theme: 'base',
+      theme: 'theme01',
       language: 'zh',
       pageCount: 2,
       randomSeed: 'raw-test',
@@ -103,8 +113,8 @@ describe('composeDeckFromRaw', () => {
       ],
     });
 
-    expect(goal.slides[0]?.layout.startsWith('cover')).toBe(true);
-    expect(goal.slides[1]?.layout.startsWith('metric')).toBe(true);
+    expect(goal.slides[0]?.layout.includes('cover')).toBe(true);
+    expect(goal.slides[1]?.layout.includes('metric')).toBe(true);
     expect(goal.slides[0]?.props._slideIdx).toBe(1);
   });
 });
