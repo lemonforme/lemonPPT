@@ -34,15 +34,15 @@ const testCases = [
     name: '一句话主题（无 API Key）',
     prompt: '帮我做一份 PPT',
     input: '帮我做一份 PPT',
-    options: { pageCount: 8, theme: 'base', language: 'zh' },
+    options: { pageCount: 8, theme: 'theme01', language: 'zh' },
     expectFallback: true,
   },
   {
     id: 2,
     name: '详细主题（无 API Key）',
-    prompt: '帮我做一份 8 页的中文 PPT，主题是“面向企业客户的 AI 助手产品发布会”，强调效率提升 10 倍、支持私有化部署、已有 50 家客户，主题用 base',
+    prompt: '帮我做一份 8 页的中文 PPT，主题是“面向企业客户的 AI 助手产品发布会”，强调效率提升 10 倍、支持私有化部署、已有 50 家客户，主题用 theme01',
     input: '面向企业客户的 AI 助手产品发布会，核心卖点：效率提升 10 倍、支持私有化部署、服务 50+ 标杆客户',
-    options: { pageCount: 8, theme: 'base', language: 'zh' },
+    options: { pageCount: 8, theme: 'theme01', language: 'zh' },
     expectFallback: true,
   },
   {
@@ -55,9 +55,9 @@ const testCases = [
   {
     id: 4,
     name: '切换主题',
-    prompt: '同样的内容，换成 dark-tech 主题再生成一次',
+    prompt: '同样的内容，换成 theme01 主题再生成一次',
     input: '面向企业客户的 AI 助手产品发布会，核心卖点：效率提升 10 倍、支持私有化部署、服务 50+ 标杆客户',
-    options: { pageCount: 8, theme: 'dark-tech', language: 'zh' },
+    options: { pageCount: 8, theme: 'theme01', language: 'zh' },
     expectFallback: true,
   },
   {
@@ -89,7 +89,7 @@ const testCases = [
     name: '有 API Key（如条件允许）',
     prompt: '用 OpenAI API Key 生成一份更专业的融资路演 PPT',
     input: 'AI 驱动的 SaaS 融资路演，面向早期风险投资机构，强调ARR增长、技术壁垒和团队背景',
-    options: { pageCount: 10, theme: 'warm-business', language: 'zh', llm: { apiKey: process.env.OPENAI_API_KEY } },
+    options: { pageCount: 10, theme: 'theme01', language: 'zh', llm: { apiKey: process.env.OPENAI_API_KEY } },
     skipIfNoApiKey: true,
   },
 ];

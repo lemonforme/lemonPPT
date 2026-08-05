@@ -15,7 +15,7 @@
  */
 
 import { chromium } from 'playwright';
-import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -24,7 +24,7 @@ const rootDir = path.resolve(__dirname, '..');
 const galleryDir = path.join(rootDir, 'output', 'gallery');
 const snapshotDir = path.join(rootDir, 'output', 'snapshots');
 
-const THEMES = ['base', 'dark-tech', 'warm-business'];
+const THEMES = ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06'];
 
 function fileUrl(theme) {
   return 'file://' + path.join(galleryDir, theme, 'index.html');
@@ -42,14 +42,47 @@ async function ensureBrowser() {
   }
 }
 
+async function waitForECharts(page) {
+  // 等待 ECharts 异步脚本加载并初始化完成：每个 data-lp-echart-type 容器内都应出现 SVG/Canvas。
+  try {
+    await page.waitForFunction(
+      () => {
+        const containers = document.querySelectorAll('[data-lp-echart-type]');
+        if (containers.length === 0) return true;
+        const rendered = document.querySelectorAll('[data-lp-echart-type] svg, [data-lp-echart-type] canvas');
+        return rendered.length >= containers.length;
+      },
+      { timeout: 10000, polling: 100 }
+    );
+  } catch {
+    // 超时仅作警告，不影响后续截图
+    console.warn('  ⚠️ 部分 ECharts 图表未在超时内完成渲染');
+  }
+}
+
 async function captureTheme(browser, theme) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   const url = fileUrl(theme);
   await page.goto(url, { waitUntil: 'networkidle' });
+  // 禁用进入动画，避免截图时机不同导致像素差异
+  await page.addStyleTag({
+    content: '*, *::before, *::after { animation: none !important; transition: none !important; }',
+  });
+  await page.evaluate(() => document.fonts.ready);
+  await waitForECharts(page);
+  // 额外等待 ECharts 内部动画（力导向图布局、入场动画）稳定，避免截图时节点/线条尚未到位。
+  await page.waitForTimeout(1500);
 
   const items = await page.locator('.lp-gallery-item').all();
   const themeSnapshotDir = path.join(snapshotDir, theme);
   await mkdir(themeSnapshotDir, { recursive: true });
+
+  // 清理旧快照，避免已废弃版式残留影响回归统计。
+  const oldEntries = await readdir(themeSnapshotDir);
+  for (const entry of oldEntries) {
+    if (entry === 'baseline' || entry === 'diff') continue;
+    await rm(path.join(themeSnapshotDir, entry), { recursive: true, force: true });
+  }
 
   const manifest = [];
   for (let i = 0; i < items.length; i++) {
@@ -58,6 +91,8 @@ async function captureTheme(browser, theme) {
     const layout = label.trim();
     const slideEl = item.locator('.lp-gallery-slide');
     const screenshotPath = path.join(themeSnapshotDir, `${layout}.png`);
+    // 对每个包含图表的 slide，再次确保其内部 ECharts 已渲染（长页面中可能出现 lazy 渲染）
+    await item.locator('[data-lp-echart-type]').first().waitFor({ state: 'attached', timeout: 5000 }).catch(() => {});
     await slideEl.screenshot({ path: screenshotPath, type: 'png' });
     manifest.push({ layout, screenshot: path.relative(rootDir, screenshotPath) });
     console.log(`  ✅ ${layout}`);

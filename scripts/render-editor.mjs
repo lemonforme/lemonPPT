@@ -1,9 +1,10 @@
+#!/usr/bin/env node
 // lemonPPT - AI-powered presentation generation
 // Copyright (c) 2026 lemonforme
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { renderDeck } from '@lemonppt/renderer';
-import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, cp, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -21,9 +22,27 @@ async function main() {
   const assetsDir = path.join(outDir, 'assets');
   await mkdir(assetsDir, { recursive: true });
 
-  const cssSource = path.join(rootDir, 'packages/themes/src/base/styles.css');
-  const cssDest = path.join(assetsDir, 'base.css');
-  await copyFile(cssSource, cssDest);
+  const themes = ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06'];
+  for (const theme of themes) {
+    const cssSource = path.join(rootDir, 'packages/themes/src', theme, 'styles.css');
+    const cssDest = path.join(assetsDir, `${theme}.css`);
+    await copyFile(cssSource, cssDest);
+  }
+
+  // 复制客户端离线渲染脚本，使静态文件模式下也能增删幻灯片
+  const clientRenderSource = path.join(rootDir, 'packages/renderer/dist/client/client-render.js');
+  const clientRenderDest = path.join(assetsDir, 'client-render.js');
+  await copyFile(clientRenderSource, clientRenderDest);
+
+  // 复制主题化 ECharts 初始化脚本，使 editor 中的图表能按需初始化
+  const themeEchartsSource = path.join(rootDir, 'packages/renderer/dist/client/theme-echarts.js');
+  const themeEchartsDest = path.join(assetsDir, 'theme-echarts.js');
+  await copyFile(themeEchartsSource, themeEchartsDest);
+
+  // 复制字体资源，使 @font-face 引用可用
+  const fontsSource = path.join(rootDir, 'packages/renderer/assets/fonts');
+  const fontsDest = path.join(assetsDir, 'fonts');
+  await cp(fontsSource, fontsDest, { recursive: true, force: true });
 
   await writeFile(outFile, result.html, 'utf-8');
 

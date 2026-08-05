@@ -49,7 +49,7 @@ function main() {
   }
 
   const tokenVarName = `${camelCase(themeId)}Tokens`;
-  const baseStyles = path.join(themesDir, 'base', 'styles.css');
+  const baseStyles = path.join(themesDir, 'theme01', 'styles.css');
   const newStyles = path.join(themeDir, 'styles.css');
 
   const tokenTemplate = `/**
@@ -103,7 +103,7 @@ export const ${tokenVarName} = {
     console.log(`   添加 import：`);
     console.log(`   import { ${tokenVarName} } from './${themeId}/tokens.js';`);
     console.log(`   更新 themes 数组：`);
-    console.log(`   export const themes = [baseTokens, darkTechTokens, warmBusinessTokens, ${tokenVarName}] as const;`);
+    console.log(`   export const themes = [theme01Tokens, ${tokenVarName}] as const;`);
     console.log(`   添加 export * from './${themeId}/tokens.js';`);
     console.log('');
     console.log(`2) 编辑 ${newStyles}`);

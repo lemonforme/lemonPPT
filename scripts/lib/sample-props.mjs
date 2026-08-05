@@ -3,6 +3,8 @@
 // Copyright (c) 2026 lemonforme
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import { PLACEHOLDER_IMAGES } from './placeholder.mjs';
+
 function sampleProps(meta) {
   const role = meta.role;
   const layoutId = meta.id;
@@ -2970,6 +2972,2213 @@ function sampleProps(meta) {
         { rank: '05', name: 'Spark AI', deals: '9笔', amount: '$15亿', trend: 'up', tone: 'green' },
       ],
       footnote: '数据来源：lemonPPT 研究整理',
+    };
+  }
+
+  // theme05 光谱报告风版式示例数据
+  if (layoutId === 'theme05_cover_v1') {
+    return {
+      tag: 'DATA REPORT',
+      title: '2026 全球 AI 大额融资年报',
+      subtitle: '从资本热度看行业格局演变',
+      metrics: [
+        { value: '970', unit: '亿美元', label: '全年总额', accent: true },
+        { value: '97', unit: '笔', label: '大额事件' },
+        { value: '×3', unit: '', label: '估值跃迁' },
+        { value: '+41%', unit: '', label: 'Q4 环比' },
+      ],
+      footnoteLeft: 'lemonPPT · 2026',
+      footnoteRight: '01',
+    };
+  }
+  if (layoutId === 'theme05_table_of_contents_v1') {
+    return {
+      title: '目录',
+      subtitle: 'CONTENTS',
+      items: [
+        { title: '市场背景与机会', page: '02' },
+        { title: '产品方案与优势', page: '04' },
+        { title: '商业模式与增长', page: '06' },
+        { title: '团队与融资计划', page: '08' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_chapter_v1') {
+    return {
+      tag: 'CHAPTER',
+      number: '01',
+      title: '核心发现',
+      subtitle: '从数据到洞察的关键转折',
+    };
+  }
+  if (layoutId === 'theme05_content_v1') {
+    return {
+      kicker: 'KEY POINTS',
+      title: '核心要点总结',
+      subtitle: '本章节提炼了三个关键结论',
+      bullets: [
+        '全栈 AI 演示生成，从大纲到成稿一键完成',
+        '光谱报告风主题，数据表达更聚焦',
+        '双外观模式适配不同交付场景',
+      ],
+      showConclusion: true,
+      conclusion: { value: '+38%', label: '年度同比增长', description: '核心指标连续四个季度保持双位数增长。' },
+    };
+  }
+  if (layoutId === 'theme05_metric_v1') {
+    return {
+      kicker: 'CORE METRIC',
+      title: '年度融资总额',
+      subtitle: '全年大额融资事件汇总',
+      value: '970',
+      unit: '亿美元',
+      metrics: [
+        { value: '97', unit: '笔', label: '事件笔数' },
+        { value: '≈10 亿', unit: '', label: '平均单笔' },
+        { value: '+41%', unit: '', label: 'Q4 环比', accent: true },
+        { value: 'Q2-Q3', unit: '', label: '高峰区间' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_chart_v1') {
+    return {
+      kicker: 'TREND',
+      title: '季度融资额趋势',
+      subtitle: '全年四个季度持续上扬',
+      type: 'bar',
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      data: [1200, 1850, 2400, 3100],
+      unit: '亿美元',
+      showConclusion: true,
+      conclusion: { value: '+38%', label: '年度同比增长', description: '核心指标连续四个季度保持双位数增长，Q4 受节日营销推动创下新高。' },
+    };
+  }
+  if (layoutId === 'theme05_bubble_v1') {
+    return {
+      kicker: '估值分布',
+      title: '{{AI 独角兽}}估值与增速分布',
+      subtitle: '横轴为估值，纵轴为同比增速，气泡大小代表累计融资额',
+      xAxisLabel: '估值（亿美元）',
+      yAxisLabel: '同比增速（%）',
+      unit: '亿美元',
+      items: [
+        { name: 'OpenAI', x: 1570, y: 41, value: 970, scheme: 'coral' },
+        { name: 'Anthropic', x: 184, y: 120, value: 77, scheme: 'teal' },
+        { name: 'xAI', x: 240, y: 300, value: 60, scheme: 'indigo' },
+        { name: 'Databricks', x: 430, y: 25, value: 50, scheme: 'amber' },
+        { name: 'CoreWeave', x: 70, y: 180, value: 35, scheme: 'violet' },
+        { name: 'Scale AI', x: 138, y: 60, value: 25, scheme: 'teal' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_map_v1') {
+    return {
+      kicker: '地区分布',
+      title: '{{AI 融资}}的区域分布',
+      subtitle: '按融资金额排序的主要地区',
+      unit: '亿美元',
+      items: [
+        { name: '北美', value: 620, scheme: 'coral' },
+        { name: '中国', value: 180, scheme: 'teal' },
+        { name: '欧洲', value: 95, scheme: 'indigo' },
+        { name: '亚太其他', value: 48, scheme: 'amber' },
+        { name: '中东', value: 18, scheme: 'violet' },
+        { name: '拉美', value: 9, scheme: 'teal' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_rank_v1') {
+    return {
+      kicker: 'RANKING',
+      title: '赛道融资额排名',
+      subtitle: '按年度融资总额排序',
+      rows: [
+        { rank: 1, name: '通用大模型', value: '420 亿', change: '+24%', positive: true },
+        { rank: 2, name: 'AI 基础设施', value: '245 亿', change: '+18%', positive: true },
+        { rank: 3, name: '垂直应用', value: '198 亿', change: '+12%', positive: true },
+        { rank: 4, name: 'AI 芯片', value: '97 亿', change: '-5%', positive: false },
+        { rank: 5, name: '其他', value: '10 亿', change: '+2%', positive: true },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_heatmap_v1') {
+    return {
+      kicker: 'HEATMAP',
+      title: '月度融资热度矩阵',
+      subtitle: '颜色越深代表当月融资事件越密集',
+      months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      values: [80, 65, 120, 180, 220, 260, 210, 190, 170, 200, 240, 310],
+      peakLabel: 'Q2 为全年融资高峰',
+    };
+  }
+  if (layoutId === 'theme05_waterfall_v1') {
+    return {
+      kicker: 'WATERFALL',
+      title: '年度利润贡献拆解',
+      subtitle: '从营收到净利润的关键增减项',
+      items: [
+        { name: '营业收入', value: 1200 },
+        { name: '营业成本', value: -420 },
+        { name: '研发费用', value: -180 },
+        { name: '销售费用', value: -120 },
+        { name: '管理费用', value: -80 },
+        { name: '其他收益', value: 60 },
+      ],
+      totalLabel: '净利润',
+    };
+  }
+  if (layoutId === 'theme05_quote_v1') {
+    return {
+      quote: '数据不会撒谎，但它只回答你问过的问题。',
+      source: '— 首席数据官 · 李明',
+    };
+  }
+  if (layoutId === 'theme05_image_v1') {
+    return {
+      kicker: 'SPOTLIGHT',
+      title: '一张图讲清市场格局',
+      subtitle: '上传高清大图，用数据标注突出关键信息。',
+      annotation: { value: '43%', label: '头部企业市占率' },
+    };
+  }
+  if (layoutId === 'theme05_versus_v1') {
+    return {
+      kicker: '横向对比',
+      title: '{{基础设施}} vs 应用层',
+      subtitle: '资金在两层之间的分布差异明显',
+      left: { value: '420', unit: '亿美元', label: '基础设施层', scheme: 'coral' },
+      right: { value: '180', unit: '亿美元', label: '应用层', scheme: 'indigo' },
+      footnote: '数据来源：lemonPPT 研究 · 2026',
+    };
+  }
+  if (layoutId === 'theme05_process_v1') {
+    return {
+      tag: '实施路径',
+      tagLabel: '07',
+      topRightMeta: 'AI 助手落地 · 四步闭环',
+      title: '四步让 {{AI 助手}} 融入工作流',
+      subtitle: '从需求识别到规模推广，构建可复用的落地路径',
+      steps: [
+        { title: '需求识别', description: '梳理高频、高价值的重复性工作场景。' },
+        { title: '原型验证', description: '用小范围试点验证模型能力与提效空间。' },
+        { title: '工具集成', description: '嵌入现有工作流，降低使用门槛。' },
+        { title: '规模推广', description: '沉淀模板与最佳实践，复制到全团队。' },
+      ],
+      footnoteLeft: 'lemonPPT · 2026',
+      footnoteRight: '07',
+    };
+  }
+  if (layoutId === 'theme05_timeline_v1') {
+    return {
+      kicker: '投资展望 · 阶段性策略',
+      title: '分三步走，{{穿越周期}}',
+      subtitle: '不押注单点爆发，按时间窗口分阶段布局——用纪律穿越 AI 资本周期的起伏。',
+      phases: [
+        { period: '2025 - 2026', badge: '观察 IPO', title: '观察 IPO 窗口', description: '盯头部公司 IPO 表现；若 OpenAI / Anthropic 上市破发，警惕全行业估值回调。', scheme: 'coral' },
+        { period: '2026 - 2027', badge: '收入曲线', title: '收入曲线验证', description: '关注垂直应用收入增长；优选 ARR ≥ 1 亿美元、续约率 > 120% 的标的。', scheme: 'teal' },
+        { period: '2027 年后', badge: '行业洗牌', title: '行业洗牌抄底', description: '若 AGI 突破未兑现，进入洗牌期，可逢低抄底被低估的技术资产。', scheme: 'amber' },
+      ],
+      footnote: '数据来源：lemonPPT 研究 · 2026',
+    };
+  }
+  if (layoutId === 'theme05_matrix_v1') {
+    return {
+      kicker: '定位矩阵',
+      title: '{{赛道}}吸引力矩阵',
+      subtitle: '按市场规模与竞争密度划分的四象限',
+      xAxis: { low: '低规模', high: '高规模' },
+      yAxis: { low: '低密度', high: '高密度' },
+      items: [
+        { title: '明星赛道', description: '规模大、竞争密度高，资本持续加注。', scheme: 'coral' },
+        { title: '潜力赛道', description: '规模尚小但增速快，早期机会显著。', scheme: 'teal' },
+        { title: '成熟赛道', description: '规模大但格局稳定，增量空间有限。', scheme: 'amber' },
+        { title: '观望赛道', description: '规模与密度均低，仍需验证。', scheme: 'indigo' },
+      ],
+      footnote: '数据来源：lemonPPT 研究 · 2026',
+    };
+  }
+  if (layoutId === 'theme05_quadrant_v1') {
+    return {
+      kicker: '选题四象限 · 资本热度 × 商业兑现',
+      title: '从「谁融得多」升级为{{「谁能兑现」}}',
+      subtitle: '',
+      xAxisLabel: '商业兑现度',
+      xAxisLabels: ['低 / 待验证', '高'],
+      yAxisLabel: '资本热度',
+      yAxisLabels: ['低', '高'],
+      quadrants: [
+        { title: '明星兑现区', description: '融资热度与收入确定性兼具，「卖铲子」逻辑成立。', tags: ['CoreWeave', 'Databricks', 'Scale AI'], scheme: 'coral' },
+        { title: '叙事泡沫区', description: '巨额融资在手，商业兑现仍受成本与监管约束。', tags: ['OpenAI', 'Anthropic', 'xAI'], scheme: 'amber' },
+        { title: '隐形价值区', description: '单笔不一定最大，但落地路径与留存更清晰。', tags: ['Glean', 'Perplexity'], scheme: 'teal' },
+        { title: '等待验证区', description: '概念成立、规模未证，作为风险与边缘变量观察。', tags: ['长尾工具链', 'AI 安全', '早期硬件'], scheme: 'indigo' },
+      ],
+      footnote: '数据来源：lemonPPT 研究 · 2026',
+    };
+  }
+  if (layoutId === 'theme05_risk_v1') {
+    return {
+      kicker: 'RISK ASSESSMENT',
+      title: '关键风险与应对',
+      subtitle: '识别潜在不确定性，提前准备缓冲方案。',
+      items: [
+        { risk: '估值回调', impact: '高', response: '优先持有收入可验证资产，减少纯叙事敞口。', scheme: 'coral' },
+        { risk: '监管收紧', impact: '中', response: '布局合规工具链与模型审计能力。', scheme: 'amber' },
+        { risk: '技术迭代', impact: '高', response: '保持模型接口弹性，避免单点绑定。', scheme: 'teal' },
+        { risk: '人才竞争', impact: '中', response: '构建内部 AI 卓越中心，降低外部依赖。', scheme: 'indigo' },
+      ],
+      footnote: '数据来源：lemonPPT 研究 · 2026',
+    };
+  }
+  if (layoutId === 'theme05_closing_v1') {
+    return {
+      kicker: 'CONCLUSION',
+      claim: 'AI 融资已进入头部集中、场景分化的成熟阶段。',
+      points: [
+        { value: '970 亿', label: '全年融资总额' },
+        { value: '97 笔', label: '大额融资事件' },
+        { value: '+38%', label: '年度同比增长' },
+      ],
+      footnoteLeft: 'lemonPPT · 2026',
+      footnoteRight: 'THANK YOU',
+    };
+  }
+
+  // theme05 Phase A 新增版式示例数据
+  if (layoutId === 'theme05_cover_ex_v1') {
+    return {
+      tag: 'DATA REPORT',
+      title: '2026 全球 AI 大额融资年报',
+      subtitle: '从资本热度看行业格局演变',
+      stats: [
+        { value: '970', unit: '亿美元', label: '年度融资总额', scheme: 'coral' },
+        { value: '128', unit: '笔', label: '大额交易数量', scheme: 'amber' },
+        { value: '+38%', unit: '', label: '年度同比增长', scheme: 'teal' },
+        { value: '12', unit: '家', label: '新晋独角兽', scheme: 'indigo' },
+      ],
+      footnoteLeft: 'lemonPPT · 2026',
+      footnoteRight: '01',
+    };
+  }
+  if (layoutId === 'theme05_cover_ex_v2') {
+    return {
+      tag: 'DATA REPORT',
+      title: '2026 全球 AI 大额融资年报',
+      subtitle: '从资本热度看行业格局演变',
+      backgroundNumber: '2026',
+      highlights: [
+        { text: '大额融资', scheme: 'coral' },
+        { text: '行业研究', scheme: 'amber' },
+        { text: '趋势洞察', scheme: 'teal' },
+      ],
+      footnoteLeft: 'lemonPPT · 2026',
+      footnoteRight: '01',
+    };
+  }
+  if (layoutId === 'theme05_cover_hero_v1') {
+    return {
+      tag: 'DATA REPORT',
+      title: '2026 全球 AI 大额融资年报',
+      subtitle: '从资本热度看行业格局演变',
+      image: PLACEHOLDER_IMAGES.landscape,
+      overlayScheme: 'indigo',
+      footnoteLeft: 'lemonPPT · 2026',
+      footnoteRight: '01',
+    };
+  }
+  if (layoutId === 'theme05_chapter_big_v1') {
+    return { tag: 'CHAPTER', title: '核心发现', subtitle: '从数据到洞察的关键转折' };
+  }
+  if (layoutId === 'theme05_chapter_split_v1') {
+    return { number: '01', title: '核心发现', subtitle: '从数据到洞察的关键转折' };
+  }
+  if (layoutId === 'theme05_chapter_numbered_v1') {
+    return { number: '01', title: '核心发现', subtitle: '从数据到洞察的关键转折' };
+  }
+  if (layoutId === 'theme05_chapter_image_v1') {
+    return {
+      number: '01',
+      title: '核心发现',
+      subtitle: '从数据到洞察的关键转折',
+      image: PLACEHOLDER_IMAGES.landscape,
+    };
+  }
+  if (layoutId === 'theme05_metric_hero_v1') {
+    return {
+      kicker: 'CORE METRIC',
+      title: '年度融资总额',
+      subtitle: '全年大额融资事件汇总',
+      value: '970',
+      unit: '亿美元',
+      change: '+38%',
+      changeLabel: '年度同比增长',
+    };
+  }
+  if (layoutId === 'theme05_metric_delta_v1') {
+    return {
+      kicker: 'GROWTH',
+      title: '年度融资同比增长',
+      subtitle: '2026 年相较 2025 年实现显著增长',
+      currentValue: '970',
+      currentUnit: '亿美元',
+      currentLabel: '2026 年',
+      previousValue: '703',
+      previousUnit: '亿美元',
+      previousLabel: '2025 年',
+      delta: '+38%',
+      deltaLabel: '年度同比增长',
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      data: [180, 220, 260, 310],
+    };
+  }
+  if (layoutId === 'theme05_metric_capacity_v1') {
+    return {
+      kicker: 'CAPACITY',
+      title: '产能利用率对比',
+      subtitle: '各业务线当前产能与目标产能对比',
+      items: [
+        { name: '云端算力', value: 78, max: 100, unit: '%', scheme: 'coral' },
+        { name: '存储资源', value: 62, max: 100, unit: '%', scheme: 'amber' },
+        { name: '网络带宽', value: 45, max: 100, unit: '%', scheme: 'teal' },
+        { name: '人力投入', value: 91, max: 100, unit: '%', scheme: 'indigo' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_chart_share_v1') {
+    return {
+      kicker: 'SHARE',
+      title: '市场占比分布',
+      subtitle: '头部企业与长尾玩家的份额对比',
+      unit: '%',
+      items: [
+        { name: '头部企业', value: 42, scheme: 'coral' },
+        { name: '成长型企业', value: 28, scheme: 'amber' },
+        { name: '初创企业', value: 18, scheme: 'teal' },
+        { name: '其他', value: 12, scheme: 'indigo' },
+      ],
+      conclusion: { value: '42%', label: '头部企业市占率', description: '头部企业占据超过四成市场份额，行业集中度持续提升。' },
+    };
+  }
+  if (layoutId === 'theme05_chart_stacked_v1') {
+    return {
+      kicker: 'COMPOSITION',
+      title: '季度资本构成',
+      subtitle: '各阶段融资额在不同季度的堆叠分布',
+      type: 'bar',
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      series: [
+        { name: '种子 / 天使', data: [12, 14, 16, 18], scheme: 'coral' },
+        { name: 'A 轮', data: [18, 22, 25, 28], scheme: 'amber' },
+        { name: 'B 轮', data: [14, 16, 18, 22], scheme: 'teal' },
+        { name: 'C 轮及以上', data: [10, 12, 14, 16], scheme: 'indigo' },
+      ],
+      unit: '亿美元',
+      conclusion: { value: '+38%', label: 'Q4 环比增长', description: '四季度各阶段融资额全面上升，成长期项目贡献最大增量。' },
+    };
+  }
+  if (layoutId === 'theme05_chart_curve_v1') {
+    return {
+      kicker: 'CURVE',
+      title: '融资额走势曲线',
+      subtitle: '全年融资额呈现明显的波动上升趋势',
+      labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      data: [45, 52, 48, 61, 58, 72, 68, 75, 82, 79, 88, 95],
+      unit: '亿美元',
+      smooth: true,
+      showArea: true,
+      conclusion: { value: 'Q4 峰值', label: '单季融资额创新高', description: '年末融资额达到全年最高点，受大型并购和 IPO 前融资推动。' },
+    };
+  }
+  if (layoutId === 'theme05_chart_peak_v1') {
+    return {
+      kicker: 'PEAK',
+      title: '单季融资峰值',
+      subtitle: '标注全年最高点及其驱动因素',
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      data: [155, 198, 234, 287],
+      unit: '亿美元',
+      peakIndex: 3,
+      conclusion: { value: 'Q4', label: '全年融资峰值', description: '四季度受大型并购和 IPO 前融资推动，单季融资额达到全年最高点。' },
+    };
+  }
+  if (layoutId === 'theme05_chart_peaktrough_v1') {
+    return {
+      kicker: 'PEAK & TROUGH',
+      title: '融资额峰谷波动',
+      subtitle: '标注全年最高点与最低点',
+      labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      data: [45, 52, 38, 61, 58, 72, 68, 75, 82, 79, 88, 95],
+      unit: '亿美元',
+      peakIndex: 11,
+      troughIndex: 2,
+      conclusion: { value: '3.2x', label: '峰谷差距', description: '最高点融资额是最低点的 3.2 倍，市场波动显著。' },
+    };
+  }
+  if (layoutId === 'theme05_chart_cumulative_v1') {
+    return {
+      kicker: 'CUMULATIVE',
+      title: '年度融资累计走势',
+      subtitle: '全年融资额逐月累计增长',
+      labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      data: [45, 52, 48, 61, 58, 72, 68, 75, 82, 79, 88, 95],
+      unit: '亿美元',
+      conclusion: { value: '970', label: '年度累计融资额', description: '截至年末，全年融资累计额达到历史新高。' },
+    };
+  }
+
+  // theme05 Phase B 新版式示例数据
+  if (layoutId === 'theme05_table_of_contents_v2') {
+    return {
+      title: '目录',
+      subtitle: 'CONTENTS',
+      items: [
+        { title: '市场背景与机会', page: '02' },
+        { title: '产品方案与优势', page: '04' },
+        { title: '商业模式与增长', page: '06' },
+        { title: '团队与融资计划', page: '08' },
+        { title: '落地路径与里程碑', page: '10' },
+        { title: '财务预测与愿景', page: '12' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_process_v2') {
+    return {
+      kicker: '实施路径',
+      title: '四步让 AI 助手融入工作流',
+      subtitle: '从需求识别到规模推广，构建可复用的落地路径',
+      steps: [
+        { title: '需求识别', description: '梳理高频、高价值的重复性工作场景。', scheme: 'coral' },
+        { title: '原型验证', description: '用小范围试点验证模型能力与提效空间。', scheme: 'amber' },
+        { title: '工具集成', description: '嵌入现有工作流，降低使用门槛。', scheme: 'teal' },
+        { title: '规模推广', description: '沉淀模板与最佳实践，复制到全团队。', scheme: 'indigo' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_comparison_v1') {
+    return {
+      kicker: 'A / B 对比',
+      title: '两种方案的关键差异',
+      subtitle: '从成本、效率与风险三个维度比较',
+      leftTitle: '方案 A',
+      leftItems: ['前期投入低', '上线周期短', '灵活可扩展', '适合快速验证'],
+      leftScheme: 'coral',
+      rightTitle: '方案 B',
+      rightItems: ['长期总拥有成本低', '性能天花板高', '依赖自建团队', '适合规模化运营'],
+      rightScheme: 'indigo',
+      vsLabel: 'VS',
+    };
+  }
+  if (layoutId === 'theme05_chart_funnel_v1') {
+    return {
+      kicker: 'CONVERSION',
+      title: '从曝光到成交的转化漏斗',
+      subtitle: '每一层的流失都代表可优化的空间',
+      stages: [
+        { name: '曝光', value: 100000, scheme: 'coral' },
+        { name: '点击', value: 42000, scheme: 'amber' },
+        { name: '访问', value: 18000, scheme: 'teal' },
+        { name: '线索', value: 5600, scheme: 'indigo' },
+        { name: '成交', value: 1200, scheme: 'violet' },
+      ],
+      showConclusion: true,
+      conclusion: { value: '1.2%', label: '最终成交转化率', description: '从曝光到成交的整体转化率偏低，需重点优化访问到线索环节。' },
+    };
+  }
+  if (layoutId === 'theme05_quote_v2') {
+    return {
+      quote: '数据不会撒谎，但它只回答你问过的问题。',
+      author: '首席数据官 · 李明',
+      source: '2026 数据领导力峰会',
+      accentScheme: 'coral',
+    };
+  }
+  if (layoutId === 'theme05_chart_gauge_v1') {
+    return {
+      kicker: 'GAUGE',
+      title: '年度目标达成率',
+      subtitle: '核心 KPI 当前完成进度',
+      value: 78,
+      min: 0,
+      max: 100,
+      unit: '%',
+      label: '达成率',
+      scheme: 'coral',
+    };
+  }
+
+  // theme05 Phase C 新版式示例数据
+  if (layoutId === 'theme05_bento_v1') {
+    return {
+      kicker: 'BENTO',
+      title: '一图速览',
+      subtitle: '核心数据模块化呈现',
+      items: [
+        { title: '全年融资总额', value: '970', description: '亿美元，同比 +23%', scheme: 'coral', span: '2' },
+        { title: '大额事件', value: '97', description: '笔单笔超 5 亿美元交易', scheme: 'amber', span: '1' },
+        { title: '平均单笔', value: '≈10', description: '亿美元', scheme: 'teal', span: '1' },
+        { title: '头部集中度', value: '68', description: 'TOP3 赛道占比', scheme: 'indigo', span: '1' },
+        { title: '晚期轮次', value: '74', description: 'C 轮及以后占比', scheme: 'violet', span: '1' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_case_v1') {
+    return {
+      kicker: 'CASE STUDY',
+      title: '典型案例',
+      subtitle: '从需求到落地的完整闭环',
+      company: 'Anthropic',
+      metric: { value: '9650', label: '亿美元估值' },
+      challenge: '如何在快速扩张的同时保持 AI 系统的安全性与可控性。',
+      solution: '引入 Constitutional AI，通过自我监督与反馈机制训练更可解释的大模型。',
+      result: '在一年内完成多轮大额融资，估值跃升至全球 AI 初创公司首位。',
+    };
+  }
+  if (layoutId === 'theme05_editorial_v1') {
+    return {
+      kicker: 'EDITORIAL',
+      title: '深度特写：一场视觉叙事',
+      subtitle: '用一张大图与一段引言，传递最有力的观点。',
+      imageUrl: PLACEHOLDER_IMAGES.portrait,
+      imageSide: 'left',
+      body: '杂志跨页适合用一段简洁有力的叙述，配合一张高质量大图，帮助受众快速建立情感连接与核心认知。高品质视觉素材能显著提升报告的专业感与信息密度。',
+      pullQuote: '「一张图胜过千言万语，而一句精准的话能让图更有力量。」',
+    };
+  }
+  if (layoutId === 'theme05_gallery_v1') {
+    return {
+      kicker: 'GALLERY',
+      title: '项目现场一览',
+      subtitle: '用一组高清图片直观呈现关键场景。',
+      items: [
+        { imageUrl: PLACEHOLDER_IMAGES.gallery, caption: '方案设计' },
+        { imageUrl: PLACEHOLDER_IMAGES.gallery, caption: '实施过程' },
+        { imageUrl: PLACEHOLDER_IMAGES.gallery, caption: '交付成果' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_profile_v1') {
+    return {
+      kicker: 'PROFILE',
+      title: '核心人物',
+      subtitle: '推动本轮融资的关键决策者',
+      name: 'Dario Amodei',
+      role: '联合创始人兼 CEO',
+      company: 'Anthropic',
+      quote: '可解释、可控的 AI 系统比单纯追求规模更符合长远利益。',
+      facts: [
+        { label: '任职时间', value: '2021 年至今' },
+        { label: '前雇主', value: 'OpenAI' },
+        { label: '核心贡献', value: 'Constitutional AI' },
+        { label: '教育背景', value: '斯坦福、普林斯顿' },
+      ],
+      avatarUrl: PLACEHOLDER_IMAGES.avatar,
+    };
+  }
+  if (layoutId === 'theme05_roadmap_v1') {
+    return {
+      kicker: 'ROADMAP',
+      title: '未来三年落地路线图',
+      subtitle: '从试点验证到规模推广，分阶段推进。',
+      phases: [
+        { title: '试点验证', period: '2025 Q1', description: '聚焦核心场景，完成 MVP 验证与效果评估。', scheme: 'coral' },
+        { title: '工具集成', period: '2025 Q2-Q3', description: '嵌入现有工作流，建立标准化交付模板。', scheme: 'amber' },
+        { title: '规模推广', period: '2025 Q4', description: '复制到全团队，沉淀最佳实践与培训体系。', scheme: 'teal' },
+        { title: '持续运营', period: '2026 起', description: '建立数据监测与迭代机制，保持长期增长。', scheme: 'indigo' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_scorecards_v1') {
+    return {
+      kicker: 'SCORECARDS',
+      title: '资本风向标',
+      subtitle: '四维度追踪市场核心指标',
+      cards: [
+        { label: '全年融资总额', value: '970', unit: '亿美元', change: '+23%', positive: true, scheme: 'coral' },
+        { label: '大额事件数量', value: '97', unit: '笔', change: '+12%', positive: true, scheme: 'amber' },
+        { label: '平均单笔规模', value: '≈10', unit: '亿', change: '-5%', positive: false, scheme: 'teal' },
+        { label: '头部赛道集中度', value: '68', unit: '%', change: '+8%', positive: true, scheme: 'indigo' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_donut_v1') {
+    return {
+      kicker: 'DISTRIBUTION',
+      title: '融资阶段分布',
+      subtitle: '早期与成长期项目仍占主导',
+      unit: '亿美元',
+      items: [
+        { name: '种子 / 天使', value: 28, scheme: 'coral' },
+        { name: 'A 轮', value: 35, scheme: 'amber' },
+        { name: 'B 轮', value: 22, scheme: 'teal' },
+        { name: 'C 轮及以上', value: 12, scheme: 'indigo' },
+        { name: '战略融资', value: 8, scheme: 'violet' },
+      ],
+      showConclusion: true,
+      conclusion: {
+        value: '63%',
+        label: '早期项目占比',
+        description: '种子至 A 轮项目合计超过六成，市场仍处于快速孵化与验证阶段。',
+      },
+    };
+  }
+  if (layoutId === 'theme05_radar_v1') {
+    return {
+      kicker: 'RADAR',
+      title: '产品能力雷达评估',
+      subtitle: '多维度对比核心竞品能力分布',
+      indicators: [
+        { name: '技术领先性', max: 100 },
+        { name: '商业兑现', max: 100 },
+        { name: '生态规模', max: 100 },
+        { name: '易用性', max: 100 },
+        { name: '成本效率', max: 100 },
+        { name: '安全合规', max: 100 },
+      ],
+      series: [
+        { name: '我方产品', values: [85, 72, 68, 90, 78, 82], scheme: 'coral' },
+        { name: '行业平均', values: [68, 65, 75, 70, 72, 66], scheme: 'indigo' },
+      ],
+    };
+  }
+  if (layoutId === 'theme05_treemap_v1') {
+    return {
+      kicker: 'TREEMAP',
+      title: 'AI 赛道融资版图',
+      subtitle: '矩形面积代表该赛道年度融资总额',
+      items: [
+        { name: '大模型', value: 420, scheme: 'coral' },
+        { name: 'AI 基础设施', value: 310, scheme: 'amber' },
+        { name: '企业智能体', value: 240, scheme: 'teal' },
+        { name: '具身智能', value: 180, scheme: 'indigo' },
+        { name: 'AI 安全', value: 120, scheme: 'violet' },
+        { name: '垂直应用', value: 95, scheme: 'coral' },
+        { name: '开发者工具', value: 70, scheme: 'amber' },
+        { name: '硬件算力', value: 55, scheme: 'teal' },
+      ],
+    };
+  }
+
+  // theme06 深色图谱风版式示例数据
+  if (layoutId === 'theme06_cover_v1') {
+    return {
+      imageUrl: '',
+      tag: 'STRATEGY ATLAS',
+      title: '2026 全球 AI 产业投资图谱',
+      subtitle: '从资本流向看战略格局与关键节点',
+      imageUrl: '',
+      metrics: [
+        { value: '970', unit: '亿美元', label: '年度融资总额', accent: true },
+        { value: '42', unit: '%', label: '头部集中度', accent: false },
+        { value: '18', unit: '家', label: '新晋独角兽', accent: false },
+        { value: 'Q4', unit: '', label: '融资高峰季度', accent: false },
+      ],
+      footnoteLeft: 'lemonPPT · 2026',
+      footnoteRight: '01',
+    };
+  }
+  if (layoutId === 'theme06_chapter_v1') {
+    return {
+      imageUrl: '',
+      topLeftLabel: '[CH] CHAPTER',
+      topRightLabel: '章节 / SECTION',
+      number: '02',
+      title: '市场数据深拆',
+      subtitle: '从数据到洞察的关键转折',
+      enSubtitle: '融资节奏 · 集中度 · 交易规模 / MARKET DATA DEEP-DIVE',
+      tags: ['集中度', '季度节奏', '峰谷对比', '资金贡献'],
+      nextHint: '→ 下一组页面进入更细的拆解',
+    };
+  }
+  if (layoutId === 'theme06_content_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'KEY POINTS',
+      title: '核心要点总结',
+      subtitle: '本章节提炼了三个关键结论',
+      bullets: [
+        '资本持续向头部大模型与基础设施集中',
+        '垂直场景应用进入规模化落地阶段',
+        'AI 安全与合规成为新的投资热点',
+      ],
+      showConclusion: true,
+      conclusion: {
+        value: '+38%',
+        label: '年度同比增长',
+        description: '核心指标连续四个季度保持双位数增长。',
+      },
+    };
+  }
+  if (layoutId === 'theme06_content_numbered_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'LEAN MANUFACTURING',
+      title: '精益智造提质增效',
+      titleAccent: '增效',
+      subtitle: '2026 生产基地智能化改造实施方案。以数字化重构制造流程，让每一道工序更轻。',
+      items: [
+        { number: '01', title: '降本', enLabel: 'COST DOWN', active: false },
+        { number: '02', title: '提效', enLabel: 'EFFICIENCY', active: false },
+        { number: '03', title: '革新', enLabel: 'INNOVATION', active: true },
+        { number: '04', title: '突围', enLabel: 'BREAKTHROUGH', active: false },
+      ],
+      footnote: '智造 · 生产基地智能化改造 · 实施方案 · PLAN / 2026',
+    };
+  }
+  if (layoutId === 'theme06_metric_hero_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'CORE METRIC',
+      title: '年度融资总额',
+      subtitle: '全年大额融资事件汇总',
+      value: '970',
+      unit: '亿美元',
+      change: '+38%',
+      changeLabel: '年度同比增长',
+    };
+  }
+  if (layoutId === 'theme06_vertical_bar_v1') {
+    return {
+      imageUrl: '',
+      topLeftLabel: '[30] LEGAL AI',
+      topRightLabel: '法律 AI 赛道 / LEGAL SERVICES',
+      title: '专业服务高客单价',
+      badge: '法律 AI 赛道 / LEGAL',
+      value: '26',
+      unit: '亿$',
+      valueLabel: '赛道融资额 / FUNDING',
+      metrics: [
+        { value: '6笔', enLabel: 'DEALS', label: '事件数' },
+        { value: '4.3亿', enLabel: 'AVG', label: '平均单笔' },
+        { value: '46%', enLabel: 'REVIEW', label: '合同审查占比', accent: true },
+      ],
+      segmentTitle: '场景占比 / SEGMENT SPLIT',
+      segments: [
+        { label: '合同审查', enLabel: 'CONTRACT REVIEW', value: 46, accent: true },
+        { label: '合规审查', enLabel: 'COMPLIANCE', value: 24 },
+        { label: '诉讼支持', enLabel: 'LITIGATION', value: 18 },
+        { label: '法律检索', enLabel: 'LEGAL RESEARCH', value: 12 },
+      ],
+      insight: '→ 法律 AI 是垂直应用商业化样本。',
+      footnote: '4 SEG / TABLE',
+    };
+  }
+  if (layoutId === 'theme06_chart_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'TREND',
+      title: '季度融资额趋势',
+      subtitle: '全年四个季度持续上扬',
+      type: 'bar',
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      data: [180, 245, 320, 415],
+      unit: '亿美元',
+      showConclusion: true,
+      conclusion: {
+        value: '+38%',
+        label: '年度同比增长',
+        description: '核心指标连续四个季度保持双位数增长，Q4 受节日营销推动创下新高。',
+      },
+    };
+  }
+  if (layoutId === 'theme06_quote_v1') {
+    return {
+      imageUrl: '',
+      quote: '数据不会撒谎，但它只回答你问过的问题。',
+      source: '— 首席数据官 · 李明',
+    };
+  }
+  if (layoutId === 'theme06_metric_grid_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'METRICS',
+      title: '核心指标一览',
+      subtitle: '本季度关键数据表现',
+      metrics: [
+        { value: '128', unit: '万', label: '月活跃用户', change: '+18%', accent: true },
+        { value: '¥3.2', unit: 'M', label: '月度经常性收入', change: '+12%' },
+        { value: '96', unit: '%', label: '客户满意度', change: '+3%' },
+        { value: '4.8', unit: '分', label: '应用商店评分', change: '-0.1%' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_rank_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'RANKING',
+      title: '头部玩家融资排名',
+      subtitle: '按 2026 年度融资额排序',
+      rows: [
+        { name: '深度求索', value: '¥120 亿', change: '+45%', focus: true },
+        { name: '智谱 AI', value: '¥95 亿', change: '+22%' },
+        { name: '月之暗面', value: '¥80 亿', change: '+18%' },
+        { name: 'Minimax', value: '¥60 亿', change: '+12%' },
+        { name: '百川智能', value: '¥45 亿', change: '+8%' },
+      ],
+      focusIndex: 0,
+    };
+  }
+  if (layoutId === 'theme06_matrix_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'MATRIX',
+      title: '战略优先级矩阵',
+      subtitle: '按吸引力与可行性划分的机会象限',
+      xAxisLabel: '可行性 →',
+      yAxisLabel: '吸引力 ↑',
+      cells: [
+        { title: '明星机会', description: '高吸引力且可行性强的核心业务，优先投入。', focus: true },
+        { title: '试探领域', description: '吸引力高但可行性待验证，需小规模试点。', focus: false },
+        { title: '稳健优化', description: '可行性高但吸引力有限，适合降本增效。', focus: false },
+        { title: '观望储备', description: '双低象限，保持关注但暂不投入。', focus: false },
+      ],
+      focusIndex: 0,
+    };
+  }
+  if (layoutId === 'theme06_chart_radar_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'RADAR',
+      title: '综合能力雷达',
+      subtitle: '从六个维度评估市场竞争力',
+      indicators: [
+        { item: '产品创新' }, { item: '市场渗透' }, { item: '运营效率' },
+        { item: '品牌影响' }, { item: '技术壁垒' }, { item: '客户成功' },
+      ],
+      data: [{ item: 88 }, { item: 72 }, { item: 65 }, { item: 80 }, { item: 90 }, { item: 78 }],
+      unit: '分',
+      showConclusion: true,
+      conclusionValue: '86',
+      conclusionLabel: '综合得分',
+      conclusionDescription: '产品创新能力突出，市场渗透与运营效率仍有提升空间。',
+    };
+  }
+  if (layoutId === 'theme06_chart_waterfall_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'WATERFALL',
+      title: '利润增减瀑布',
+      subtitle: '从收入到净利润的关键科目拆解',
+      labels: [
+        { item: '营业收入' }, { item: '营业成本' }, { item: '毛利润' },
+        { item: '销售费用' }, { item: '研发费用' }, { item: '管理费用' }, { item: '净利润' },
+      ],
+      values: [{ item: 1000 }, { item: -420 }, { item: 580 }, { item: -120 }, { item: -180 }, { item: -80 }, { item: 200 }],
+      unit: '百万元',
+      showConclusion: true,
+      conclusionValue: '+24%',
+      conclusionLabel: '净利润率',
+      conclusionDescription: '成本控制与毛利率改善共同推动了净利润率提升。',
+    };
+  }
+  if (layoutId === 'theme06_chart_peak_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'PEAK',
+      title: '趋势峰值分析',
+      subtitle: '识别关键转折点位',
+      labels: [
+        { item: 'Q1' }, { item: 'Q2' }, { item: 'Q3' }, { item: 'Q4' },
+        { item: 'Q1\'26' }, { item: 'Q2\'26' }, { item: 'Q3\'26' }, { item: 'Q4\'26' },
+      ],
+      data: [{ item: 120 }, { item: 145 }, { item: 110 }, { item: 180 }, { item: 210 }, { item: 195 }, { item: 170 }, { item: 240 }],
+      showTrough: true,
+      unit: '亿美元',
+      showConclusion: true,
+      conclusionValue: 'Q4',
+      conclusionLabel: '峰值季度',
+      conclusionDescription: 'Q4 融资额达到全年最高点，主要由大额后期项目驱动。',
+    };
+  }
+  if (layoutId === 'theme06_process_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'PROCESS',
+      title: '落地实施路径',
+      subtitle: '从需求识别到规模推广的四步闭环',
+      steps: [
+        { title: '需求识别', description: '梳理高频、高价值的重复性工作场景。' },
+        { title: '原型验证', description: '用小范围试点验证模型能力与提效空间。' },
+        { title: '工具集成', description: '嵌入现有工作流，降低使用门槛。' },
+        { title: '规模推广', description: '沉淀模板与最佳实践，复制到全团队。' },
+      ],
+      footnote: '4 段 / FLOW',
+    };
+  }
+  if (layoutId === 'theme06_timeline_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'TIMELINE',
+      title: '关键里程碑',
+      subtitle: '未来 18 个月的重点推进节奏',
+      phases: [
+        { date: '2026 Q1', title: '产品验证', description: '完成核心场景 MVP 验证，确认 PMF。' },
+        { date: '2026 Q2', title: '规模获客', description: '启动 GTM，聚焦种子客户与生态合作。' },
+        { date: '2026 Q4', title: '商业化', description: '建立付费转化路径，实现收入闭环。' },
+        { date: '2027 Q2', title: '出海准备', description: '验证多语言与区域合规能力。' },
+      ],
+      footnote: '4 段 / FLOW',
+    };
+  }
+  if (layoutId === 'theme06_case_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'CASE STUDY',
+      title: '典型案例',
+      subtitle: '从需求到落地的完整闭环',
+      company: 'Anthropic',
+      tagline: '用 Constitutional AI 构建更可解释、更可控的大模型。',
+      metrics: [
+        { value: '9650', label: '亿美元估值' },
+        { value: '120+', label: '企业客户' },
+        { value: '3x', label: '年增速' },
+      ],
+      challenge: '如何在快速扩张的同时保持 AI 系统的安全性与可控性。',
+      solution: '引入 Constitutional AI，通过自我监督与反馈机制训练更可解释的大模型。',
+      result: '在一年内完成多轮大额融资，估值跃升至全球 AI 初创公司首位。',
+    };
+  }
+  if (layoutId === 'theme06_risk_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'RISK',
+      title: '关键风险与应对',
+      subtitle: '识别潜在不确定性，提前准备缓冲方案',
+      items: [
+        { risk: '估值回调', level: 'high', response: '优先持有收入可验证资产，减少纯叙事敞口。' },
+        { risk: '监管收紧', level: 'medium', response: '布局合规工具链与模型审计能力。' },
+        { risk: '技术迭代', level: 'high', response: '保持模型接口弹性，避免单点绑定。' },
+        { risk: '人才竞争', level: 'medium', response: '构建内部 AI 卓越中心，降低外部依赖。' },
+      ],
+      footnote: '4 项风险 / 4 RISKS',
+    };
+  }
+  if (layoutId === 'theme06_risk_v2') {
+    return {
+      imageUrl: '',
+      kicker: 'RISK',
+      title: '关键风险与应对',
+      subtitle: '识别潜在不确定性，提前准备缓冲方案。',
+      items: [
+        { number: '01', risk: '估值回调', level: 'high', response: '优先持有收入可验证资产，减少纯叙事敞口。', meta: 'HIGH / 高风险' },
+        { number: '02', risk: '监管收紧', level: 'medium', response: '布局合规工具链与模型审计能力。', meta: 'MEDIUM / 中风险' },
+        { number: '03', risk: '技术迭代', level: 'high', response: '保持模型接口弹性，避免单点绑定。', meta: 'HIGH / 高风险' },
+        { number: '04', risk: '人才竞争', level: 'medium', response: '构建内部 AI 卓越中心，降低外部依赖。', meta: 'MEDIUM / 中风险' },
+      ],
+      insight: '四类风险相互传导：估值回调会加剧人才流失，监管收紧则提高合规成本，需建立联动缓冲机制。',
+      footnote: '4 项风险 / 4 RISKS',
+    };
+  }
+  if (layoutId === 'theme06_case_v2') {
+    return {
+      imageUrl: '',
+      kicker: 'CASE STUDY',
+      title: '典型案例',
+      subtitle: '从需求到落地的完整闭环',
+      company: 'Anthropic',
+      tagline: '用 Constitutional AI 构建更可解释、更可控的大模型。',
+      items: [
+        { number: '01', title: '挑战', description: '如何在快速扩张的同时保持 AI 系统的安全性与可控性。', meta: 'CHALLENGE / 挑战' },
+        { number: '02', title: '方案', description: '引入 Constitutional AI，通过自我监督与反馈机制训练更可解释的大模型。', meta: 'SOLUTION / 方案' },
+        { number: '03', title: '成果', description: '在一年内完成多轮大额融资，估值跃升至全球 AI 初创公司首位。', meta: 'RESULT / 成果' },
+        { number: '04', title: '启示', description: '安全与性能并非零和，结构化反馈可成为核心竞争壁垒。', meta: 'INSIGHT / 启示' },
+      ],
+      insight: '案例验证：安全优先的产品叙事在资本寒冬中仍能获得溢价估值。',
+      footnote: '4 段 / FLOW',
+    };
+  }
+  if (layoutId === 'theme06_chart_graph_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'GRAPH',
+      title: '核心模块调用关系',
+      subtitle: '节点大小代表模块重要性，连线代表调用依赖',
+      nodes: [
+        { id: 'A', name: '数据中台', value: 80, category: 0 },
+        { id: 'B', name: '用户端', value: 60, category: 1 },
+        { id: 'C', name: '管理端', value: 50, category: 1 },
+        { id: 'D', name: 'AI 引擎', value: 90, category: 0 },
+        { id: 'E', name: '知识库', value: 55, category: 2 },
+        { id: 'F', name: '审计服务', value: 40, category: 2 },
+      ],
+      links: [
+        { source: 'A', target: 'B', value: 3 },
+        { source: 'A', target: 'C', value: 3 },
+        { source: 'D', target: 'A', value: 5 },
+        { source: 'D', target: 'E', value: 4 },
+        { source: 'E', target: 'F', value: 2 },
+        { source: 'B', target: 'D', value: 3 },
+      ],
+      categories: [{ name: '核心' }, { name: '入口' }, { name: '支撑' }],
+      showConclusion: true,
+      conclusion: {
+        value: '4',
+        label: '核心模块数',
+        description: '平台通过数据中台串联用户端、管理端与 AI 引擎，形成完整能力闭环。',
+      },
+    };
+  }
+  if (layoutId === 'theme06_map_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'REGION',
+      title: '融资区域分布',
+      subtitle: '按融资金额排序的主要地区',
+      unit: '亿美元',
+      items: [
+        { name: '北美', value: 620 },
+        { name: '中国', value: 180 },
+        { name: '欧洲', value: 95 },
+        { name: '亚太其他', value: 48 },
+        { name: '中东', value: 18 },
+        { name: '拉美', value: 9 },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_table_of_contents_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'CONTENTS',
+      title: '目录',
+      subtitle: '本次汇报的核心章节安排',
+      items: [
+        { title: '市场格局与投资趋势', page: '02' },
+        { title: '核心数据与关键指标', page: '04' },
+        { title: '竞争态势与机会象限', page: '06' },
+        { title: '落地路径与里程碑', page: '08' },
+        { title: '风险研判与应对策略', page: '10' },
+        { title: '结论与下一步行动', page: '12' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_summary_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'SUMMARY',
+      title: '核心结论',
+      subtitle: '从数据到洞察的关键提炼',
+      points: [
+        { text: 'AI 资本持续向头部大模型与基础设施集中。' },
+        { text: '垂直场景应用进入规模化落地阶段。' },
+        { text: 'AI 安全与合规成为新的投资热点。' },
+        { text: '多模态与 Agent 架构重塑产品边界。' },
+      ],
+      value: '+38%',
+      valueLabel: '年度同比增长',
+      valueDescription: '核心指标连续四个季度保持双位数增长，验证产品市场契合度。',
+    };
+  }
+  if (layoutId === 'theme06_closing_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'THANK YOU',
+      title: '感谢观看',
+      subtitle: '期待与您进一步探讨 AI 投资与合作机会。',
+      imageUrl: '',
+      links: [
+        { label: '邮箱', value: 'hello@lemonppt.dev' },
+        { label: '官网', value: 'lemonppt.dev' },
+        { label: '地址', value: '上海市浦东新区' },
+      ],
+      cta: '立即预约演示 →',
+    };
+  }
+  if (layoutId === 'theme06_sources_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'SOURCES',
+      title: '数据来源',
+      subtitle: '本报告引用的公开数据与研究来源',
+      sources: [
+        { text: 'PitchBook：2026 全球 AI 投融资报告' },
+        { text: 'CB Insights：State of AI 2026' },
+        { text: 'lemonPPT 研究：中国 AI 应用落地调研' },
+        { text: 'OpenAI / Anthropic 官方博客与论文' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_chart_heatmap_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'HEATMAP',
+      title: '用户活跃热力分布',
+      subtitle: '工作日与周末的分时段活跃强度',
+      xAxis: ['周一', '周二', '周三', '周四', '周五'],
+      yAxis: ['早晨', '下午', '晚间'],
+      data: [
+        '周一,早晨,28', '周一,下午,45', '周一,晚间,72',
+        '周二,早晨,35', '周二,下午,58', '周二,晚间,64',
+        '周三,早晨,22', '周三,下午,61', '周三,晚间,80',
+        '周四,早晨,40', '周四,下午,55', '周四,晚间,76',
+        '周五,早晨,18', '周五,下午,70', '周五,晚间,92',
+      ],
+    };
+  }
+  if (layoutId === 'theme06_bento_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'OVERVIEW',
+      title: '核心能力全景',
+      subtitle: '从数据洞察到内容生成的完整链路',
+      items: [
+        { title: '多模态理解', description: '支持文本、图表与布局语义联合解析', value: '01', accent: true },
+        { title: '智能版式匹配', description: '基于角色与内容自动选择最佳版式', value: '02' },
+        { title: '实时协同编辑', description: '多人同时在线调整内容与样式', value: '03' },
+        { title: '一键导出', description: 'PPTX / PDF / 图片多格式无缝输出', value: '04', accent: true },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_comparison_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'COMPARISON',
+      title: '方案对比分析',
+      subtitle: '从效率、成本与体验三个维度评估两种路径',
+      leftTitle: '传统方式',
+      rightTitle: 'AI 驱动',
+      points: [
+        { text: '制作周期从 2 周缩短到 2 天', winner: 'right' },
+        { text: '人力成本随页数线性增长', winner: 'left' },
+        { text: '风格一致性与品牌契合度更高', winner: 'right' },
+        { text: '需要人工反复校对数据', winner: 'left' },
+      ],
+      leftSummary: '适合单页、临时性汇报，长期规模化成本较高。',
+      rightSummary: '适合高频、标准化场景，可显著释放生产力。',
+    };
+  }
+
+  // theme06 Phase 3/4 新版式示例数据
+  if (layoutId === 'theme06_sector_spotlight_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'SECTOR SPOTLIGHT',
+      title: '医疗健康 AI 落地现状',
+      subtitle: '从影像辅助诊断到药物发现，AI 正在重塑研发与临床路径',
+      takeaways: [
+        { text: '影像识别准确率已接近资深医师水平' },
+        { text: '药物研发周期从 5 年压缩至 18 个月' },
+        { text: '监管框架仍是规模化落地的最大变量' },
+      ],
+      highlights: [
+        { value: '470+', label: '在研项目', accent: true },
+        { value: '$12B', label: '年度融资', accent: false },
+        { value: '38%', label: '渗透率提升', accent: false },
+        { value: '24', label: '获批产品', accent: true },
+      ],
+      insight: { value: '3.2x', label: '投资回报率中位数', description: '在已商业化的场景中，AI 辅助诊疗展现出显著的运营效率提升。' },
+    };
+  }
+  if (layoutId === 'theme06_tech_landscape_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'TECH LANDSCAPE',
+      title: 'AI 应用栈全景图',
+      subtitle: '从基础设施到终端应用的六层能力矩阵',
+      topics: [
+        { title: '基础模型', description: '大参数预训练模型提供通用语义与推理能力', value: 'L0', accent: true },
+        { title: '领域微调', description: '针对行业数据做 RLHF 与知识注入', value: 'L1', accent: false },
+        { title: '工具编排', description: 'Agent、RAG、函数调用构建可执行工作流', value: 'L2', accent: false },
+        { title: '应用界面', description: '聊天、Copilot、嵌入式组件等多端交互', value: 'L3', accent: true },
+        { title: '评估治理', description: '安全护栏、评测集、合规审计与版本控制', value: 'L4', accent: false },
+        { title: '运营观测', description: '成本、延迟、质量与反馈闭环监控', value: 'L5', accent: false },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_company_profile_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'COMPANY PROFILE',
+      company: 'Nova Compute',
+      tagline: '专注于推理效率优化的 AI 基础设施公司，帮助大模型在端侧以更低成本运行。',
+      facts: [
+        { label: '成立时间', value: '2021' },
+        { label: '总部', value: 'San Francisco' },
+        { label: '员工', value: '320' },
+        { label: '融资阶段', value: 'Series C' },
+      ],
+      metrics: [
+        { value: '4.2x', label: '推理速度提升' },
+        { value: '67%', label: '成本降低' },
+        { value: '12M+', label: '日均请求' },
+      ],
+      narrative: {
+        challenge: '端侧大模型部署面临算力受限与电池续航双重约束。',
+        solution: '通过模型蒸馏、量化与专用编译器栈，将推理负载压缩到消费级芯片。',
+        result: '客户在生产环境中实现了 4.2 倍加速，单请求成本下降 67%。',
+      },
+    };
+  }
+  if (layoutId === 'theme06_chain_flow_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'VALUE CHAIN',
+      title: 'AI 产业链价值流向',
+      subtitle: '从芯片层到应用层的价值分配与关键节点',
+      steps: [
+        { label: '算力层', description: 'GPU / TPU / 推理集群', value: '$120B' },
+        { label: '基础模型', description: '预训练大模型与 API', value: '$45B' },
+        { label: '中间件', description: '向量库 / Agent / 安全', value: '$18B' },
+        { label: '垂直应用', description: '医疗 / 法律 / 金融', value: '$62B' },
+        { label: '终端服务', description: 'Copilot / 搜索 / 客服', value: '$89B' },
+      ],
+      footnote: '数据为 2026 年全球市场规模估算，单位：美元。',
+    };
+  }
+  if (layoutId === 'theme06_quarter_table_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'QUARTERLY',
+      title: '季度核心指标追踪',
+      subtitle: '全年四个季度的收入、毛利与运营利润率变化',
+      columns: [
+        { item: '季度' },
+        { item: '收入' },
+        { item: '毛利' },
+        { item: '运营利润率' },
+        { item: '环比' },
+      ],
+      rows: [
+        { quarter: 'Q1', metric1: '¥1.2B', metric2: '¥480M', metric3: '12%', change: '+8%', tone: 'positive' },
+        { quarter: 'Q2', metric1: '¥1.5B', metric2: '¥630M', metric3: '15%', change: '+18%', tone: 'positive' },
+        { quarter: 'Q3', metric1: '¥1.8B', metric2: '¥780M', metric3: '17%', change: '+14%', tone: 'positive', focus: true },
+        { quarter: 'Q4', metric1: '¥2.1B', metric2: '¥920M', metric3: '19%', change: '+12%', tone: 'positive' },
+      ],
+      summary: { label: '全年收入', value: '¥6.6B' },
+    };
+  }
+  if (layoutId === 'theme06_metric_showcase_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'KEY METRIC',
+      title: '年度活跃用户突破',
+      subtitle: '平台在过去 12 个月内实现显著增长',
+      value: '10M',
+      unit: '用户',
+      change: '+142%',
+      changeLabel: '同比增长',
+      supporting: [
+        { value: '4.8x', label: '周活跃度' },
+        { value: '68%', label: '付费转化' },
+        { value: '92%', label: '留存率' },
+        { value: '127', label: '覆盖国家' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_milestone_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'MILESTONES',
+      title: '从初创到 IPO 的关键节点',
+      subtitle: '五年内的融资、产品与商业化里程碑',
+      milestones: [
+        { date: '2021', title: '公司成立', value: 'Seed', status: '已完成', description: '完成核心团队组建与产品原型' },
+        { date: '2022', title: '产品发布', value: 'Series A', status: '已完成', description: '首个商业版本上线，签约 10 家客户' },
+        { date: '2023', title: '规模化', value: 'Series B', status: '已完成', description: '年收入突破 1 亿元，团队扩张至 200 人' },
+        { date: '2024', title: '全球化', value: 'Series C', status: '已完成', description: '进入亚太与欧洲市场' },
+        { date: '2026', title: 'IPO', value: 'NASDAQ', status: '进行中', focus: true, description: '预计 Q3 挂牌上市' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_risk_matrix_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'RISK MATRIX',
+      title: 'AI 投资关键风险矩阵',
+      subtitle: '按发生概率与影响程度划分的四类核心风险',
+      xAxisLabel: '影响程度 →',
+      yAxisLabel: '发生概率 →',
+      cells: [
+        { title: '技术路线不确定', description: '模型能力演进可能偏离预期，需保持多路线投入。', level: 'high', focus: true },
+        { title: '监管政策收紧', description: '数据合规与内容安全要求提高，合规成本上升。', level: 'high' },
+        { title: '人才竞争激烈', description: '核心算法与工程人才稀缺，招聘与留存成本持续走高。', level: 'medium' },
+        { title: '客户付费意愿波动', description: '宏观经济影响企业 IT 预算，需强化 ROI 证明。', level: 'low' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_sector_comparison_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'BUILD VS BUY',
+      title: '自研模型 vs 第三方 API',
+      subtitle: '企业在 AI 能力建设中的两种典型路径对比',
+      leftTitle: '自研模型',
+      rightTitle: '第三方 API',
+      points: [
+        { text: '数据隐私与可控性更高', winner: 'left' },
+        { text: '前期投入与人才门槛更高', winner: 'right' },
+        { text: '可针对业务做深度定制', winner: 'left' },
+        { text: '上线速度快，即开即用', winner: 'right' },
+        { text: '长期规模化成本更低', winner: 'left' },
+        { text: '运维与升级责任由厂商承担', winner: 'right' },
+      ],
+      leftSummary: '适合数据敏感、差异化要求高的头部企业。',
+      rightSummary: '适合快速验证、资源有限的中小型团队。',
+    };
+  }
+  if (layoutId === 'theme06_geo_distribution_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'GEO DISTRIBUTION',
+      title: 'AI 创业公司地理分布',
+      subtitle: '头部城市集中了超过七成的融资事件与人才储备',
+      unit: '家公司',
+      items: [
+        { name: 'San Francisco Bay Area', value: 420 },
+        { name: 'New York', value: 185 },
+        { name: 'Seattle', value: 96 },
+        { name: 'Boston', value: 78 },
+        { name: 'Los Angeles', value: 64 },
+        { name: 'Austin', value: 58 },
+      ],
+      totalLabel: '总计',
+    };
+  }
+  if (layoutId === 'theme06_geo_heatmap_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'GEO HEATMAP',
+      title: '区域 AI 投资热度',
+      subtitle: '不同区域在融资、人才与政策三个维度的热度分布',
+      xAxis: [{ item: '融资热度' }, { item: '人才密度' }, { item: '政策开放度' }],
+      yAxis: [{ item: '湾区' }, { item: '纽约' }, { item: '西雅图' }, { item: '波士顿' }, { item: '洛杉矶' }],
+      data: [
+        { item: '融资热度,湾区,95' },
+        { item: '人才密度,湾区,92' },
+        { item: '政策开放度,湾区,78' },
+        { item: '融资热度,纽约,82' },
+        { item: '人才密度,纽约,85' },
+        { item: '政策开放度,纽约,72' },
+        { item: '融资热度,西雅图,68' },
+        { item: '人才密度,西雅图,74' },
+        { item: '政策开放度,西雅图,80' },
+        { item: '融资热度,波士顿,58' },
+        { item: '人才密度,波士顿,70' },
+        { item: '政策开放度,波士顿,68' },
+        { item: '融资热度,洛杉矶,52' },
+        { item: '人才密度,洛杉矶,60' },
+        { item: '政策开放度,洛杉矶,65' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_ecosystem_graph_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'ECOSYSTEM',
+      title: '生成式 AI 生态图谱',
+      subtitle: '基础设施、模型层、工具链与应用层的协作关系',
+      categories: [{ item: '基础设施' }, { item: '基础模型' }, { item: '工具链' }, { item: '应用' }],
+      nodes: [
+        { name: '云端算力', category: 0, value: 80 },
+        { name: 'GPU 集群', category: 0, value: 60 },
+        { name: '大模型 API', category: 1, value: 90 },
+        { name: '开源模型', category: 1, value: 70 },
+        { name: '向量数据库', category: 2, value: 55 },
+        { name: 'Agent 框架', category: 2, value: 65 },
+        { name: '代码助手', category: 3, value: 75 },
+        { name: '搜索增强', category: 3, value: 68 },
+        { name: '设计工具', category: 3, value: 50 },
+      ],
+      links: [
+        { source: '云端算力', target: '大模型 API', value: 5 },
+        { source: 'GPU 集群', target: '开源模型', value: 4 },
+        { source: '大模型 API', target: 'Agent 框架', value: 5 },
+        { source: '开源模型', target: '代码助手', value: 4 },
+        { source: '向量数据库', target: '搜索增强', value: 4 },
+        { source: 'Agent 框架', target: '代码助手', value: 3 },
+        { source: 'Agent 框架', target: '搜索增强', value: 3 },
+        { source: '大模型 API', target: '设计工具', value: 3 },
+      ],
+      conclusion: '模型层是生态核心，工具链与应用层围绕其快速分化，基础设施层提供算力底座。',
+    };
+  }
+
+  // theme06 Phase 1 + Phase 2 新版式示例数据
+  if (layoutId === 'theme06_cover_product_v1') {
+    return {
+      imageUrl: '',
+      badge: 'PRODUCT LAUNCH',
+      hero: 'Atlas One',
+      title: '下一代智能分析平台',
+      subtitle: '用 AI 将复杂数据转化为可执行的产业洞察',
+      kpis: [
+        { value: '10x', unit: '', label: '分析效率提升' },
+        { value: '85%', unit: '', label: '预测准确率' },
+        { value: '3', unit: '周', label: '部署周期' },
+      ],
+      footnoteLeft: 'CONFIDENTIAL',
+      footnoteRight: '2026.08',
+    };
+  }
+  if (layoutId === 'theme06_cover_business_v1') {
+    return {
+      imageUrl: '',
+      tag: 'BUSINESS PLAN',
+      title: 'AI 驱动的产业情报服务',
+      subtitle: '为投资与研究团队提供全景式数据洞察',
+      bars: [
+        { label: '目标市场', value: '1200 亿', progress: 0.85 },
+        { label: '年复合增长率', value: '34%', progress: 0.65 },
+        { label: '客户留存率', value: '92%', progress: 0.92 },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_chapter_numbered_v1') {
+    return {
+      imageUrl: '',
+      tag: 'CHAPTER',
+      number: '02',
+      title: '市场竞争格局',
+      subtitle: '从融资、产品到生态的全景扫描',
+    };
+  }
+  if (layoutId === 'theme06_chapter_split_v1') {
+    return {
+      imageUrl: '',
+      tag: 'CHAPTER',
+      number: '03',
+      title: '技术架构演进',
+      subtitle: '从单点工具到平台化 Agent 的跃迁',
+      visualItems: [
+        { value: '5', label: '核心模块' },
+        { value: '40+', label: 'API 接口' },
+        { value: '99.9%', label: '可用性' },
+        { value: '<100ms', label: '响应延迟' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_trend_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'TREND',
+      title: '市场规模增长趋势',
+      subtitle: '过去八个季度保持稳健上升',
+      unit: '亿美元',
+      labels: [{ item: '2024 Q1' }, { item: '2024 Q2' }, { item: '2024 Q3' }, { item: '2024 Q4' }, { item: '2025 Q1' }, { item: '2025 Q2' }, { item: '2025 Q3' }, { item: '2025 Q4' }],
+      data: [{ item: 42 }, { item: 55 }, { item: 68 }, { item: 79 }, { item: 96 }, { item: 118 }, { item: 145 }, { item: 172 }],
+      events: [{ label: '产品发布' }, { label: '海外扩张' }, { label: '战略融资' }],
+    };
+  }
+  if (layoutId === 'theme06_cumulative_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'CUMULATIVE',
+      title: '年度累计收入构成',
+      subtitle: '各业务线逐季叠加，整体规模持续扩大',
+      unit: '百万元',
+      labels: [{ item: 'Q1' }, { item: 'Q2' }, { item: 'Q3' }, { item: 'Q4' }],
+      data: [{ item: 120 }, { item: 280 }, { item: 520 }, { item: 860 }],
+      conclusion: { value: '860M', label: '年度累计', description: '四季度受企业客户续约推动，收入环比提升 65%，全年目标超额完成。' },
+    };
+  }
+  if (layoutId === 'theme06_quadrant_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'QUADRANT',
+      title: '竞争格局象限分析',
+      subtitle: '按市场影响力与增长潜力划分赛道玩家',
+      xAxisLabel: '市场影响力 →',
+      yAxisLabel: '增长潜力 →',
+      bubbles: [
+        { name: '领导者', x: 85, y: 82, size: 48 },
+        { name: '挑战者', x: 72, y: 45, size: 36 },
+        { name: '探索者', x: 35, y: 78, size: 32 },
+        { name: '利基者', x: 28, y: 30, size: 24 },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_outlook_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'OUTLOOK',
+      title: '下一步行动',
+      subtitle: '从洞察到落地的关键路径',
+      points: [
+        { text: '持续跟踪头部模型能力边界与成本曲线' },
+        { text: '建立跨部门 AI 应用评估与治理框架' },
+        { text: '优先在客服、代码、营销场景验证 ROI' },
+      ],
+      steps: [
+        { date: 'Q1', title: '试点验证', description: '选择 3 个高价值场景跑通端到端流程' },
+        { date: 'Q2', title: '能力建设中台化', description: '沉淀提示词、评测与数据飞轮' },
+        { date: 'Q3', title: '规模化推广', description: '复制到更多业务线并建立运营指标' },
+        { date: 'Q4', title: '生态联动', description: '与模型厂商、云厂商形成战略合作' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_recap_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'RECAP',
+      title: '核心结论回顾',
+      subtitle: '本报告的关键发现与建议',
+      points: [
+        { text: 'AI Agent 市场处于早期爆发阶段，头部玩家快速分化' },
+        { text: '企业客户更看重可控性、合规与端到端集成能力' },
+        { text: '检索增强与工具调用是决定 Agent 可用性的核心技术' },
+      ],
+      value: '85%',
+      valueLabel: '受访企业计划未来 12 个月试点 Agent',
+    };
+  }
+  if (layoutId === 'theme06_company_rounds_v1') {
+    return {
+      imageUrl: '',
+      company: '星云智能',
+      tagline: '专注企业级 AI Agent 平台，累计服务 200+ 行业客户',
+      rounds: [
+        { date: '2022.06', round: '种子轮', amount: '数百万', investor: '某知名天使' },
+        { date: '2023.03', round: 'Pre-A', amount: '数千万', investor: '某头部 VC' },
+        { date: '2024.01', round: 'A 轮', amount: '1 亿', investor: '某产业基金' },
+        { date: '2025.08', round: 'B 轮', amount: '3 亿', investor: '某主权基金' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_company_investors_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'INVESTORS',
+      title: '主要投资方可视化',
+      subtitle: '覆盖早期 VC、产业基金与战略投资方',
+      investors: [
+        { name: '红杉中国', type: 'VC', stage: 'A 轮' },
+        { name: '高瓴投资', type: 'PE', stage: 'B 轮' },
+        { name: '某产业基金', type: 'CVC', stage: '战略' },
+        { name: '某头部 VC', type: 'VC', stage: 'Pre-A' },
+        { name: '某天使基金', type: 'Angel', stage: '种子' },
+        { name: '某主权基金', type: 'Sovereign', stage: 'B+ 轮' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_company_comparison_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'COMPARISON',
+      title: '核心玩家能力对比',
+      subtitle: '从技术、商业化、生态三个维度评估赛道代表公司',
+      dimensions: [{ item: '技术深度' }, { item: '商业化' }, { item: '生态规模' }],
+      companies: [
+        { name: '星云智能', values: [{ item: '领先' }, { item: '快速' }, { item: '完整' }] },
+        { name: '竞品 A', values: [{ item: '中等' }, { item: '成熟' }, { item: '分散' }] },
+        { name: '竞品 B', values: [{ item: '追赶' }, { item: '早期' }, { item: '垂直' }] },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_geo_cities_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'GEO CITIES',
+      title: '重点城市指标排名',
+      subtitle: '抽象条形图呈现核心城市关键指标差异',
+      cities: [
+        { name: '北京', value: '1,240', unit: '亿', change: '+12%' },
+        { name: '上海', value: '1,180', unit: '亿', change: '+9%' },
+        { name: '深圳', value: '980', unit: '亿', change: '+15%' },
+        { name: '杭州', value: '720', unit: '亿', change: '+18%' },
+        { name: '广州', value: '650', unit: '亿', change: '+7%' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_agent_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'AGENT MAP',
+      title: 'Agent 能力与应用图谱',
+      subtitle: '抽象网络呈现核心能力节点与应用场景连接',
+      categories: [{ item: '核心能力' }, { item: '感知层' }, { item: '执行层' }, { item: '应用场景' }],
+      nodes: [
+        { id: 'reasoning', name: '推理规划', category: 0, value: 48 },
+        { id: 'memory', name: '记忆管理', category: 0, value: 40 },
+        { id: 'tool', name: '工具调用', category: 0, value: 44 },
+        { id: 'vision', name: '多模态感知', category: 1, value: 32 },
+        { id: 'text', name: '文本理解', category: 1, value: 36 },
+        { id: 'code', name: '代码执行', category: 2, value: 38 },
+        { id: 'search', name: '检索增强', category: 2, value: 34 },
+        { id: 'service', name: '智能客服', category: 3, value: 30 },
+        { id: 'analyst', name: '数据分析', category: 3, value: 28 },
+        { id: 'coder', name: '编程助手', category: 3, value: 32 },
+      ],
+      links: [
+        { source: 'reasoning', target: 'tool' },
+        { source: 'reasoning', target: 'memory' },
+        { source: 'vision', target: 'reasoning' },
+        { source: 'text', target: 'reasoning' },
+        { source: 'tool', target: 'code' },
+        { source: 'tool', target: 'search' },
+        { source: 'code', target: 'coder' },
+        { source: 'search', target: 'analyst' },
+        { source: 'memory', target: 'service' },
+      ],
+      conclusion: { label: '核心洞察', text: 'Agent 的核心竞争力来自推理规划、工具调用与记忆管理的协同，垂直场景落地决定商业化天花板。' },
+    };
+  }
+  if (layoutId === 'theme06_search_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'SEARCH FLOW',
+      title: '智能检索流程',
+      subtitle: '从问题理解到答案生成的端到端流程',
+      steps: [
+        { title: 'Query 理解', description: '解析用户意图、实体与约束', input: '自然语言问题', output: '结构化查询' },
+        { title: '向量召回', description: '在知识库中检索相关片段', input: 'Embedding', output: 'Top-K 候选' },
+        { title: '重排序', description: '按相关性与可信度精排', input: '候选片段', output: '精选上下文' },
+        { title: '答案生成', description: '基于上下文生成可溯源回答', input: '上下文 + 问题', output: '最终答案' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_cover_manufacturing_v1') {
+    return {
+      imageUrl: '',
+      badge: 'LEAN MFG',
+      headline: '精益智造 · 数字工厂',
+      title: '下一代智能制造解决方案',
+      subtitle: '以数据驱动生产流程优化，实现降本增效与柔性交付',
+      metrics: [
+        { value: '42%', unit: '', label: '生产损耗降低' },
+        { value: '3x', unit: '', label: '设备综合效率提升' },
+        { value: '99.2%', unit: '', label: '订单准时交付率' },
+      ],
+      footnoteLeft: 'CONFIDENTIAL',
+      footnoteRight: '2026.08',
+    };
+  }
+  if (layoutId === 'theme06_cover_brand_v1') {
+    return {
+      imageUrl: '',
+      badge: 'BRAND MKT',
+      headline: '整合营销 · 全域增长',
+      title: '品牌整合营销方案',
+      subtitle: '打通内容、社交、电商与私域，构建品牌增长飞轮',
+      channels: [
+        { name: '内容种草', metric: '3.2M 曝光' },
+        { name: '社交传播', metric: '18% 互动率' },
+        { name: '电商转化', metric: '12% ROI' },
+        { name: '私域运营', metric: '45% 复购率' },
+        { name: 'KOL 矩阵', metric: '120+ 达人' },
+      ],
+      footnoteLeft: 'CONFIDENTIAL',
+      footnoteRight: '2026.08',
+    };
+  }
+  if (layoutId === 'theme06_method_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'RESEARCH METHOD',
+      title: '产业研究方法论',
+      subtitle: '从数据采集到结论输出的四步闭环',
+      steps: [
+        { number: '01', title: '数据采集', description: '整合公开财报、投融资、专利与行业数据库' },
+        { number: '02', title: '清洗建模', description: '构建统一指标体系，清洗异常值并标准化' },
+        { number: '03', title: '交叉验证', description: '多源数据交叉验证，排除单一数据源偏差' },
+        { number: '04', title: '洞察输出', description: '提炼趋势、风险与机会，形成可执行结论' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_quarter_q1_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'Q1 2026',
+      title: '一季度市场表现',
+      subtitle: '年初需求回暖，核心指标实现开门红',
+      labels: ['1月', '2月', '3月'],
+      data: [{ item: 42 }, { item: 58 }, { item: 73 }],
+      highlight: '3 月新品发布推动单月环比增长 26%',
+      conclusion: 'Q1 整体符合预期，三月增速加快为 Q2 奠定基础。',
+    };
+  }
+  if (layoutId === 'theme06_quarter_q2_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'Q2 2026',
+      title: '二季度市场表现',
+      subtitle: '旺季拉动增长，渠道扩张初见成效',
+      labels: ['4月', '5月', '6月'],
+      data: [{ item: 73 }, { item: 91 }, { item: 86 }],
+      highlight: '5 月渠道扩张覆盖 12 个新城市，带动峰值突破',
+      conclusion: 'Q2 峰值显著抬升，但 6 月回调提示需关注留存。',
+    };
+  }
+  if (layoutId === 'theme06_quarter_q3_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'Q3 2026',
+      title: '三季度市场表现',
+      subtitle: '产品迭代加速，用户规模再上台阶',
+      labels: ['7月', '8月', '9月'],
+      data: [{ item: 86 }, { item: 94 }, { item: 112 }],
+      highlight: '9 月 2.0 版本上线，月活突破历史新高',
+      conclusion: 'Q3 增长质量提升，产品迭代成为主要驱动力。',
+    };
+  }
+  if (layoutId === 'theme06_quarter_q4_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'Q4 2026',
+      title: '四季度市场表现',
+      subtitle: '年末冲刺收官，全年目标超额完成',
+      labels: ['10月', '11月', '12月'],
+      data: [{ item: 112 }, { item: 128 }, { item: 145 }],
+      highlight: '12 月年终大促创下单月新高，全年目标达成 118%',
+      conclusion: 'Q4 强势收官，全年呈现逐季加速态势。',
+    };
+  }
+  if (layoutId === 'theme06_big_number_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'KEY METRIC',
+      title: '年度核心指标',
+      number: '128',
+      unit: '%',
+      label: '同比增长',
+      description: '核心业务收入实现翻倍增长，增速连续四个季度领跑行业。',
+      supporting: [
+        { value: '34%', label: '市场份额提升' },
+        { value: '12M', label: '新增用户' },
+        { value: '$2.4B', label: '总交易额' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_chapter_focus_v1') {
+    return {
+      imageUrl: '',
+      tag: 'CHAPTER',
+      number: '03',
+      title: '融资热度',
+      subtitle: '资本持续向头部模型与基础设施聚集',
+      focusValue: '$97B',
+      focusUnit: '',
+      focusLabel: '年度投融资总额',
+    };
+  }
+  if (layoutId === 'theme06_chapter_image_v1') {
+    return {
+      imageUrl: '',
+      tag: 'CHAPTER',
+      number: '04',
+      title: '区域洞察',
+      subtitle: '从地理分布看创新中心与资本热土',
+      imageUrl: '',
+    };
+  }
+  if (layoutId === 'theme06_chapter_minimal_v1') {
+    return {
+      imageUrl: '',
+      tag: 'CHAPTER',
+      title: '未来展望',
+      subtitle: '从当前格局推演下一阶段的战略机会',
+    };
+  }
+  if (layoutId === 'theme06_triad_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'TRIAD',
+      title: '三种路径对比',
+      subtitle: '从成熟度、成本与可控性选择最佳落地方案',
+      items: [
+        { title: '自研模型', description: '完全掌控数据与推理链路，投入高、周期长。', value: 'A', accent: true },
+        { title: '微调开源', description: '基于开源基座做领域适配，平衡成本与效果。', value: 'B', accent: false },
+        { title: 'API 调用', description: '快速上线、按需付费，但依赖第三方能力边界。', value: 'C', accent: false },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_deal_map_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'DEAL MAP',
+      title: '核心交易关系网络',
+      subtitle: '投资方、标的公司与战略伙伴的关键连接',
+      nodes: [
+        { name: '领投基金 A', category: 0, value: 90 },
+        { name: '领投基金 B', category: 0, value: 75 },
+        { name: '战略 C', category: 1, value: 65 },
+        { name: '标的公司 X', category: 2, value: 100 },
+        { name: '标的公司 Y', category: 2, value: 80 },
+        { name: '标的公司 Z', category: 2, value: 55 },
+        { name: '投行 M', category: 3, value: 50 },
+      ],
+      links: [
+        { source: '领投基金 A', target: '标的公司 X', value: 5 },
+        { source: '领投基金 B', target: '标的公司 Y', value: 4 },
+        { source: '战略 C', target: '标的公司 X', value: 3 },
+        { source: '标的公司 X', target: '标的公司 Y', value: 2 },
+        { source: '投行 M', target: '标的公司 Z', value: 2 },
+      ],
+      conclusion: '头部标的公司同时被多家基金与战略方覆盖，交易网络高度集中。',
+    };
+  }
+  if (layoutId === 'theme06_size_split_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'SIZE SPLIT',
+      title: '融资规模分布',
+      subtitle: '不同轮次/规模区间的资金占比',
+      unit: '亿美元',
+      items: [
+        { name: '种子 - A 轮', value: 12 },
+        { name: 'B - C 轮', value: 28 },
+        { name: 'D 轮及以上', value: 35 },
+        { name: '并购', value: 18 },
+        { name: 'PIPE / 后续', value: 7 },
+      ],
+      conclusion: '中后期轮次与并购占据资金主流，早期项目占比收缩。',
+    };
+  }
+  if (layoutId === 'theme06_revenue_risk_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'REVENUE RISK',
+      title: '收入端主要风险',
+      subtitle: '识别可能影响收入达成的关键变量与敞口',
+      risks: [
+        { label: '大客户续约延迟', impact: '-12%', probability: '中', level: 'medium' },
+        { label: '价格战侵蚀客单价', impact: '-8%', probability: '高', level: 'high' },
+        { label: '新市场拓展不及预期', impact: '-15%', probability: '中', level: 'medium' },
+        { label: '监管合规成本上升', impact: '-5%', probability: '低', level: 'low' },
+      ],
+      totalExposure: '-$42M',
+      exposureLabel: '预计收入敞口',
+    };
+  }
+  if (layoutId === 'theme06_region_risk_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'REGIONAL RISK',
+      title: '区域风险热力图',
+      subtitle: '不同地区在政策、汇率与需求侧的风险分布',
+      regions: ['北美', '欧洲', '亚太', '拉美', '中东'],
+      risks: ['政策', '汇率', '需求', '供应链'],
+      items: [
+        { region: '北美', risk: '政策', value: 3 }, { region: '北美', risk: '汇率', value: 5 },
+        { region: '北美', risk: '需求', value: 4 }, { region: '北美', risk: '供应链', value: 5 },
+        { region: '欧洲', risk: '政策', value: 6 }, { region: '欧洲', risk: '汇率', value: 7 },
+        { region: '欧洲', risk: '需求', value: 5 }, { region: '欧洲', risk: '供应链', value: 4 },
+        { region: '亚太', risk: '政策', value: 4 }, { region: '亚太', risk: '汇率', value: 6 },
+        { region: '亚太', risk: '需求', value: 7 }, { region: '亚太', risk: '供应链', value: 6 },
+        { region: '拉美', risk: '政策', value: 7 }, { region: '拉美', risk: '汇率', value: 8 },
+        { region: '拉美', risk: '需求', value: 6 }, { region: '拉美', risk: '供应链', value: 7 },
+        { region: '中东', risk: '政策', value: 5 }, { region: '中东', risk: '汇率', value: 6 },
+        { region: '中东', risk: '需求', value: 5 }, { region: '中东', risk: '供应链', value: 8 },
+      ],
+      conclusion: '欧洲汇率与亚太需求侧风险偏高，需要针对性对冲。',
+    };
+  }
+  if (layoutId === 'theme06_open_risk_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'OPEN RISK',
+      title: '未来不确定性扫描',
+      subtitle: '识别可能改变行业格局的外部变量与情景',
+      uncertainties: [
+        { horizon: '6 个月内', scenario: '监管细则落地', impact: '合规成本上升 10-20%', probability: '高' },
+        { horizon: '12 个月内', scenario: '开源模型能力追平闭源', impact: 'API 价格下探 30%', probability: '中' },
+        { horizon: '18 个月内', scenario: '地缘政治限制算力出口', impact: '区域交付周期延长', probability: '低' },
+      ],
+      conclusion: '短期监管与中期技术迭代是最需要持续跟踪的变量。',
+    };
+  }
+  if (layoutId === 'theme06_legal_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'LEGAL & COMPLIANCE',
+      title: 'AI 产品合规框架',
+      subtitle: '从数据、算法到内容输出的关键合规节点',
+      items: [
+        { title: '数据授权与最小化', description: '训练与推理数据需获得合法授权，遵循目的限制与最小必要原则。' },
+        { title: '算法透明与可解释', description: '高风险场景提供可解释输出，记录模型版本与决策依据。' },
+        { title: '内容安全护栏', description: '建立输入过滤、输出审核与人工复核机制，降低有害内容风险。' },
+        { title: '跨境传输评估', description: '涉及个人信息出境时，完成安全评估与标准合同备案。' },
+      ],
+      conclusion: '合规不是一次性动作，而是贯穿产品生命周期的持续治理。',
+    };
+  }
+  if (layoutId === 'theme06_capital_flow_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'CAPITAL FLOW',
+      title: '资本流向图谱',
+      subtitle: '从资金来源到赛道配置的完整链路',
+      nodes: [
+        { name: 'VC 基金' },
+        { name: 'PE 基金' },
+        { name: '战略投资' },
+        { name: '基础模型' },
+        { name: '基础设施' },
+        { name: '应用层' },
+      ],
+      links: [
+        { source: 'VC 基金', target: '基础模型', value: 45 },
+        { source: 'VC 基金', target: '应用层', value: 25 },
+        { source: 'PE 基金', target: '基础设施', value: 30 },
+        { source: 'PE 基金', target: '基础模型', value: 20 },
+        { source: '战略投资', target: '基础设施', value: 18 },
+        { source: '战略投资', target: '应用层', value: 12 },
+      ],
+      conclusion: '基础模型与基础设施吸纳了超过六成的资本，应用层仍在验证规模化路径。',
+    };
+  }
+  if (layoutId === 'theme06_avg_ticket_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'DEAL SIZE',
+      title: '平均交易额分布',
+      subtitle: '不同规模区间的交易数量与金额占比',
+      intervals: ['<$1M', '$1–5M', '$5–15M', '$15–50M', '$50–100M', '>$100M'],
+      values: [18, 32, 28, 16, 5, 1],
+      unit: '笔',
+      conclusion: '中小型交易仍是市场主力，超过九成交易集中在 5,000 万美元以下。',
+    };
+  }
+  if (layoutId === 'theme06_industry_vertical_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'INDUSTRY SPOTLIGHT',
+      title: '医疗健康 AI 落地现状',
+      subtitle: '从影像辅助诊断到药物发现，AI 正在重塑研发与临床路径',
+      industry: '医疗健康',
+      useCases: [
+        { title: '影像辅助诊断', description: '准确率已接近资深医师水平，阅片效率提升 3 倍以上。' },
+        { title: '药物发现', description: '利用生成式模型压缩先导化合物筛选周期。' },
+        { title: '智能问诊', description: '覆盖常见症状预检与分级诊疗导流。' },
+        { title: '慢病管理', description: '基于可穿戴数据的个性化干预方案。' },
+      ],
+      highlights: [
+        { value: '470+', label: '在研项目', accent: true },
+        { value: '$12B', label: '年度融资', accent: false },
+        { value: '38%', label: '渗透率提升', accent: false },
+        { value: '24', label: '获批产品', accent: true },
+      ],
+      insight: '监管框架与临床验证仍是规模化落地的最大变量，率先通过审批的企业将建立显著壁垒。',
+    };
+  }
+  if (layoutId === 'theme06_industry_infrastructure_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'INFRASTRUCTURE',
+      title: 'AI 基础设施版图',
+      subtitle: '算力、数据与工具链构成新一代智能底座',
+      segments: [
+        { title: '算力层', description: 'GPU 集群、推理优化与弹性调度平台。', value: 'L0', accent: true },
+        { title: '数据层', description: '向量数据库、数据管道与标注平台。', value: 'L1', accent: false },
+        { title: '模型层', description: '基础模型、微调框架与模型服务平台。', value: 'L2', accent: false },
+        { title: '工具层', description: 'Agent 编排、评估治理与可观测性工具。', value: 'L3', accent: true },
+      ],
+      metrics: [
+        { value: '$31B', label: '年度融资' },
+        { value: '62%', label: '资本占比' },
+        { value: '4.2x', label: '平均估值倍数' },
+      ],
+      insight: '基础设施层吸纳了超过六成的 AI 投资，算力与数据成为最关键的壁垒。',
+    };
+  }
+  if (layoutId === 'theme06_company_spotlight_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'COMPANY SPOTLIGHT',
+      company: 'OpenAI',
+      tagline: '引领通用人工智能研究与应用',
+      description: '从 GPT 系列模型到 ChatGPT，OpenAI 持续推动大语言模型技术的产品化与规模化落地。',
+      stage: '后期轮',
+      location: 'San Francisco',
+      founded: '2015',
+      metrics: [
+        { value: '$157B', label: '最新估值' },
+        { value: '400M+', label: '周活用户' },
+        { value: '75%', label: '企业订阅占比' },
+        { value: '2022', label: 'ChatGPT 发布' },
+      ],
+      highlights: [
+        { title: '模型迭代', description: 'GPT-4 及后续模型在推理、代码与多模态能力上持续领先。' },
+        { title: '生态构建', description: 'Plugin 与 API 生态吸引数百万开发者与企业客户。' },
+        { title: '商业模式', description: '订阅与 API 双轮驱动，形成规模化收入。' },
+      ],
+    };
+  }
+  if (layoutId === 'theme06_ipo_watch_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'IPO WATCH',
+      title: '2026 AI 赛道 IPO 观察',
+      subtitle: '高估值独角兽的上市窗口与关键变量',
+      companies: [
+        { name: 'CoreWeave', exchange: 'NASDAQ', expectedDate: '2026 Q2', valuation: '$35B', status: '已递交' },
+        { name: 'Databricks', exchange: 'NYSE', expectedDate: '2026 Q3', valuation: '$62B', status: '筹备中' },
+        { name: 'Scale AI', exchange: 'NASDAQ', expectedDate: '2026 Q4', valuation: '$25B', status: '筹备中' },
+        { name: 'Glean', exchange: 'NYSE', expectedDate: '2027', valuation: '$4.6B', status: '观望中' },
+      ],
+      conclusion: '算力与数据基础设施公司率先进入上市窗口，应用层公司仍需证明规模化盈利。',
+    };
+  }
+  if (layoutId === 'theme06_statement_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'STATEMENT',
+      statement: 'AI 基础设施的投资窗口将在未来 18 个月持续收窄。',
+      subtitle: '资本向头部集中、推理成本下降与监管趋严三重力量叠加，尾部玩家生存空间被压缩。',
+      points: [
+        { text: '头部模型训练成本超过 10 亿美元，新进入者难以复制。' },
+        { text: '推理价格年均下降 50% 以上，压缩垂直模型溢价。' },
+        { text: '全球主要市场同步推进 AI 监管立法。' },
+      ],
+      source: 'lemonPPT 研究 · 2026',
+    };
+  }
+  if (layoutId === 'theme06_industry_finance_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'FINANCE SPOTLIGHT',
+      title: '金融 AI 落地场景',
+      subtitle: '从智能投顾到反欺诈，AI 正在重构金融服务链路',
+      industry: '金融',
+      useCases: [
+        { title: '智能投顾', description: '基于客户画像与市场的个性化资产配置建议。' },
+        { title: '反欺诈风控', description: '实时识别异常交易模式，降低欺诈损失。' },
+        { title: '信贷审批', description: '融合多维度数据，提升授信效率与准确性。' },
+        { title: '合规助手', description: '自动化解析监管文本并生成合规报告。' },
+      ],
+      highlights: [
+        { value: '$45B', label: '年度投入', accent: true },
+        { value: '62%', label: '风控效率提升', accent: false },
+        { value: '3.2x', label: '客户转化率', accent: false },
+        { value: '40%', label: '运营成本下降', accent: true },
+      ],
+      insight: '监管合规与数据隐私是金融 AI 规模化落地的核心变量，头部机构正通过私有化部署建立信任壁垒。',
+    };
+  }
+  if (layoutId === 'theme06_industry_growth_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'GROWTH SPOTLIGHT',
+      title: '增长飞轮拆解',
+      subtitle: '从获客到留存，识别驱动指数级增长的核心杠杆',
+      stages: [
+        { period: '获客', milestone: '病毒式传播 + 精准投放', value: '+120%' },
+        { period: '激活', milestone: '缩短首次价值体验路径', value: '+45%' },
+        { period: '留存', milestone: '习惯养成与社区运营', value: '+30%' },
+        { period: '变现', milestone: '订阅与增值服务升级', value: '+60%' },
+      ],
+      levers: [
+        { title: '产品驱动增长', description: '免费工具 + 付费功能分层', metric: 'PLG' },
+        { title: '生态合作', description: '与平台、渠道共建场景', metric: 'PARTNER' },
+        { title: '数据驱动运营', description: '实时实验与个性化触达', metric: 'DATA' },
+        { title: '品牌内容', description: '行业报告 + 社区影响力', metric: 'BRAND' },
+      ],
+      insight: '留存是增长飞轮的放大器，获客成本下降与使用深度提升共同决定长期价值。',
+    };
+  }
+  if (layoutId === 'theme06_industry_safety_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'SAFETY SPOTLIGHT',
+      title: 'AI 安全与合规框架',
+      subtitle: '从模型安全到数据治理，构建可信 AI 基础设施',
+      risks: [
+        { category: '提示注入', level: 'high', description: '恶意提示绕过安全护栏，导致输出有害内容。' },
+        { category: '数据泄露', level: 'high', description: '训练数据或上下文中的敏感信息被泄露。' },
+        { category: '幻觉风险', level: 'medium', description: '模型生成看似合理但事实错误的内容。' },
+        { category: '版权争议', level: 'medium', description: '训练语料与生成结果引发知识产权纠纷。' },
+      ],
+      controls: [
+        { title: '输入输出过滤', status: '已部署' },
+        { title: '敏感数据脱敏', status: '已部署' },
+        { title: '模型审计日志', status: '进行中' },
+        { title: '合规评估报告', status: '规划中' },
+      ],
+      insight: '安全不是一次性工程，而是贯穿模型训练、部署与运营的全生命周期治理。',
+    };
+  }
+  if (layoutId === 'theme06_deal_structure_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'DEAL STRUCTURE',
+      title: '交易结构与关键条款',
+      subtitle: '拆解一桩标志性并购案的参与方与对价构成',
+      dealName: 'Alpha 收购 Beta',
+      buyer: 'Alpha Corp',
+      target: 'Beta Inc',
+      value: '$12.5B',
+      valuation: 'EV/Revenue 8.2x',
+      structure: [
+        { label: '现金', percentage: 55 },
+        { label: '股票', percentage: 35 },
+        { label: '债务承担', percentage: 10 },
+      ],
+      parties: [
+        { role: '买方顾问', name: '高盛' },
+        { role: '标的顾问', name: '摩根士丹利' },
+        { role: '法律顾问', name: '世达' },
+        { role: '财务尽调', name: '德勤' },
+      ],
+      highlights: [
+        { value: '30 天', label: '独家谈判期' },
+        { value: '$500M', label: '分手费' },
+        { value: '监管', label: '需反垄断审批' },
+        { value: 'Q4', label: '预计交割' },
+      ],
+      insight: '股票对价占比高意味着双方对未来协同效应有较强共识，监管审批是最大不确定性。',
+    };
+  }
+  if (layoutId === 'theme06_alliance_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'ALLIANCE',
+      title: '战略联盟与资源整合',
+      subtitle: '通过互补能力共建生态，扩大市场覆盖与技术纵深',
+      partners: [
+        { name: '云厂商 A', role: '基础设施', contribution: '提供 GPU 集群与全球机房' },
+        { name: '模型厂商 B', role: '基础模型', contribution: '开放模型 API 与微调能力' },
+        { name: '行业龙头 C', role: '场景入口', contribution: '提供行业数据与客户渠道' },
+        { name: '咨询公司 D', role: '落地服务', contribution: '提供变革管理与实施交付' },
+      ],
+      resources: [
+        { title: '算力池', description: '统一调度 GPU/TPU，降低训练成本' },
+        { title: '数据联盟', description: '合规共享行业数据，提升模型效果' },
+        { title: '品牌联合', description: '共同举办峰会与白皮书发布' },
+        { title: '渠道互通', description: '互相引入客户，扩大销售漏斗' },
+      ],
+      outcomes: [
+        { value: '40%', label: '成本下降' },
+        { value: '3x', label: '触达客户' },
+        { value: '6 个月', label: '上线周期' },
+        { value: '15+', label: '联合方案' },
+      ],
+      insight: '联盟的价值在于把各方的“长板”组合成端到端解决方案，而不是简单的客户转介绍。',
+    };
+  }
+  if (layoutId === 'theme06_compute_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'COMPUTE',
+      title: 'AI 算力基础设施',
+      subtitle: '从芯片到集群，训练与推理的算力栈正在快速分层',
+      layers: [
+        { name: '芯片层', description: 'GPU / TPU / 自研 AI 芯片', metric: 'H100 等' },
+        { name: '服务器层', description: '高密度 AI 服务器与高速互联', metric: 'NVLink / IB' },
+        { name: '集群层', description: '万卡级训练集群调度', metric: '10k+ GPU' },
+        { name: '框架层', description: '分布式训练与推理框架', metric: 'PyTorch / JAX' },
+        { name: '平台层', description: 'MaaS 与弹性算力调度', metric: 'Serverless' },
+      ],
+      metrics: [
+        { value: '1.2 EFLOPS', label: '总算力', accent: true },
+        { value: '72%', label: '集群利用率', accent: false },
+        { value: '$2.1M', label: '单次训练成本', accent: false },
+        { value: '38%', label: '推理成本年降', accent: true },
+      ],
+      insight: '推理成本下降速度超过训练成本，未来算力竞争将从“堆卡”转向“调度效率”。',
+    };
+  }
+  if (layoutId === 'theme06_megadeals_v1') {
+    return {
+      imageUrl: '',
+      kicker: 'MEGADEALS',
+      title: '年度重磅交易盘点',
+      subtitle: '资本向头部集中，大额交易正在重塑产业格局',
+      heroValue: '$86B',
+      heroLabel: 'TOP 10 交易总额',
+      deals: [
+        { company: 'Beta AI', buyer: 'Alpha Cloud', value: '$18.5B', date: '2026 Q1', rationale: '补齐模型层能力' },
+        { company: 'Neural Chip', buyer: 'GPU Giant', value: '$12.0B', date: '2026 Q1', rationale: '掌控训练芯片供应链' },
+        { company: 'Data Vault', buyer: 'Enterprise Soft', value: '$7.2B', date: '2026 Q2', rationale: '获取高质量行业数据' },
+        { company: 'AutoDrive X', buyer: 'Mega Auto', value: '$5.8B', date: '2026 Q2', rationale: '加速自动驾驶落地' },
+        { company: 'HealthLLM', buyer: 'Pharma Plus', value: '$4.5B', date: '2026 Q3', rationale: '拓展药物研发场景' },
+      ],
+      insight: '大额交易集中在模型、芯片与数据三大核心要素，买家更关注战略卡位而非短期财务回报。',
     };
   }
 

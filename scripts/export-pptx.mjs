@@ -11,7 +11,7 @@ import { readFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { exportDeckToPptx } from '@lemonppt/renderer';
-import { validateDeckGoal } from '@lemonppt/core';
+import { validateDeckGoal, validateDeckGoalContent } from '@lemonppt/core';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -27,6 +27,12 @@ async function main() {
     console.error('goal.json 校验失败:');
     console.error(validation.errors?.format());
     process.exit(1);
+  }
+
+  const contentErrors = validateDeckGoalContent(validation.data);
+  if (contentErrors.length > 0) {
+    console.warn('内容字段缺失（可能导致空白页或占位提示）:');
+    contentErrors.forEach((e) => console.warn('  ⚠️ ' + e));
   }
 
   await mkdir(path.dirname(outFile), { recursive: true });
