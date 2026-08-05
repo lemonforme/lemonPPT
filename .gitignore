@@ -41,5 +41,9 @@ Presentation.pptx
 # Internal Dashi PPT reference analysis (third-party assets, not for public repo)
 docs/analysis/theme*-all/
 
+# Internal development docs (sensitive: contains Dashi analyses and internal plans)
+# Kept locally for reference, not published to public repo
+docs/
+
 # Logs
 *.log

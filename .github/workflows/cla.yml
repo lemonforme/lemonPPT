@@ -1,0 +1,25 @@
+name: CLA Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  pull-requests: read
+  contents: read
+
+jobs:
+  cla:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check CLA agreement
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || '';
+            const claChecked = /- \[x\]\s+我已阅读并同意.*CLA\.md/i.test(body);
+            if (!claChecked) {
+              core.setFailed(
+                '请阅读并勾选 CLA：在 PR 描述中勾选 "我已阅读并同意 CLA.md 中的全部条款"'
+              );
+            }
