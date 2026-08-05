@@ -10,7 +10,7 @@
  *   node scripts/create-layout.mjs <role> <name>
  * 示例：
  *   node scripts/create-layout.mjs timeline v2
- *   -> 生成 packages/templates/src/base/timeline-v2.tsx
+ *   -> 生成 packages/templates/src/themes/theme01/timeline-v2.tsx
  */
 
 import { existsSync } from 'node:fs';
@@ -62,12 +62,12 @@ function main() {
     process.exit(1);
   }
 
-  const layoutId = `${role}_${name}`;
+  const layoutId = `theme01_${role}_${name}`;
   const fileName = `${role}-${name}.tsx`;
-  const componentName = `${pascalCase(role)}${pascalCase(name)}`;
-  const metaName = `${camelCase(role)}${pascalCase(name)}Meta`;
+  const componentName = `Theme01${pascalCase(role)}${pascalCase(name)}`;
+  const metaName = `theme01${camelCase(role)}${pascalCase(name)}Meta`;
   const propsName = `${componentName}Props`;
-  const destDir = path.join(rootDir, 'packages', 'templates', 'src', 'base');
+  const destDir = path.join(rootDir, 'packages', 'templates', 'src', 'themes', 'theme01');
   const destFile = path.join(destDir, fileName);
 
   if (existsSync(destFile)) {
@@ -89,7 +89,7 @@ export interface ${propsName} {
 
 export const ${metaName}: LayoutMeta = {
   id: '${layoutId}',
-  theme: 'base',
+  theme: 'theme01',
   role: '${role}',
   displayName: '${componentName}',
   description: 'TODO: 补充版式描述',
@@ -134,12 +134,12 @@ describe('${layoutId}', () => {
 });
 `;
 
-  const baseExportLine = `export * from './base/${role}-${name}.js';\n`;
-  const registryImportLine = `import { ${componentName}, ${metaName}, type ${propsName} } from './base/${role}-${name}.js';\n`;
+  const themeExportLine = `export * from './themes/theme01/${role}-${name}.js';\n`;
+  const registryImportLine = `import { ${componentName}, ${metaName}, type ${propsName} } from './themes/theme01/${role}-${name}.js';\n`;
   const registryRegisterLine = `registerLayout<${propsName}>({ meta: ${metaName}, component: ${componentName} });\n`;
-  const composerCandidateLine = `  ${role}: ['${role}_v1'],\n`;
-  const exportPptxCase = `    case '${layoutId}':\n      render${componentName}(pptxSlide, slide.props as unknown as ${propsName});\n      break;\n`;
-  const exportPptxFunction = `\ninterface ${propsName} {\n  title?: string;\n  kicker?: string;\n  [key: string]: unknown;\n}\n\nfunction render${componentName}(slide: PptxSlide, props: ${propsName}): void {\n  addKicker(slide, props.kicker);\n  addTitle(slide, props.title ?? '${componentName}');\n  slide.addText('TODO: 在 export-pptx.ts 中实现 ${componentName} 的 PPTX 导出', {\n    x: 0.8, y: 2.6, w: 8.4, h: 2,\n    fontSize: 18, color: COLORS.secondary, align: 'left', valign: 'top',\n  });\n}\n`;
+  const exportPptxInterface = `\ninterface ${propsName} {\n  title?: string;\n  kicker?: string;\n  [key: string]: unknown;\n}\n`;
+  const exportPptxFunction = `\nfunction render${componentName}(slide: PptxSlide, props: ${propsName}): void {\n  addKicker(slide, props.kicker);\n  addTitle(slide, props.title ?? '${componentName}');\n  slide.addText('TODO: 在 export-pptx.ts 中实现 ${componentName} 的 PPTX 导出', {\n    x: 0.8, y: 2.6, w: 8.4, h: 2,\n    fontSize: 18, color: COLORS.secondary, align: 'left', valign: 'top',\n  });\n}\n`;
+  const exportPptxRegisterLine = `registerPptxLayoutRenderer('${layoutId}', render${componentName} as PptxRenderFn);\n`;
 
   const tasks = [];
 
@@ -154,13 +154,13 @@ describe('${layoutId}', () => {
 
   tasks.push(
     patchFile(path.join(rootDir, 'packages', 'templates', 'src', 'index.ts'), (content) => {
-      if (content.includes(baseExportLine.trim())) return content;
-      // Insert before the last base export to keep grouping
-      const marker = "export * from './base/";
+      if (content.includes(themeExportLine.trim())) return content;
+      // 在 theme01 导出区域末尾追加
+      const marker = "export * from './themes/theme01/";
       const lastIdx = content.lastIndexOf(marker);
       if (lastIdx === -1) return content;
       const lineEnd = content.indexOf('\n', lastIdx) + 1;
-      return content.slice(0, lineEnd) + baseExportLine + content.slice(lineEnd);
+      return content.slice(0, lineEnd) + themeExportLine + content.slice(lineEnd);
     })
   );
 
@@ -196,13 +196,24 @@ describe('${layoutId}', () => {
 
   tasks.push(
     patchFile(path.join(rootDir, 'packages', 'renderer', 'src', 'export-pptx.ts'), (content) => {
-      if (content.includes(`case '${layoutId}'`)) return content;
-      const switchMarker = '  switch (slide.layout) {\n';
-      const switchIdx = content.indexOf(switchMarker);
-      if (switchIdx !== -1) {
-        content = content.slice(0, switchIdx + switchMarker.length) + exportPptxCase + content.slice(switchIdx + switchMarker.length);
+      if (content.includes(`render${componentName}`)) return content;
+
+      // 1. 在 renderer registration 区域之前插入 interface + render 函数
+      const registrationMarker = '// ---- PPTX renderer registration -------------------------------------------';
+      const regIdx = content.indexOf(registrationMarker);
+      if (regIdx !== -1) {
+        content = content.slice(0, regIdx) + exportPptxInterface + exportPptxFunction + '\n' + content.slice(regIdx);
       }
-      return content + exportPptxFunction;
+
+      // 2. 在最后一个 registerPptxLayoutRenderer 调用后追加注册
+      const registerMarker = "registerPptxLayoutRenderer('theme01_pest_v1', renderPestV1 as PptxRenderFn);";
+      const lastIdx = content.lastIndexOf(registerMarker);
+      if (lastIdx !== -1) {
+        const lineEnd = content.indexOf('\n', lastIdx) + 1;
+        content = content.slice(0, lineEnd) + exportPptxRegisterLine + content.slice(lineEnd);
+      }
+
+      return content;
     })
   );
 
@@ -214,15 +225,13 @@ describe('${layoutId}', () => {
     console.log('下一步请手动完成：');
     console.log('');
     console.log('1) 完善组件实现');
-    console.log(`   ${path.join('packages/templates/src/base', fileName)}`);
+    console.log(`   ${path.join('packages/templates/src/themes/theme01', fileName)}`);
     console.log('');
     console.log('2) 完善 PPTX 导出实现');
     console.log(`   ${path.join('packages/renderer/src/export-pptx.ts')} 中的 render${componentName}`);
     console.log('');
-    console.log('3) 为三个主题补充 CSS（建议类名 .lp-' + role + '-' + name + '）：');
-    console.log('   - packages/themes/src/base/styles.css');
-    console.log('   - packages/themes/src/dark-tech/styles.css');
-    console.log('   - packages/themes/src/warm-business/styles.css');
+    console.log('3) 为主题补充 CSS（建议类名 .lp-' + role + '-' + name + '）：');
+    console.log('   - packages/themes/src/theme01/styles.css');
     console.log('');
     console.log('4) composer 候选列表已自动新增一条单候选映射，如需多版式随机请调整');
     console.log(`   packages/composer/src/index.ts 中 ${role}: ['${layoutId}']`);
