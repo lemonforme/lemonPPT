@@ -49,10 +49,6 @@ lemonPPT/
 │   ├── renderer/        # HTML/PPTX/PDF 渲染
 │   ├── templates/       # 共享版式组件与主题专属变体注册
 │   └── themes/          # 主题 tokens 与 CSS
-├── docs/                # 项目文档
-│   ├── plans/           # 规划文档
-│   ├── analysis/        # 方案分析
-│   └── progress.md      # 进度记录
 ├── examples/            # 示例 goal.json 与导出的 PPTX
 ├── output/              # 本地生成的 HTML/PPTX/PDF/gallery
 ├── scripts/             # CLI 脚本
@@ -117,12 +113,6 @@ node scripts/export-pptx.mjs examples/sample-goal.json examples/sample-goal.pptx
 # 导出 PDF
 node scripts/export-pdf.mjs examples/sample-goal.json output/sample-goal.pdf
 ```
-
-示例文件：
-
-- [`examples/sample-goal.json`](examples/sample-goal.json) —— theme01 示例
-- [`output/gallery/theme01`](output/gallery/theme01) —— theme01 版式预览
-- [`output/snapshots`](output/snapshots) —— 视觉回归基线与当前快照
 
 ## API 列表
 
