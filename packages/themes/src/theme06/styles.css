@@ -973,7 +973,7 @@
   align-self: flex-start;
   padding: 5px 10px;
   border-radius: var(--lp-radius-small);
-  background: var(--lp-surface);
+  background: #E3F0E4;
   font-family: var(--lp-font-mono);
   font-size: var(--lp-font-size-caption);
   font-weight: 700;
@@ -981,6 +981,7 @@
 }
 
 .lp-theme06-metric-grid-change.negative {
+  background: #F6E2E0;
   color: var(--lp-red);
 }
 
@@ -1294,6 +1295,28 @@
 }
 
 .lp-theme06-timeline-desc {
+  font-size: var(--lp-font-size-body-small);
+  color: var(--lp-ink2);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* timeline-v1 卡片行容器（原缺样式，导致卡片竖排撑破） */
+.lp-theme06-timeline-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 20px;
+  min-height: 0;
+}
+
+.lp-theme06-timeline-card-title {
+  font-size: var(--lp-font-size-body);
+  font-weight: 700;
+  color: var(--lp-ink);
+  margin-top: 8px;
+}
+
+.lp-theme06-timeline-card-desc {
   font-size: var(--lp-font-size-body-small);
   color: var(--lp-ink2);
   line-height: 1.5;
@@ -2779,7 +2802,7 @@
 /* ---- 行业对比 Sector Comparison ---- */
 
 .lp-theme06-sector-comparison {
-  padding: 72px 56px 64px;
+  padding: 72px 56px 48px;
   display: flex;
   flex-direction: column;
 }
@@ -2789,7 +2812,7 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   gap: 32px;
-  margin-top: 28px;
+  margin-top: 12px;
   min-height: 0;
 }
 
@@ -2859,14 +2882,14 @@
 }
 
 .lp-theme06-sector-comparison-summary {
-  margin-top: auto;
-  padding: 16px;
+  margin-top: 4px;
+  padding: 10px;
   background: var(--lp-surface-solid);
   border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius-medium);
   font-size: var(--lp-font-size-body-small);
   color: var(--lp-ink2);
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 /* ---- 地理分布 Geo Distribution ---- */
@@ -5815,7 +5838,7 @@
 }
 
 .lp-theme06-industry-finance-cell.accent .lp-theme06-industry-finance-label {
-  color: color-mix(in srgb, var(--lp-text-inverse) 80%, transparent);
+  color: var(--lp-text-inverse);
 }
 
 .lp-theme06-industry-finance-cases {
@@ -5893,17 +5916,17 @@
 
 /* industry growth */
 .lp-theme06-industry-growth {
-  padding: 72px 56px 64px;
+  padding: 56px 56px 48px;
 }
 
 .lp-theme06-industry-growth-header {
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
 .lp-theme06-industry-growth-body {
   display: grid;
   grid-template-columns: 1fr 0.85fr;
-  gap: 28px;
+  gap: 20px;
 }
 
 .lp-theme06-industry-growth-timeline {
@@ -5928,7 +5951,7 @@
 .lp-theme06-industry-growth-stage {
   position: relative;
   display: flex;
-  gap: 16px;
+  gap: 12px;
   align-items: flex-start;
 }
 
@@ -5946,7 +5969,7 @@
 
 .lp-theme06-industry-growth-stage-content {
   flex: 1;
-  padding: 12px 14px;
+  padding: 10px 12px;
   border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius-large);
   background: var(--lp-surface-solid);
@@ -5991,7 +6014,7 @@
 }
 
 .lp-theme06-industry-growth-lever {
-  padding: 12px 14px;
+  padding: 10px 12px;
   border: 1px solid var(--lp-border);
   border-top: 3px solid var(--lp-accent);
   border-radius: 0 0 var(--lp-radius-large) var(--lp-radius-large);
@@ -6032,15 +6055,15 @@
 }
 
 .lp-theme06-industry-growth-insight {
-  margin-top: 12px;
-  padding: 12px 16px;
+  margin-top: 6px;
+  padding: 10px 14px;
   border: 1px solid var(--lp-accent);
   border-left: 3px solid var(--lp-accent);
   border-radius: 0 var(--lp-radius-large) var(--lp-radius-large) 0;
   background: color-mix(in srgb, var(--lp-accent) 10%, transparent);
   font-size: var(--lp-font-size-body-small);
   color: var(--lp-ink);
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 /* industry safety */
@@ -6115,8 +6138,8 @@
 }
 
 .lp-theme06-industry-safety-risk.high .lp-theme06-industry-safety-risk-level {
-  background: color-mix(in srgb, var(--lp-red) 18%, transparent);
-  color: var(--lp-red);
+  background: #F6E2E0;
+  color: #8E2118;
 }
 
 .lp-theme06-industry-safety-risk.medium .lp-theme06-industry-safety-risk-level {
@@ -6612,7 +6635,12 @@
 .lp-theme06-megadeals-body {
   display: grid;
   grid-template-columns: 0.42fr 1fr;
-  gap: 28px;
+  gap: 12px;
+  min-height: 0;
+}
+
+.lp-theme06-megadeals-body > * {
+  min-height: 0;
 }
 
 .lp-theme06-megadeals-hero {
@@ -6620,7 +6648,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 28px;
+  padding: 20px;
   border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius-large);
   background: var(--lp-surface-solid);
@@ -6675,14 +6703,14 @@
 .lp-theme06-megadeals-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 2px;
 }
 
 .lp-theme06-megadeals-item {
   display: grid;
   grid-template-columns: 36px 1fr auto;
-  gap: 4px 14px;
-  padding: 12px 14px;
+  gap: 3px 10px;
+  padding: 5px 9px;
   border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius-large);
   background: var(--lp-surface-solid);
@@ -7068,4 +7096,27 @@
   color: var(--lp-ink3);
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+/* ===== 对比度修复：深色外观专属覆盖（WCAG AA） ===== */
+[data-appearance="dark"] .lp-theme06-metric-grid-change {
+  background: #16300A;
+  color: #4ADE80;
+}
+[data-appearance="dark"] .lp-theme06-metric-grid-change.negative {
+  background: #3A1414;
+  color: #FF9D9D;
+}
+[data-appearance="dark"] .lp-theme06-industry-vertical-cell.accent {
+  background: #4A7A00;
+}
+[data-appearance="dark"] .lp-theme06-industry-vertical-value {
+  color: #FFFFFF;
+}
+.lp-theme06-industry-vertical-cell.accent .lp-theme06-industry-vertical-label {
+  color: #FFFFFF;
+}
+[data-appearance="dark"] .lp-theme06-industry-growth-lever-metric {
+  background: #1F3D12;
+  color: #7AC300;
 }

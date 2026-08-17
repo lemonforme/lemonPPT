@@ -8,6 +8,14 @@ node_modules/
 # Build outputs
 dist/
 *.tsbuildinfo
+/vitest.config.js
+/vitest.config.d.ts
+/vitest.config.js.map
+/vitest.config.d.ts.map
+/vitest.e2e.config.js
+/vitest.e2e.config.d.ts
+/vitest.e2e.config.js.map
+/vitest.e2e.config.d.ts.map
 
 # Compiled artifacts misplaced in src
 packages/*/src/**/*.js
@@ -22,8 +30,39 @@ apps/*/src/**/*.d.ts.map
 
 # Generated output
 output/
+apps/server/output/
 tmp/
 packages/cli/SKILL.md
+
+# Generated regression examples
+examples/theme*-all-goal.json
+examples/theme*-full-goal.json
+examples/theme*-phase*-test-goal.json
+examples/_tmp_*.json
+
+# Local scratch
+h_goal.mjs
+--pages
+
+# Screenshots / visual regression artifacts
+scripts/screenshots/
+
+# Internal development scripts (not part of release artifact)
+scripts/_*.mjs
+scripts/aggregate-eval.mjs
+scripts/audit-*.mjs
+scripts/build-theme01-*.mjs
+scripts/contact-sheet.mjs
+scripts/coverage-pptx.mjs
+scripts/e2e-editor.mjs
+scripts/eval-theme.mjs
+scripts/export-theme01-final.mjs
+scripts/extract-theme*.mjs
+scripts/gen-theme*.mjs
+scripts/generate-theme*.mjs
+scripts/validate-theme01.mjs
+scripts/verify-theme07-visual.mjs
+!scripts/audit-layouts.mjs
 
 # OS / Editor
 .DS_Store

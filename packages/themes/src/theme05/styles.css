@@ -200,7 +200,7 @@
   border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius-medium);
   box-shadow: var(--lp-shadow-sm);
-  padding: 24px;
+  padding: 10px;
 }
 
 .lp-theme05-card--accent {
@@ -221,7 +221,7 @@
 .lp-theme05-card--violet { border-top: 4px solid #7C3AED; }
 
 .lp-theme05-card-value {
-  font-size: var(--lp-font-size-h2);
+  font-size: 32px;
   font-weight: 800;
   color: var(--lp-ink);
   line-height: 1.1;
@@ -233,7 +233,7 @@
   color: var(--lp-ink3);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 /* ---- 列表 ---- */
@@ -426,7 +426,7 @@
 /* ---- 指标 ---- */
 
 .lp-theme05-metric {
-  padding: 92px 84px 96px;
+  padding: 56px 84px 52px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -436,7 +436,7 @@
   display: flex;
   align-items: baseline;
   gap: 16px;
-  margin-top: 32px;
+  margin-top: 26px;
 }
 
 .lp-theme05-metric-hero-value {
@@ -456,8 +456,9 @@
 .lp-theme05-metric-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-top: 48px;
+  gap: 10px;
+  margin-top: 2px;
+  min-height: 0;
 }
 
 /* ---- 图表 ---- */
@@ -490,7 +491,7 @@
 /* ---- 排名 ---- */
 
 .lp-theme05-rank {
-  padding: 92px 84px 96px;
+  padding: 92px 84px 92px;
   display: flex;
   flex-direction: column;
 }
@@ -498,8 +499,9 @@
 .lp-theme05-rank-rows {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 36px;
+  gap: 10px;
+  margin-top: 20px;
+  min-height: 0;
 }
 
 .lp-theme05-rank-row {
@@ -507,7 +509,7 @@
   grid-template-columns: 48px 1fr auto auto;
   align-items: center;
   gap: 20px;
-  padding: 18px 22px;
+  padding: 15px 20px;
   background: var(--lp-surface-solid);
   border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius-medium);
@@ -583,7 +585,7 @@
   font-family: var(--lp-font-mono);
   font-size: 11px;
   font-weight: 700;
-  color: var(--lp-text-inverse);
+  color: var(--lp-white-alpha-90);
 }
 
 .lp-theme05-heatmap-labels {
@@ -709,16 +711,16 @@
   left: 20px;
   right: 20px;
   padding: 16px 20px;
-  background: var(--lp-scrim);
+  background: rgba(21, 21, 26, 0.72);
   backdrop-filter: blur(8px);
   border-radius: var(--lp-radius-medium);
-  color: var(--lp-text-inverse);
+  color: var(--lp-white-alpha-90);
 }
 
 .lp-theme05-image-annotation-value {
   font-size: var(--lp-font-size-h2);
   font-weight: 800;
-  color: var(--lp-accent);
+  color: var(--lp-white-alpha-90);
 }
 
 .lp-theme05-image-annotation-label {
@@ -1020,15 +1022,15 @@
   font-family: var(--lp-font-mono);
   font-size: 16px;
   font-weight: 800;
-  color: var(--lp-text-inverse);
-  background: var(--lp-accent);
+  color: var(--lp-white-alpha-90);
+  background: var(--lp-coral);
 }
 
-.lp-theme05-timeline-dot--coral { background: #E85D4E; }
-.lp-theme05-timeline-dot--amber { background: #F5A623; }
-.lp-theme05-timeline-dot--teal { background: #0FA3B1; }
-.lp-theme05-timeline-dot--indigo { background: #4A58D9; }
-.lp-theme05-timeline-dot--violet { background: #7C3AED; }
+.lp-theme05-timeline-dot--coral { background: var(--lp-coral); }
+.lp-theme05-timeline-dot--amber { background: var(--lp-amber); }
+.lp-theme05-timeline-dot--teal { background: var(--lp-teal); }
+.lp-theme05-timeline-dot--indigo { background: var(--lp-indigo); }
+.lp-theme05-timeline-dot--violet { background: var(--lp-violet); }
 
 .lp-theme05-timeline-period {
   font-family: var(--lp-font-mono);
@@ -2045,16 +2047,16 @@
   font-family: var(--lp-font-mono);
   font-size: 16px;
   font-weight: 800;
-  color: var(--lp-text-inverse);
-  background: var(--lp-accent);
+  color: var(--lp-white-alpha-90);
+  background: var(--lp-coral);
   flex: none;
 }
 
-.lp-theme05-roadmap-node--coral { background: #E85D4E; }
-.lp-theme05-roadmap-node--amber { background: #F5A623; }
-.lp-theme05-roadmap-node--teal { background: #0FA3B1; }
-.lp-theme05-roadmap-node--indigo { background: #4A58D9; }
-.lp-theme05-roadmap-node--violet { background: #7C3AED; }
+.lp-theme05-roadmap-node--coral { background: var(--lp-coral); }
+.lp-theme05-roadmap-node--amber { background: var(--lp-amber); }
+.lp-theme05-roadmap-node--teal { background: var(--lp-teal); }
+.lp-theme05-roadmap-node--indigo { background: var(--lp-indigo); }
+.lp-theme05-roadmap-node--violet { background: var(--lp-violet); }
 
 .lp-theme05-roadmap-card {
   width: 100%;
@@ -2504,8 +2506,8 @@
 
 .lp-theme05-cover-ex2-highlight {
   padding: 8px 16px;
-  background: var(--lp-accent);
-  color: var(--lp-text-inverse);
+  background: var(--lp-coral);
+  color: var(--lp-white-alpha-90);
   border-radius: 999px;
   font-size: var(--lp-font-size-caption);
   font-weight: 700;
@@ -2538,6 +2540,7 @@
   justify-content: flex-end;
   padding: 92px 84px 96px;
   overflow: hidden;
+  background: linear-gradient(180deg, rgba(21, 21, 26, 0.82) 0%, rgba(21, 21, 26, 0.92) 100%);
 }
 
 .lp-theme05-cover-hero-media {
@@ -2581,9 +2584,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--lp-ink3);
-  border: 2px dashed var(--lp-border);
-  background: var(--lp-surface);
+  color: var(--lp-white-alpha-80);
+  border: 2px dashed rgba(255, 255, 255, 0.18);
+  background: rgba(21, 21, 26, 0.55);
 }
 
 .lp-theme05-cover-hero-content {
@@ -2726,6 +2729,7 @@
   justify-content: center;
   padding: 92px 84px 96px;
   overflow: hidden;
+  background: linear-gradient(90deg, rgba(21, 21, 26, 0.82) 0%, rgba(21, 21, 26, 0.42) 100%);
 }
 
 .lp-theme05-chapter-image-media {
@@ -2746,9 +2750,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--lp-ink3);
-  border: 2px dashed var(--lp-border);
-  background: var(--lp-surface);
+  color: var(--lp-white-alpha-80);
+  border: 2px dashed rgba(255, 255, 255, 0.18);
+  background: rgba(21, 21, 26, 0.55);
 }
 
 .lp-theme05-chapter-image-overlay {
@@ -2768,7 +2772,7 @@
   font-family: var(--lp-font-mono);
   font-size: var(--lp-font-size-caption);
   font-weight: 700;
-  color: var(--lp-accent);
+  color: var(--lp-white-alpha-90);
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -2788,6 +2792,11 @@
   line-height: 1.5;
   color: var(--lp-white-alpha-85);
   margin-top: 18px;
+}
+
+.lp-theme05-cover-hero .lp-theme05-kicker,
+.lp-theme05-chapter-image .lp-theme05-kicker {
+  color: var(--lp-white-alpha-90);
 }
 
 /* ---- 数据指标变体 ---- */
@@ -3344,8 +3353,8 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--lp-accent);
-  color: var(--lp-text-inverse);
+  background: var(--lp-coral);
+  color: var(--lp-white-alpha-90);
   font-family: var(--lp-font-mono);
   font-size: 18px;
   font-weight: 800;
@@ -3480,14 +3489,15 @@
 .lp-theme05-toc-v2-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
+  min-height: 0;
 }
 
 .lp-theme05-toc-v2-item {
   display: flex;
   align-items: flex-start;
   gap: 18px;
-  padding: 20px 24px;
+  padding: 16px 20px;
   background: var(--lp-surface-solid);
   border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius-lg);
@@ -3585,3 +3595,7 @@
   color: var(--lp-accent);
   background: var(--lp-overlay);
 }
+
+/* 对比度修复 #322（修订）：versus / metric 实际落在深 substrate（#15151A/#1E1E24）上，
+   故沿用 :root（dark 外观）自带的浅色 --lp-ink2/--lp-ink3 与 --lp-accent 眉标，
+   不再强制深灰（此前误判为浅底导致 4.5:1 不达标）。 */

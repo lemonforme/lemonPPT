@@ -72,14 +72,23 @@ lemonppt export ./goal.json --pptx ./deck.pptx
 
 ### 方式三：HTTP API 服务
 
+先确保已构建：`pnpm -r build`。
+
 ```bash
+# 启动真正的 lemonPPT API 服务（默认 3456 端口）
 lemonppt serve --port 3456
+
+# 等价的 server 别名
+lemonppt server --port 3456
 ```
+
+底层启动 `apps/server/dist/index.js`，输出目录默认 `./output`。
 
 接口：
 
 - `POST /api/generate-goal`：自然语言 → `goal.json`
 - `POST /api/render`：`goal.json` → HTML
+- `POST /api/render-editor`：`goal.json` → 单页编辑器渲染数据（`EditorData` JSON），不再生成静态文件
 - `POST /api/export/pptx`：`goal.json` → PPTX
 - `POST /api/export/pdf`：`goal.json` → PDF
 - `POST /api/layout-query`：候选版式查询
@@ -87,6 +96,31 @@ lemonppt serve --port 3456
 - `POST /api/goal-scaffold`：生成骨架
 - `POST /api/write-safe-props`：规范化 props
 - `POST /api/validate-goal-spec`：校验 goal.json
+- `POST /api/stage-media`：上传 base64 图片到服务目录，返回可在 `goal.json` 中引用的 URL
+- `GET /editor`：打开单页编辑器（所有主题共享同一页面，通过 `?theme=theme01` 切换主题）
+- `GET /api/render-editor?theme=theme01`：基于示例 goal 返回指定主题的 `EditorData`
+
+调用示例：
+
+```bash
+curl -X POST http://localhost:3456/api/render \
+  -H "Content-Type: application/json" \
+  -d @goal.json
+
+curl -X POST http://localhost:3456/api/export/pptx \
+  -H "Content-Type: application/json" \
+  -d @goal.json \
+  --output deck.pptx
+
+curl -X POST "http://localhost:3456/api/render-editor?theme=theme02" \
+  -H "Content-Type: application/json" \
+  -d @goal.json
+
+# 上传本地图片（base64）
+curl -X POST http://localhost:3456/api/stage-media \
+  -H "Content-Type: application/json" \
+  -d '{"filename":"logo.png","data":"iVBORw0KGgoAAAANSUhEUg..."}'
+```
 
 ---
 
@@ -100,6 +134,10 @@ lemonppt serve --port 3456
 | `theme04` | 玻璃糖果风 | green / yellow / blue / pink + light / dark |
 | `theme05` | 光谱报告风 | coral / amber / teal / indigo / violet + light / dark |
 | `theme06` | 深色图谱风 | volt / magma / nebula / nova + light / dark |
+| `theme07` | 冷白金融投资风 | cold-white / warm-gray / ink / navy + light / dark |
+| `theme08` | 曜金黑金机构风 | obsidian-gold / midnight-silver / graphite-rose / forest-gold |
+| `theme09` | 墨韵杂志印刷风 | paper / ink 双基底 + primary / muted |
+| `theme10` | 金指数据指数风 | gold-index / blue-index / green-index |
 
 默认主题：`theme01`。
 
@@ -140,11 +178,11 @@ lemonppt serve --port 3456
 | `goal` | 是 | 演示目标/背景 |
 | `audience` | 是 | 受众描述 |
 | `owner` | 否 | 汇报人 |
-| `theme` | 是 | 主题 ID |
+| `theme` | 是 | 主题 ID；也兼容 `themePack` 作为别名 |
 | `colorScheme` | 否 | 主题专用配色方案，见「可用主题」 |
 | `appearance` | 否 | `light` / `dark`，部分主题支持 |
 | `language` | 否 | `zh` 或 `en`，默认 `zh` |
-| `pageCount` | 是 | 总页数，必须等于 `slides.length` |
+| `pageCount` | 否 | 总页数；留空时自动等于 `slides.length` |
 | `randomSeed` | 否 | 随机种子，保证选页可复现 |
 | `slides` | 是 | 幻灯片数组 |
 
@@ -152,9 +190,11 @@ lemonppt serve --port 3456
 
 | 字段 | 必填 | 说明 |
 |---|---|---|
-| `role` | 是 | 页面角色，见下方「页面角色」 |
+| `role` | 否 | 页面角色，见下方「页面角色」；留空时尝试从 `layout` 推断 |
 | `layout` | 否 | 具体版式 ID；留空时系统按 role 自动选择 |
 | `props` | 是 | 该版式所需数据 |
+
+> **外部 Agent 友好**：HTTP API 与 CLI 均支持 `themePack` 替代 `theme`、`pageCount` 省略、`role` 省略（系统从 `layout` ID 推断），方便被其他 Agent 调用。未提供的必填字段将自动补全。
 
 ---
 
@@ -220,8 +260,9 @@ lemonppt render <goal.json> [--out ./output] [--editable]
 # 导出
 lemonppt export <goal.json> --pptx out.pptx [--pdf out.pdf]
 
-# 本地服务
+# 本地服务（优先启动 API 服务；未构建时回退到静态预览）
 lemonppt serve [<dir>] [--port N]
+lemonppt server [<dir>] [--port N]
 
 # 主题/版式查询
 lemonppt list-themes

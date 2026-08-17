@@ -1,0 +1,1721 @@
+/* lemonPPT - AI-powered presentation generation */
+/* Copyright (c) 2026 lemonforme */
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+
+/* packages/themes/src/theme10/styles.css */
+/* theme10: 金色指数 · 金融编辑风 / Gold Index · Financial Editorial */
+
+/* CSS 变量由 renderer 在 <style> 中注入（generateTheme10CssVariables），
+   styles.css 仅承载基底布局 + 金融编辑装饰语汇 + 版式专属类，
+   不重复定义 :root，避免覆盖注入的三情绪变量。 */
+
+* {
+  box-sizing: border-box;
+}
+
+.lp-theme10.lp-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--lp-mood-gradient, var(--lp-bg, #0a0e14));
+  color: var(--lp-ink);
+  font-family: var(--lp-font);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* obsidian 深底上 ink3(#7e889b) 仅 4.38:1，低于 WCAG AA 4.5 阈值；
+   局部提亮至 #8b96a8(≈5.2:1)，仅作用于 obsidian 情绪，不影响浅色情绪 */
+.lp-theme10-mood-obsidian { --lp-ink3: #8b96a8; --lp-red: #f0786f; }
+.lp-theme10-mood-ember { --lp-red: #f0786f; }
+
+/* 极淡 mono 网格底（数据画布质感，全局叠加在情绪渐变之上） */
+.lp-theme10.lp-slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(238, 241, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(238, 241, 246, 0.04) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.lp-theme10-inner {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--lp-pad-top, 72px) var(--lp-page-padding, 60px) var(--lp-pad-bottom, 68px);
+}
+
+/* ────────────────────────────────────────────────────────────────
+ * 入场动效（与其它主题一致的 lp-rise 约定）
+ * ──────────────────────────────────────────────────────────────── */
+.lp-theme10 .lp-rise {
+  animation: lp-theme10-rise 0.46s cubic-bezier(0.22, 0.68, 0.32, 1) both;
+}
+@keyframes lp-theme10-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lp-theme10 .lp-rise {
+    animation: none;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────
+ * 金融编辑装饰语汇（原创，不抄 theme08/09）
+ * ──────────────────────────────────────────────────────────────── */
+
+/* 行情带 ticker：顶部细条 + mono 滚动代码/指数 */
+.lp-theme10-ticker {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  height: var(--lp-t10-ticker-h, 30px);
+  padding: 0 4px;
+  border-bottom: 1px solid var(--lp-t10-rule);
+  font-family: var(--lp-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--lp-ink2);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.lp-theme10-ticker .t10-tick {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.lp-theme10-ticker .t10-tick b {
+  color: var(--lp-ink);
+  font-weight: 700;
+}
+.lp-theme10-ticker .t10-up {
+  color: var(--lp-gold);
+}
+.lp-theme10-ticker .t10-down {
+  color: var(--lp-copper);
+}
+
+/* 账本细线 ledger-rule */
+.lp-theme10-ledger {
+  height: 1px;
+  background: var(--lp-t10-rule-strong);
+  width: 100%;
+}
+.lp-theme10-ledger.dashed {
+  background: repeating-linear-gradient(90deg, var(--lp-t10-rule-strong) 0 6px, transparent 6px 12px);
+  height: 1px;
+}
+
+/* 刻度尺 scale：重复短线 + mono 标注 */
+.lp-theme10-scale {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  height: var(--lp-t10-scale-unit, 22px);
+  font-family: var(--lp-font-mono);
+  font-size: 10px;
+  color: var(--lp-ink3);
+}
+.lp-theme10-scale .t10-tick {
+  position: relative;
+  width: 1px;
+  height: 10px;
+  background: var(--lp-t10-rule);
+  margin-right: 18px;
+}
+.lp-theme10-scale .t10-tick.major {
+  height: 16px;
+  background: var(--lp-t10-rule-strong);
+}
+.lp-theme10-scale .t10-tick span {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 页脚三段 folio */
+.lp-theme10-folio {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--lp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--lp-ink3);
+  padding-top: 14px;
+  border-top: 1px solid var(--lp-t10-rule);
+}
+.lp-theme10-folio .t10-folio-page {
+  color: var(--lp-ink);
+  font-weight: 700;
+}
+.lp-theme10-folio .t10-folio-rule {
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--lp-t10-rule);
+}
+
+/* 来源戳 stamp */
+.lp-theme10-stamp {
+  position: absolute;
+  right: var(--lp-page-padding, 60px);
+  bottom: 22px;
+  z-index: 2;
+  font-family: var(--lp-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--lp-ink3);
+  text-align: right;
+}
+.lp-theme10-stamp::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  background: var(--lp-t10-gold);
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* 数据点 data-dot */
+.lp-theme10-data-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--lp-t10-blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lp-t10-blue) 26%, transparent);
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.lp-theme10-data-dot.gold {
+  background: var(--lp-t10-gold);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lp-t10-gold) 26%, transparent);
+}
+
+/* 金线分隔 gold-rule */
+.lp-theme10-gold-rule {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--lp-t10-gold), transparent);
+  border-radius: 2px;
+}
+
+/* 涨跌箭头 delta */
+.lp-theme10-delta {
+  font-family: var(--lp-font-mono);
+  font-weight: 700;
+  font-size: 13px;
+}
+.lp-theme10-delta.up {
+  color: var(--lp-gold);
+}
+.lp-theme10-delta.down {
+  color: var(--lp-copper);
+}
+
+/* ────────────────────────────────────────────────────────────────
+ * EditorialPhoto（复用 theme09 上传属性约定，金线皮肤）
+ * ──────────────────────────────────────────────────────────────── */
+.lp-theme10-photo {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--lp-border-strong);
+  border-radius: var(--lp-radius-medium);
+  background: var(--lp-surface-solid);
+}
+.lp-theme10-photo.fit-cover .lp-theme10-photo-img,
+.lp-theme10-photo.fit-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lp-theme10-photo.fit-contain .lp-theme10-photo-img,
+.lp-theme10-photo.fit-contain img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.lp-theme10-photo.empty {
+  background:
+    linear-gradient(rgba(238, 241, 246, 0.05) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(90deg, rgba(238, 241, 246, 0.05) 1px, transparent 1px) 0 0 / 22px 22px,
+    var(--lp-surface-solid);
+}
+.lp-theme10-photo-slot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--lp-ink3);
+  font-family: var(--lp-font-mono);
+  font-size: 12px;
+}
+.lp-theme10-photo-reg {
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--lp-border-strong);
+  border-radius: 50%;
+  position: relative;
+}
+.lp-theme10-photo-reg::before,
+.lp-theme10-photo-reg::after {
+  content: '';
+  position: absolute;
+  background: var(--lp-border-strong);
+}
+.lp-theme10-photo-reg::before {
+  left: 50%;
+  top: -10px;
+  bottom: -10px;
+  width: 1px;
+  transform: translateX(-50%);
+}
+.lp-theme10-photo-reg::after {
+  top: 50%;
+  left: -10px;
+  right: -10px;
+  height: 1px;
+  transform: translateY(-50%);
+}
+.lp-theme10-photo-spec {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--lp-ink3);
+}
+
+/* ────────────────────────────────────────────────────────────────
+ * 通用文字类
+ * ──────────────────────────────────────────────────────────────── */
+.lp-theme10-eyelabel {
+  font-family: var(--lp-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lp-t10-gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.lp-theme10-eyelabel::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  background: var(--lp-t10-gold);
+}
+.lp-theme10-title {
+  font-family: var(--lp-font-heading);
+  font-weight: 800;
+  line-height: 1.02;
+  color: var(--lp-ink);
+  letter-spacing: -0.01em;
+}
+.lp-theme10-en {
+  font-family: var(--lp-t10-en);
+  font-style: italic;
+  color: var(--lp-ink2);
+}
+.lp-theme10-mono {
+  font-family: var(--lp-font-mono);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * 版式专属类
+ * ═══════════════════════════════════════════════════════════════ */
+
+/* 1. cover_dusk —— 暮光对角封面 */
+.lp-theme10-cover-dusk {
+  position: relative;
+}
+.lp-theme10-cover-dusk-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, transparent 49.6%, var(--lp-t10-gold) 49.6%, var(--lp-t10-gold) 50.4%, transparent 50.4%) top right / 62% 100% no-repeat;
+  opacity: 0.7;
+}
+.lp-theme10-cover-dusk-grid::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 62%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 60%, color-mix(in srgb, var(--lp-t10-gold) 10%, transparent) 100%);
+}
+.lp-theme10-cover-dusk-inner {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 56%;
+}
+.lp-theme10-cover-dusk-title {
+  font-family: var(--lp-font-mono);
+  font-weight: 700;
+  font-size: var(--lp-font-size-display);
+  line-height: 0.98;
+  color: var(--lp-ink);
+  letter-spacing: -0.02em;
+}
+.lp-theme10-cover-dusk-sub {
+  margin-top: 18px;
+  font-size: 18px;
+  color: var(--lp-ink2);
+  max-width: 30ch;
+}
+
+/* 2. cover_field —— 色场分栏封面 */
+.lp-theme10-cover-field {
+  position: relative;
+  flex-direction: row;
+}
+.lp-theme10-cover-field-main {
+  flex: 1 1 56%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 40px;
+}
+.lp-theme10-cover-field-aside {
+  flex: 1 1 44%;
+  position: relative;
+  border-left: 1px solid var(--lp-t10-gold);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--lp-t10-blue) 14%, transparent), color-mix(in srgb, var(--lp-t10-gold) 12%, transparent));
+  display: flex;
+  align-items: flex-end;
+  padding: 30px;
+}
+.lp-theme10-cover-field-aside .t10-field-no {
+  font-family: var(--lp-font-mono);
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--lp-ink);
+  opacity: 0.92;
+}
+
+/* 3. cover_atmos —— 满版渐变大字 */
+.lp-theme10-cover-atmos {
+  position: relative;
+  align-items: flex-start;
+  justify-content: center;
+}
+.lp-theme10-cover-atmos-title {
+  font-family: var(--lp-font-heading);
+  font-weight: 800;
+  font-size: calc(var(--lp-font-size-display) * 1.05);
+  line-height: 0.96;
+  color: var(--lp-ink);
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+}
+
+/* 4. cover_horizon —— 地平线封面 */
+.lp-theme10-cover-horizon {
+  position: relative;
+  justify-content: flex-end;
+}
+.lp-theme10-cover-horizon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 38%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lp-t10-gold) 30%, var(--lp-t10-gold) 70%, transparent);
+  z-index: 0;
+}
+.lp-theme10-cover-horizon-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-bottom: 8%;
+}
+.lp-theme10-cover-horizon-issue {
+  position: absolute;
+  top: var(--lp-pad-top, 72px);
+  right: var(--lp-page-padding, 60px);
+  font-family: var(--lp-font-mono);
+  font-size: 12px;
+  color: var(--lp-ink2);
+}
+
+/* 5. cover_standard —— 标准封面 */
+.lp-theme10-cover-standard {
+  position: relative;
+}
+.lp-theme10-cover-standard-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 6. cover_dawn —— 晨光卡封面（含角嵌影像） */
+.lp-theme10-cover-dawn-card {
+  position: relative;
+  flex: 1;
+  border: 1px solid var(--lp-border-strong);
+  border-radius: var(--lp-radius-large);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--lp-t10-gold) 12%, transparent), color-mix(in srgb, var(--lp-t10-copper) 8%, transparent));
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.lp-theme10-cover-dawn-photo {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 160px;
+  height: 120px;
+}
+
+/* 7. chapter —— 章节索引 */
+.lp-theme10-partdiv {
+  position: relative;
+  align-items: flex-start;
+  justify-content: center;
+}
+.lp-theme10-partdiv-no {
+  font-family: var(--lp-font-mono);
+  font-size: clamp(120px, 22vw, 240px);
+  font-weight: 700;
+  line-height: 0.9;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--lp-t10-gold);
+  text-stroke: 2px var(--lp-t10-gold);
+}
+.lp-theme10-partdiv-name {
+  font-family: var(--lp-font-heading);
+  font-weight: 800;
+  font-size: var(--lp-font-size-h1);
+  color: var(--lp-ink);
+  margin-top: 10px;
+}
+.lp-theme10-partdiv-list {
+  margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lp-theme10-partdiv-list .t10-row {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  border-top: 1px solid var(--lp-t10-rule);
+  padding-top: 8px;
+  font-family: var(--lp-font-mono);
+  font-size: 13px;
+  color: var(--lp-ink2);
+}
+.lp-theme10-partdiv-list .t10-row b {
+  color: var(--lp-ink);
+  min-width: 28px;
+}
+
+/* 8. divider —— 序号分章 */
+.lp-theme10-divider {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.lp-theme10-divider-no {
+  font-family: var(--lp-font-mono);
+  font-size: 96px;
+  font-weight: 700;
+  color: var(--lp-t10-gold);
+}
+.lp-theme10-divider-name {
+  font-family: var(--lp-font-heading);
+  font-weight: 800;
+  font-size: var(--lp-font-size-h2);
+  color: var(--lp-ink);
+  margin-top: 14px;
+}
+.lp-theme10-divider .lp-theme10-gold-rule {
+  width: 220px;
+  margin: 22px auto;
+}
+
+/* 9. statement_section —— 宣言章节（左宣言右索引） */
+.lp-theme10-statement-section {
+  flex-direction: row;
+  gap: 0;
+}
+.lp-theme10-statement-section-left {
+  flex: 1 1 52%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 44px;
+}
+.lp-theme10-statement-section-right {
+  flex: 1 1 48%;
+  border-left: 1px solid var(--lp-t10-rule);
+  padding-left: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.lp-theme10-statement-section-quote {
+  font-family: var(--lp-font-heading);
+  font-weight: 700;
+  font-size: var(--lp-font-size-h1);
+  line-height: 1.12;
+  color: var(--lp-ink);
+}
+.lp-theme10-statement-section-right .t10-idx {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--lp-t10-rule);
+  padding: 10px 0;
+  font-family: var(--lp-font-mono);
+  font-size: 13px;
+  color: var(--lp-ink2);
+}
+.lp-theme10-statement-section-right .t10-idx b {
+  color: var(--lp-ink);
+}
+
+/* 10. statement —— 声明金句 */
+.lp-theme10-statement {
+  align-items: flex-start;
+  justify-content: center;
+}
+.lp-theme10-statement-word {
+  font-family: var(--lp-font-heading);
+  font-weight: 800;
+  font-size: calc(var(--lp-font-size-display) * 0.62);
+  line-height: 1.08;
+  color: var(--lp-ink);
+  max-width: 20ch;
+}
+.lp-theme10-statement-sign {
+  margin-top: 26px;
+  font-family: var(--lp-font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--lp-t10-gold);
+}
+
+/* 11. principles —— 投资原则（编号 + 刻度尺） */
+.lp-theme10-principles {
+  position: relative;
+}
+.lp-theme10-principles-head {
+  margin-bottom: 24px;
+}
+.lp-theme10-principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  flex: 1;
+  align-content: start;
+}
+.lp-theme10-principles-item {
+  border-top: 2px solid var(--lp-t10-gold);
+  padding-top: 14px;
+}
+.lp-theme10-principles-item .t10-no {
+  font-family: var(--lp-font-mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--lp-t10-blue);
+}
+.lp-theme10-principles-item .t10-name {
+  font-family: var(--lp-font-heading);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--lp-ink);
+  margin: 6px 0;
+}
+.lp-theme10-principles-item .t10-desc {
+  font-size: 14px;
+  color: var(--lp-ink2);
+  line-height: 1.5;
+}
+
+/* 12. closing —— 结束页 */
+.lp-theme10-closing {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.lp-theme10-closing-word {
+  font-family: var(--lp-font-heading);
+  font-weight: 800;
+  font-size: var(--lp-font-size-h1);
+  color: var(--lp-ink);
+  max-width: 22ch;
+}
+.lp-theme10-closing-sub {
+  margin-top: 16px;
+  font-size: 16px;
+  color: var(--lp-ink2);
+  max-width: 40ch;
+}
+.lp-theme10-closing-colophon {
+  margin-top: 28px;
+  display: flex;
+  gap: 18px;
+  font-family: var(--lp-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--lp-ink3);
+}
+.lp-theme10-closing-colophon i {
+  color: var(--lp-t10-rule-strong);
+  font-style: normal;
+}
+
+/* 12b. closing 满版影像层（铺满 full-bleed 整页；frame 本身无内边距，无需逃逸） */
+.lp-theme10-closing-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.lp-theme10-closing-photo .lp-theme10-photo {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+.lp-theme10-closing-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--lp-bg) 50%, transparent) 0%,
+    color-mix(in srgb, var(--lp-bg) 76%, transparent) 100%
+  );
+}
+.lp-theme10-closing-inner {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 78%;
+  margin: 0 auto;
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * 编辑器画布切换显隐（deck / slide-wrapper）
+ * 画布切换显隐由 .lp-deck / .lp-slide-wrapper 控制；
+ * 编辑器 chrome（.lp-editor-* / .lp-thumbnail）由 render.tsx 内联 <style> 提供，与主题无关。
+ * ════════════════════════════════════════════════════════════════ */
+
+.lp-deck {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lp-slide-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  z-index: 0;
+}
+
+.lp-slide-wrapper.enter,
+.lp-slide-wrapper.leave {
+  pointer-events: none;
+}
+
+.lp-deck[data-lp-transition="none"] .lp-slide-wrapper {
+  transition: opacity 80ms ease;
+  transform: none;
+}
+
+.lp-deck[data-lp-transition="none"] .lp-slide-wrapper.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.lp-deck:not([data-lp-transition]) .lp-slide-wrapper,
+.lp-deck[data-lp-transition="slide"] .lp-slide-wrapper {
+  transform: translateX(100%);
+  transition: transform 400ms ease-in-out, opacity 300ms ease;
+}
+
+.lp-deck:not([data-lp-transition]) .lp-slide-wrapper.active,
+.lp-deck[data-lp-transition="slide"] .lp-slide-wrapper.active {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 2;
+}
+
+.lp-deck:not([data-lp-transition]) .lp-slide-wrapper.prev,
+.lp-deck[data-lp-transition="slide"] .lp-slide-wrapper.prev {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * P1 影像图文 · 批次A（profile / team / quote / editorial / magazine）
+ * ════════════════════════════════════════════════════════════════ */
+
+/* 13. profile · 人物特写（obsidian，左肖像出血 + 右履历条） */
+.lp-theme10-profile { position: relative; }
+.lp-theme10-profile-photo {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 42%;
+  z-index: 0;
+}
+.lp-theme10-profile-photo .lp-theme10-photo {
+  width: 100%; height: 100%; border: none; border-radius: 0;
+  border-right: 1px solid var(--lp-t10-gold);
+}
+.lp-theme10-profile-photo-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 58%, color-mix(in srgb, var(--lp-bg) 38%, transparent));
+}
+.lp-theme10-profile-body {
+  position: relative; z-index: 1;
+  margin-left: 42%; padding-left: 50px;
+  display: flex; flex-direction: column; justify-content: center;
+  flex: 1 1 auto; min-height: 0;
+}
+.lp-theme10-profile-name {
+  font-family: var(--lp-font-heading); font-weight: 800;
+  font-size: calc(var(--lp-font-size-h1) * 1.05); line-height: 1.02; color: var(--lp-ink); margin-top: 10px;
+}
+.lp-theme10-profile-en {
+  font-family: var(--lp-font-mono); font-size: 14px; letter-spacing: 0.04em; color: var(--lp-ink2); margin-top: 4px;
+}
+.lp-theme10-profile-title {
+  font-family: var(--lp-font-heading); font-weight: 700; font-size: 20px; color: var(--lp-t10-gold); margin-top: 14px;
+}
+.lp-theme10-profile-resume { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+.lp-theme10-profile-resume .t10-row {
+  display: flex; gap: 18px; align-items: baseline; border-top: 1px solid var(--lp-t10-rule); padding-top: 8px;
+}
+.lp-theme10-profile-resume .t10-k {
+  font-family: var(--lp-font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--lp-ink2); min-width: 44px;
+}
+.lp-theme10-profile-resume .t10-v { font-family: var(--lp-font-body); font-size: 14px; color: var(--lp-ink); }
+.lp-theme10-profile-bio { margin-top: 18px; font-size: 14px; color: var(--lp-ink2); line-height: 1.55; max-width: 32ch; }
+
+/* 14. team · 内容墙 / 团队（ember，3×2 网格 + 展签） */
+.lp-theme10-team { position: relative; }
+.lp-theme10-team-head { position: relative; margin-bottom: 22px; }
+.lp-theme10-team-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-team-head .lp-theme10-stamp { position: absolute; top: 0; right: 0; bottom: auto; }
+.lp-theme10-team-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-team-cell { margin: 0; display: flex; flex-direction: column; min-height: 0; }
+.lp-theme10-team-photo { width: 100%; flex: 1 1 auto; min-height: 0; }
+.lp-theme10-team-cap { display: flex; flex-direction: column; gap: 2px; padding-top: 8px; }
+.lp-theme10-team-cap .t10-name { font-family: var(--lp-font-heading); font-weight: 700; font-size: 15px; color: var(--lp-ink); }
+.lp-theme10-team-cap .t10-role { font-family: var(--lp-font-mono); font-size: 11px; color: var(--lp-t10-gold); letter-spacing: 0.04em; }
+
+/* 15. quote · 引言（obsidian，巨型引号 + mono 署名） */
+.lp-theme10-quote { position: relative; align-items: flex-start; justify-content: center; }
+.lp-theme10-quote-mark {
+  position: absolute; top: calc(var(--lp-pad-top, 72px) - 46px); left: calc(var(--lp-page-padding, 60px) - 12px);
+  font-family: var(--lp-font-heading); font-size: 150px; line-height: 1; color: color-mix(in srgb, var(--lp-t10-gold) 38%, transparent);
+  z-index: 0; pointer-events: none;
+}
+.lp-theme10-quote-body {
+  position: relative; z-index: 1; flex: 1 1 auto; width: 100%;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.lp-theme10-quote-text {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: calc(var(--lp-font-size-h1) * 1.15);
+  line-height: 1.12; color: var(--lp-ink); margin-top: 14px; white-space: pre-line; max-width: 26ch;
+}
+.lp-theme10-quote-sign { margin-top: 22px; display: flex; flex-direction: column; gap: 4px; }
+.lp-theme10-quote-sign .t10-sign { font-family: var(--lp-font-heading); font-weight: 700; font-size: 18px; color: var(--lp-t10-gold); }
+.lp-theme10-quote-sign .t10-source { font-family: var(--lp-font-mono); font-size: 12px; color: var(--lp-ink3); letter-spacing: 0.04em; }
+
+/* 16. editorial · 编排图文（ember，三栏文字 + 右出血图） */
+.lp-theme10-editorial { position: relative; }
+.lp-theme10-editorial-photo {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 42%; z-index: 0;
+}
+.lp-theme10-editorial-photo .lp-theme10-photo {
+  width: 100%; height: 100%; border: none; border-radius: 0;
+  border-left: 1px solid var(--lp-t10-gold);
+}
+.lp-theme10-editorial-photo-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(270deg, transparent 58%, color-mix(in srgb, var(--lp-bg) 38%, transparent));
+}
+.lp-theme10-editorial-body {
+  position: relative; z-index: 1; margin-right: 42%; padding-right: 50px;
+  display: flex; flex-direction: column; justify-content: center;
+  flex: 1 1 auto; min-height: 0;
+}
+.lp-theme10-editorial-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: calc(var(--lp-font-size-h1) * 1.02); line-height: 1.04; color: var(--lp-ink); margin-top: 10px;
+}
+.lp-theme10-editorial-lead { font-size: 16px; color: var(--lp-ink2); line-height: 1.5; margin-top: 14px; max-width: 36ch; }
+.lp-theme10-editorial-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
+.lp-theme10-editorial-col { font-size: 13px; color: var(--lp-ink); line-height: 1.5; }
+.lp-theme10-editorial-col .t10-col-no {
+  display: block; font-family: var(--lp-font-mono); font-size: 12px; font-weight: 700; color: var(--lp-t10-blue); margin-bottom: 6px;
+}
+
+/* 17. magazine · 杂志图文（obsidian，左大图 + 右文 + 右下小图） */
+.lp-theme10-magazine { position: relative; }
+.lp-theme10-magazine-figure {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 46%; z-index: 0;
+}
+.lp-theme10-magazine-figure .lp-theme10-photo {
+  width: 100%; height: 100%; border: none; border-radius: 0;
+  border-right: 1px solid var(--lp-t10-gold);
+}
+.lp-theme10-magazine-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 55%, color-mix(in srgb, var(--lp-bg) 30%, transparent));
+}
+.lp-theme10-magazine-cap {
+  position: absolute; left: 18px; bottom: 16px; font-family: var(--lp-font-mono); font-size: 11px; color: var(--lp-ink2); max-width: 60%;
+}
+.lp-theme10-magazine-body {
+  position: relative; z-index: 1; margin-left: 46%; padding-left: 50px;
+  display: flex; flex-direction: column; justify-content: center;
+  flex: 1 1 auto; min-height: 0;
+}
+.lp-theme10-magazine-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: calc(var(--lp-font-size-h1) * 1.0); line-height: 1.06; color: var(--lp-ink); margin-top: 10px;
+}
+.lp-theme10-magazine-lead { font-size: 15px; color: var(--lp-ink2); line-height: 1.55; margin-top: 14px; max-width: 36ch; }
+.lp-theme10-magazine-pull {
+  font-family: var(--lp-font-heading); font-style: italic; font-weight: 700; font-size: 19px; color: var(--lp-t10-gold);
+  line-height: 1.25; margin-top: 18px; border-left: 2px solid var(--lp-t10-gold); padding-left: 14px;
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * P1 影像图文 · 批次B（triptych / strata / spark / testimonials / feature）
+ * ════════════════════════════════════════════════════════════════ */
+
+/* 18. triptych · 三联影像（ember，3 等高图 + 图注） */
+.lp-theme10-triptych { position: relative; }
+.lp-theme10-triptych-head { position: relative; margin-bottom: 20px; }
+.lp-theme10-triptych-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-triptych-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 64ch; }
+.lp-theme10-triptych-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-triptych-cell { margin: 0; display: flex; flex-direction: column; min-height: 0; }
+.lp-theme10-triptych-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-triptych-cap {
+  font-family: var(--lp-font-mono); font-size: 11px; color: var(--lp-ink2);
+  padding-top: 8px; margin-top: 8px; border-top: 1px solid var(--lp-t10-rule);
+}
+
+/* 19. strata · 横向影像带（obsidian，满宽 4 联 + 图注） */
+.lp-theme10-strata { position: relative; }
+.lp-theme10-strata-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-strata-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-strata-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-strata-band {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-strata-cell { margin: 0; display: flex; flex-direction: column; min-height: 0; }
+.lp-theme10-strata-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-strata-cap {
+  display: flex; align-items: baseline; gap: 6px; padding-top: 8px;
+  font-family: var(--lp-font-mono); font-size: 10px; color: var(--lp-ink2);
+}
+.lp-theme10-strata-cap .t10-idx { color: var(--lp-t10-gold); font-weight: 700; min-width: 18px; }
+
+/* 20. spark · 持仓小图集（obsidian，2×3 + 涨跌幅） */
+.lp-theme10-spark { position: relative; }
+.lp-theme10-spark-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-spark-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-spark-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-spark-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-spark-cell { margin: 0; display: flex; flex-direction: column; min-height: 0; }
+.lp-theme10-spark-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-spark-cap { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding-top: 8px; }
+.lp-theme10-spark-cap .t10-name { font-family: var(--lp-font-heading); font-weight: 700; font-size: 13px; color: var(--lp-ink); }
+.lp-theme10-spark-cap .t10-val { font-family: var(--lp-font-mono); font-size: 12px; font-weight: 700; }
+.lp-theme10-spark-cap .t10-val.up { color: var(--lp-t10-gold); }
+.lp-theme10-spark-cap .t10-val.down { color: var(--lp-t10-copper); }
+.lp-theme10-spark-foot {
+  display: flex; align-items: center; gap: 14px; margin-top: 14px;
+  font-family: var(--lp-font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--lp-ink2);
+}
+.lp-theme10-spark-foot .t10-foot-label { white-space: nowrap; }
+.lp-theme10-spark-foot .lp-theme10-scale { flex: 1 1 auto; }
+
+/* 21. testimonials · 引述清单（ember，头像卡 + 三联短引述） */
+.lp-theme10-testimonials { position: relative; }
+.lp-theme10-testimonials-main {
+  display: grid; grid-template-columns: 1.5in auto; gap: 28px; align-items: center;
+  margin-top: 18px; margin-bottom: 24px;
+}
+.lp-theme10-testimonials-avatar { width: 1.5in; height: 1.5in; }
+.lp-theme10-testimonials-photo { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--lp-t10-gold); }
+.lp-theme10-testimonials-body { position: relative; min-width: 0; }
+.lp-theme10-quote-glyph {
+  position: absolute; top: -22px; left: -8px; font-family: var(--lp-font-heading);
+  font-size: 64px; line-height: 1; color: color-mix(in srgb, var(--lp-t10-gold) 38%, transparent); pointer-events: none;
+}
+.lp-theme10-testimonials-quote {
+  font-family: var(--lp-font-heading); font-weight: 700; font-size: 20px; line-height: 1.3; color: var(--lp-ink); margin: 0;
+}
+.lp-theme10-testimonials-sign { display: flex; flex-direction: column; gap: 2px; margin-top: 14px; }
+.lp-theme10-testimonials-sign .t10-name { font-family: var(--lp-font-heading); font-weight: 700; font-size: 15px; color: var(--lp-t10-gold); }
+.lp-theme10-testimonials-sign .t10-title { font-family: var(--lp-font-body); font-size: 13px; color: var(--lp-ink2); }
+.lp-theme10-testimonials-sign .t10-source { font-family: var(--lp-font-mono); font-size: 11px; color: var(--lp-ink3); letter-spacing: 0.04em; }
+.lp-theme10-testimonials-strip {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  flex: 1 1 auto; min-height: 0; align-content: start;
+}
+.lp-theme10-testimonials-mini {
+  border-top: 1px solid var(--lp-t10-gold); padding-top: 10px; min-width: 0;
+}
+.lp-theme10-testimonials-mini .t10-mini-text { font-size: 12px; color: var(--lp-ink); line-height: 1.5; margin: 0; }
+.lp-theme10-testimonials-mini .t10-mini-who { display: block; margin-top: 8px; font-family: var(--lp-font-mono); font-size: 11px; color: var(--lp-ink3); }
+
+/* 22. feature · 图文特写（obsidian，左大图出血 + 右批注） */
+.lp-theme10-feature { position: relative; }
+.lp-theme10-feature-photo {
+  position: absolute; top: 0; bottom: 0; left: 0; width: 46%; z-index: 0;
+}
+.lp-theme10-feature-photo .lp-theme10-photo {
+  width: 100%; height: 100%; border: none; border-radius: 0;
+  border-right: 1px solid var(--lp-t10-gold);
+}
+.lp-theme10-feature-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 55%, color-mix(in srgb, var(--lp-bg) 30%, transparent));
+}
+.lp-theme10-feature-body {
+  position: relative; z-index: 1; margin-left: 46%; padding-left: 50px;
+  display: flex; flex-direction: column; justify-content: center;
+  flex: 1 1 auto; min-height: 0;
+}
+.lp-theme10-feature-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: calc(var(--lp-font-size-h1) * 1.0); line-height: 1.06; color: var(--lp-ink); margin-top: 10px;
+}
+.lp-theme10-feature-lead { font-size: 15px; color: var(--lp-ink2); line-height: 1.55; margin-top: 14px; max-width: 34ch; }
+.lp-theme10-feature-notes { margin-top: 22px; display: flex; flex-direction: column; gap: 16px; }
+.lp-theme10-feature-note { display: flex; gap: 14px; align-items: flex-start; }
+.lp-theme10-feature-note .t10-leader { flex: 0 0 3px; width: 3px; align-self: stretch; background: var(--lp-t10-gold); }
+.lp-theme10-feature-note .t10-note-text { display: flex; flex-direction: column; gap: 3px; }
+.lp-theme10-feature-note .t10-label { font-family: var(--lp-font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--lp-t10-gold); }
+.lp-theme10-feature-note .t10-detail { font-family: var(--lp-font-body); font-size: 13px; color: var(--lp-ink); }
+.lp-theme10-magazine-thumb { width: 220px; max-width: 50%; margin-top: 18px; align-self: flex-start; }
+
+/* ════════════════════════════════════════════════════════════════
+ * P1 影像图文 · 批次C（compareimg / pinboard / filmstrip / inset / gallery2）
+ * ════════════════════════════════════════════════════════════════ */
+
+/* 23. compareimg · 对照双图（ember，左右双图 + 角标图注） */
+.lp-theme10-compareimg { position: relative; }
+.lp-theme10-compareimg-head { position: relative; margin-bottom: 20px; }
+.lp-theme10-compareimg-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-compareimg-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 64ch; }
+.lp-theme10-compareimg-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-compareimg-cell { position: relative; margin: 0; display: flex; flex-direction: column; min-height: 0; }
+.lp-theme10-compareimg-tag {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  font-family: var(--lp-font-mono); font-size: 11px; letter-spacing: 0.08em; font-weight: 700;
+  color: var(--lp-t10-gold);
+  background: color-mix(in srgb, var(--lp-bg) 62%, transparent);
+  border: 1px solid var(--lp-t10-gold); border-radius: 2px; padding: 3px 9px;
+}
+.lp-theme10-compareimg-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-compareimg-cap {
+  font-family: var(--lp-font-mono); font-size: 11px; color: var(--lp-ink2);
+  padding-top: 8px; margin-top: 8px; border-top: 1px solid var(--lp-t10-rule);
+}
+
+/* 24. pinboard · 钉板九宫格（obsidian，3×3 + 图注） */
+.lp-theme10-pinboard { position: relative; }
+.lp-theme10-pinboard-head { position: relative; margin-bottom: 16px; }
+.lp-theme10-pinboard-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-pinboard-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-pinboard-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 14px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-pinboard-cell { margin: 0; display: flex; flex-direction: column; min-height: 0; }
+.lp-theme10-pinboard-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-pinboard-cap {
+  font-family: var(--lp-font-mono); font-size: 9px; color: var(--lp-ink2);
+  padding-top: 5px; margin-top: 5px; border-top: 1px solid var(--lp-t10-rule);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* 25. filmstrip · 横向胶片条（obsidian，满宽七联 + 帧号） */
+.lp-theme10-filmstrip { position: relative; }
+.lp-theme10-filmstrip-head { position: relative; margin-bottom: 14px; }
+.lp-theme10-filmstrip-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-filmstrip-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-filmstrip-strip {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-filmstrip-cell { position: relative; margin: 0; display: flex; flex-direction: column; min-height: 0; border-top: 2px solid var(--lp-t10-gold); padding-top: 6px; }
+.lp-theme10-filmstrip-idx {
+  font-family: var(--lp-font-mono); font-size: 11px; font-weight: 700; color: var(--lp-t10-gold); letter-spacing: 0.04em; margin-bottom: 6px;
+}
+.lp-theme10-filmstrip-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-filmstrip-cap {
+  font-family: var(--lp-font-mono); font-size: 9px; color: var(--lp-ink2);
+  padding-top: 5px; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* 26. inset · 满版内嵌（aurora，满版影像 + 内嵌文字卡） */
+.lp-theme10-inset { position: relative; }
+.lp-theme10-inset-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.lp-theme10-inset-photo .lp-theme10-photo {
+  width: 100%; height: 100%; border: none; border-radius: 0;
+}
+.lp-theme10-inset-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--lp-bg) 60%, transparent) 0%, color-mix(in srgb, var(--lp-bg) 22%, transparent) 60%, transparent 100%);
+}
+.lp-theme10-inset-card {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  flex: 1 1 auto; min-height: 0; max-width: 60%;
+}
+.lp-theme10-inset-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: calc(var(--lp-font-size-h1) * 1.05); line-height: 1.06; color: var(--lp-ink); margin-top: 10px;
+}
+.lp-theme10-inset-lead { font-size: 15px; color: var(--lp-ink2); line-height: 1.55; margin-top: 14px; max-width: 40ch; }
+.lp-theme10-inset-notes { margin-top: 20px; display: flex; flex-direction: column; gap: 14px; }
+.lp-theme10-inset-note { display: flex; gap: 12px; align-items: flex-start; }
+.lp-theme10-inset-note .t10-leader { flex: 0 0 3px; width: 3px; align-self: stretch; background: var(--lp-t10-gold); }
+.lp-theme10-inset-note .t10-note-text { display: flex; flex-direction: column; gap: 3px; }
+.lp-theme10-inset-note .t10-label { font-family: var(--lp-font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--lp-t10-gold); }
+.lp-theme10-inset-note .t10-detail { font-family: var(--lp-font-body); font-size: 13px; color: var(--lp-ink); }
+
+/* 27. gallery2 · 画廊六格（ember，3×2 + 图注） */
+.lp-theme10-gallery2 { position: relative; }
+.lp-theme10-gallery2-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-gallery2-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-gallery2-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-gallery2-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: 18px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-gallery2-cell { margin: 0; display: flex; flex-direction: column; min-height: 0; }
+.lp-theme10-gallery2-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-gallery2-cap {
+  font-family: var(--lp-font-mono); font-size: 10px; color: var(--lp-ink2);
+  padding-top: 7px; margin-top: 7px; border-top: 1px solid var(--lp-t10-rule);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * P1 影像图文 · 批次D（mosaic / collage / captioned / showcase / poster）
+ * ════════════════════════════════════════════════════════════════ */
+
+/* 28. mosaic · 马赛克拼贴（aurora，不规则 3×3 跨格） */
+.lp-theme10-mosaic { position: relative; }
+.lp-theme10-mosaic-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-mosaic-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-mosaic-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-mosaic-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 13px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-mosaic-cell { margin: 0; display: flex; flex-direction: column; min-height: 0; position: relative; }
+.lp-theme10-mosaic-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-mosaic-cap {
+  font-family: var(--lp-font-mono); font-size: 10px; color: var(--lp-ink2);
+  padding-top: 6px; margin-top: 6px; border-top: 1px solid var(--lp-t10-rule);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* 29. collage · 自由拼贴（ember，主图左通栏高 + 右三图竖叠 + 金线图签） */
+.lp-theme10-collage { position: relative; }
+.lp-theme10-collage-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-collage-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-collage-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-collage-grid {
+  display: grid; grid-template-columns: 1.6fr 1fr; grid-template-rows: repeat(3, 1fr); gap: 16px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-collage-hero { grid-column: 1; grid-row: 1 / 4; margin: 0; display: flex; flex-direction: column; min-height: 0; position: relative; }
+.lp-theme10-collage-cell { grid-column: 2; margin: 0; display: flex; flex-direction: column; min-height: 0; position: relative; }
+.lp-theme10-collage-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-collage-tag {
+  position: absolute; left: 10px; bottom: 10px; max-width: 82%;
+  font-family: var(--lp-font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--lp-ink);
+  background: color-mix(in srgb, var(--lp-bg) 72%, transparent);
+  padding: 4px 9px; border-left: 2px solid var(--lp-t10-gold);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* 30. captioned · 图注组（obsidian，三联大图 + 标题/说明图注） */
+.lp-theme10-captioned { position: relative; }
+.lp-theme10-captioned-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-captioned-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-captioned-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-captioned-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr; gap: 18px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-captioned-cell { margin: 0; display: flex; flex-direction: column; min-height: 0; }
+.lp-theme10-captioned-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-captioned-cap { padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--lp-t10-rule-strong); display: flex; flex-direction: column; gap: 4px; }
+.lp-theme10-captioned-cap .t10-cap-title { font-family: var(--lp-font-heading); font-weight: 700; font-size: 15px; color: var(--lp-ink); }
+.lp-theme10-captioned-cap .t10-cap-note { font-family: var(--lp-font-body); font-size: 12px; color: var(--lp-ink2); line-height: 1.45; }
+
+/* 31. showcase · 陈列橱窗（aurora，主图左 + 右 2×2 缩略） */
+.lp-theme10-showcase { position: relative; }
+.lp-theme10-showcase-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-showcase-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-showcase-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-showcase-grid {
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr; grid-template-rows: repeat(2, 1fr); gap: 16px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-showcase-hero { grid-column: 1; grid-row: 1 / 3; margin: 0; display: flex; flex-direction: column; min-height: 0; position: relative; }
+.lp-theme10-showcase-thumb { margin: 0; display: flex; flex-direction: column; min-height: 0; position: relative; }
+.lp-theme10-showcase-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-showcase-cap {
+  font-family: var(--lp-font-mono); font-size: 9px; color: var(--lp-ink2);
+  padding-top: 5px; margin-top: 5px; border-top: 1px solid var(--lp-t10-rule);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* 32. poster · 海报（ember，满版影像 + 底部压字大标题） */
+.lp-theme10-poster { position: relative; }
+.lp-theme10-poster-photo { position: absolute; inset: 0; z-index: 0; }
+.lp-theme10-poster-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lp-theme10-poster-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    color-mix(in srgb, var(--lp-bg) 80%, transparent) 0%,
+    color-mix(in srgb, var(--lp-bg) 34%, transparent) 44%,
+    transparent 70%);
+}
+.lp-theme10-poster-card { position: absolute; left: 60px; right: 60px; bottom: 92px; z-index: 2; }
+.lp-theme10-poster-kicker {
+  font-family: var(--lp-font-mono); font-size: 12px; letter-spacing: 0.14em; color: var(--lp-t10-gold); text-transform: uppercase;
+}
+.lp-theme10-poster-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: calc(var(--lp-font-size-h1) * 1.12); line-height: 1.04; color: var(--lp-ink); margin-top: 10px;
+}
+.lp-theme10-poster-tagline { font-size: 15px; color: var(--lp-ink2); line-height: 1.5; margin-top: 14px; max-width: 56ch; }
+.lp-theme10-poster-bar {
+  position: absolute; left: 60px; right: 60px; bottom: 80px; height: 2px; z-index: 2;
+  background: linear-gradient(90deg, var(--lp-t10-gold), transparent);
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * P1 影像图文 · 批次E（annotated / quoteimg / quilt / exhibit / medallions）
+ * ════════════════════════════════════════════════════════════════ */
+
+/* 33. annotated · 注解图（aurora，底图 + 编号注解列表） */
+.lp-theme10-annotated { position: relative; }
+.lp-theme10-annotated-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-annotated-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-annotated-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-annotated-body { display: flex; gap: 28px; flex: 1 1 auto; min-height: 0; }
+.lp-theme10-annotated-figure { margin: 0; flex: 1.5 1 0; min-height: 0; display: flex; }
+.lp-theme10-annotated-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-annotated-notes { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; gap: 18px; justify-content: center; }
+.lp-theme10-annotated-item { display: flex; gap: 14px; align-items: flex-start; }
+.lp-theme10-annotated-no {
+  flex: 0 0 30px; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--lp-t10-gold); color: var(--lp-bg);
+  font-family: var(--lp-font-mono); font-weight: 700; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.lp-theme10-annotated-text { font-family: var(--lp-font-body); font-size: 15px; color: var(--lp-ink); line-height: 1.5; padding-top: 3px; }
+
+/* 34. quoteimg · 引言图（ember，满版影像 + 居中大引述） */
+.lp-theme10-quoteimg { position: relative; }
+.lp-theme10-quoteimg-photo { position: absolute; inset: 0; z-index: 0; }
+.lp-theme10-quoteimg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lp-theme10-quoteimg-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--lp-bg) 52%, transparent) 0%, color-mix(in srgb, var(--lp-bg) 80%, transparent) 100%);
+}
+.lp-theme10-quoteimg-card { position: absolute; left: 60px; right: 60px; top: 50%; transform: translateY(-50%); z-index: 2; text-align: center; }
+.lp-theme10-quoteimg-kicker { font-family: var(--lp-font-mono); font-size: 12px; letter-spacing: 0.14em; color: var(--lp-t10-gold); text-transform: uppercase; }
+.lp-theme10-quoteimg-mark { display: block; font-family: var(--lp-font-heading); font-size: 64px; line-height: 1; color: var(--lp-t10-gold); margin: 6px 0; }
+.lp-theme10-quoteimg-quote {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: calc(var(--lp-font-size-h1) * 0.9); line-height: 1.18; color: var(--lp-ink); margin: 0;
+}
+.lp-theme10-quoteimg-attr { font-family: var(--lp-font-mono); font-size: 13px; letter-spacing: 0.04em; color: var(--lp-t10-gold); margin-top: 18px; }
+
+/* 35. quilt · 拼布（obsidian，4×2 紧凑影像拼布） */
+.lp-theme10-quilt { position: relative; }
+.lp-theme10-quilt-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-quilt-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-quilt-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-quilt-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 12px;
+  flex: 1 1 auto; min-height: 0; align-content: stretch;
+}
+.lp-theme10-quilt-cell { margin: 0; display: flex; flex-direction: column; min-height: 0; }
+.lp-theme10-quilt-photo { flex: 1 1 auto; min-height: 0; }
+
+/* 36. exhibit · 陈列展（aurora，带框展品 + 展签文本） */
+.lp-theme10-exhibit { position: relative; }
+.lp-theme10-exhibit-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-exhibit-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-exhibit-body { display: flex; gap: 28px; flex: 1 1 auto; min-height: 0; }
+.lp-theme10-exhibit-figure { margin: 0; flex: 1.4 1 0; min-height: 0; display: flex; }
+.lp-theme10-exhibit-photo { flex: 1 1 auto; min-height: 0; }
+.lp-theme10-exhibit-label { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
+.lp-theme10-exhibit-meta { font-family: var(--lp-font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--lp-t10-gold); }
+.lp-theme10-exhibit-rule { height: 1px; background: var(--lp-t10-rule-strong); margin: 16px 0; }
+.lp-theme10-exhibit-desc { font-family: var(--lp-font-body); font-size: 15px; color: var(--lp-ink2); line-height: 1.6; margin: 0; }
+
+/* 37. medallions · 徽章墙（ember，3×2 圆形徽章 + 标签） */
+.lp-theme10-medallions { position: relative; }
+.lp-theme10-medallions-head { position: relative; margin-bottom: 18px; }
+.lp-theme10-medallions-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2); color: var(--lp-ink); margin-top: 8px;
+}
+.lp-theme10-medallions-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 72ch; }
+.lp-theme10-medallions-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: 18px 30px;
+  flex: 1 1 auto; min-height: 0; align-content: center;
+}
+.lp-theme10-medallions-cell { margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 0; }
+.lp-theme10-medallions-photo {
+  width: 100%; max-width: 200px; aspect-ratio: 1 / 1; border-radius: 50%;
+  overflow: hidden; border: 2px solid var(--lp-t10-gold);
+}
+.lp-theme10-medallions-cap {
+  font-family: var(--lp-font-heading); font-weight: 700; font-size: 14px; color: var(--lp-ink); margin-top: 12px; text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────────────
+ * P2 数据图表 · 批次F（基础图表 5 版式）
+ * 手绘 SVG 图表：金线网格 + 冰蓝/香槟金序列色，复用 theme10 自带 CSS 变量。
+ * ──────────────────────────────────────────────────────────────── */
+.lp-theme10-chart { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.lp-theme10-chart-head { flex: 0 0 auto; margin-bottom: 12px; }
+.lp-theme10-chart-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2);
+  color: var(--lp-ink); margin-top: 8px; line-height: 1.05;
+}
+.lp-theme10-chart-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 10px; max-width: 74ch; }
+.lp-theme10-chart-body { flex: 1 1 auto; min-height: 0; display: flex; }
+.lp-t10-chart-svg { width: 100%; height: 100%; display: block; }
+
+/* 坐标轴 / 网格文字 */
+.lp-t10-axis-label,
+.lp-t10-row-label {
+  font-family: var(--lp-font-mono); font-size: 12px; fill: var(--lp-ink3); letter-spacing: 0.02em;
+}
+.lp-t10-row-label { fill: var(--lp-ink2); }
+.lp-t10-row-val { font-family: var(--lp-font-mono); font-size: 13px; font-weight: 700; fill: var(--lp-ink); }
+.lp-t10-bar { transition: opacity 0.2s; }
+.lp-t10-line-series polyline { vector-effect: non-scaling-stroke; }
+.lp-t10-area { }
+
+/* 图例 */
+.lp-t10-legend { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 10px; }
+.lp-t10-legend-item { display: inline-flex; align-items: center; gap: 8px; font-family: var(--lp-font-body); font-size: 12px; color: var(--lp-ink2); }
+.lp-t10-legend-chip { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+
+/* 批次J 新增图表文字样式（漏斗/仪表盘/子弹/箱线/矩形树） */
+.lp-t10-funnel-label { font-family: var(--lp-font-body); font-size: 15px; font-weight: 700; fill: var(--lp-ink); }
+.lp-t10-funnel-value { font-family: var(--lp-font-mono); font-size: 14px; font-weight: 700; fill: var(--lp-ink); }
+.lp-t10-funnel-pct { font-family: var(--lp-font-mono); font-size: 12px; fill: var(--lp-ink2); }
+.lp-t10-gauge-value { font-family: var(--lp-font-mono); font-size: 48px; font-weight: 700; fill: var(--lp-ink); }
+.lp-t10-gauge-label { font-family: var(--lp-font-body); font-size: 14px; fill: var(--lp-ink2); }
+.lp-t10-bullet-label { font-family: var(--lp-font-body); font-size: 13px; fill: var(--lp-ink2); }
+.lp-t10-bullet-value { font-family: var(--lp-font-mono); font-size: 13px; font-weight: 700; fill: var(--lp-ink); }
+.lp-t10-treemap-label { font-family: var(--lp-font-body); font-size: 14px; font-weight: 700; fill: var(--lp-ink); }
+.lp-t10-treemap-value { font-family: var(--lp-font-mono); font-size: 13px; fill: var(--lp-ink); }
+.lp-t10-treemap-cell { transition: opacity 0.2s; }
+
+/* KPI 指标卡（ember，2×2） */
+.lp-theme10-kpis { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.lp-theme10-kpis-head { flex: 0 0 auto; margin-bottom: 14px; }
+.lp-theme10-kpis-title {
+  font-family: var(--lp-font-heading); font-weight: 800; font-size: var(--lp-font-size-h2);
+  color: var(--lp-ink); margin-top: 8px; line-height: 1.05;
+}
+.lp-theme10-kpis-lead { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin-top: 10px; max-width: 74ch; }
+.lp-theme10-kpis-grid {
+  flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 18px 26px;
+  align-content: stretch;
+}
+.lp-theme10-kpi-card {
+  position: relative; display: flex; flex-direction: column; justify-content: flex-start;
+  padding: 22px 26px; min-height: 0;
+  background: var(--lp-surface-solid); border: 1px solid var(--lp-border-strong); border-radius: var(--lp-radius-large);
+}
+.t10-kpi-label { font-family: var(--lp-font-body); font-size: 13px; color: var(--lp-ink2); }
+.t10-kpi-value { display: flex; align-items: baseline; gap: 6px; margin-top: 14px; }
+.t10-kpi-num { font-family: var(--lp-font-mono); font-weight: 800; font-size: 46px; line-height: 1; color: var(--lp-ink); letter-spacing: -0.01em; }
+.t10-kpi-unit { font-family: var(--lp-font-mono); font-weight: 700; font-size: 18px; color: var(--lp-ink2); }
+.t10-kpi-delta { font-family: var(--lp-font-mono); font-weight: 700; font-size: 14px; margin-top: 14px; }
+.t10-kpi-delta.up { color: var(--lp-green); }
+.t10-kpi-delta.down { color: var(--lp-red); }
+
+/* ────────────────────────────────────────────────────────────────
+ * P2 数据图表 · 批次G（对比与构成 5 版式）
+ * grouped / stack / donut / pie / waterfall
+ * 复用批次F 的 .lp-theme10-chart 基样式（head/body/svg/legend）。
+ * ──────────────────────────────────────────────────────────────── */
+
+/* 47. waterfall · 浮动柱（obsidian）数值标签已由 .lp-t10-row-val 提供 */
+.lp-theme10-waterfall { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+
+/* 环形 / 饼图 圆心与扇区 */
+.lp-t10-donut-seg,
+.lp-t10-pie-seg {
+  stroke: var(--lp-surface-solid);
+  stroke-width: 2;
+  transition: opacity 0.2s;
+}
+.lp-t10-donut-total {
+  font-family: var(--lp-font-mono); font-weight: 800; font-size: 34px;
+  fill: var(--lp-ink); letter-spacing: -0.01em;
+}
+.lp-t10-donut-cap {
+  font-family: var(--lp-font-body); font-size: 13px; fill: var(--lp-ink3); letter-spacing: 0.06em;
+}
+/* SVG 内图例（donut / pie 右侧） */
+.lp-t10-legend-svg .lp-t10-row-label { fill: var(--lp-ink2); }
+.lp-t10-legend-svg .lp-t10-row-val { fill: var(--lp-ink); }
+
+/* ────────────────────────────────────────────────────────────────
+ * P2 数据图表 · 批次H（分布与关系 5 版式）
+ * scatter / bubble / radar / radial / heat
+ * 复用批次F 的 .lp-theme10-chart 基样式（head/body/svg/legend）。
+ * ──────────────────────────────────────────────────────────────── */
+
+/* 轴名（散点/气泡横纵轴说明） */
+.lp-t10-axis-name { font-family: var(--lp-font-body); font-size: 12px; fill: var(--lp-ink3); letter-spacing: 0.04em; }
+
+/* 48. scatter · 点 */
+.lp-t10-dot { stroke: var(--lp-surface-solid); stroke-width: 1; }
+
+/* 49. bubble · 气泡（描边由内联 stroke 控制） */
+.lp-t10-bubble { stroke: var(--lp-surface-solid); }
+
+/* 50. radar · 网格 / 轴线 / 多边形 / 标签 */
+.lp-t10-radar-grid { fill: none; stroke: var(--lp-rule); stroke-width: 1; }
+.lp-t10-radar-spoke { stroke: var(--lp-rule-strong); stroke-width: 1; }
+.lp-t10-radar-poly { fill-opacity: 0.16; stroke-width: 2; stroke-linejoin: round; }
+.lp-t10-radar-label { font-family: var(--lp-font-body); font-size: 13px; fill: var(--lp-ink2); }
+
+/* 51. radial · 扇区 / 标签 / 中心轴 */
+.lp-t10-radial-seg { stroke: var(--lp-surface-solid); stroke-width: 1; }
+.lp-t10-radial-label { font-family: var(--lp-font-body); font-size: 12px; fill: var(--lp-ink2); }
+.lp-t10-radial-hub { fill: none; stroke: var(--lp-rule-strong); stroke-width: 1; }
+
+/* 52. heat · 单元格 / 标签 */
+.lp-t10-heat-cell { stroke: var(--lp-surface-solid); stroke-width: 1; }
+.lp-t10-heat-cell-txt { font-family: var(--lp-font-mono); font-size: 12px; font-weight: 700; }
+.lp-t10-heat-rowlabel { font-family: var(--lp-font-body); font-size: 13px; fill: var(--lp-ink2); }
+.lp-t10-heat-collabel { font-family: var(--lp-font-body); font-size: 13px; fill: var(--lp-ink2); }
+
+/* ────────────────────────────────────────────────────────────────
+ * P2 数据图表 · 批次I（趋势与时间 5 版式）
+ * trend / range / candlestick / ridgeline / calendar
+ * 复用批次F 的 .lp-theme10-chart 基样式（head/body/svg/legend）。
+ * ──────────────────────────────────────────────────────────────── */
+
+/* 53. trend · 末值标签 */
+.lp-t10-trend-end { font-family: var(--lp-font-mono); font-size: 13px; font-weight: 700; }
+
+/* 54. range · 区间带 / 中枢（圆点与带由内联属性控制） */
+.lp-theme10-range .lp-t10-axis-label { fill: var(--lp-ink2); }
+
+/* 55. candlestick · K线（涨绿跌红由内联 var 控制） */
+.lp-theme10-candle .lp-t10-axis-label { fill: var(--lp-ink3); }
+
+/* 56. ridgeline · 山脊线 */
+.lp-t10-ridge-label { font-family: var(--lp-font-body); font-size: 13px; font-weight: 600; }
+
+/* 57. calendar · 日历热力（cells 由内联 fill 控制） */
+.lp-t10-cal-cell { stroke: var(--lp-surface-solid); stroke-width: 1; }
+.lp-t10-cal-rowlabel { font-family: var(--lp-font-body); font-size: 12px; fill: var(--lp-ink2); }
+.lp-t10-cal-cap { font-family: var(--lp-font-body); font-size: 12px; fill: var(--lp-ink3); letter-spacing: 0.04em; }
+
+/* ────────────────────────────────────────────────────────────────
+ * P2 数据图表 · 批次K（关系与构成进阶 5 版式）
+ * sankey / dumbbell / histogram / slope / waffle
+ * 复用 .lp-theme10-chart / .lp-t10-chart-svg / .lp-t10-axis-name 基样式。
+ * ──────────────────────────────────────────────────────────────── */
+
+/* 58. sankey · 流带 / 节点标签 */
+.lp-t10-sankey-band { transition: opacity 0.2s; }
+.lp-t10-node-label { font-family: var(--lp-font-body); font-size: 13px; font-weight: 600; fill: var(--lp-ink2); }
+
+/* 59. dumbbell · 起/终点数值（用 .lp-t10-data-num） */
+.lp-t10-data-num { font-family: var(--lp-font-mono); font-size: 12px; font-weight: 700; fill: var(--lp-ink); }
+
+/* 60. histogram · 柱体沿用批次F 的 .lp-t10-bar（已定义） */
+
+/* 61. slope · 复用 .lp-t10-node-label / .lp-t10-data-num */
+
+/* 62. waffle · 网格单元格 / 图例 */
+.lp-t10-waffle-cell { transition: opacity 0.2s; }
+.lp-theme10-waffle-legend { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 14px; }
+
+/* 63. P2 数据图表 · 批次L（时序与分布 5 版式） */
+.lp-theme10-gantt, .lp-theme10-bump, .lp-theme10-rose,
+.lp-theme10-dotplot, .lp-theme10-timeline { /* 容器：沿用 chart-canvas 通用排版 */ }
+.lp-t10-node-label { font-family: var(--lp-font-body); font-size: 14px; fill: var(--lp-ink); font-weight: 600; }
+.lp-t10-node-sub { font-family: var(--lp-font-body); font-size: 12px; fill: var(--lp-ink3); letter-spacing: 0.02em; }
+.lp-t10-rose-label { font-family: var(--lp-font-body); font-size: 13px; fill: var(--lp-ink2); }
+
+/* 64. P2 数据图表 · 批次M（结构与关系 5 版式） */
+.lp-theme10-orgchart, .lp-theme10-parallel, .lp-theme10-circlepack,
+.lp-theme10-cscatter, .lp-theme10-marimekko { /* 容器：沿用 chart-canvas 通用排版 */ }
+
+/* ════════════════════════════════════════════════════════════════
+ * P3 结构 / 流程 / 长尾（11 版式）
+ * steps / cycle / swimlane / checklist / plans / journey
+ * goals / glossary / faq / isotype / venn
+ * ══════════════════════════════════════════════════════════════ */
+
+/* 65. steps · 运作机制（obsidian，横向步骤链 + 箭头） */
+.lp-theme10-steps { position: relative; }
+.lp-theme10-steps-head { margin-bottom: 26px; max-width: 82%; }
+.lp-theme10-steps-lead { font-size: 15px; color: var(--lp-ink2); line-height: 1.5; margin-top: 12px; max-width: 60ch; }
+.lp-theme10-steps-flow { display: flex; align-items: stretch; gap: 0; flex: 1 1 auto; min-height: 0; }
+.lp-theme10-steps-node { position: relative; flex: 1 1 0; display: flex; flex-direction: column; gap: 10px; padding: 22px 22px 0; border-top: 2px solid var(--lp-t10-gold); }
+.t10-step-no { font-family: var(--lp-font-mono); font-size: 30px; font-weight: 700; color: var(--lp-t10-blue); }
+.t10-step-name { font-family: var(--lp-font-heading); font-weight: 700; font-size: 19px; color: var(--lp-ink); }
+.t10-step-desc { font-size: 13px; color: var(--lp-ink2); line-height: 1.5; }
+.t10-step-arrow { position: absolute; right: -15px; top: 26px; color: var(--lp-t10-gold); font-size: 22px; z-index: 2; }
+
+/* 66. cycle · 循环流程（obsidian，环形节点） */
+.lp-theme10-cycle { position: relative; }
+.lp-theme10-cycle-head { margin-bottom: 14px; }
+.lp-theme10-cycle-stage { flex: 1 1 auto; min-height: 0; display: flex; }
+.lp-theme10-cycle-stage .lp-t10-chart-svg { width: 100%; height: 100%; }
+
+/* 67. swimlane · 泳道流程（ember，横向阶段泳道） */
+.lp-theme10-swimlane { position: relative; }
+.lp-theme10-swimlane-head { margin-bottom: 22px; }
+.lp-theme10-swimlane-body { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
+.lp-theme10-swimlane-row { display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; border-top: 1px solid var(--lp-t10-rule); padding-top: 12px; }
+.t10-lane-role { font-family: var(--lp-font-heading); font-weight: 700; font-size: 16px; color: var(--lp-t10-gold); }
+.t10-lane-track { display: flex; flex-wrap: wrap; gap: 10px; }
+.t10-lane-chip { font-family: var(--lp-font-mono); font-size: 12px; color: var(--lp-ink); background: var(--lp-surface-solid); border: 1px solid var(--lp-border-strong); border-radius: 999px; padding: 6px 14px; }
+
+/* 68. checklist · 核查清单（obsidian，双栏勾选） */
+.lp-theme10-checklist { position: relative; }
+.lp-theme10-checklist-head { margin-bottom: 22px; }
+.lp-theme10-checklist-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; flex: 1 1 auto; min-height: 0; align-content: start; }
+.lp-theme10-checklist-col { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.t10-check { display: flex; align-items: baseline; gap: 12px; border-top: 1px solid var(--lp-t10-rule); padding-top: 12px; }
+.t10-check-mark { font-family: var(--lp-font-mono); font-size: 18px; color: var(--lp-ink3); flex: 0 0 auto; }
+.t10-check-mark.on { color: var(--lp-green); }
+.t10-check-text { font-size: 15px; color: var(--lp-ink); line-height: 1.4; }
+
+/* 69. plans · 方案对比（ember，2–3 列方案卡） */
+.lp-theme10-plans { position: relative; }
+.lp-theme10-plans-head { margin-bottom: 22px; }
+.lp-theme10-plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; flex: 1 1 auto; min-height: 0; align-content: stretch; }
+.lp-theme10-plans-card { display: flex; flex-direction: column; gap: 12px; padding: 22px 24px; background: var(--lp-surface-solid); border: 1px solid var(--lp-border-strong); border-radius: var(--lp-radius-large); border-top: 3px solid var(--lp-t10-gold); }
+.t10-plan-tag { font-family: var(--lp-font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--lp-t10-gold); }
+.t10-plan-name { font-family: var(--lp-font-heading); font-weight: 800; font-size: 22px; color: var(--lp-ink); }
+.t10-plan-points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.t10-plan-point { display: flex; gap: 10px; align-items: baseline; font-size: 14px; color: var(--lp-ink2); }
+.t10-plan-bullet { color: var(--lp-t10-blue); }
+
+/* 70. journey · 客户旅程（ember，阶段 + 情绪曲线） */
+.lp-theme10-journey { position: relative; }
+.lp-theme10-journey-head { margin-bottom: 16px; }
+.lp-theme10-journey-stage { flex: 1 1 auto; min-height: 0; display: flex; }
+.lp-theme10-journey-stage .lp-t10-chart-svg { width: 100%; height: 100%; }
+
+/* 71. goals · 目标进度（ember，目标卡 + 进度条） */
+.lp-theme10-goals { position: relative; }
+.lp-theme10-goals-head { margin-bottom: 24px; }
+.lp-theme10-goals-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; gap: 18px 30px; flex: 1 1 auto; min-height: 0; align-content: stretch; }
+.lp-theme10-goals-card { display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 20px 24px; background: var(--lp-surface-solid); border: 1px solid var(--lp-border-strong); border-radius: var(--lp-radius-large); }
+.t10-goal-top { display: flex; justify-content: space-between; align-items: baseline; }
+.t10-goal-name { font-family: var(--lp-font-heading); font-weight: 700; font-size: 17px; color: var(--lp-ink); }
+.t10-goal-target { font-family: var(--lp-font-mono); font-size: 13px; color: var(--lp-ink2); }
+.t10-goal-bar { height: 8px; background: var(--lp-surface-elevated); border-radius: 4px; overflow: hidden; }
+.t10-goal-fill { display: block; height: 100%; background: linear-gradient(90deg, var(--lp-t10-blue), var(--lp-t10-gold)); border-radius: 4px; }
+.t10-goal-pct { font-family: var(--lp-font-mono); font-size: 14px; font-weight: 700; color: var(--lp-t10-gold); }
+
+/* 72. glossary · 术语表（obsidian，术语 + 释义双栏） */
+.lp-theme10-glossary { position: relative; }
+.lp-theme10-glossary-head { margin-bottom: 22px; }
+.lp-theme10-glossary-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; flex: 1 1 auto; min-height: 0; align-content: start; }
+.lp-theme10-glossary-col { margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.t10-gloss { border-top: 1px solid var(--lp-t10-rule); padding-top: 12px; }
+.t10-gloss-term { font-family: var(--lp-font-heading); font-weight: 700; font-size: 16px; color: var(--lp-t10-gold); margin: 0 0 4px; }
+.t10-gloss-def { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; margin: 0; }
+
+/* 73. faq · 问答（ember，左栏索引 + 右栏释疑） */
+.lp-theme10-faq { position: relative; flex-direction: row; gap: 0; }
+.lp-theme10-faq-rail { flex: 0 0 32%; display: flex; flex-direction: column; justify-content: center; padding-right: 40px; }
+.lp-theme10-faq-list { flex: 1 1 auto; min-width: 0; border-left: 1px solid var(--lp-t10-rule); padding-left: 40px; display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+.lp-theme10-faq-row { display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--lp-t10-rule); padding-top: 12px; }
+.t10-faq-q { display: flex; align-items: baseline; gap: 12px; }
+.t10-faq-no { font-family: var(--lp-font-mono); font-size: 13px; font-weight: 700; color: var(--lp-t10-gold); flex: 0 0 auto; }
+.t10-faq-qtext { font-family: var(--lp-font-heading); font-weight: 700; font-size: 17px; color: var(--lp-ink); }
+.t10-faq-a { font-size: 14px; color: var(--lp-ink2); line-height: 1.5; }
+
+/* 74. isotype · 象形图（obsidian，单位符号重复） */
+.lp-theme10-isotype { position: relative; }
+.lp-theme10-isotype-head { margin-bottom: 24px; }
+.lp-theme10-isotype-list { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+.lp-theme10-isotype-row { display: grid; grid-template-columns: 120px 1fr 44px; align-items: center; gap: 18px; }
+.t10-iso-label { display: flex; flex-direction: column; gap: 2px; }
+.t10-iso-label > :first-child { font-family: var(--lp-font-heading); font-weight: 700; font-size: 15px; color: var(--lp-ink); }
+.t10-iso-unit { font-family: var(--lp-font-mono); font-size: 11px; color: var(--lp-ink3); }
+.t10-iso-glyphs { display: flex; flex-wrap: wrap; gap: 6px; }
+.t10-iso-glyph { width: 16px; height: 16px; border-radius: 3px; display: inline-block; }
+.t10-iso-val { font-family: var(--lp-font-mono); font-size: 18px; font-weight: 700; color: var(--lp-ink); text-align: right; }
+
+/* 75. venn · 韦恩图（ember，三集合） */
+.lp-theme10-venn { position: relative; }
+.lp-theme10-venn-head { margin-bottom: 14px; }
+.lp-theme10-venn-stage { flex: 1 1 auto; min-height: 0; display: flex; }
+.lp-theme10-venn-stage .lp-t10-chart-svg { width: 100%; height: 100%; }
+
+/* 76. metric-hero · 英雄指标（aurora，单一超大指标，居中） */
+.lp-theme10-metric-hero .lp-theme10-inner { justify-content: center; align-items: flex-start; }
+.lp-theme10-metric-hero-inner { display: flex; flex-direction: column; gap: 6px; max-width: 82%; }
+.lp-theme10-metric-hero-title { font-family: var(--lp-font-heading); font-weight: 700; font-size: 22px; color: var(--lp-ink2); margin: 6px 0 24px; line-height: 1.3; }
+.lp-theme10-metric-hero-label { font-family: var(--lp-font-mono); font-size: 14px; color: var(--lp-ink3); letter-spacing: 0.04em; text-transform: uppercase; }
+.lp-theme10-metric-hero-num { font-size: 132px; line-height: 0.92; }
+.lp-theme10-metric-hero-context { font-size: 15px; color: var(--lp-ink2); line-height: 1.6; max-width: 60ch; margin-top: 24px; }
+
+/* 77. scorecard · 记分卡（ember，评分卡网格） */
+.lp-theme10-scorecard-grid { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; align-content: center; }
+.lp-theme10-scorecard-card { border: 1px solid var(--lp-t10-rule); border-radius: 10px; padding: 22px 20px; background: color-mix(in srgb, var(--lp-t10-gold) 4%, transparent); display: flex; flex-direction: column; gap: 4px; }
+.lp-theme10-scorecard-note { font-size: 12px; color: var(--lp-ink3); margin-top: 10px; line-height: 1.45; }
+
+/* 78. comparison-stat · 对比指标（obsidian，左右两组 + 中间 VS） */
+.lp-theme10-cmp-stat .lp-theme10-inner { justify-content: center; }
+.lp-theme10-cmp-stat-row { display: flex; align-items: center; justify-content: center; gap: 48px; }
+.lp-theme10-cmp-side { display: flex; flex-direction: column; gap: 8px; min-width: 220px; align-items: center; text-align: center; }
+.lp-theme10-cmp-vs { font-family: var(--lp-font-mono); font-weight: 800; font-size: 26px; color: var(--lp-t10-gold); border: 1px solid var(--lp-t10-rule); border-radius: 50%; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+
+/* 79. small-multiples · 小多图（aurora，2×N 迷你图网格） */
+.lp-theme10-sm-grid { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; gap: 18px; }
+.lp-theme10-sm-cell { border: 1px solid var(--lp-t10-rule); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; min-height: 0; background: color-mix(in srgb, var(--lp-t10-gold) 3%, transparent); }
+.lp-theme10-sm-title { font-family: var(--lp-font-heading); font-weight: 700; font-size: 14px; color: var(--lp-ink2); margin-bottom: 6px; }
+.lp-theme10-sm-cell .lp-t10-echart { flex: 1 1 auto; min-height: 0; width: 100%; }
+
+/* 80. stat-strip · 指标长条（aurora，横向紧凑指标） */
+.lp-theme10-strip-row { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; gap: 0; }
+.lp-theme10-strip-item { flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; padding: 0 22px; border-left: 1px solid var(--lp-t10-rule); }
+.lp-theme10-strip-item:first-child { border-left: none; padding-left: 0; }
+
+/* 81. quote-stat · 金句指标（ember，金句 + 嵌入式指标） */
+.lp-theme10-quote-stat .lp-theme10-inner { justify-content: center; }
+.lp-theme10-quote-stat-body { max-width: 80%; margin-bottom: 28px; }
+.lp-theme10-quote-stat-text { font-family: var(--lp-font-heading); font-weight: 700; font-size: 40px; line-height: 1.32; color: var(--lp-ink); white-space: pre-line; }
+.lp-theme10-quote-stat-sign { font-family: var(--lp-font-mono); font-size: 13px; color: var(--lp-t10-gold); margin-top: 16px; }
+.lp-theme10-quote-stat-chip { display: flex; flex-direction: column; gap: 4px; border-left: 3px solid var(--lp-t10-gold); padding-left: 18px; }
+
+/* 82. index-board · 指数看板（obsidian，多行行情） */
+.lp-theme10-index-board-head { display: grid; grid-template-columns: 1.1fr 1.6fr 1fr 1fr; gap: 16px; font-family: var(--lp-font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lp-ink3); border-bottom: 1px solid var(--lp-t10-rule); padding-bottom: 8px; margin-bottom: 2px; }
+.lp-theme10-index-board-head .t10-idx-num { text-align: right; }
+.lp-theme10-index-board-rows { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.lp-theme10-idx-row { display: grid; grid-template-columns: 1.1fr 1.6fr 1fr 1fr; gap: 16px; align-items: center; border-bottom: 1px solid var(--lp-t10-rule); padding: 14px 0; }
+.t10-idx-code { font-family: var(--lp-font-mono); font-weight: 700; font-size: 15px; color: var(--lp-ink); }
+.t10-idx-name { font-family: var(--lp-font-heading); font-size: 15px; color: var(--lp-ink2); }
+.t10-idx-value { font-family: var(--lp-font-mono); font-weight: 700; font-size: 18px; color: var(--lp-ink); text-align: right; }
+.t10-idx-delta { font-family: var(--lp-font-mono); font-weight: 700; font-size: 15px; text-align: right; }
+.t10-idx-delta.up { color: var(--lp-red); }
+.t10-idx-delta.down { color: var(--lp-green); }
+

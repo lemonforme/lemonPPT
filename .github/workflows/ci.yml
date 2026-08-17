@@ -44,5 +44,8 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
+      - name: Editor e2e test
+        run: pnpm test:e2e
+
       - name: Agent smoke test
         run: pnpm agent:test

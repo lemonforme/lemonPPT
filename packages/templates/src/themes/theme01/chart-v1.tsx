@@ -4,6 +4,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactElement, ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Sheet, GlassCard } from './shared.js';
 export interface Theme01ChartV1InsightItem {
   label?: string;
   value?: string;
@@ -41,6 +42,8 @@ export const theme01ChartV1Meta: LayoutMeta = {
   displayName: 'Theme 01 图表页',
   description: '玻璃卡片 + SVG 图表（柱状/折线/饼图）',
   needsMedia: false,
+  tags: ['chart', 'data', 'svg', 'light'],
+  contentShape: 'chart',
 };
 export const theme01ChartV1Schema: PropsSchema = {
   fields: [
@@ -501,8 +504,8 @@ export function Theme01ChartV1(props: Theme01ChartV1Props): ReactNode {
       : barChart(labels, data);
 
   return (
-    <div className={`lp-slide lp-chart-v1 ${hasInsight ? 'lp-chart-v1--with-insight' : ''}`}>
-      <div className="lp-card lp-chart-card lp-rise">
+    <Sheet substrate="light" frame="chart-canvas" className={`lp-chart-v1 ${hasInsight ? 'lp-chart-v1--with-insight' : ''}`}>
+      <GlassCard className="lp-chart-card lp-rise">
         <div className="lp-chart-header">
           {kicker && (
             <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill">
@@ -545,7 +548,7 @@ export function Theme01ChartV1(props: Theme01ChartV1Props): ReactNode {
             )}
           </div>
         )}
-      </div>
-    </div>
+      </GlassCard>
+    </Sheet>
   );
 }

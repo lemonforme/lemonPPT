@@ -2,7 +2,7 @@
 // Copyright (c) 2026 lemonforme
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import type { ReactElement, ReactNode } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
 export interface EditableFieldProps {
   /** 当前 slide 索引 */
@@ -19,11 +19,13 @@ export interface EditableFieldProps {
   className?: string;
   /** 标记为图表数据字段，修改后需要刷新图表 */
   chartData?: boolean;
+  /** 内联样式（用于入场动效错峰等） */
+  style?: CSSProperties;
   children: ReactNode;
 }
 
 export function EditableField(props: EditableFieldProps): ReactElement {
-  const { slideIdx, editable, prop, as: Tag = 'span', fieldType, className, chartData, children } = props;
+  const { slideIdx, editable, prop, as: Tag = 'span', fieldType, className, chartData, style, children } = props;
   const attrs: Record<string, string | undefined> = {};
 
   if (editable && slideIdx !== undefined) {
@@ -40,7 +42,7 @@ export function EditableField(props: EditableFieldProps): ReactElement {
   }
 
   return (
-    <Tag className={className} {...attrs} suppressContentEditableWarning>
+    <Tag className={className} style={style} {...attrs} suppressContentEditableWarning>
       {children}
     </Tag>
   );

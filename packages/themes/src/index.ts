@@ -8,8 +8,12 @@ import { theme03Tokens } from './theme03/tokens.js';
 import { theme04Tokens } from './theme04/tokens.js';
 import { theme05Tokens } from './theme05/tokens.js';
 import { theme06Tokens } from './theme06/tokens.js';
+import { theme07Tokens } from './theme07/tokens.js';
+import { theme08Tokens } from './theme08/tokens.js';
+import { theme09Tokens } from './theme09/tokens.js';
+import { theme10Tokens } from './theme10/tokens.js';
 
-export const themes = [theme01Tokens, theme02Tokens, theme03Tokens, theme04Tokens, theme05Tokens, theme06Tokens] as const;
+export const themes = [theme01Tokens, theme02Tokens, theme03Tokens, theme04Tokens, theme05Tokens, theme06Tokens, theme07Tokens, theme08Tokens, theme09Tokens, theme10Tokens] as const;
 
 export type ThemeToken = typeof themes[number];
 
@@ -23,3 +27,7 @@ export * from './theme03/tokens.js';
 export * from './theme04/tokens.js';
 export * from './theme05/tokens.js';
 export * from './theme06/tokens.js';
+export * from './theme07/tokens.js';
+export * from './theme08/tokens.js';
+export * from './theme09/tokens.js';
+export * from './theme10/tokens.js';

@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Sheet, GlassCard } from './shared.js';
 
 export interface Theme01ClosingV2Props {
   kicker?: string;
@@ -26,6 +27,8 @@ export const theme01ClosingV2Meta: LayoutMeta = {
   displayName: 'Theme 01 结尾页',
   description: '居中标题 + 可选 CTA 与联系信息',
   needsMedia: false,
+  tags: ['closing', 'ending', 'light', 'tint'],
+  contentShape: 'closing',
 };
 
 export const theme01ClosingV2Schema: PropsSchema = {
@@ -79,8 +82,8 @@ export function Theme01ClosingV2(props: Theme01ClosingV2Props): ReactNode {
   const { kicker, title, subtitle, cta, contact, email, link, _slideIdx, _editable } = props;
 
   return (
-    <div className="lp-slide lp-closing-v2">
-      <div className="lp-card lp-closing-card lp-rise">
+    <Sheet substrate="tint" frame="stage" className="lp-closing-v2">
+      <GlassCard className="lp-closing-card lp-rise">
         {kicker && (
           <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill lp-closing-kicker">
             {kicker}
@@ -118,7 +121,7 @@ export function Theme01ClosingV2(props: Theme01ClosingV2Props): ReactNode {
             )}
           </div>
         )}
-      </div>
-    </div>
+      </GlassCard>
+    </Sheet>
   );
 }

@@ -255,3 +255,262 @@ export * from './themes/theme06/risk-v1.js';
 export * from './themes/theme06/risk-v2.js';
 export * from './themes/theme06/chart-graph-v1.js';
 export * from './themes/theme06/map-v1.js';
+
+// theme07 视觉 Token（冷白调研风，单一 light 外观，接口预留 dark 扩展）
+export {
+  generateTheme07CssVariables,
+  generateTheme07CssVariablesWithAppearance,
+  generateTheme07CssVariablesWithSchemesAndAppearance,
+  type Theme07Tokens,
+  type Theme07Appearance,
+} from './themes/theme07/tokens.js';
+
+// theme08 视觉 Token（黑金实验风，primary/muted 双外观）
+export {
+  theme08Tokens,
+  getTheme08Tokens,
+  generateTheme08CssVariables,
+  generateTheme08CssVariablesWithAppearance,
+  generateTheme08CssVariablesWithSchemesAndAppearance,
+  type Theme08Tokens,
+  type Theme08Appearance,
+} from './themes/theme08/tokens.js';
+
+// theme09 视觉 Token（墨韵专色 · 杂志印刷风，纸/墨双基底 + primary/muted 专色浓度）
+export {
+  theme09Tokens,
+  getTheme09Tokens,
+  generateTheme09CssVariables,
+  generateTheme09CssVariablesWithAppearance,
+  generateTheme09CssVariablesWithSchemesAndAppearance,
+  type Theme09Tokens,
+  type Theme09Appearance,
+  type Theme09Substrate,
+} from './themes/theme09/tokens.js';
+
+// theme07 版式（Phase 1：8 个核心版式 + Phase 2：扩展版式）
+export * from './themes/theme07/cover-v1.js';
+export * from './themes/theme07/table-of-contents-v1.js';
+export * from './themes/theme07/chapter-v1.js';
+export * from './themes/theme07/chapter-capital-v1.js';
+export * from './themes/theme07/chapter-risk-v1.js';
+export * from './themes/theme07/chapter-appendix-v1.js';
+export * from './themes/theme07/content-v1.js';
+export * from './themes/theme07/summary-v1.js';
+export * from './themes/theme07/ranking-v1.js';
+export * from './themes/theme07/case-v1.js';
+export * from './themes/theme07/sources-v1.js';
+export * from './themes/theme07/method-v1.js';
+export * from './themes/theme07/monthly-v1.js';
+export * from './themes/theme07/waterfall-v1.js';
+export * from './themes/theme07/matrix-v1.js';
+export * from './themes/theme07/risk-v1.js';
+export * from './themes/theme07/cover-lean-v1.js';
+export * from './themes/theme07/cover-supply-chain-v1.js';
+export * from './themes/theme07/cover-retail-trend-v1.js';
+export * from './themes/theme07/cover-supply-strategy-v1.js';
+export * from './themes/theme07/peak-v1.js';
+export * from './themes/theme07/cooldown-v1.js';
+export * from './themes/theme07/peak-trough-v1.js';
+export * from './themes/theme07/deal-size-v1.js';
+export * from './themes/theme07/avg-ticket-v1.js';
+export * from './themes/theme07/outlook-v1.js';
+export * from './themes/theme07/repricing-v1.js';
+export * from './themes/theme07/deal-map-v1.js';
+export * from './themes/theme07/cold-start-v1.js';
+export * from './themes/theme07/accelerate-v1.js';
+export * from './themes/theme07/investor-v1.js';
+export * from './themes/theme07/active-capital-v1.js';
+export * from './themes/theme07/concentration-v1.js';
+export * from './themes/theme07/syndicate-v1.js';
+// theme07 版式（Phase 3/4：垂直赛道、资本生态、地理、公司案例、风险策略、结尾页）
+export * from './themes/theme07/knowledge-v1.js';
+export * from './themes/theme07/legal-v1.js';
+export * from './themes/theme07/healthcare-v1.js';
+export * from './themes/theme07/finance-v1.js';
+export * from './themes/theme07/compute-v1.js';
+export * from './themes/theme07/chip-v1.js';
+export * from './themes/theme07/robotics-v1.js';
+export * from './themes/theme07/autonomy-v1.js';
+export * from './themes/theme07/safety-v1.js';
+export * from './themes/theme07/content_gen-v1.js';
+export * from './themes/theme07/education-v1.js';
+export * from './themes/theme07/support-v1.js';
+export * from './themes/theme07/sales-v1.js';
+export * from './themes/theme07/low_code-v1.js';
+export * from './themes/theme07/open_source-v1.js';
+export * from './themes/theme07/alignment-v1.js';
+export * from './themes/theme07/early_stage-v1.js';
+export * from './themes/theme07/deal_structure-v1.js';
+export * from './themes/theme07/investor_mix-v1.js';
+export * from './themes/theme07/resource-v1.js';
+export * from './themes/theme07/alliance-v1.js';
+export * from './themes/theme07/ecosystem-v1.js';
+export * from './themes/theme07/geo_center-v1.js';
+export * from './themes/theme07/region_cluster-v1.js';
+export * from './themes/theme07/resource_triad-v1.js';
+export * from './themes/theme07/company_openai-v1.js';
+export * from './themes/theme07/company_figure-v1.js';
+export * from './themes/theme07/company_ssi-v1.js';
+export * from './themes/theme07/revenue-v1.js';
+export * from './themes/theme07/compliance-v1.js';
+export * from './themes/theme07/margin-v1.js';
+export * from './themes/theme07/moat-v1.js';
+export * from './themes/theme07/strategy_infra-v1.js';
+export * from './themes/theme07/strategy_vertical-v1.js';
+export * from './themes/theme07/quote-v1.js';
+export * from './themes/theme07/closing-v1.js';
+export * from './themes/theme07/forward-v1.js';
+export * from './themes/theme07/about_lab-v1.js';
+export * from './themes/theme07/stat_hero-v1.js';
+export * from './themes/theme07/stat_row-v1.js';
+export * from './themes/theme07/stat_chart-v1.js';
+export * from './themes/theme07/stat_compare-v1.js';
+export * from './themes/theme07/drop-media-placeholder.js';
+
+// theme09 版式（P0 骨架 12 个）
+export * from './themes/theme09/shared.js';
+export * from './themes/theme09/cover-masthead-v1.js';
+export * from './themes/theme09/cover-bleed-v1.js';
+export * from './themes/theme09/cover-dossier-v1.js';
+export * from './themes/theme09/cover-colorbar-v1.js';
+export * from './themes/theme09/cover-aperture-v1.js';
+export * from './themes/theme09/cover-colophon-v1.js';
+export * from './themes/theme09/cover-photo-v1.js';
+export * from './themes/theme09/abstract-v1.js';
+export * from './themes/theme09/contents-v1.js';
+export * from './themes/theme09/section-v1.js';
+export * from './themes/theme09/section-card-v1.js';
+export * from './themes/theme09/closing-v1.js';
+
+// theme09 版式（P3 批次一 · 9 版式）
+export * from './themes/theme09/cross-perspective-v1.js';
+export * from './themes/theme09/thesis-v1.js';
+export * from './themes/theme09/value-chain-v1.js';
+export * from './themes/theme09/risk-v1.js';
+export * from './themes/theme09/outlook-v1.js';
+export * from './themes/theme09/conclusion-v1.js';
+export * from './themes/theme09/bracket-v1.js';
+export * from './themes/theme09/flow-v1.js';
+export * from './themes/theme09/orbit-v1.js';
+// theme09 版式（P3 批次二 · 9 版式）
+export * from './themes/theme09/vertical-v1.js';
+export * from './themes/theme09/calendar-v1.js';
+export * from './themes/theme09/phases-v1.js';
+export * from './themes/theme09/gauge-v1.js';
+export * from './themes/theme09/scoreboard-v1.js';
+export * from './themes/theme09/trend-v1.js';
+export * from './themes/theme09/histogram-v1.js';
+export * from './themes/theme09/forecast-fan-v1.js';
+export * from './themes/theme09/plans-v1.js';
+
+// theme09 版式（P3 批次三 · 9 版式）
+export * from './themes/theme09/stair-v1.js';
+export * from './themes/theme09/stacked-v1.js';
+export * from './themes/theme09/era-v1.js';
+export * from './themes/theme09/roadmap-v1.js';
+export * from './themes/theme09/score-v1.js';
+export * from './themes/theme09/takeaway-v1.js';
+export * from './themes/theme09/compare-v1.js';
+export * from './themes/theme09/process-v1.js';
+export * from './themes/theme09/faq-v1.js';
+
+// theme10 视觉 Token（金色指数 · 金融编辑风，mood 三情绪渐变）
+export {
+  theme10Tokens,
+  getTheme10Tokens,
+  generateTheme10CssVariables,
+  type Theme10Tokens,
+  type Theme10Mood,
+} from './themes/theme10/tokens.js';
+
+// theme10 版式（P0 骨架 12 个）— 金色指数 · 金融编辑风
+export * from './themes/theme10/cover-dusk-v1.js';
+export * from './themes/theme10/cover-field-v1.js';
+export * from './themes/theme10/cover-atmos-v1.js';
+export * from './themes/theme10/cover-horizon-v1.js';
+export * from './themes/theme10/cover-standard-v1.js';
+export * from './themes/theme10/cover-dawn-v1.js';
+export * from './themes/theme10/chapter-v1.js';
+export * from './themes/theme10/divider-v1.js';
+export * from './themes/theme10/statement-section-v1.js';
+export * from './themes/theme10/statement-v1.js';
+export * from './themes/theme10/principles-v1.js';
+export * from './themes/theme10/closing-v1.js';
+export * from './themes/theme10/profile-v1.js';
+export * from './themes/theme10/team-v1.js';
+export * from './themes/theme10/quote-v1.js';
+export * from './themes/theme10/editorial-v1.js';
+export * from './themes/theme10/magazine-v1.js';
+export * from './themes/theme10/triptych-v1.js';
+export * from './themes/theme10/strata-v1.js';
+export * from './themes/theme10/spark-v1.js';
+export * from './themes/theme10/testimonials-v1.js';
+export * from './themes/theme10/feature-v1.js';
+export * from './themes/theme10/compareimg-v1.js';
+export * from './themes/theme10/pinboard-v1.js';
+export * from './themes/theme10/filmstrip-v1.js';
+export * from './themes/theme10/inset-v1.js';
+export * from './themes/theme10/gallery2-v1.js';
+export * from './themes/theme10/mosaic-v1.js';
+export * from './themes/theme10/collage-v1.js';
+export * from './themes/theme10/captioned-v1.js';
+export * from './themes/theme10/showcase-v1.js';
+export * from './themes/theme10/poster-v1.js';
+export * from './themes/theme10/annotated-v1.js';
+export * from './themes/theme10/quoteimg-v1.js';
+export * from './themes/theme10/quilt-v1.js';
+export * from './themes/theme10/exhibit-v1.js';
+export * from './themes/theme10/medallions-v1.js';
+export * from './themes/theme10/chartkit.js';
+export * from './themes/theme10/bar-v1.js';
+export * from './themes/theme10/hbar-v1.js';
+export * from './themes/theme10/line-v1.js';
+export * from './themes/theme10/area-v1.js';
+export * from './themes/theme10/kpis-v1.js';
+export * from './themes/theme10/grouped-v1.js';
+export * from './themes/theme10/stack-v1.js';
+export * from './themes/theme10/donut-v1.js';
+export * from './themes/theme10/pie-v1.js';
+export * from './themes/theme10/waterfall-v1.js';
+export * from './themes/theme10/scatter-v1.js';
+export * from './themes/theme10/bubble-v1.js';
+export * from './themes/theme10/radar-v1.js';
+export * from './themes/theme10/radial-v1.js';
+export * from './themes/theme10/heat-v1.js';
+export * from './themes/theme10/trend-v1.js';
+export * from './themes/theme10/range-v1.js';
+export * from './themes/theme10/candlestick-v1.js';
+export * from './themes/theme10/ridgeline-v1.js';
+export * from './themes/theme10/calendar-v1.js';
+export * from './themes/theme10/funnel-v1.js';
+export * from './themes/theme10/gauge-v1.js';
+export * from './themes/theme10/bullet-v1.js';
+export * from './themes/theme10/box-v1.js';
+export * from './themes/theme10/treemap-v1.js';
+export * from './themes/theme10/sankey-v1.js';
+export * from './themes/theme10/dumbbell-v1.js';
+export * from './themes/theme10/histogram-v1.js';
+export * from './themes/theme10/slope-v1.js';
+export * from './themes/theme10/waffle-v1.js';
+export * from './themes/theme10/gantt-v1.js';
+export * from './themes/theme10/bump-v1.js';
+export * from './themes/theme10/rose-v1.js';
+export * from './themes/theme10/dotplot-v1.js';
+export * from './themes/theme10/timeline-v1.js';
+export * from './themes/theme10/orgchart-v1.js';
+export * from './themes/theme10/parallel-v1.js';
+export * from './themes/theme10/circlepack-v1.js';
+export * from './themes/theme10/cscatter-v1.js';
+export * from './themes/theme10/marimekko-v1.js';
+export * from './themes/theme10/steps-v1.js';
+export * from './themes/theme10/cycle-v1.js';
+export * from './themes/theme10/swimlane-v1.js';
+export * from './themes/theme10/checklist-v1.js';
+export * from './themes/theme10/plans-v1.js';
+export * from './themes/theme10/journey-v1.js';
+export * from './themes/theme10/goals-v1.js';
+export * from './themes/theme10/glossary-v1.js';
+export * from './themes/theme10/faq-v1.js';
+export * from './themes/theme10/isotype-v1.js';
+export * from './themes/theme10/venn-v1.js';

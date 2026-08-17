@@ -55,12 +55,12 @@ export const theme05HeatmapV1Schema: PropsSchema = {
 };
 
 function getHeatColor(value: number, max: number): string {
-  if (max === 0) return 'var(--lp-surface-strong)';
+  if (max === 0) return 'rgba(26, 26, 26, 0.5)';
   const ratio = value / max;
-  if (ratio > 0.75) return 'var(--lp-accent)';
-  if (ratio > 0.5) return 'var(--lp-accent-2)';
-  if (ratio > 0.25) return 'var(--lp-accent-cool)';
-  return 'var(--lp-surface-strong)';
+  if (ratio > 0.75) return 'var(--lp-coral)';
+  if (ratio > 0.5) return 'var(--lp-amber)';
+  if (ratio > 0.25) return 'var(--lp-teal)';
+  return '#3A3A42';
 }
 
 export function Theme05HeatmapV1(props: Theme05HeatmapV1Props): ReactNode {

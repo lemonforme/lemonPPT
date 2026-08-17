@@ -4,6 +4,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Sheet, GlassCard, Folio } from './shared.js';
 export interface Theme01ComparisonV1Props {
   kicker?: string;
   title: string;
@@ -22,6 +23,8 @@ export const theme01ComparisonV1Meta: LayoutMeta = {
   displayName: 'Theme 01 左右对比',
   description: '玻璃卡片左右两栏对比',
   needsMedia: false,
+  tags: ['comparison', 'columns', 'grid', 'light'],
+  contentShape: 'comparison',
 };
 export const theme01ComparisonV1Schema: PropsSchema = {
   fields: [
@@ -83,7 +86,7 @@ export const theme01ComparisonV1Schema: PropsSchema = {
 };
 export function Theme01ComparisonV1(props: Theme01ComparisonV1Props): ReactNode {
   const { kicker, title, leftTitle = '方案 A', leftPoints = [], rightTitle = '方案 B', rightPoints = [], _slideIdx, _editable, } = props;
-  return (<div className="lp-slide lp-comparison-v1">
+  return (<Sheet substrate="light" frame="grid" className="lp-comparison-v1">
       <div className="lp-comparison-inner">
     {kicker && (<EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill lp-rise">
       {kicker}
@@ -92,7 +95,7 @@ export function Theme01ComparisonV1(props: Theme01ComparisonV1Props): ReactNode 
           {title}
     </EditableField>
     <div className="lp-comparison-grid">
-          <div className="lp-card lp-comparison-col lp-rise">
+          <GlassCard className="lp-comparison-col lp-rise">
       <EditableField prop="leftTitle" slideIdx={_slideIdx} editable={_editable} as="h3" className="lp-comparison-col-title">
               {leftTitle}
       </EditableField>
@@ -103,8 +106,8 @@ export function Theme01ComparisonV1(props: Theme01ComparisonV1Props): ReactNode 
                   </EditableField>
         </li>))}
       </ul>
-          </div>
-          <div className="lp-card lp-comparison-col lp-rise">
+          </GlassCard>
+          <GlassCard className="lp-comparison-col lp-rise">
       <EditableField prop="rightTitle" slideIdx={_slideIdx} editable={_editable} as="h3" className="lp-comparison-col-title">
               {rightTitle}
       </EditableField>
@@ -115,8 +118,15 @@ export function Theme01ComparisonV1(props: Theme01ComparisonV1Props): ReactNode 
                   </EditableField>
         </li>))}
       </ul>
-          </div>
+          </GlassCard>
     </div>
       </div>
-  </div>);
+      <Folio
+        left="主题一 · 对比"
+        page="对比"
+        right="LEMONPPT"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+  </Sheet>);
 }

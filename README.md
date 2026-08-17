@@ -8,14 +8,18 @@ lemonPPT 是一个基于 AI 的演示文稿生成与渲染引擎。它接收自�
 
 - **自然语言生成**：输入一句话需求，AI 自动输出 `goal.json` 页面规划。
 - **混合架构**：共享版式组件 + 主题 Token + CSS 变量；每个页面角色按 `(role, theme)` 二维索引注册专属版式，新增主题只需补 token + CSS。
-- **多主题内置**：6 套原创主题（每套均支持 light/dark 与多种色彩方案）
-  - `theme01` 浅色玻璃质感
-  - `theme02` 深色霓虹科技（scheme-a/b）
-  - `theme03` 代码编辑器风（scheme-a/b + light/dark）
-  - `theme04` 玻璃糖果风（green/yellow/blue/pink + light/dark）
-  - `theme05` 光谱报告风（coral/amber/teal/indigo/violet + light/dark）
-  - `theme06` 深色图谱风（volt/magma/nebula/nova + light/dark，88 个版式）
-- **丰富版式**：覆盖封面、目录、核心数字、统计、图表、对比、流程、时间线、路线图、引用、客户证言、FAQ、图文、分屏、特性、团队、合作伙伴、价格、图库、SWOT、PEST、结尾等 23 个页面角色，注册版式 402 个。
+- **多主题内置**：10 套原创主题（每套均支持多种色彩方案与外观模式）
+  - `theme01` 浅色玻璃质感（light / dark）
+  - `theme02` 深色霓虹科技（scheme-a / scheme-b）
+  - `theme03` 代码编辑器风（scheme-a / scheme-b + light / dark）
+  - `theme04` 玻璃糖果风（green / yellow / blue / pink + light / dark）
+  - `theme05` 光谱报告风（coral / amber / teal / indigo / violet + light / dark）
+  - `theme06` 深色图谱风（volt / magma / nebula / nova + light / dark）
+  - `theme07` 冷白金融投资风（cold-white / warm-gray / ink / navy + light / dark）
+  - `theme08` 曜金黑金机构风（obsidian-gold / midnight-silver / graphite-rose / forest-gold）
+  - `theme09` 墨韵杂志印刷风（paper / ink 双基底 + primary / muted）
+  - `theme10` 金指数据指数风（gold-index / blue-index / green-index）
+- **丰富版式**：覆盖封面、目录、核心数字、统计、图表、对比、流程、时间线、路线图、引用、客户证言、FAQ、图文、分屏、特性、团队、合作伙伴、价格、图库、SWOT、PEST、结尾等 23 个页面角色，注册版式 802 个。
 - **浏览器编辑**：在线修改文字、替换图片、撤销/重做、自动保存到 localStorage。
 - **导出能力**：一键导出可编辑 PPTX 与 PDF。
 - **本地字体集成**：内置 Anton、Archivo、Caveat、IBM Plex Sans、Inter、JetBrains Mono、Newsreader、Space Grotesk、Space Mono 9 款英文字体，以及 Noto Sans SC、Noto Serif SC 2 款中文字体，均来自 Google Fonts 并使用 SIL Open Font License 1.1。
@@ -95,7 +99,20 @@ COREPACK_INTEGRITY_KEYS=0 corepack pnpm --filter @lemonppt/server dev
 
 ### 使用浏览器编辑器
 
-打开 `http://127.0.0.1:5300/editor`。
+lemonPPT 采用**单页编辑器架构**：所有主题共享同一个 `/editor` 页面，主题通过 URL 参数动态加载，保证各主题编辑器头部、交互、视觉完全一致。
+
+```bash
+# 默认主题 theme01
+open http://127.0.0.1:5300/editor
+
+# 指定主题
+open http://127.0.0.1:5300/editor?theme=theme02
+```
+
+- `/editor`：返回单页编辑器 HTML，不生成静态文件。
+- `/api/render-editor`：返回编辑器所需的 `EditorData` JSON（包含 slides HTML、主题 CSS 变量、主题元数据等）。
+  - `GET /api/render-editor?theme=theme01`：基于 `examples/sample-goal.json` 生成指定主题的渲染数据。
+  - `POST /api/render-editor`：传入完整 `goal.json`，返回对应渲染数据。
 
 ### 生成 goal.json
 
@@ -130,7 +147,9 @@ node scripts/export-pdf.mjs examples/sample-goal.json output/sample-goal.pdf
 | POST | `/api/render-editor` | 渲染可编辑 HTML |
 | POST | `/api/export/pptx` | 导出 PPTX |
 | POST | `/api/export/pdf` | 导出 PDF |
-| GET | `/editor` | 打开编辑器 |
+| GET | `/editor` | 打开单页编辑器（所有主题共享同一页面） |
+| GET | `/api/render-editor` | 返回指定主题的 EditorData 渲染数据 |
+| POST | `/api/render-editor` | 传入 goal.json，返回 EditorData 渲染数据 |
 
 > 对应 CLI 子命令：`generate / export / render / list-themes / layout-query / inspect-layout / goal-scaffold / write-safe-props / validate-goal-spec / install-skill / serve`。Agent YAML 接口定义见 [`packages/cli/agents/`](packages/cli/agents/)。
 

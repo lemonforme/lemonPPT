@@ -45,4 +45,48 @@ describe('server', () => {
     expect(res.body.success).toBe(true);
     expect(res.body.assets).toContain('./assets/theme01.css');
   });
+
+  it('GET /api/render-editor should return EditorData', async () => {
+    const res = await request(app).get('/api/render-editor?theme=theme02');
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    const data = res.body.data;
+    expect(data).toBeDefined();
+    expect(data.goal).toBeDefined();
+    expect(data.theme).toBe('theme02');
+    expect(data.slidesMarkup).toContain('lp-slide-wrapper');
+    expect(data.themeCssVars).toContain('--');
+    expect(data.colorScheme).toBeDefined();
+  });
+
+  it('POST /api/render-editor should honor body goal theme', async () => {
+    const res = await request(app).post('/api/render-editor?theme=theme03').send(sampleGoal);
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.data.theme).toBe('theme03');
+    expect(res.body.data.goal.slides.length).toBe(sampleGoal.slides.length);
+  });
+
+  it('GET /editor should return single-page editor HTML', async () => {
+    const res = await request(app).get('/editor?theme=theme02');
+    expect(res.status).toBe(200);
+    expect(res.text).toContain('editor.js');
+    expect(res.text).toContain('lp-editor-root');
+  });
+
+  it('POST /api/export/pptx should return a PPTX blob', async () => {
+    const res = await request(app).post('/api/export/pptx').send(sampleGoal);
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toMatch(/octet-stream|officedocument/);
+    expect(res.headers['content-disposition']).toMatch(/\.pptx/);
+    expect(Number(res.headers['content-length'])).toBeGreaterThan(1000);
+  });
+
+  it('POST /api/export/pdf should return a PDF blob', async () => {
+    const res = await request(app).post('/api/export/pdf').send(sampleGoal);
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toMatch(/octet-stream|pdf/);
+    expect(res.headers['content-disposition']).toMatch(/\.pdf/);
+    expect(Number(res.headers['content-length'])).toBeGreaterThan(1000);
+  });
 });

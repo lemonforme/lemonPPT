@@ -24,7 +24,7 @@ const rootDir = path.resolve(__dirname, '..');
 const galleryDir = path.join(rootDir, 'output', 'gallery');
 const snapshotDir = path.join(rootDir, 'output', 'snapshots');
 
-const THEMES = ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06'];
+const THEMES = ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06', 'theme07', 'theme08', 'theme09', 'theme10'];
 
 function fileUrl(theme) {
   return 'file://' + path.join(galleryDir, theme, 'index.html');
@@ -126,7 +126,11 @@ async function main() {
     }
     console.log(`\n全部完成：${path.join(snapshotDir)}`);
   } finally {
-    await browser.close();
+    await Promise.race([
+      browser.close(),
+      new Promise((resolve) => setTimeout(resolve, 5000)),
+    ]);
+    process.exit(0);
   }
 }
 

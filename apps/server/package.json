@@ -6,12 +6,14 @@
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@lemonppt/agent-prompts": "workspace:*",
     "@lemonppt/cli": "workspace:*",
     "@lemonppt/core": "workspace:*",
+    "@lemonppt/renderer": "workspace:*",
     "@lemonppt/themes": "workspace:*",
     "express": "^4.19.0"
   },

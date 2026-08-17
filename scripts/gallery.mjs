@@ -14,7 +14,7 @@
  *   output/gallery/assets/<theme>.css
  */
 
-import { cp, mkdir, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -24,6 +24,11 @@ import {
   generateTheme04CssVariablesWithAppearance,
   generateTheme05CssVariablesWithSchemesAndAppearance,
   generateTheme06CssVariablesWithSchemesAndAppearance,
+  generateTheme07CssVariablesWithSchemesAndAppearance,
+  generateTheme08CssVariablesWithSchemesAndAppearance,
+  generateTheme09CssVariablesWithSchemesAndAppearance,
+  generateTheme10CssVariables,
+  getLayoutSchema,
   listLayoutsByTheme,
   renderSlide,
 } from '@lemonppt/templates';
@@ -36,9 +41,18 @@ const outDir = path.join(rootDir, 'output', 'gallery');
 const assetsDir = path.join(outDir, 'assets');
 const themesDir = path.join(rootDir, 'packages', 'themes', 'src');
 
-const THEMES = ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06'];
+const THEMES = ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06', 'theme07', 'theme08', 'theme09', 'theme10'];
 
 import { sampleProps } from './lib/sample-props.mjs';
+
+function schemaDefaultsToProps(schema) {
+  if (!schema || !Array.isArray(schema.fields)) return {};
+  const props = {};
+  for (const f of schema.fields) {
+    if (f.defaultValue !== undefined) props[f.key] = f.defaultValue;
+  }
+  return props;
+}
 
 function renderSlideHtml(slide, index, theme) {
   const element = renderSlide(slide, { slideIdx: index, editable: false, theme });
@@ -75,7 +89,7 @@ function buildGalleryHtml(theme, slides, themeCssVars, colorScheme, appearance) 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 ${themeCssVars}
-    html, body { width: 100%; min-height: 100%; background: #111; color: #e5e5e5; font-family: system-ui, sans-serif; }
+    html, body { width: 100%; min-height: 100%; overflow-x: hidden; overflow-y: auto; background: #111; color: #e5e5e5; font-family: system-ui, sans-serif; }
     body { padding: 40px 24px; }
     .lp-gallery-header { max-width: 1280px; margin: 0 auto 32px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
     .lp-gallery-header h1 { font-size: 24px; font-weight: 700; }
@@ -129,6 +143,16 @@ async function main() {
   const themeEchartsDest = path.join(assetsDir, 'theme-echarts.js');
   await cp(themeEchartsSource, themeEchartsDest);
 
+  // theme01 画廊使用一套连贯的真实演示数据（output/theme01-data-goal.json），而非占位 sampleProps
+  let t01DataMap = new Map();
+  try {
+    const t01Goal = JSON.parse(await readFile(path.join(rootDir, 'output', 'theme01-data-goal.json'), 'utf-8'));
+    t01DataMap = new Map(t01Goal.slides.map((s) => [s.layout, s.props]));
+    console.log(`ℹ️ theme01 画廊已载入真实数据：${t01DataMap.size} 个版式`);
+  } catch (e) {
+    console.warn('⚠️ 未找到 output/theme01-data-goal.json，theme01 画廊回退到 sampleProps：', e.message);
+  }
+
   for (const theme of THEMES) {
     const themeDir = path.join(outDir, theme);
     await mkdir(themeDir, { recursive: true });
@@ -137,8 +161,8 @@ async function main() {
     const cssDest = path.join(assetsDir, `${theme}.css`);
     await cp(cssSource, cssDest);
 
-    const colorScheme = theme === 'theme01' ? 'light' : theme === 'theme04' ? 'green' : theme === 'theme05' ? 'coral' : theme === 'theme06' ? 'volt' : 'scheme-a';
-    const appearance = theme === 'theme03' || theme === 'theme04' || theme === 'theme05' || theme === 'theme06' ? 'dark' : undefined;
+    const colorScheme = theme === 'theme01' ? 'light' : theme === 'theme04' ? 'green' : theme === 'theme05' ? 'coral' : theme === 'theme06' ? 'volt' : theme === 'theme07' ? 'cold-white' : theme === 'theme08' ? 'obsidian-gold' : theme === 'theme09' ? 'ink-editorial' : theme === 'theme10' ? 'gold-index' : 'scheme-a';
+    const appearance = theme === 'theme03' || theme === 'theme04' || theme === 'theme05' || theme === 'theme06' ? 'dark' : theme === 'theme08' ? 'primary' : theme === 'theme09' ? 'primary' : theme === 'theme10' ? 'primary' : undefined;
     const themeCssVars = theme === 'theme01'
       ? generateThemeCssVariablesWithDark()
       : theme === 'theme02'
@@ -151,7 +175,15 @@ async function main() {
               ? generateTheme05CssVariablesWithSchemesAndAppearance()
               : theme === 'theme06'
                 ? generateTheme06CssVariablesWithSchemesAndAppearance()
-                : '';
+                : theme === 'theme07'
+                  ? generateTheme07CssVariablesWithSchemesAndAppearance()
+                  : theme === 'theme08'
+                    ? generateTheme08CssVariablesWithSchemesAndAppearance()
+                    : theme === 'theme09'
+                      ? generateTheme09CssVariablesWithSchemesAndAppearance()
+                      : theme === 'theme10'
+                        ? generateTheme10CssVariables()
+                        : '';
 
     const layouts = listLayoutsByTheme(theme);
     layouts.sort((a, b) => a.id.localeCompare(b.id));
@@ -160,7 +192,11 @@ async function main() {
     const slides = layouts.map((meta) => ({
       role: meta.role,
       layout: meta.id,
-      props: sampleProps(meta),
+      props: theme === 'theme01'
+        ? (t01DataMap.get(meta.id) || sampleProps(meta))
+        : theme === 'theme08'
+          ? schemaDefaultsToProps(getLayoutSchema(meta.id))
+          : sampleProps(meta),
     }));
 
     const html = buildGalleryHtml(theme, slides, themeCssVars, colorScheme, appearance);

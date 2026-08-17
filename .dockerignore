@@ -1,0 +1,11 @@
+node_modules
+**/node_modules
+*.log
+.DS_Store
+.git
+.github
+coverage
+output
+**/dist
+.vscode
+.idea

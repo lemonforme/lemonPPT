@@ -72,7 +72,7 @@ export async function exportDeckToPdf(goal: DeckGoal, options: ExportPdfOptions)
   const page = await browser.newPage();
 
   try {
-    await page.goto('file://' + tempHtml, { waitUntil: 'networkidle' });
+    await page.goto('file://' + tempHtml, { waitUntil: 'domcontentloaded' });
     await page.evaluate(() => document.fonts.ready);
     // 显式等待并执行 ECharts 初始化，确保异步图表渲染完成后再生成 PDF。
     await page.evaluate(async () => {

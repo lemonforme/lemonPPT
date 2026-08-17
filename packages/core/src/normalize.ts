@@ -2,7 +2,66 @@
 // Copyright (c) 2026 lemonforme
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import type { DeckGoal, RawDeckGoal, Slide, RawSlide } from './types.js';
+import type { DeckGoal, RawDeckGoal, Slide, RawSlide, SlideRole } from './types.js';
+
+const VALID_ROLES: SlideRole[] = [
+  'cover', 'tableOfContents', 'metric', 'stats', 'chart', 'comparison', 'pricing',
+  'process', 'timeline', 'roadmap', 'quote', 'testimonial', 'content', 'faq',
+  'feature', 'team', 'partners', 'image', 'gallery', 'bento', 'table', 'tags',
+  'filmstrip', 'swot', 'pest', 'closing',
+];
+
+function inferRoleFromLayout(layoutId: string): SlideRole | undefined {
+  const parts = layoutId.split('_');
+  if (parts.length >= 3) {
+    const maybe = parts[1] as SlideRole;
+    if (VALID_ROLES.includes(maybe)) return maybe;
+  }
+  return undefined;
+}
+
+/**
+ * 预处理外部 Agent 传入的 goal.json，兼容 Dashi PPT 等外部契约。
+ * - 将 `themePack` 映射为 `theme`
+ * - 未传 `pageCount` 时默认等于 slides.length
+ * - 未传 `role` 时尝试从 layout ID 推断
+ */
+export function preprocessAgentGoal(input: unknown): Record<string, unknown> {
+  if (!input || typeof input !== 'object') {
+    throw new Error('goal must be a JSON object');
+  }
+  const raw = input as Record<string, unknown>;
+  const goal: Record<string, unknown> = { ...raw };
+
+  if (goal.themePack && !goal.theme) {
+    goal.theme = goal.themePack;
+  }
+  delete goal.themePack;
+
+  if (!goal.theme) {
+    goal.theme = 'theme01';
+  }
+
+  const slides = Array.isArray(goal.slides) ? [...goal.slides] : [];
+  goal.slides = slides.map((slide) => {
+    if (!slide || typeof slide !== 'object') return slide;
+    const s = { ...(slide as Record<string, unknown>) };
+    if (!s.role && typeof s.layout === 'string') {
+      const inferred = inferRoleFromLayout(s.layout);
+      if (inferred) s.role = inferred;
+    }
+    if (!s.role) {
+      s.role = 'content';
+    }
+    return s;
+  });
+
+  if (typeof goal.pageCount !== 'number') {
+    goal.pageCount = slides.length;
+  }
+
+  return goal;
+}
 
 /**
  * 将旧版 layout ID 规范化。
@@ -40,7 +99,7 @@ function normalizeRawSlide(slide: RawSlide): RawSlide {
   };
 }
 
-type ColorSchemeValue = 'light' | 'dark' | 'scheme-a' | 'scheme-b' | 'green' | 'yellow' | 'blue' | 'pink' | 'coral' | 'amber' | 'teal' | 'indigo' | 'violet' | 'volt' | 'magma' | 'nebula' | 'nova';
+type ColorSchemeValue = 'light' | 'dark' | 'scheme-a' | 'scheme-b' | 'green' | 'yellow' | 'blue' | 'pink' | 'coral' | 'amber' | 'teal' | 'indigo' | 'violet' | 'volt' | 'magma' | 'nebula' | 'nova' | 'obsidian-gold' | 'ink-editorial';
 
 const THEME05_SCHEMES: ColorSchemeValue[] = ['coral', 'amber', 'teal', 'indigo', 'violet'];
 const THEME06_SCHEMES: ColorSchemeValue[] = ['volt', 'magma', 'nebula', 'nova'];
@@ -69,6 +128,23 @@ function normalizeColorScheme(
     if (scheme === 'light' || scheme === 'dark') return 'volt';
     return THEME06_SCHEMES.includes(scheme) ? scheme : 'volt';
   }
+  if (theme === 'theme08') {
+    // theme08 仅有单一配色方案「曜金」，深浅由 appearance(primary/muted) 控制
+    return 'obsidian-gold';
+  }
+  if (theme === 'theme09') {
+    // theme09 仅有单一配色方案「墨韵专色」；纸/墨基底由版式自身预分配，
+    // appearance(primary/muted) 只调专色浓度与网点密度，不翻转明暗
+    return 'ink-editorial';
+  }
+  if (colorScheme === 'obsidian-gold') {
+    // 非 theme08 不认识该方案，退回浅色
+    return 'light';
+  }
+  if (colorScheme === 'ink-editorial') {
+    // 非 theme09 不认识该方案，退回浅色
+    return 'light';
+  }
   if (colorScheme === 'scheme-a' || colorScheme === 'scheme-b' ||
       colorScheme === 'green' || colorScheme === 'yellow' ||
       colorScheme === 'blue' || colorScheme === 'pink' ||
@@ -82,9 +158,17 @@ function normalizeColorScheme(
 
 function normalizeAppearance(
   themeId: string,
-  appearance: 'light' | 'dark' | undefined,
-): 'light' | 'dark' | undefined {
+  appearance: 'light' | 'dark' | 'primary' | 'muted' | undefined,
+): 'light' | 'dark' | 'primary' | 'muted' | undefined {
   const theme = normalizeThemeId(themeId);
+  if (theme === 'theme08') {
+    // theme08 使用 primary(深/黑金) 与 muted(浅/暖金)，同时兼容 dark/light 写法
+    return appearance === 'muted' || appearance === 'light' ? 'muted' : 'primary';
+  }
+  if (theme === 'theme09') {
+    // theme09 使用 primary(浓专色) 与 muted(淡专色)，同时兼容 dark/light 写法
+    return appearance === 'muted' || appearance === 'light' ? 'muted' : 'primary';
+  }
   if (theme !== 'theme03' && theme !== 'theme04' && theme !== 'theme05') {
     return undefined;
   }

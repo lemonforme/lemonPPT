@@ -33,6 +33,20 @@ function resolveSkillMdPath(): string {
   throw new Error('SKILL.md not found. It should be bundled with @lemonppt/cli or exist at the repo root.');
 }
 
+function resolveAgentYamlPath(skillMdPath: string): string {
+  const skillRoot = path.dirname(skillMdPath);
+  const published = path.join(skillRoot, 'agents', 'openai.yaml');
+  if (existsSync(published)) {
+    return published;
+  }
+  // Local monorepo dev
+  const local = path.resolve(skillRoot, '..', 'agents', 'openai.yaml');
+  if (existsSync(local)) {
+    return local;
+  }
+  return published;
+}
+
 async function installAgent(agent: string): Promise<void> {
   const homeDir = os.homedir();
   const skillDir = path.join(homeDir, `.${agent}/skills/lemonppt`);
@@ -41,6 +55,12 @@ async function installAgent(agent: string): Promise<void> {
   const skillMdSource = resolveSkillMdPath();
   await copyFile(skillMdSource, path.join(skillDir, 'SKILL.md'));
   await copyFile(skillMdSource, path.join(skillDir, 'README.md'));
+
+  // 同时安装 Agent skill 元数据（OpenAI/Codex 风格）
+  const agentYamlSource = resolveAgentYamlPath(skillMdSource);
+  if (existsSync(agentYamlSource)) {
+    await copyFile(agentYamlSource, path.join(skillDir, 'openai.yaml'));
+  }
 
   const scriptsDir = path.join(skillDir, 'scripts');
   await mkdir(scriptsDir, { recursive: true });

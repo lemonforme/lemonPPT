@@ -11,6 +11,12 @@ import {
   type Theme01AppendixV1Props,
 } from './themes/theme01/appendix-v1.js';
 import {
+  Theme01ComponentsV1,
+  theme01ComponentsV1Meta,
+  theme01ComponentsV1Schema,
+  type Theme01ComponentsV1Props,
+} from './themes/theme01/components-v1.js';
+import {
   Theme01BentoV1,
   theme01BentoV1Meta,
   theme01BentoV1Schema,
@@ -664,6 +670,174 @@ import {
   theme02TestimonialV1Schema,
   type Theme02TestimonialV1Props,
 } from './themes/theme02/testimonial-v1.js';
+import {
+  Theme02FeatureV2,
+  theme02FeatureV2Meta,
+  theme02FeatureV2Schema,
+  type Theme02FeatureV2Props,
+} from './themes/theme02/feature-v2.js';
+import {
+  Theme02ChecklistV1,
+  theme02ChecklistV1Meta,
+  theme02ChecklistV1Schema,
+  type Theme02ChecklistV1Props,
+} from './themes/theme02/checklist-v1.js';
+import {
+  Theme02StepsV1,
+  theme02StepsV1Meta,
+  theme02StepsV1Schema,
+  type Theme02StepsV1Props,
+} from './themes/theme02/steps-v1.js';
+import {
+  Theme02CardGridV1,
+  theme02CardGridV1Meta,
+  theme02CardGridV1Schema,
+  type Theme02CardGridV1Props,
+} from './themes/theme02/card-grid-v1.js';
+import {
+  Theme02HighlightV1,
+  theme02HighlightV1Meta,
+  theme02HighlightV1Schema,
+  type Theme02HighlightV1Props,
+} from './themes/theme02/highlight-v1.js';
+import {
+  Theme02ComparisonV2,
+  theme02ComparisonV2Meta,
+  theme02ComparisonV2Schema,
+  type Theme02ComparisonV2Props,
+} from './themes/theme02/comparison-v2.js';
+import {
+  Theme02MatrixV1,
+  theme02MatrixV1Meta,
+  theme02MatrixV1Schema,
+  type Theme02MatrixV1Props,
+} from './themes/theme02/matrix-v1.js';
+import {
+  Theme02StatGridV1,
+  theme02StatGridV1Meta,
+  theme02StatGridV1Schema,
+  type Theme02StatGridV1Props,
+} from './themes/theme02/stat-grid-v1.js';
+import {
+  Theme02CoverV3,
+  theme02CoverV3Meta,
+  theme02CoverV3Schema,
+  type Theme02CoverV3Props,
+} from './themes/theme02/cover-v3.js';
+import {
+  Theme02ClosingV2,
+  theme02ClosingV2Meta,
+  theme02ClosingV2Schema,
+  type Theme02ClosingV2Props,
+} from './themes/theme02/closing-v2.js';
+import {
+  Theme02ChartBarV1,
+  theme02ChartBarV1Meta,
+  theme02ChartBarV1Schema,
+  type Theme02ChartBarV1Props,
+} from './themes/theme02/chart-bar-v1.js';
+import {
+  Theme02ChartLineV1,
+  theme02ChartLineV1Meta,
+  theme02ChartLineV1Schema,
+  type Theme02ChartLineV1Props,
+} from './themes/theme02/chart-line-v1.js';
+import {
+  Theme02ChartAreaV1,
+  theme02ChartAreaV1Meta,
+  theme02ChartAreaV1Schema,
+  type Theme02ChartAreaV1Props,
+} from './themes/theme02/chart-area-v1.js';
+import {
+  Theme02ChartStackV1,
+  theme02ChartStackV1Meta,
+  theme02ChartStackV1Schema,
+  type Theme02ChartStackV1Props,
+} from './themes/theme02/chart-stack-v1.js';
+import {
+  Theme02KpiStripV1,
+  theme02KpiStripV1Meta,
+  theme02KpiStripV1Schema,
+  type Theme02KpiStripV1Props,
+} from './themes/theme02/kpi-strip-v1.js';
+import {
+  Theme02BigStatV1,
+  theme02BigStatV1Meta,
+  theme02BigStatV1Schema,
+  type Theme02BigStatV1Props,
+} from './themes/theme02/big-stat-v1.js';
+import {
+  Theme02CycleV1,
+  theme02CycleV1Meta,
+  theme02CycleV1Schema,
+  type Theme02CycleV1Props,
+} from './themes/theme02/cycle-v1.js';
+import {
+  Theme02SwimlaneV1,
+  theme02SwimlaneV1Meta,
+  theme02SwimlaneV1Schema,
+  type Theme02SwimlaneV1Props,
+} from './themes/theme02/swimlane-v1.js';
+import {
+  Theme02PyramidV1,
+  theme02PyramidV1Meta,
+  theme02PyramidV1Schema,
+  type Theme02PyramidV1Props,
+} from './themes/theme02/pyramid-v1.js';
+import {
+  Theme02OrgChartV1,
+  theme02OrgChartV1Meta,
+  theme02OrgChartV1Schema,
+  type Theme02OrgChartV1Props,
+} from './themes/theme02/org-chart-v1.js';
+import {
+  Theme02FlowV1,
+  theme02FlowV1Meta,
+  theme02FlowV1Schema,
+  type Theme02FlowV1Props,
+} from './themes/theme02/flow-v1.js';
+import {
+  Theme02TableV2,
+  theme02TableV2Meta,
+  theme02TableV2Schema,
+  type Theme02TableV2Props,
+} from './themes/theme02/table-v2.js';
+import {
+  Theme02ImageSplitV1,
+  theme02ImageSplitV1Meta,
+  theme02ImageSplitV1Schema,
+  type Theme02ImageSplitV1Props,
+} from './themes/theme02/image-split-v1.js';
+import {
+  Theme02ImageGridV2,
+  theme02ImageGridV2Meta,
+  theme02ImageGridV2Schema,
+  type Theme02ImageGridV2Props,
+} from './themes/theme02/image-grid-v2.js';
+import {
+  Theme02SpotlightV1,
+  theme02SpotlightV1Meta,
+  theme02SpotlightV1Schema,
+  type Theme02SpotlightV1Props,
+} from './themes/theme02/spotlight-v1.js';
+import {
+  Theme02ChapterV3,
+  theme02ChapterV3Meta,
+  theme02ChapterV3Schema,
+  type Theme02ChapterV3Props,
+} from './themes/theme02/chapter-v3.js';
+import {
+  Theme02SectionDividerV1,
+  theme02SectionDividerV1Meta,
+  theme02SectionDividerV1Schema,
+  type Theme02SectionDividerV1Props,
+} from './themes/theme02/section-divider-v1.js';
+import {
+  Theme02LogoWallV1,
+  theme02LogoWallV1Meta,
+  theme02LogoWallV1Schema,
+  type Theme02LogoWallV1Props,
+} from './themes/theme02/logo-wall-v1.js';
 import {
   Theme03CaseV1,
   theme03CaseV1Meta,
@@ -2416,6 +2590,979 @@ import {
   theme06MegadealsV1Schema,
   type Theme06MegadealsV1Props,
 } from './themes/theme06/megadeals-v1.js';
+import {
+  Theme08CoverV1,
+  theme08CoverV1Meta,
+  theme08CoverV1Schema,
+  type Theme08CoverV1Props,
+} from './themes/theme08/cover-v1.js';
+import {
+  Theme08ChapterV1,
+  theme08ChapterV1Meta,
+  theme08ChapterV1Schema,
+  type Theme08ChapterV1Props,
+} from './themes/theme08/chapter-v1.js';
+import {
+  Theme08OverviewV1,
+  theme08OverviewV1Meta,
+  theme08OverviewV1Schema,
+  type Theme08OverviewV1Props,
+} from './themes/theme08/overview-v1.js';
+import {
+  Theme08ContentsV1,
+  theme08ContentsV1Meta,
+  theme08ContentsV1Schema,
+  type Theme08ContentsV1Props,
+} from './themes/theme08/contents-v1.js';
+import {
+  Theme08ContentV1,
+  theme08ContentV1Meta,
+  theme08ContentV1Schema,
+  type Theme08ContentV1Props,
+} from './themes/theme08/content-v1.js';
+import {
+  Theme08QuoteV1,
+  theme08QuoteV1Meta,
+  theme08QuoteV1Schema,
+  type Theme08QuoteV1Props,
+} from './themes/theme08/quote-v1.js';
+import {
+  Theme08FeatureV1,
+  theme08FeatureV1Meta,
+  theme08FeatureV1Schema,
+  type Theme08FeatureV1Props,
+} from './themes/theme08/feature-v1.js';
+import {
+  Theme08MetricsV1,
+  theme08MetricsV1Meta,
+  theme08MetricsV1Schema,
+  type Theme08MetricsV1Props,
+} from './themes/theme08/metrics-v1.js';
+import {
+  Theme08MetricBigV1,
+  theme08MetricBigV1Meta,
+  theme08MetricBigV1Schema,
+  type Theme08MetricBigV1Props,
+} from './themes/theme08/metric-big-v1.js';
+import {
+  Theme08CaseV1,
+  theme08CaseV1Meta,
+  theme08CaseV1Schema,
+  type Theme08CaseV1Props,
+} from './themes/theme08/case-v1.js';
+import {
+  Theme08CompareV1,
+  theme08CompareV1Meta,
+  theme08CompareV1Schema,
+  type Theme08CompareV1Props,
+} from './themes/theme08/compare-v1.js';
+import {
+  Theme08RankingV1,
+  theme08RankingV1Meta,
+  theme08RankingV1Schema,
+  type Theme08RankingV1Props,
+} from './themes/theme08/ranking-v1.js';
+import {
+  Theme08TableV1,
+  theme08TableV1Meta,
+  theme08TableV1Schema,
+  type Theme08TableV1Props,
+} from './themes/theme08/table-v1.js';
+import {
+  Theme08TimelineV1,
+  theme08TimelineV1Meta,
+  theme08TimelineV1Schema,
+  type Theme08TimelineV1Props,
+} from './themes/theme08/timeline-v1.js';
+import {
+  Theme08ProcessV1,
+  theme08ProcessV1Meta,
+  theme08ProcessV1Schema,
+  type Theme08ProcessV1Props,
+} from './themes/theme08/process-v1.js';
+import {
+  Theme08RoadmapV1,
+  theme08RoadmapV1Meta,
+  theme08RoadmapV1Schema,
+  type Theme08RoadmapV1Props,
+} from './themes/theme08/roadmap-v1.js';
+import {
+  Theme08StrategyV1,
+  theme08StrategyV1Meta,
+  theme08StrategyV1Schema,
+  type Theme08StrategyV1Props,
+} from './themes/theme08/strategy-v1.js';
+import {
+  Theme08QuadrantV1,
+  theme08QuadrantV1Meta,
+  theme08QuadrantV1Schema,
+  type Theme08QuadrantV1Props,
+} from './themes/theme08/quadrant-v1.js';
+import {
+  Theme08ChartBarV1,
+  theme08ChartBarV1Meta,
+  theme08ChartBarV1Schema,
+  type Theme08ChartBarV1Props,
+} from './themes/theme08/chart-bar-v1.js';
+import {
+  Theme08ChartDonutV1,
+  theme08ChartDonutV1Meta,
+  theme08ChartDonutV1Schema,
+  type Theme08ChartDonutV1Props,
+} from './themes/theme08/chart-donut-v1.js';
+import {
+  Theme08RegionV1,
+  theme08RegionV1Meta,
+  theme08RegionV1Schema,
+  type Theme08RegionV1Props,
+} from './themes/theme08/region-v1.js';
+import {
+  Theme08GalleryV1,
+  theme08GalleryV1Meta,
+  theme08GalleryV1Schema,
+  type Theme08GalleryV1Props,
+} from './themes/theme08/gallery-v1.js';
+import {
+  Theme08CollageV1,
+  theme08CollageV1Meta,
+  theme08CollageV1Schema,
+  type Theme08CollageV1Props,
+} from './themes/theme08/collage-v1.js';
+import {
+  Theme08TeamV1,
+  theme08TeamV1Meta,
+  theme08TeamV1Schema,
+  type Theme08TeamV1Props,
+} from './themes/theme08/team-v1.js';
+import {
+  Theme08PartnersV1,
+  theme08PartnersV1Meta,
+  theme08PartnersV1Schema,
+  type Theme08PartnersV1Props,
+} from './themes/theme08/partners-v1.js';
+import {
+  Theme08ClosingV1,
+  theme08ClosingV1Meta,
+  theme08ClosingV1Schema,
+  type Theme08ClosingV1Props,
+} from './themes/theme08/closing-v1.js';
+import {
+  Theme08RangeV1,
+  theme08RangeV1Meta,
+  theme08RangeV1Schema,
+  type Theme08RangeV1Props,
+} from './themes/theme08/range-v1.js';
+import {
+  Theme08ScorecardV1,
+  theme08ScorecardV1Meta,
+  theme08ScorecardV1Schema,
+  type Theme08ScorecardV1Props,
+} from './themes/theme08/scorecard-v1.js';
+import {
+  Theme08EcosystemV1,
+  theme08EcosystemV1Meta,
+  theme08EcosystemV1Schema,
+  type Theme08EcosystemV1Props,
+} from './themes/theme08/ecosystem-v1.js';
+import {
+  Theme08RadarV1,
+  theme08RadarV1Meta,
+  theme08RadarV1Schema,
+  type Theme08RadarV1Props,
+} from './themes/theme08/radar-v1.js';
+import {
+  Theme08WaterfallV1,
+  theme08WaterfallV1Meta,
+  theme08WaterfallV1Schema,
+  type Theme08WaterfallV1Props,
+} from './themes/theme08/waterfall-v1.js';
+import {
+  Theme08GaugeV1,
+  theme08GaugeV1Meta,
+  theme08GaugeV1Schema,
+  type Theme08GaugeV1Props,
+} from './themes/theme08/gauge-v1.js';
+import {
+  Theme08ChainV1,
+  theme08ChainV1Meta,
+  theme08ChainV1Schema,
+  type Theme08ChainV1Props,
+} from './themes/theme08/chain-v1.js';
+import {
+  Theme08BubbleV1,
+  theme08BubbleV1Meta,
+  theme08BubbleV1Schema,
+  type Theme08BubbleV1Props,
+} from './themes/theme08/bubble-v1.js';
+import {
+  Theme08HeatmapV1,
+  theme08HeatmapV1Meta,
+  theme08HeatmapV1Schema,
+  type Theme08HeatmapV1Props,
+} from './themes/theme08/heatmap-v1.js';
+import {
+  Theme08FundingV1,
+  theme08FundingV1Meta,
+  theme08FundingV1Schema,
+  type Theme08FundingV1Props,
+} from './themes/theme08/funding-v1.js';
+import {
+  Theme08MatrixV1,
+  theme08MatrixV1Meta,
+  theme08MatrixV1Schema,
+  type Theme08MatrixV1Props,
+} from './themes/theme08/matrix-v1.js';
+import {
+  Theme08WorkflowV1,
+  theme08WorkflowV1Meta,
+  theme08WorkflowV1Schema,
+  type Theme08WorkflowV1Props,
+} from './themes/theme08/workflow-v1.js';
+import {
+  Theme08HeroSplitV1,
+  theme08HeroSplitV1Meta,
+  theme08HeroSplitV1Schema,
+  type Theme08HeroSplitV1Props,
+} from './themes/theme08/hero-split-v1.js';
+import {
+  Theme08Cover_v2,
+  theme08Cover_v2Meta,
+  theme08Cover_v2Schema,
+  type Theme08Cover_v2Props,
+} from './themes/theme08/cover_v2.js';
+import {
+  Theme08Cover_v3,
+  theme08Cover_v3Meta,
+  theme08Cover_v3Schema,
+  type Theme08Cover_v3Props,
+} from './themes/theme08/cover_v3.js';
+import {
+  Theme08Cover_v4,
+  theme08Cover_v4Meta,
+  theme08Cover_v4Schema,
+  type Theme08Cover_v4Props,
+} from './themes/theme08/cover_v4.js';
+import {
+  Theme08Cover_v5,
+  theme08Cover_v5Meta,
+  theme08Cover_v5Schema,
+  type Theme08Cover_v5Props,
+} from './themes/theme08/cover_v5.js';
+import {
+  Theme08Chapter_v2,
+  theme08Chapter_v2Meta,
+  theme08Chapter_v2Schema,
+  type Theme08Chapter_v2Props,
+} from './themes/theme08/chapter_v2.js';
+import {
+  Theme08Chapter_v3,
+  theme08Chapter_v3Meta,
+  theme08Chapter_v3Schema,
+  type Theme08Chapter_v3Props,
+} from './themes/theme08/chapter_v3.js';
+import {
+  Theme08Chapter_v4,
+  theme08Chapter_v4Meta,
+  theme08Chapter_v4Schema,
+  type Theme08Chapter_v4Props,
+} from './themes/theme08/chapter_v4.js';
+import {
+  Theme08Quote_statement,
+  theme08Quote_statementMeta,
+  theme08Quote_statementSchema,
+  type Theme08Quote_statementProps,
+} from './themes/theme08/quote_statement.js';
+import {
+  Theme08Quote_resources,
+  theme08Quote_resourcesMeta,
+  theme08Quote_resourcesSchema,
+  type Theme08Quote_resourcesProps,
+} from './themes/theme08/quote_resources.js';
+import {
+  Theme08Quote_verdict,
+  theme08Quote_verdictMeta,
+  theme08Quote_verdictSchema,
+  type Theme08Quote_verdictProps,
+} from './themes/theme08/quote_verdict.js';
+import {
+  Theme08Quote_twofield,
+  theme08Quote_twofieldMeta,
+  theme08Quote_twofieldSchema,
+  type Theme08Quote_twofieldProps,
+} from './themes/theme08/quote_twofield.js';
+import {
+  Theme08Quote_manifesto,
+  theme08Quote_manifestoMeta,
+  theme08Quote_manifestoSchema,
+  type Theme08Quote_manifestoProps,
+} from './themes/theme08/quote_manifesto.js';
+import {
+  Theme08Case_card,
+  theme08Case_cardMeta,
+  theme08Case_cardSchema,
+  type Theme08Case_cardProps,
+} from './themes/theme08/case_card.js';
+import {
+  Theme08Case_card_v2,
+  theme08Case_card_v2Meta,
+  theme08Case_card_v2Schema,
+  type Theme08Case_card_v2Props,
+} from './themes/theme08/case_card_v2.js';
+import {
+  Theme08Case_table,
+  theme08Case_tableMeta,
+  theme08Case_tableSchema,
+  type Theme08Case_tableProps,
+} from './themes/theme08/case_table.js';
+import {
+  Theme08Case_study,
+  theme08Case_studyMeta,
+  theme08Case_studySchema,
+  type Theme08Case_studyProps,
+} from './themes/theme08/case_study.js';
+import {
+  Theme08Case_grid,
+  theme08Case_gridMeta,
+  theme08Case_gridSchema,
+  type Theme08Case_gridProps,
+} from './themes/theme08/case_grid.js';
+import {
+  Theme08Case_list,
+  theme08Case_listMeta,
+  theme08Case_listSchema,
+  type Theme08Case_listProps,
+} from './themes/theme08/case_list.js';
+import {
+  Theme08Region_anchor,
+  theme08Region_anchorMeta,
+  theme08Region_anchorSchema,
+  type Theme08Region_anchorProps,
+} from './themes/theme08/region_anchor.js';
+import {
+  Theme08Region_card_ny,
+  theme08Region_card_nyMeta,
+  theme08Region_card_nySchema,
+  type Theme08Region_card_nyProps,
+} from './themes/theme08/region_card_ny.js';
+import {
+  Theme08Region_dotmap,
+  theme08Region_dotmapMeta,
+  theme08Region_dotmapSchema,
+  type Theme08Region_dotmapProps,
+} from './themes/theme08/region_dotmap.js';
+import {
+  Theme08Segment,
+  theme08SegmentMeta,
+  theme08SegmentSchema,
+  type Theme08SegmentProps,
+} from './themes/theme08/segment.js';
+import {
+  Theme08Pipeline,
+  theme08PipelineMeta,
+  theme08PipelineSchema,
+  type Theme08PipelineProps,
+} from './themes/theme08/pipeline.js';
+import {
+  Theme08Architecture,
+  theme08ArchitectureMeta,
+  theme08ArchitectureSchema,
+  type Theme08ArchitectureProps,
+} from './themes/theme08/architecture.js';
+import {
+  Theme08Supply,
+  theme08SupplyMeta,
+  theme08SupplySchema,
+  type Theme08SupplyProps,
+} from './themes/theme08/supply.js';
+import {
+  Theme08Compute,
+  theme08ComputeMeta,
+  theme08ComputeSchema,
+  type Theme08ComputeProps,
+} from './themes/theme08/compute.js';
+import {
+  Theme08Trend,
+  theme08TrendMeta,
+  theme08TrendSchema,
+  type Theme08TrendProps,
+} from './themes/theme08/trend.js';
+import {
+  Theme08Cross,
+  theme08CrossMeta,
+  theme08CrossSchema,
+  type Theme08CrossProps,
+} from './themes/theme08/cross.js';
+import {
+  Theme08Peak,
+  theme08PeakMeta,
+  theme08PeakSchema,
+  type Theme08PeakProps,
+} from './themes/theme08/peak.js';
+import {
+  Theme08Pullback,
+  theme08PullbackMeta,
+  theme08PullbackSchema,
+  type Theme08PullbackProps,
+} from './themes/theme08/pullback.js';
+import {
+  Theme08Peak_trough,
+  theme08Peak_troughMeta,
+  theme08Peak_troughSchema,
+  type Theme08Peak_troughProps,
+} from './themes/theme08/peak_trough.js';
+import {
+  Theme08Capital_curve,
+  theme08Capital_curveMeta,
+  theme08Capital_curveSchema,
+  type Theme08Capital_curveProps,
+} from './themes/theme08/capital_curve.js';
+import {
+  Theme08Revenue,
+  theme08RevenueMeta,
+  theme08RevenueSchema,
+  type Theme08RevenueProps,
+} from './themes/theme08/revenue.js';
+import {
+  Theme08Regulation,
+  theme08RegulationMeta,
+  theme08RegulationSchema,
+  type Theme08RegulationProps,
+} from './themes/theme08/regulation.js';
+import {
+  Theme08Squeeze,
+  theme08SqueezeMeta,
+  theme08SqueezeSchema,
+  type Theme08SqueezeProps,
+} from './themes/theme08/squeeze.js';
+import {
+  Theme08Early_stage,
+  theme08Early_stageMeta,
+  theme08Early_stageSchema,
+  type Theme08Early_stageProps,
+} from './themes/theme08/early_stage.js';
+import {
+  Theme08Investor_mix,
+  theme08Investor_mixMeta,
+  theme08Investor_mixSchema,
+  type Theme08Investor_mixProps,
+} from './themes/theme08/investor_mix.js';
+import {
+  Theme08Resource_map,
+  theme08Resource_mapMeta,
+  theme08Resource_mapSchema,
+  type Theme08Resource_mapProps,
+} from './themes/theme08/resource_map.js';
+import {
+  Theme08Closed_loop,
+  theme08Closed_loopMeta,
+  theme08Closed_loopSchema,
+  type Theme08Closed_loopProps,
+} from './themes/theme08/closed_loop.js';
+import {
+  Theme08Triptych,
+  theme08TriptychMeta,
+  theme08TriptychSchema,
+  type Theme08TriptychProps,
+} from './themes/theme08/triptych.js';
+import {
+  Theme08Scene_split,
+  theme08Scene_splitMeta,
+  theme08Scene_splitSchema,
+  type Theme08Scene_splitProps,
+} from './themes/theme08/scene_split.js';
+import {
+  Theme08Budget_card,
+  theme08Budget_cardMeta,
+  theme08Budget_cardSchema,
+  type Theme08Budget_cardProps,
+} from './themes/theme08/budget_card.js';
+import {
+  Theme08Mainlines,
+  theme08MainlinesMeta,
+  theme08MainlinesSchema,
+  type Theme08MainlinesProps,
+} from './themes/theme08/mainlines.js';
+import {
+  Theme08Migration,
+  theme08MigrationMeta,
+  theme08MigrationSchema,
+  type Theme08MigrationProps,
+} from './themes/theme08/migration.js';
+import {
+  Theme08Size_split,
+  theme08Size_splitMeta,
+  theme08Size_splitSchema,
+  type Theme08Size_splitProps,
+} from './themes/theme08/size_split.js';
+
+import {
+  Theme07CoverV1,
+  theme07CoverV1Meta,
+  theme07CoverV1Schema,
+  type Theme07CoverV1Props,
+} from './themes/theme07/cover-v1.js';
+import {
+  Theme07TableOfContentsV1,
+  theme07TableOfContentsV1Meta,
+  theme07TableOfContentsV1Schema,
+  type Theme07TableOfContentsV1Props,
+} from './themes/theme07/table-of-contents-v1.js';
+import {
+  Theme07ChapterV1,
+  theme07ChapterV1Meta,
+  theme07ChapterV1Schema,
+  type Theme07ChapterV1Props,
+} from './themes/theme07/chapter-v1.js';
+import {
+  Theme07ContentV1,
+  theme07ContentV1Meta,
+  theme07ContentV1Schema,
+  type Theme07ContentV1Props,
+} from './themes/theme07/content-v1.js';
+import {
+  Theme07SummaryV1,
+  theme07SummaryV1Meta,
+  theme07SummaryV1Schema,
+  type Theme07SummaryV1Props,
+} from './themes/theme07/summary-v1.js';
+import {
+  Theme07RankingV1,
+  theme07RankingV1Meta,
+  theme07RankingV1Schema,
+  type Theme07RankingV1Props,
+} from './themes/theme07/ranking-v1.js';
+import {
+  Theme07CaseV1,
+  theme07CaseV1Meta,
+  theme07CaseV1Schema,
+  type Theme07CaseV1Props,
+} from './themes/theme07/case-v1.js';
+import {
+  Theme07CaseGridV1,
+  theme07CaseGridV1Meta,
+  theme07CaseGridV1Schema,
+  type Theme07CaseGridV1Props,
+} from './themes/theme07/case-grid-v1.js';
+import {
+  Theme07SourcesV1,
+  theme07SourcesV1Meta,
+  theme07SourcesV1Schema,
+  type Theme07SourcesV1Props,
+} from './themes/theme07/sources-v1.js';
+import {
+  Theme07ChapterCapitalV1,
+  theme07ChapterCapitalV1Meta,
+  theme07ChapterCapitalV1Schema,
+  type Theme07ChapterCapitalV1Props,
+} from './themes/theme07/chapter-capital-v1.js';
+import {
+  Theme07ChapterRiskV1,
+  theme07ChapterRiskV1Meta,
+  theme07ChapterRiskV1Schema,
+  type Theme07ChapterRiskV1Props,
+} from './themes/theme07/chapter-risk-v1.js';
+import {
+  Theme07ChapterAppendixV1,
+  theme07ChapterAppendixV1Meta,
+  theme07ChapterAppendixV1Schema,
+  type Theme07ChapterAppendixV1Props,
+} from './themes/theme07/chapter-appendix-v1.js';
+import {
+  Theme07MethodV1,
+  theme07MethodV1Meta,
+  theme07MethodV1Schema,
+  type Theme07MethodV1Props,
+} from './themes/theme07/method-v1.js';
+import {
+  Theme07MonthlyV1,
+  theme07MonthlyV1Meta,
+  theme07MonthlyV1Schema,
+  type Theme07MonthlyV1Props,
+} from './themes/theme07/monthly-v1.js';
+import {
+  Theme07WaterfallV1,
+  theme07WaterfallV1Meta,
+  theme07WaterfallV1Schema,
+  type Theme07WaterfallV1Props,
+} from './themes/theme07/waterfall-v1.js';
+import {
+  Theme07MatrixV1,
+  theme07MatrixV1Meta,
+  theme07MatrixV1Schema,
+  type Theme07MatrixV1Props,
+} from './themes/theme07/matrix-v1.js';
+import {
+  Theme07RiskV1,
+  theme07RiskV1Meta,
+  theme07RiskV1Schema,
+  type Theme07RiskV1Props,
+} from './themes/theme07/risk-v1.js';
+import {
+  Theme07CoverLeanV1,
+  theme07CoverLeanV1Meta,
+  theme07CoverLeanV1Schema,
+  type Theme07CoverLeanV1Props,
+} from './themes/theme07/cover-lean-v1.js';
+import {
+  Theme07CoverSupplyChainV1,
+  theme07CoverSupplyChainV1Meta,
+  theme07CoverSupplyChainV1Schema,
+  type Theme07CoverSupplyChainV1Props,
+} from './themes/theme07/cover-supply-chain-v1.js';
+import {
+  Theme07CoverRetailTrendV1,
+  theme07CoverRetailTrendV1Meta,
+  theme07CoverRetailTrendV1Schema,
+  type Theme07CoverRetailTrendV1Props,
+} from './themes/theme07/cover-retail-trend-v1.js';
+import {
+  Theme07CoverSupplyStrategyV1,
+  theme07CoverSupplyStrategyV1Meta,
+  theme07CoverSupplyStrategyV1Schema,
+  type Theme07CoverSupplyStrategyV1Props,
+} from './themes/theme07/cover-supply-strategy-v1.js';
+import {
+  Theme07PeakV1,
+  theme07PeakV1Meta,
+  theme07PeakV1Schema,
+  type Theme07PeakV1Props,
+} from './themes/theme07/peak-v1.js';
+import {
+  Theme07CooldownV1,
+  theme07CooldownV1Meta,
+  theme07CooldownV1Schema,
+  type Theme07CooldownV1Props,
+} from './themes/theme07/cooldown-v1.js';
+import {
+  Theme07PeakTroughV1,
+  theme07PeakTroughV1Meta,
+  theme07PeakTroughV1Schema,
+  type Theme07PeakTroughV1Props,
+} from './themes/theme07/peak-trough-v1.js';
+import {
+  Theme07DealSizeV1,
+  theme07DealSizeV1Meta,
+  theme07DealSizeV1Schema,
+  type Theme07DealSizeV1Props,
+} from './themes/theme07/deal-size-v1.js';
+import {
+  Theme07AvgTicketV1,
+  theme07AvgTicketV1Meta,
+  theme07AvgTicketV1Schema,
+  type Theme07AvgTicketV1Props,
+} from './themes/theme07/avg-ticket-v1.js';
+import {
+  Theme07OutlookV1,
+  theme07OutlookV1Meta,
+  theme07OutlookV1Schema,
+  type Theme07OutlookV1Props,
+} from './themes/theme07/outlook-v1.js';
+import {
+  Theme07RepricingV1,
+  theme07RepricingV1Meta,
+  theme07RepricingV1Schema,
+  type Theme07RepricingV1Props,
+} from './themes/theme07/repricing-v1.js';
+import {
+  Theme07DealMapV1,
+  theme07DealMapV1Meta,
+  theme07DealMapV1Schema,
+  type Theme07DealMapV1Props,
+} from './themes/theme07/deal-map-v1.js';
+import {
+  Theme07ColdStartV1,
+  theme07ColdStartV1Meta,
+  theme07ColdStartV1Schema,
+  type Theme07ColdStartV1Props,
+} from './themes/theme07/cold-start-v1.js';
+import {
+  Theme07AccelerateV1,
+  theme07AccelerateV1Meta,
+  theme07AccelerateV1Schema,
+  type Theme07AccelerateV1Props,
+} from './themes/theme07/accelerate-v1.js';
+import {
+  Theme07InvestorV1,
+  theme07InvestorV1Meta,
+  theme07InvestorV1Schema,
+  type Theme07InvestorV1Props,
+} from './themes/theme07/investor-v1.js';
+import {
+  Theme07ActiveCapitalV1,
+  theme07ActiveCapitalV1Meta,
+  theme07ActiveCapitalV1Schema,
+  type Theme07ActiveCapitalV1Props,
+} from './themes/theme07/active-capital-v1.js';
+import {
+  Theme07ConcentrationV1,
+  theme07ConcentrationV1Meta,
+  theme07ConcentrationV1Schema,
+  type Theme07ConcentrationV1Props,
+} from './themes/theme07/concentration-v1.js';
+import {
+  Theme07SyndicateV1,
+  theme07SyndicateV1Meta,
+  theme07SyndicateV1Schema,
+  type Theme07SyndicateV1Props,
+} from './themes/theme07/syndicate-v1.js';
+import {
+  Theme07KnowledgeV1,
+  theme07KnowledgeV1Meta,
+  theme07KnowledgeV1Schema,
+  type Theme07KnowledgeV1Props,
+} from './themes/theme07/knowledge-v1.js';
+import {
+  Theme07LegalV1,
+  theme07LegalV1Meta,
+  theme07LegalV1Schema,
+  type Theme07LegalV1Props,
+} from './themes/theme07/legal-v1.js';
+import {
+  Theme07HealthcareV1,
+  theme07HealthcareV1Meta,
+  theme07HealthcareV1Schema,
+  type Theme07HealthcareV1Props,
+} from './themes/theme07/healthcare-v1.js';
+import {
+  Theme07FinanceV1,
+  theme07FinanceV1Meta,
+  theme07FinanceV1Schema,
+  type Theme07FinanceV1Props,
+} from './themes/theme07/finance-v1.js';
+import {
+  Theme07ComputeV1,
+  theme07ComputeV1Meta,
+  theme07ComputeV1Schema,
+  type Theme07ComputeV1Props,
+} from './themes/theme07/compute-v1.js';
+import {
+  Theme07ChipV1,
+  theme07ChipV1Meta,
+  theme07ChipV1Schema,
+  type Theme07ChipV1Props,
+} from './themes/theme07/chip-v1.js';
+import {
+  Theme07RoboticsV1,
+  theme07RoboticsV1Meta,
+  theme07RoboticsV1Schema,
+  type Theme07RoboticsV1Props,
+} from './themes/theme07/robotics-v1.js';
+import {
+  Theme07AutonomyV1,
+  theme07AutonomyV1Meta,
+  theme07AutonomyV1Schema,
+  type Theme07AutonomyV1Props,
+} from './themes/theme07/autonomy-v1.js';
+import {
+  Theme07SafetyV1,
+  theme07SafetyV1Meta,
+  theme07SafetyV1Schema,
+  type Theme07SafetyV1Props,
+} from './themes/theme07/safety-v1.js';
+import {
+  Theme07ContentGenV1,
+  theme07ContentGenV1Meta,
+  theme07ContentGenV1Schema,
+  type Theme07ContentGenV1Props,
+} from './themes/theme07/content_gen-v1.js';
+import {
+  Theme07EducationV1,
+  theme07EducationV1Meta,
+  theme07EducationV1Schema,
+  type Theme07EducationV1Props,
+} from './themes/theme07/education-v1.js';
+import {
+  Theme07SupportV1,
+  theme07SupportV1Meta,
+  theme07SupportV1Schema,
+  type Theme07SupportV1Props,
+} from './themes/theme07/support-v1.js';
+import {
+  Theme07SalesV1,
+  theme07SalesV1Meta,
+  theme07SalesV1Schema,
+  type Theme07SalesV1Props,
+} from './themes/theme07/sales-v1.js';
+import {
+  Theme07LowCodeV1,
+  theme07LowCodeV1Meta,
+  theme07LowCodeV1Schema,
+  type Theme07LowCodeV1Props,
+} from './themes/theme07/low_code-v1.js';
+import {
+  Theme07OpenSourceV1,
+  theme07OpenSourceV1Meta,
+  theme07OpenSourceV1Schema,
+  type Theme07OpenSourceV1Props,
+} from './themes/theme07/open_source-v1.js';
+import {
+  Theme07AlignmentV1,
+  theme07AlignmentV1Meta,
+  theme07AlignmentV1Schema,
+  type Theme07AlignmentV1Props,
+} from './themes/theme07/alignment-v1.js';
+import {
+  Theme07EarlyStageV1,
+  theme07EarlyStageV1Meta,
+  theme07EarlyStageV1Schema,
+  type Theme07EarlyStageV1Props,
+} from './themes/theme07/early_stage-v1.js';
+import {
+  Theme07DealStructureV1,
+  theme07DealStructureV1Meta,
+  theme07DealStructureV1Schema,
+  type Theme07DealStructureV1Props,
+} from './themes/theme07/deal_structure-v1.js';
+import {
+  Theme07InvestorMixV1,
+  theme07InvestorMixV1Meta,
+  theme07InvestorMixV1Schema,
+  type Theme07InvestorMixV1Props,
+} from './themes/theme07/investor_mix-v1.js';
+import {
+  Theme07ResourceV1,
+  theme07ResourceV1Meta,
+  theme07ResourceV1Schema,
+  type Theme07ResourceV1Props,
+} from './themes/theme07/resource-v1.js';
+import {
+  Theme07AllianceV1,
+  theme07AllianceV1Meta,
+  theme07AllianceV1Schema,
+  type Theme07AllianceV1Props,
+} from './themes/theme07/alliance-v1.js';
+import {
+  Theme07EcosystemV1,
+  theme07EcosystemV1Meta,
+  theme07EcosystemV1Schema,
+  type Theme07EcosystemV1Props,
+} from './themes/theme07/ecosystem-v1.js';
+import {
+  Theme07GeoCenterV1,
+  theme07GeoCenterV1Meta,
+  theme07GeoCenterV1Schema,
+  type Theme07GeoCenterV1Props,
+} from './themes/theme07/geo_center-v1.js';
+import {
+  Theme07RegionClusterV1,
+  theme07RegionClusterV1Meta,
+  theme07RegionClusterV1Schema,
+  type Theme07RegionClusterV1Props,
+} from './themes/theme07/region_cluster-v1.js';
+import {
+  Theme07ResourceTriadV1,
+  theme07ResourceTriadV1Meta,
+  theme07ResourceTriadV1Schema,
+  type Theme07ResourceTriadV1Props,
+} from './themes/theme07/resource_triad-v1.js';
+import {
+  Theme07CompanyOpenaiV1,
+  theme07CompanyOpenaiV1Meta,
+  theme07CompanyOpenaiV1Schema,
+  type Theme07CompanyOpenaiV1Props,
+} from './themes/theme07/company_openai-v1.js';
+import {
+  Theme07CompanyFigureV1,
+  theme07CompanyFigureV1Meta,
+  theme07CompanyFigureV1Schema,
+  type Theme07CompanyFigureV1Props,
+} from './themes/theme07/company_figure-v1.js';
+import {
+  Theme07CompanySsiV1,
+  theme07CompanySsiV1Meta,
+  theme07CompanySsiV1Schema,
+  type Theme07CompanySsiV1Props,
+} from './themes/theme07/company_ssi-v1.js';
+import {
+  Theme07RevenueV1,
+  theme07RevenueV1Meta,
+  theme07RevenueV1Schema,
+  type Theme07RevenueV1Props,
+} from './themes/theme07/revenue-v1.js';
+import {
+  Theme07ComplianceV1,
+  theme07ComplianceV1Meta,
+  theme07ComplianceV1Schema,
+  type Theme07ComplianceV1Props,
+} from './themes/theme07/compliance-v1.js';
+import {
+  Theme07MarginV1,
+  theme07MarginV1Meta,
+  theme07MarginV1Schema,
+  type Theme07MarginV1Props,
+} from './themes/theme07/margin-v1.js';
+import {
+  Theme07MoatV1,
+  theme07MoatV1Meta,
+  theme07MoatV1Schema,
+  type Theme07MoatV1Props,
+} from './themes/theme07/moat-v1.js';
+import {
+  Theme07StrategyInfraV1,
+  theme07StrategyInfraV1Meta,
+  theme07StrategyInfraV1Schema,
+  type Theme07StrategyInfraV1Props,
+} from './themes/theme07/strategy_infra-v1.js';
+import {
+  Theme07StrategyVerticalV1,
+  theme07StrategyVerticalV1Meta,
+  theme07StrategyVerticalV1Schema,
+  type Theme07StrategyVerticalV1Props,
+} from './themes/theme07/strategy_vertical-v1.js';
+import {
+  Theme07QuoteV1,
+  theme07QuoteV1Meta,
+  theme07QuoteV1Schema,
+  type Theme07QuoteV1Props,
+} from './themes/theme07/quote-v1.js';
+import {
+  Theme07ClosingV1,
+  theme07ClosingV1Meta,
+  theme07ClosingV1Schema,
+  type Theme07ClosingV1Props,
+} from './themes/theme07/closing-v1.js';
+import {
+  Theme07ClosingQuoteV1,
+  theme07ClosingQuoteV1Meta,
+  theme07ClosingQuoteV1Schema,
+  type Theme07ClosingQuoteV1Props,
+} from './themes/theme07/closing-quote-v1.js';
+import {
+  Theme07ForwardV1,
+  theme07ForwardV1Meta,
+  theme07ForwardV1Schema,
+  type Theme07ForwardV1Props,
+} from './themes/theme07/forward-v1.js';
+import {
+  Theme07AboutLabV1,
+  theme07AboutLabV1Meta,
+  theme07AboutLabV1Schema,
+  type Theme07AboutLabV1Props,
+} from './themes/theme07/about_lab-v1.js';
+import {
+  Theme07StatHeroV1,
+  theme07StatHeroV1Meta,
+  theme07StatHeroV1Schema,
+  type Theme07StatHeroV1Props,
+} from './themes/theme07/stat_hero-v1.js';
+import {
+  Theme07StatRowV1,
+  theme07StatRowV1Meta,
+  theme07StatRowV1Schema,
+  type Theme07StatRowV1Props,
+} from './themes/theme07/stat_row-v1.js';
+import {
+  Theme07StatChartV1,
+  theme07StatChartV1Meta,
+  theme07StatChartV1Schema,
+  type Theme07StatChartV1Props,
+} from './themes/theme07/stat_chart-v1.js';
+import {
+  Theme07StatCompareV1,
+  theme07StatCompareV1Meta,
+  theme07StatCompareV1Schema,
+  type Theme07StatCompareV1Props,
+} from './themes/theme07/stat_compare-v1.js';
 
 export interface RegisteredLayout<P extends Record<string, unknown>> {
   meta: LayoutMeta;
@@ -2669,6 +3816,7 @@ registerLayout<Theme01TeamV2Props>({ meta: theme01TeamV2Meta, component: Theme01
 registerLayout<Theme01TestimonialV1Props>({ meta: theme01TestimonialV1Meta, component: Theme01TestimonialV1, schema: theme01TestimonialV1Schema });
 registerLayout<Theme01TimelineV1Props>({ meta: theme01TimelineV1Meta, component: Theme01TimelineV1, schema: theme01TimelineV1Schema });
 registerLayout<Theme01TrendV1Props>({ meta: theme01TrendV1Meta, component: Theme01TrendV1, schema: theme01TrendV1Schema });
+registerLayout<Theme01ComponentsV1Props>({ meta: theme01ComponentsV1Meta, component: Theme01ComponentsV1, schema: theme01ComponentsV1Schema });
 
 // 注册 Theme02 主题专属版式
 registerLayout<Theme02CoverV1Props>({ meta: theme02CoverV1Meta, component: Theme02CoverV1, schema: theme02CoverV1Schema });
@@ -2710,6 +3858,34 @@ registerLayout<Theme02StatsV1Props>({ meta: theme02StatsV1Meta, component: Theme
 registerLayout<Theme02TableV1Props>({ meta: theme02TableV1Meta, component: Theme02TableV1, schema: theme02TableV1Schema });
 registerLayout<Theme02TagsV1Props>({ meta: theme02TagsV1Meta, component: Theme02TagsV1, schema: theme02TagsV1Schema });
 registerLayout<Theme02TestimonialV1Props>({ meta: theme02TestimonialV1Meta, component: Theme02TestimonialV1, schema: theme02TestimonialV1Schema });
+registerLayout<Theme02FeatureV2Props>({ meta: theme02FeatureV2Meta, component: Theme02FeatureV2, schema: theme02FeatureV2Schema });
+registerLayout<Theme02ChecklistV1Props>({ meta: theme02ChecklistV1Meta, component: Theme02ChecklistV1, schema: theme02ChecklistV1Schema });
+registerLayout<Theme02StepsV1Props>({ meta: theme02StepsV1Meta, component: Theme02StepsV1, schema: theme02StepsV1Schema });
+registerLayout<Theme02CardGridV1Props>({ meta: theme02CardGridV1Meta, component: Theme02CardGridV1, schema: theme02CardGridV1Schema });
+registerLayout<Theme02HighlightV1Props>({ meta: theme02HighlightV1Meta, component: Theme02HighlightV1, schema: theme02HighlightV1Schema });
+registerLayout<Theme02ComparisonV2Props>({ meta: theme02ComparisonV2Meta, component: Theme02ComparisonV2, schema: theme02ComparisonV2Schema });
+registerLayout<Theme02MatrixV1Props>({ meta: theme02MatrixV1Meta, component: Theme02MatrixV1, schema: theme02MatrixV1Schema });
+registerLayout<Theme02StatGridV1Props>({ meta: theme02StatGridV1Meta, component: Theme02StatGridV1, schema: theme02StatGridV1Schema });
+registerLayout<Theme02CoverV3Props>({ meta: theme02CoverV3Meta, component: Theme02CoverV3, schema: theme02CoverV3Schema });
+registerLayout<Theme02ClosingV2Props>({ meta: theme02ClosingV2Meta, component: Theme02ClosingV2, schema: theme02ClosingV2Schema });
+registerLayout<Theme02ChartBarV1Props>({ meta: theme02ChartBarV1Meta, component: Theme02ChartBarV1, schema: theme02ChartBarV1Schema });
+registerLayout<Theme02ChartLineV1Props>({ meta: theme02ChartLineV1Meta, component: Theme02ChartLineV1, schema: theme02ChartLineV1Schema });
+registerLayout<Theme02ChartAreaV1Props>({ meta: theme02ChartAreaV1Meta, component: Theme02ChartAreaV1, schema: theme02ChartAreaV1Schema });
+registerLayout<Theme02ChartStackV1Props>({ meta: theme02ChartStackV1Meta, component: Theme02ChartStackV1, schema: theme02ChartStackV1Schema });
+registerLayout<Theme02KpiStripV1Props>({ meta: theme02KpiStripV1Meta, component: Theme02KpiStripV1, schema: theme02KpiStripV1Schema });
+registerLayout<Theme02BigStatV1Props>({ meta: theme02BigStatV1Meta, component: Theme02BigStatV1, schema: theme02BigStatV1Schema });
+registerLayout<Theme02CycleV1Props>({ meta: theme02CycleV1Meta, component: Theme02CycleV1, schema: theme02CycleV1Schema });
+registerLayout<Theme02SwimlaneV1Props>({ meta: theme02SwimlaneV1Meta, component: Theme02SwimlaneV1, schema: theme02SwimlaneV1Schema });
+registerLayout<Theme02PyramidV1Props>({ meta: theme02PyramidV1Meta, component: Theme02PyramidV1, schema: theme02PyramidV1Schema });
+registerLayout<Theme02OrgChartV1Props>({ meta: theme02OrgChartV1Meta, component: Theme02OrgChartV1, schema: theme02OrgChartV1Schema });
+registerLayout<Theme02FlowV1Props>({ meta: theme02FlowV1Meta, component: Theme02FlowV1, schema: theme02FlowV1Schema });
+registerLayout<Theme02TableV2Props>({ meta: theme02TableV2Meta, component: Theme02TableV2, schema: theme02TableV2Schema });
+registerLayout<Theme02ImageSplitV1Props>({ meta: theme02ImageSplitV1Meta, component: Theme02ImageSplitV1, schema: theme02ImageSplitV1Schema });
+registerLayout<Theme02ImageGridV2Props>({ meta: theme02ImageGridV2Meta, component: Theme02ImageGridV2, schema: theme02ImageGridV2Schema });
+registerLayout<Theme02SpotlightV1Props>({ meta: theme02SpotlightV1Meta, component: Theme02SpotlightV1, schema: theme02SpotlightV1Schema });
+registerLayout<Theme02ChapterV3Props>({ meta: theme02ChapterV3Meta, component: Theme02ChapterV3, schema: theme02ChapterV3Schema });
+registerLayout<Theme02SectionDividerV1Props>({ meta: theme02SectionDividerV1Meta, component: Theme02SectionDividerV1, schema: theme02SectionDividerV1Schema });
+registerLayout<Theme02LogoWallV1Props>({ meta: theme02LogoWallV1Meta, component: Theme02LogoWallV1, schema: theme02LogoWallV1Schema });
 registerLayout<Theme03CoverV1Props>({ meta: theme03CoverV1Meta, component: Theme03CoverV1, schema: theme03CoverV1Schema });
 registerLayout<Theme03ChapterV1Props>({ meta: theme03ChapterV1Meta, component: Theme03ChapterV1, schema: theme03ChapterV1Schema });
 registerLayout<Theme03ContentV1Props>({ meta: theme03ContentV1Meta, component: Theme03ContentV1, schema: theme03ContentV1Schema });
@@ -3157,3 +4333,1767 @@ registerLayout<Theme06ComputeV1Props>({ meta: theme06ComputeV1Meta, component: T
 registerLayout<Theme06DealStructureV1Props>({ meta: theme06DealStructureV1Meta, component: Theme06DealStructureV1, schema: theme06DealStructureV1Schema });
 registerLayout<Theme06MegadealsV1Props>({ meta: theme06MegadealsV1Meta, component: Theme06MegadealsV1, schema: theme06MegadealsV1Schema });
 
+// Theme07 冷白调研风版式（Phase 1：8 个核心版式 + Phase 2：扩展版式）
+registerLayout<Theme07CoverV1Props>({ meta: theme07CoverV1Meta, component: Theme07CoverV1, schema: theme07CoverV1Schema });
+registerLayout<Theme07TableOfContentsV1Props>({ meta: theme07TableOfContentsV1Meta, component: Theme07TableOfContentsV1, schema: theme07TableOfContentsV1Schema });
+registerLayout<Theme07ChapterV1Props>({ meta: theme07ChapterV1Meta, component: Theme07ChapterV1, schema: theme07ChapterV1Schema });
+registerLayout<Theme07ChapterCapitalV1Props>({ meta: theme07ChapterCapitalV1Meta, component: Theme07ChapterCapitalV1, schema: theme07ChapterCapitalV1Schema });
+registerLayout<Theme07ChapterRiskV1Props>({ meta: theme07ChapterRiskV1Meta, component: Theme07ChapterRiskV1, schema: theme07ChapterRiskV1Schema });
+registerLayout<Theme07ChapterAppendixV1Props>({ meta: theme07ChapterAppendixV1Meta, component: Theme07ChapterAppendixV1, schema: theme07ChapterAppendixV1Schema });
+registerLayout<Theme07ContentV1Props>({ meta: theme07ContentV1Meta, component: Theme07ContentV1, schema: theme07ContentV1Schema });
+registerLayout<Theme07SummaryV1Props>({ meta: theme07SummaryV1Meta, component: Theme07SummaryV1, schema: theme07SummaryV1Schema });
+registerLayout<Theme07RankingV1Props>({ meta: theme07RankingV1Meta, component: Theme07RankingV1, schema: theme07RankingV1Schema });
+registerLayout<Theme07CaseV1Props>({ meta: theme07CaseV1Meta, component: Theme07CaseV1, schema: theme07CaseV1Schema });
+registerLayout<Theme07CaseGridV1Props>({ meta: theme07CaseGridV1Meta, component: Theme07CaseGridV1, schema: theme07CaseGridV1Schema });
+registerLayout<Theme07SourcesV1Props>({ meta: theme07SourcesV1Meta, component: Theme07SourcesV1, schema: theme07SourcesV1Schema });
+registerLayout<Theme07MethodV1Props>({ meta: theme07MethodV1Meta, component: Theme07MethodV1, schema: theme07MethodV1Schema });
+registerLayout<Theme07MonthlyV1Props>({ meta: theme07MonthlyV1Meta, component: Theme07MonthlyV1, schema: theme07MonthlyV1Schema });
+registerLayout<Theme07WaterfallV1Props>({ meta: theme07WaterfallV1Meta, component: Theme07WaterfallV1, schema: theme07WaterfallV1Schema });
+registerLayout<Theme07MatrixV1Props>({ meta: theme07MatrixV1Meta, component: Theme07MatrixV1, schema: theme07MatrixV1Schema });
+registerLayout<Theme07RiskV1Props>({ meta: theme07RiskV1Meta, component: Theme07RiskV1, schema: theme07RiskV1Schema });
+registerLayout<Theme07CoverLeanV1Props>({ meta: theme07CoverLeanV1Meta, component: Theme07CoverLeanV1, schema: theme07CoverLeanV1Schema });
+registerLayout<Theme07CoverSupplyChainV1Props>({ meta: theme07CoverSupplyChainV1Meta, component: Theme07CoverSupplyChainV1, schema: theme07CoverSupplyChainV1Schema });
+registerLayout<Theme07CoverRetailTrendV1Props>({ meta: theme07CoverRetailTrendV1Meta, component: Theme07CoverRetailTrendV1, schema: theme07CoverRetailTrendV1Schema });
+registerLayout<Theme07CoverSupplyStrategyV1Props>({ meta: theme07CoverSupplyStrategyV1Meta, component: Theme07CoverSupplyStrategyV1, schema: theme07CoverSupplyStrategyV1Schema });
+registerLayout<Theme07PeakV1Props>({ meta: theme07PeakV1Meta, component: Theme07PeakV1, schema: theme07PeakV1Schema });
+registerLayout<Theme07CooldownV1Props>({ meta: theme07CooldownV1Meta, component: Theme07CooldownV1, schema: theme07CooldownV1Schema });
+registerLayout<Theme07PeakTroughV1Props>({ meta: theme07PeakTroughV1Meta, component: Theme07PeakTroughV1, schema: theme07PeakTroughV1Schema });
+registerLayout<Theme07DealSizeV1Props>({ meta: theme07DealSizeV1Meta, component: Theme07DealSizeV1, schema: theme07DealSizeV1Schema });
+registerLayout<Theme07AvgTicketV1Props>({ meta: theme07AvgTicketV1Meta, component: Theme07AvgTicketV1, schema: theme07AvgTicketV1Schema });
+registerLayout<Theme07OutlookV1Props>({ meta: theme07OutlookV1Meta, component: Theme07OutlookV1, schema: theme07OutlookV1Schema });
+registerLayout<Theme07RepricingV1Props>({ meta: theme07RepricingV1Meta, component: Theme07RepricingV1, schema: theme07RepricingV1Schema });
+registerLayout<Theme07DealMapV1Props>({ meta: theme07DealMapV1Meta, component: Theme07DealMapV1, schema: theme07DealMapV1Schema });
+registerLayout<Theme07ColdStartV1Props>({ meta: theme07ColdStartV1Meta, component: Theme07ColdStartV1, schema: theme07ColdStartV1Schema });
+registerLayout<Theme07AccelerateV1Props>({ meta: theme07AccelerateV1Meta, component: Theme07AccelerateV1, schema: theme07AccelerateV1Schema });
+registerLayout<Theme07InvestorV1Props>({ meta: theme07InvestorV1Meta, component: Theme07InvestorV1, schema: theme07InvestorV1Schema });
+registerLayout<Theme07ActiveCapitalV1Props>({ meta: theme07ActiveCapitalV1Meta, component: Theme07ActiveCapitalV1, schema: theme07ActiveCapitalV1Schema });
+registerLayout<Theme07ConcentrationV1Props>({ meta: theme07ConcentrationV1Meta, component: Theme07ConcentrationV1, schema: theme07ConcentrationV1Schema });
+registerLayout<Theme07SyndicateV1Props>({ meta: theme07SyndicateV1Meta, component: Theme07SyndicateV1, schema: theme07SyndicateV1Schema });
+
+// Theme07 冷白调研风版式（Phase 3/4）
+registerLayout<Theme07KnowledgeV1Props>({ meta: theme07KnowledgeV1Meta, component: Theme07KnowledgeV1, schema: theme07KnowledgeV1Schema });
+registerLayout<Theme07LegalV1Props>({ meta: theme07LegalV1Meta, component: Theme07LegalV1, schema: theme07LegalV1Schema });
+registerLayout<Theme07HealthcareV1Props>({ meta: theme07HealthcareV1Meta, component: Theme07HealthcareV1, schema: theme07HealthcareV1Schema });
+registerLayout<Theme07FinanceV1Props>({ meta: theme07FinanceV1Meta, component: Theme07FinanceV1, schema: theme07FinanceV1Schema });
+registerLayout<Theme07ComputeV1Props>({ meta: theme07ComputeV1Meta, component: Theme07ComputeV1, schema: theme07ComputeV1Schema });
+registerLayout<Theme07ChipV1Props>({ meta: theme07ChipV1Meta, component: Theme07ChipV1, schema: theme07ChipV1Schema });
+registerLayout<Theme07RoboticsV1Props>({ meta: theme07RoboticsV1Meta, component: Theme07RoboticsV1, schema: theme07RoboticsV1Schema });
+registerLayout<Theme07AutonomyV1Props>({ meta: theme07AutonomyV1Meta, component: Theme07AutonomyV1, schema: theme07AutonomyV1Schema });
+registerLayout<Theme07SafetyV1Props>({ meta: theme07SafetyV1Meta, component: Theme07SafetyV1, schema: theme07SafetyV1Schema });
+registerLayout<Theme07ContentGenV1Props>({ meta: theme07ContentGenV1Meta, component: Theme07ContentGenV1, schema: theme07ContentGenV1Schema });
+registerLayout<Theme07EducationV1Props>({ meta: theme07EducationV1Meta, component: Theme07EducationV1, schema: theme07EducationV1Schema });
+registerLayout<Theme07SupportV1Props>({ meta: theme07SupportV1Meta, component: Theme07SupportV1, schema: theme07SupportV1Schema });
+registerLayout<Theme07SalesV1Props>({ meta: theme07SalesV1Meta, component: Theme07SalesV1, schema: theme07SalesV1Schema });
+registerLayout<Theme07LowCodeV1Props>({ meta: theme07LowCodeV1Meta, component: Theme07LowCodeV1, schema: theme07LowCodeV1Schema });
+registerLayout<Theme07OpenSourceV1Props>({ meta: theme07OpenSourceV1Meta, component: Theme07OpenSourceV1, schema: theme07OpenSourceV1Schema });
+registerLayout<Theme07AlignmentV1Props>({ meta: theme07AlignmentV1Meta, component: Theme07AlignmentV1, schema: theme07AlignmentV1Schema });
+registerLayout<Theme07EarlyStageV1Props>({ meta: theme07EarlyStageV1Meta, component: Theme07EarlyStageV1, schema: theme07EarlyStageV1Schema });
+registerLayout<Theme07DealStructureV1Props>({ meta: theme07DealStructureV1Meta, component: Theme07DealStructureV1, schema: theme07DealStructureV1Schema });
+registerLayout<Theme07InvestorMixV1Props>({ meta: theme07InvestorMixV1Meta, component: Theme07InvestorMixV1, schema: theme07InvestorMixV1Schema });
+registerLayout<Theme07ResourceV1Props>({ meta: theme07ResourceV1Meta, component: Theme07ResourceV1, schema: theme07ResourceV1Schema });
+registerLayout<Theme07AllianceV1Props>({ meta: theme07AllianceV1Meta, component: Theme07AllianceV1, schema: theme07AllianceV1Schema });
+registerLayout<Theme07EcosystemV1Props>({ meta: theme07EcosystemV1Meta, component: Theme07EcosystemV1, schema: theme07EcosystemV1Schema });
+registerLayout<Theme07GeoCenterV1Props>({ meta: theme07GeoCenterV1Meta, component: Theme07GeoCenterV1, schema: theme07GeoCenterV1Schema });
+registerLayout<Theme07RegionClusterV1Props>({ meta: theme07RegionClusterV1Meta, component: Theme07RegionClusterV1, schema: theme07RegionClusterV1Schema });
+registerLayout<Theme07ResourceTriadV1Props>({ meta: theme07ResourceTriadV1Meta, component: Theme07ResourceTriadV1, schema: theme07ResourceTriadV1Schema });
+registerLayout<Theme07CompanyOpenaiV1Props>({ meta: theme07CompanyOpenaiV1Meta, component: Theme07CompanyOpenaiV1, schema: theme07CompanyOpenaiV1Schema });
+registerLayout<Theme07CompanyFigureV1Props>({ meta: theme07CompanyFigureV1Meta, component: Theme07CompanyFigureV1, schema: theme07CompanyFigureV1Schema });
+registerLayout<Theme07CompanySsiV1Props>({ meta: theme07CompanySsiV1Meta, component: Theme07CompanySsiV1, schema: theme07CompanySsiV1Schema });
+registerLayout<Theme07RevenueV1Props>({ meta: theme07RevenueV1Meta, component: Theme07RevenueV1, schema: theme07RevenueV1Schema });
+registerLayout<Theme07ComplianceV1Props>({ meta: theme07ComplianceV1Meta, component: Theme07ComplianceV1, schema: theme07ComplianceV1Schema });
+registerLayout<Theme07MarginV1Props>({ meta: theme07MarginV1Meta, component: Theme07MarginV1, schema: theme07MarginV1Schema });
+registerLayout<Theme07MoatV1Props>({ meta: theme07MoatV1Meta, component: Theme07MoatV1, schema: theme07MoatV1Schema });
+registerLayout<Theme07StrategyInfraV1Props>({ meta: theme07StrategyInfraV1Meta, component: Theme07StrategyInfraV1, schema: theme07StrategyInfraV1Schema });
+registerLayout<Theme07StrategyVerticalV1Props>({ meta: theme07StrategyVerticalV1Meta, component: Theme07StrategyVerticalV1, schema: theme07StrategyVerticalV1Schema });
+registerLayout<Theme07QuoteV1Props>({ meta: theme07QuoteV1Meta, component: Theme07QuoteV1, schema: theme07QuoteV1Schema });
+registerLayout<Theme07ClosingV1Props>({ meta: theme07ClosingV1Meta, component: Theme07ClosingV1, schema: theme07ClosingV1Schema });
+registerLayout<Theme07ClosingQuoteV1Props>({ meta: theme07ClosingQuoteV1Meta, component: Theme07ClosingQuoteV1, schema: theme07ClosingQuoteV1Schema });
+registerLayout<Theme07ForwardV1Props>({ meta: theme07ForwardV1Meta, component: Theme07ForwardV1, schema: theme07ForwardV1Schema });
+registerLayout<Theme07AboutLabV1Props>({ meta: theme07AboutLabV1Meta, component: Theme07AboutLabV1, schema: theme07AboutLabV1Schema });
+registerLayout<Theme07StatHeroV1Props>({ meta: theme07StatHeroV1Meta, component: Theme07StatHeroV1, schema: theme07StatHeroV1Schema });
+registerLayout<Theme07StatRowV1Props>({ meta: theme07StatRowV1Meta, component: Theme07StatRowV1, schema: theme07StatRowV1Schema });
+registerLayout<Theme07StatChartV1Props>({ meta: theme07StatChartV1Meta, component: Theme07StatChartV1, schema: theme07StatChartV1Schema });
+registerLayout<Theme07StatCompareV1Props>({ meta: theme07StatCompareV1Meta, component: Theme07StatCompareV1, schema: theme07StatCompareV1Schema });
+
+// ===== theme08 黑金实验风（Phase 0 脚手架 + MVP 版式） =====
+registerLayout<Theme08CoverV1Props>({ meta: theme08CoverV1Meta, component: Theme08CoverV1, schema: theme08CoverV1Schema });
+registerLayout<Theme08ChapterV1Props>({ meta: theme08ChapterV1Meta, component: Theme08ChapterV1, schema: theme08ChapterV1Schema });
+registerLayout<Theme08OverviewV1Props>({ meta: theme08OverviewV1Meta, component: Theme08OverviewV1, schema: theme08OverviewV1Schema });
+registerLayout<Theme08ContentsV1Props>({ meta: theme08ContentsV1Meta, component: Theme08ContentsV1, schema: theme08ContentsV1Schema });
+registerLayout<Theme08ContentV1Props>({ meta: theme08ContentV1Meta, component: Theme08ContentV1, schema: theme08ContentV1Schema });
+registerLayout<Theme08QuoteV1Props>({ meta: theme08QuoteV1Meta, component: Theme08QuoteV1, schema: theme08QuoteV1Schema });
+registerLayout<Theme08FeatureV1Props>({ meta: theme08FeatureV1Meta, component: Theme08FeatureV1, schema: theme08FeatureV1Schema });
+registerLayout<Theme08MetricsV1Props>({ meta: theme08MetricsV1Meta, component: Theme08MetricsV1, schema: theme08MetricsV1Schema });
+registerLayout<Theme08MetricBigV1Props>({ meta: theme08MetricBigV1Meta, component: Theme08MetricBigV1, schema: theme08MetricBigV1Schema });
+registerLayout<Theme08CaseV1Props>({ meta: theme08CaseV1Meta, component: Theme08CaseV1, schema: theme08CaseV1Schema });
+registerLayout<Theme08CompareV1Props>({ meta: theme08CompareV1Meta, component: Theme08CompareV1, schema: theme08CompareV1Schema });
+registerLayout<Theme08RankingV1Props>({ meta: theme08RankingV1Meta, component: Theme08RankingV1, schema: theme08RankingV1Schema });
+registerLayout<Theme08TableV1Props>({ meta: theme08TableV1Meta, component: Theme08TableV1, schema: theme08TableV1Schema });
+registerLayout<Theme08TimelineV1Props>({ meta: theme08TimelineV1Meta, component: Theme08TimelineV1, schema: theme08TimelineV1Schema });
+registerLayout<Theme08ProcessV1Props>({ meta: theme08ProcessV1Meta, component: Theme08ProcessV1, schema: theme08ProcessV1Schema });
+registerLayout<Theme08RoadmapV1Props>({ meta: theme08RoadmapV1Meta, component: Theme08RoadmapV1, schema: theme08RoadmapV1Schema });
+registerLayout<Theme08StrategyV1Props>({ meta: theme08StrategyV1Meta, component: Theme08StrategyV1, schema: theme08StrategyV1Schema });
+registerLayout<Theme08QuadrantV1Props>({ meta: theme08QuadrantV1Meta, component: Theme08QuadrantV1, schema: theme08QuadrantV1Schema });
+registerLayout<Theme08ChartBarV1Props>({ meta: theme08ChartBarV1Meta, component: Theme08ChartBarV1, schema: theme08ChartBarV1Schema });
+registerLayout<Theme08ChartDonutV1Props>({ meta: theme08ChartDonutV1Meta, component: Theme08ChartDonutV1, schema: theme08ChartDonutV1Schema });
+registerLayout<Theme08RegionV1Props>({ meta: theme08RegionV1Meta, component: Theme08RegionV1, schema: theme08RegionV1Schema });
+registerLayout<Theme08GalleryV1Props>({ meta: theme08GalleryV1Meta, component: Theme08GalleryV1, schema: theme08GalleryV1Schema });
+registerLayout<Theme08CollageV1Props>({ meta: theme08CollageV1Meta, component: Theme08CollageV1, schema: theme08CollageV1Schema });
+registerLayout<Theme08TeamV1Props>({ meta: theme08TeamV1Meta, component: Theme08TeamV1, schema: theme08TeamV1Schema });
+registerLayout<Theme08PartnersV1Props>({ meta: theme08PartnersV1Meta, component: Theme08PartnersV1, schema: theme08PartnersV1Schema });
+registerLayout<Theme08ClosingV1Props>({ meta: theme08ClosingV1Meta, component: Theme08ClosingV1, schema: theme08ClosingV1Schema });
+registerLayout<Theme08RangeV1Props>({ meta: theme08RangeV1Meta, component: Theme08RangeV1, schema: theme08RangeV1Schema });
+registerLayout<Theme08ScorecardV1Props>({ meta: theme08ScorecardV1Meta, component: Theme08ScorecardV1, schema: theme08ScorecardV1Schema });
+registerLayout<Theme08EcosystemV1Props>({ meta: theme08EcosystemV1Meta, component: Theme08EcosystemV1, schema: theme08EcosystemV1Schema });
+registerLayout<Theme08RadarV1Props>({ meta: theme08RadarV1Meta, component: Theme08RadarV1, schema: theme08RadarV1Schema });
+registerLayout<Theme08WaterfallV1Props>({ meta: theme08WaterfallV1Meta, component: Theme08WaterfallV1, schema: theme08WaterfallV1Schema });
+registerLayout<Theme08GaugeV1Props>({ meta: theme08GaugeV1Meta, component: Theme08GaugeV1, schema: theme08GaugeV1Schema });
+registerLayout<Theme08ChainV1Props>({ meta: theme08ChainV1Meta, component: Theme08ChainV1, schema: theme08ChainV1Schema });
+registerLayout<Theme08BubbleV1Props>({ meta: theme08BubbleV1Meta, component: Theme08BubbleV1, schema: theme08BubbleV1Schema });
+registerLayout<Theme08HeatmapV1Props>({ meta: theme08HeatmapV1Meta, component: Theme08HeatmapV1, schema: theme08HeatmapV1Schema });
+registerLayout<Theme08FundingV1Props>({ meta: theme08FundingV1Meta, component: Theme08FundingV1, schema: theme08FundingV1Schema });
+registerLayout<Theme08MatrixV1Props>({ meta: theme08MatrixV1Meta, component: Theme08MatrixV1, schema: theme08MatrixV1Schema });
+registerLayout<Theme08WorkflowV1Props>({ meta: theme08WorkflowV1Meta, component: Theme08WorkflowV1, schema: theme08WorkflowV1Schema });
+registerLayout<Theme08HeroSplitV1Props>({ meta: theme08HeroSplitV1Meta, component: Theme08HeroSplitV1, schema: theme08HeroSplitV1Schema });
+registerLayout<Theme08Cover_v2Props>({ meta: theme08Cover_v2Meta, component: Theme08Cover_v2, schema: theme08Cover_v2Schema });
+registerLayout<Theme08Cover_v3Props>({ meta: theme08Cover_v3Meta, component: Theme08Cover_v3, schema: theme08Cover_v3Schema });
+registerLayout<Theme08Cover_v4Props>({ meta: theme08Cover_v4Meta, component: Theme08Cover_v4, schema: theme08Cover_v4Schema });
+registerLayout<Theme08Cover_v5Props>({ meta: theme08Cover_v5Meta, component: Theme08Cover_v5, schema: theme08Cover_v5Schema });
+registerLayout<Theme08Chapter_v2Props>({ meta: theme08Chapter_v2Meta, component: Theme08Chapter_v2, schema: theme08Chapter_v2Schema });
+registerLayout<Theme08Chapter_v3Props>({ meta: theme08Chapter_v3Meta, component: Theme08Chapter_v3, schema: theme08Chapter_v3Schema });
+registerLayout<Theme08Chapter_v4Props>({ meta: theme08Chapter_v4Meta, component: Theme08Chapter_v4, schema: theme08Chapter_v4Schema });
+registerLayout<Theme08Quote_statementProps>({ meta: theme08Quote_statementMeta, component: Theme08Quote_statement, schema: theme08Quote_statementSchema });
+registerLayout<Theme08Quote_resourcesProps>({ meta: theme08Quote_resourcesMeta, component: Theme08Quote_resources, schema: theme08Quote_resourcesSchema });
+registerLayout<Theme08Quote_verdictProps>({ meta: theme08Quote_verdictMeta, component: Theme08Quote_verdict, schema: theme08Quote_verdictSchema });
+registerLayout<Theme08Quote_twofieldProps>({ meta: theme08Quote_twofieldMeta, component: Theme08Quote_twofield, schema: theme08Quote_twofieldSchema });
+registerLayout<Theme08Quote_manifestoProps>({ meta: theme08Quote_manifestoMeta, component: Theme08Quote_manifesto, schema: theme08Quote_manifestoSchema });
+registerLayout<Theme08Case_cardProps>({ meta: theme08Case_cardMeta, component: Theme08Case_card, schema: theme08Case_cardSchema });
+registerLayout<Theme08Case_card_v2Props>({ meta: theme08Case_card_v2Meta, component: Theme08Case_card_v2, schema: theme08Case_card_v2Schema });
+registerLayout<Theme08Case_tableProps>({ meta: theme08Case_tableMeta, component: Theme08Case_table, schema: theme08Case_tableSchema });
+registerLayout<Theme08Case_studyProps>({ meta: theme08Case_studyMeta, component: Theme08Case_study, schema: theme08Case_studySchema });
+registerLayout<Theme08Case_gridProps>({ meta: theme08Case_gridMeta, component: Theme08Case_grid, schema: theme08Case_gridSchema });
+registerLayout<Theme08Case_listProps>({ meta: theme08Case_listMeta, component: Theme08Case_list, schema: theme08Case_listSchema });
+registerLayout<Theme08Region_anchorProps>({ meta: theme08Region_anchorMeta, component: Theme08Region_anchor, schema: theme08Region_anchorSchema });
+registerLayout<Theme08Region_card_nyProps>({ meta: theme08Region_card_nyMeta, component: Theme08Region_card_ny, schema: theme08Region_card_nySchema });
+registerLayout<Theme08Region_dotmapProps>({ meta: theme08Region_dotmapMeta, component: Theme08Region_dotmap, schema: theme08Region_dotmapSchema });
+registerLayout<Theme08SegmentProps>({ meta: theme08SegmentMeta, component: Theme08Segment, schema: theme08SegmentSchema });
+registerLayout<Theme08PipelineProps>({ meta: theme08PipelineMeta, component: Theme08Pipeline, schema: theme08PipelineSchema });
+registerLayout<Theme08ArchitectureProps>({ meta: theme08ArchitectureMeta, component: Theme08Architecture, schema: theme08ArchitectureSchema });
+registerLayout<Theme08SupplyProps>({ meta: theme08SupplyMeta, component: Theme08Supply, schema: theme08SupplySchema });
+registerLayout<Theme08ComputeProps>({ meta: theme08ComputeMeta, component: Theme08Compute, schema: theme08ComputeSchema });
+registerLayout<Theme08TrendProps>({ meta: theme08TrendMeta, component: Theme08Trend, schema: theme08TrendSchema });
+registerLayout<Theme08CrossProps>({ meta: theme08CrossMeta, component: Theme08Cross, schema: theme08CrossSchema });
+registerLayout<Theme08PeakProps>({ meta: theme08PeakMeta, component: Theme08Peak, schema: theme08PeakSchema });
+registerLayout<Theme08PullbackProps>({ meta: theme08PullbackMeta, component: Theme08Pullback, schema: theme08PullbackSchema });
+registerLayout<Theme08Peak_troughProps>({ meta: theme08Peak_troughMeta, component: Theme08Peak_trough, schema: theme08Peak_troughSchema });
+registerLayout<Theme08Capital_curveProps>({ meta: theme08Capital_curveMeta, component: Theme08Capital_curve, schema: theme08Capital_curveSchema });
+registerLayout<Theme08RevenueProps>({ meta: theme08RevenueMeta, component: Theme08Revenue, schema: theme08RevenueSchema });
+registerLayout<Theme08RegulationProps>({ meta: theme08RegulationMeta, component: Theme08Regulation, schema: theme08RegulationSchema });
+registerLayout<Theme08SqueezeProps>({ meta: theme08SqueezeMeta, component: Theme08Squeeze, schema: theme08SqueezeSchema });
+registerLayout<Theme08Early_stageProps>({ meta: theme08Early_stageMeta, component: Theme08Early_stage, schema: theme08Early_stageSchema });
+registerLayout<Theme08Investor_mixProps>({ meta: theme08Investor_mixMeta, component: Theme08Investor_mix, schema: theme08Investor_mixSchema });
+registerLayout<Theme08Resource_mapProps>({ meta: theme08Resource_mapMeta, component: Theme08Resource_map, schema: theme08Resource_mapSchema });
+registerLayout<Theme08Closed_loopProps>({ meta: theme08Closed_loopMeta, component: Theme08Closed_loop, schema: theme08Closed_loopSchema });
+registerLayout<Theme08TriptychProps>({ meta: theme08TriptychMeta, component: Theme08Triptych, schema: theme08TriptychSchema });
+registerLayout<Theme08Scene_splitProps>({ meta: theme08Scene_splitMeta, component: Theme08Scene_split, schema: theme08Scene_splitSchema });
+registerLayout<Theme08Budget_cardProps>({ meta: theme08Budget_cardMeta, component: Theme08Budget_card, schema: theme08Budget_cardSchema });
+registerLayout<Theme08MainlinesProps>({ meta: theme08MainlinesMeta, component: Theme08Mainlines, schema: theme08MainlinesSchema });
+registerLayout<Theme08MigrationProps>({ meta: theme08MigrationMeta, component: Theme08Migration, schema: theme08MigrationSchema });
+registerLayout<Theme08Size_splitProps>({ meta: theme08Size_splitMeta, component: Theme08Size_split, schema: theme08Size_splitSchema });
+
+registerLayout<Theme08Cover_v2Props>({ meta: theme08Cover_v2Meta, component: Theme08Cover_v2, schema: theme08Cover_v2Schema });
+registerLayout<Theme08Cover_v3Props>({ meta: theme08Cover_v3Meta, component: Theme08Cover_v3, schema: theme08Cover_v3Schema });
+registerLayout<Theme08Cover_v4Props>({ meta: theme08Cover_v4Meta, component: Theme08Cover_v4, schema: theme08Cover_v4Schema });
+registerLayout<Theme08Cover_v5Props>({ meta: theme08Cover_v5Meta, component: Theme08Cover_v5, schema: theme08Cover_v5Schema });
+registerLayout<Theme08Chapter_v2Props>({ meta: theme08Chapter_v2Meta, component: Theme08Chapter_v2, schema: theme08Chapter_v2Schema });
+registerLayout<Theme08Chapter_v3Props>({ meta: theme08Chapter_v3Meta, component: Theme08Chapter_v3, schema: theme08Chapter_v3Schema });
+registerLayout<Theme08Chapter_v4Props>({ meta: theme08Chapter_v4Meta, component: Theme08Chapter_v4, schema: theme08Chapter_v4Schema });
+registerLayout<Theme08Quote_statementProps>({ meta: theme08Quote_statementMeta, component: Theme08Quote_statement, schema: theme08Quote_statementSchema });
+registerLayout<Theme08Quote_resourcesProps>({ meta: theme08Quote_resourcesMeta, component: Theme08Quote_resources, schema: theme08Quote_resourcesSchema });
+registerLayout<Theme08Quote_verdictProps>({ meta: theme08Quote_verdictMeta, component: Theme08Quote_verdict, schema: theme08Quote_verdictSchema });
+registerLayout<Theme08Quote_twofieldProps>({ meta: theme08Quote_twofieldMeta, component: Theme08Quote_twofield, schema: theme08Quote_twofieldSchema });
+registerLayout<Theme08Quote_manifestoProps>({ meta: theme08Quote_manifestoMeta, component: Theme08Quote_manifesto, schema: theme08Quote_manifestoSchema });
+registerLayout<Theme08Case_cardProps>({ meta: theme08Case_cardMeta, component: Theme08Case_card, schema: theme08Case_cardSchema });
+registerLayout<Theme08Case_card_v2Props>({ meta: theme08Case_card_v2Meta, component: Theme08Case_card_v2, schema: theme08Case_card_v2Schema });
+registerLayout<Theme08Case_tableProps>({ meta: theme08Case_tableMeta, component: Theme08Case_table, schema: theme08Case_tableSchema });
+registerLayout<Theme08Case_studyProps>({ meta: theme08Case_studyMeta, component: Theme08Case_study, schema: theme08Case_studySchema });
+registerLayout<Theme08Case_gridProps>({ meta: theme08Case_gridMeta, component: Theme08Case_grid, schema: theme08Case_gridSchema });
+registerLayout<Theme08Case_listProps>({ meta: theme08Case_listMeta, component: Theme08Case_list, schema: theme08Case_listSchema });
+registerLayout<Theme08Region_anchorProps>({ meta: theme08Region_anchorMeta, component: Theme08Region_anchor, schema: theme08Region_anchorSchema });
+registerLayout<Theme08Region_card_nyProps>({ meta: theme08Region_card_nyMeta, component: Theme08Region_card_ny, schema: theme08Region_card_nySchema });
+registerLayout<Theme08Region_dotmapProps>({ meta: theme08Region_dotmapMeta, component: Theme08Region_dotmap, schema: theme08Region_dotmapSchema });
+registerLayout<Theme08SegmentProps>({ meta: theme08SegmentMeta, component: Theme08Segment, schema: theme08SegmentSchema });
+registerLayout<Theme08PipelineProps>({ meta: theme08PipelineMeta, component: Theme08Pipeline, schema: theme08PipelineSchema });
+registerLayout<Theme08ArchitectureProps>({ meta: theme08ArchitectureMeta, component: Theme08Architecture, schema: theme08ArchitectureSchema });
+registerLayout<Theme08SupplyProps>({ meta: theme08SupplyMeta, component: Theme08Supply, schema: theme08SupplySchema });
+registerLayout<Theme08ComputeProps>({ meta: theme08ComputeMeta, component: Theme08Compute, schema: theme08ComputeSchema });
+registerLayout<Theme08TrendProps>({ meta: theme08TrendMeta, component: Theme08Trend, schema: theme08TrendSchema });
+registerLayout<Theme08CrossProps>({ meta: theme08CrossMeta, component: Theme08Cross, schema: theme08CrossSchema });
+registerLayout<Theme08PeakProps>({ meta: theme08PeakMeta, component: Theme08Peak, schema: theme08PeakSchema });
+registerLayout<Theme08PullbackProps>({ meta: theme08PullbackMeta, component: Theme08Pullback, schema: theme08PullbackSchema });
+registerLayout<Theme08Peak_troughProps>({ meta: theme08Peak_troughMeta, component: Theme08Peak_trough, schema: theme08Peak_troughSchema });
+registerLayout<Theme08Capital_curveProps>({ meta: theme08Capital_curveMeta, component: Theme08Capital_curve, schema: theme08Capital_curveSchema });
+registerLayout<Theme08RevenueProps>({ meta: theme08RevenueMeta, component: Theme08Revenue, schema: theme08RevenueSchema });
+registerLayout<Theme08RegulationProps>({ meta: theme08RegulationMeta, component: Theme08Regulation, schema: theme08RegulationSchema });
+registerLayout<Theme08SqueezeProps>({ meta: theme08SqueezeMeta, component: Theme08Squeeze, schema: theme08SqueezeSchema });
+registerLayout<Theme08Early_stageProps>({ meta: theme08Early_stageMeta, component: Theme08Early_stage, schema: theme08Early_stageSchema });
+registerLayout<Theme08Investor_mixProps>({ meta: theme08Investor_mixMeta, component: Theme08Investor_mix, schema: theme08Investor_mixSchema });
+registerLayout<Theme08Resource_mapProps>({ meta: theme08Resource_mapMeta, component: Theme08Resource_map, schema: theme08Resource_mapSchema });
+registerLayout<Theme08Closed_loopProps>({ meta: theme08Closed_loopMeta, component: Theme08Closed_loop, schema: theme08Closed_loopSchema });
+registerLayout<Theme08TriptychProps>({ meta: theme08TriptychMeta, component: Theme08Triptych, schema: theme08TriptychSchema });
+registerLayout<Theme08Scene_splitProps>({ meta: theme08Scene_splitMeta, component: Theme08Scene_split, schema: theme08Scene_splitSchema });
+registerLayout<Theme08Budget_cardProps>({ meta: theme08Budget_cardMeta, component: Theme08Budget_card, schema: theme08Budget_cardSchema });
+registerLayout<Theme08MainlinesProps>({ meta: theme08MainlinesMeta, component: Theme08Mainlines, schema: theme08MainlinesSchema });
+registerLayout<Theme08MigrationProps>({ meta: theme08MigrationMeta, component: Theme08Migration, schema: theme08MigrationSchema });
+registerLayout<Theme08Size_splitProps>({ meta: theme08Size_splitMeta, component: Theme08Size_split, schema: theme08Size_splitSchema });
+
+registerLayout<Theme08Cover_v2Props>({ meta: theme08Cover_v2Meta, component: Theme08Cover_v2, schema: theme08Cover_v2Schema });
+registerLayout<Theme08Cover_v3Props>({ meta: theme08Cover_v3Meta, component: Theme08Cover_v3, schema: theme08Cover_v3Schema });
+registerLayout<Theme08Cover_v4Props>({ meta: theme08Cover_v4Meta, component: Theme08Cover_v4, schema: theme08Cover_v4Schema });
+registerLayout<Theme08Cover_v5Props>({ meta: theme08Cover_v5Meta, component: Theme08Cover_v5, schema: theme08Cover_v5Schema });
+registerLayout<Theme08Chapter_v2Props>({ meta: theme08Chapter_v2Meta, component: Theme08Chapter_v2, schema: theme08Chapter_v2Schema });
+registerLayout<Theme08Chapter_v3Props>({ meta: theme08Chapter_v3Meta, component: Theme08Chapter_v3, schema: theme08Chapter_v3Schema });
+registerLayout<Theme08Chapter_v4Props>({ meta: theme08Chapter_v4Meta, component: Theme08Chapter_v4, schema: theme08Chapter_v4Schema });
+registerLayout<Theme08Quote_statementProps>({ meta: theme08Quote_statementMeta, component: Theme08Quote_statement, schema: theme08Quote_statementSchema });
+registerLayout<Theme08Quote_resourcesProps>({ meta: theme08Quote_resourcesMeta, component: Theme08Quote_resources, schema: theme08Quote_resourcesSchema });
+registerLayout<Theme08Quote_verdictProps>({ meta: theme08Quote_verdictMeta, component: Theme08Quote_verdict, schema: theme08Quote_verdictSchema });
+registerLayout<Theme08Quote_twofieldProps>({ meta: theme08Quote_twofieldMeta, component: Theme08Quote_twofield, schema: theme08Quote_twofieldSchema });
+registerLayout<Theme08Quote_manifestoProps>({ meta: theme08Quote_manifestoMeta, component: Theme08Quote_manifesto, schema: theme08Quote_manifestoSchema });
+registerLayout<Theme08Case_cardProps>({ meta: theme08Case_cardMeta, component: Theme08Case_card, schema: theme08Case_cardSchema });
+registerLayout<Theme08Case_card_v2Props>({ meta: theme08Case_card_v2Meta, component: Theme08Case_card_v2, schema: theme08Case_card_v2Schema });
+registerLayout<Theme08Case_tableProps>({ meta: theme08Case_tableMeta, component: Theme08Case_table, schema: theme08Case_tableSchema });
+registerLayout<Theme08Case_studyProps>({ meta: theme08Case_studyMeta, component: Theme08Case_study, schema: theme08Case_studySchema });
+registerLayout<Theme08Case_gridProps>({ meta: theme08Case_gridMeta, component: Theme08Case_grid, schema: theme08Case_gridSchema });
+registerLayout<Theme08Case_listProps>({ meta: theme08Case_listMeta, component: Theme08Case_list, schema: theme08Case_listSchema });
+registerLayout<Theme08Region_anchorProps>({ meta: theme08Region_anchorMeta, component: Theme08Region_anchor, schema: theme08Region_anchorSchema });
+registerLayout<Theme08Region_card_nyProps>({ meta: theme08Region_card_nyMeta, component: Theme08Region_card_ny, schema: theme08Region_card_nySchema });
+registerLayout<Theme08Region_dotmapProps>({ meta: theme08Region_dotmapMeta, component: Theme08Region_dotmap, schema: theme08Region_dotmapSchema });
+registerLayout<Theme08SegmentProps>({ meta: theme08SegmentMeta, component: Theme08Segment, schema: theme08SegmentSchema });
+registerLayout<Theme08PipelineProps>({ meta: theme08PipelineMeta, component: Theme08Pipeline, schema: theme08PipelineSchema });
+registerLayout<Theme08ArchitectureProps>({ meta: theme08ArchitectureMeta, component: Theme08Architecture, schema: theme08ArchitectureSchema });
+registerLayout<Theme08SupplyProps>({ meta: theme08SupplyMeta, component: Theme08Supply, schema: theme08SupplySchema });
+registerLayout<Theme08ComputeProps>({ meta: theme08ComputeMeta, component: Theme08Compute, schema: theme08ComputeSchema });
+registerLayout<Theme08TrendProps>({ meta: theme08TrendMeta, component: Theme08Trend, schema: theme08TrendSchema });
+registerLayout<Theme08CrossProps>({ meta: theme08CrossMeta, component: Theme08Cross, schema: theme08CrossSchema });
+registerLayout<Theme08PeakProps>({ meta: theme08PeakMeta, component: Theme08Peak, schema: theme08PeakSchema });
+registerLayout<Theme08PullbackProps>({ meta: theme08PullbackMeta, component: Theme08Pullback, schema: theme08PullbackSchema });
+registerLayout<Theme08Peak_troughProps>({ meta: theme08Peak_troughMeta, component: Theme08Peak_trough, schema: theme08Peak_troughSchema });
+registerLayout<Theme08Capital_curveProps>({ meta: theme08Capital_curveMeta, component: Theme08Capital_curve, schema: theme08Capital_curveSchema });
+registerLayout<Theme08RevenueProps>({ meta: theme08RevenueMeta, component: Theme08Revenue, schema: theme08RevenueSchema });
+registerLayout<Theme08RegulationProps>({ meta: theme08RegulationMeta, component: Theme08Regulation, schema: theme08RegulationSchema });
+registerLayout<Theme08SqueezeProps>({ meta: theme08SqueezeMeta, component: Theme08Squeeze, schema: theme08SqueezeSchema });
+registerLayout<Theme08Early_stageProps>({ meta: theme08Early_stageMeta, component: Theme08Early_stage, schema: theme08Early_stageSchema });
+registerLayout<Theme08Investor_mixProps>({ meta: theme08Investor_mixMeta, component: Theme08Investor_mix, schema: theme08Investor_mixSchema });
+registerLayout<Theme08Resource_mapProps>({ meta: theme08Resource_mapMeta, component: Theme08Resource_map, schema: theme08Resource_mapSchema });
+registerLayout<Theme08Closed_loopProps>({ meta: theme08Closed_loopMeta, component: Theme08Closed_loop, schema: theme08Closed_loopSchema });
+registerLayout<Theme08TriptychProps>({ meta: theme08TriptychMeta, component: Theme08Triptych, schema: theme08TriptychSchema });
+registerLayout<Theme08Scene_splitProps>({ meta: theme08Scene_splitMeta, component: Theme08Scene_split, schema: theme08Scene_splitSchema });
+registerLayout<Theme08Budget_cardProps>({ meta: theme08Budget_cardMeta, component: Theme08Budget_card, schema: theme08Budget_cardSchema });
+registerLayout<Theme08MainlinesProps>({ meta: theme08MainlinesMeta, component: Theme08Mainlines, schema: theme08MainlinesSchema });
+registerLayout<Theme08MigrationProps>({ meta: theme08MigrationMeta, component: Theme08Migration, schema: theme08MigrationSchema });
+registerLayout<Theme08Size_splitProps>({ meta: theme08Size_splitMeta, component: Theme08Size_split, schema: theme08Size_splitSchema });
+
+/* ═══════════════ theme09 · 墨韵专色 · 杂志印刷风（P0 骨架 12 版式）═══════════════ */
+
+import {
+  Theme09CoverMastheadV1,
+  theme09CoverMastheadV1Meta,
+  theme09CoverMastheadV1Schema,
+  type Theme09CoverMastheadV1Props,
+} from './themes/theme09/cover-masthead-v1.js';
+import {
+  Theme09CoverBleedV1,
+  theme09CoverBleedV1Meta,
+  theme09CoverBleedV1Schema,
+  type Theme09CoverBleedV1Props,
+} from './themes/theme09/cover-bleed-v1.js';
+import {
+  Theme09CoverDossierV1,
+  theme09CoverDossierV1Meta,
+  theme09CoverDossierV1Schema,
+  type Theme09CoverDossierV1Props,
+} from './themes/theme09/cover-dossier-v1.js';
+import {
+  Theme09CoverColorbarV1,
+  theme09CoverColorbarV1Meta,
+  theme09CoverColorbarV1Schema,
+  type Theme09CoverColorbarV1Props,
+} from './themes/theme09/cover-colorbar-v1.js';
+import {
+  Theme09CoverApertureV1,
+  theme09CoverApertureV1Meta,
+  theme09CoverApertureV1Schema,
+  type Theme09CoverApertureV1Props,
+} from './themes/theme09/cover-aperture-v1.js';
+import {
+  Theme09CoverColophonV1,
+  theme09CoverColophonV1Meta,
+  theme09CoverColophonV1Schema,
+  type Theme09CoverColophonV1Props,
+} from './themes/theme09/cover-colophon-v1.js';
+import {
+  Theme09CoverPhotoV1,
+  theme09CoverPhotoV1Meta,
+  theme09CoverPhotoV1Schema,
+  type Theme09CoverPhotoV1Props,
+} from './themes/theme09/cover-photo-v1.js';
+import {
+  Theme09AbstractV1,
+  theme09AbstractV1Meta,
+  theme09AbstractV1Schema,
+  type Theme09AbstractV1Props,
+} from './themes/theme09/abstract-v1.js';
+import {
+  Theme09ContentsV1,
+  theme09ContentsV1Meta,
+  theme09ContentsV1Schema,
+  type Theme09ContentsV1Props,
+} from './themes/theme09/contents-v1.js';
+import {
+  Theme09SectionV1,
+  theme09SectionV1Meta,
+  theme09SectionV1Schema,
+  type Theme09SectionV1Props,
+} from './themes/theme09/section-v1.js';
+import {
+  Theme09SectionCardV1,
+  theme09SectionCardV1Meta,
+  theme09SectionCardV1Schema,
+  type Theme09SectionCardV1Props,
+} from './themes/theme09/section-card-v1.js';
+import {
+  Theme09ClosingV1,
+  theme09ClosingV1Meta,
+  theme09ClosingV1Schema,
+  type Theme09ClosingV1Props,
+} from './themes/theme09/closing-v1.js';
+import {
+  Theme09SpecimenV1,
+  theme09SpecimenV1Meta,
+  theme09SpecimenV1Schema,
+  type Theme09SpecimenV1Props,
+} from './themes/theme09/specimen-v1.js';
+import {
+  Theme09PhotoFeatureV1,
+  theme09PhotoFeatureV1Meta,
+  theme09PhotoFeatureV1Schema,
+  type Theme09PhotoFeatureV1Props,
+} from './themes/theme09/photo-feature-v1.js';
+import {
+  Theme09PhotoGridV1,
+  theme09PhotoGridV1Meta,
+  theme09PhotoGridV1Schema,
+  type Theme09PhotoGridV1Props,
+} from './themes/theme09/photo-grid-v1.js';
+import {
+  Theme09PhotoQuoteV1,
+  theme09PhotoQuoteV1Meta,
+  theme09PhotoQuoteV1Schema,
+  type Theme09PhotoQuoteV1Props,
+} from './themes/theme09/photo-quote-v1.js';
+import {
+  Theme09PhotoDuoV1,
+  theme09PhotoDuoV1Meta,
+  theme09PhotoDuoV1Schema,
+  type Theme09PhotoDuoV1Props,
+} from './themes/theme09/photo-duo-v1.js';
+import {
+  Theme09PhotoPanoramaV1,
+  theme09PhotoPanoramaV1Meta,
+  theme09PhotoPanoramaV1Schema,
+  type Theme09PhotoPanoramaV1Props,
+} from './themes/theme09/photo-panorama-v1.js';
+import {
+  Theme09PhotoStageV1,
+  theme09PhotoStageV1Meta,
+  theme09PhotoStageV1Schema,
+  type Theme09PhotoStageV1Props,
+} from './themes/theme09/photo-stage-v1.js';
+import {
+  Theme09StoryboardV1,
+  theme09StoryboardV1Meta,
+  theme09StoryboardV1Schema,
+  type Theme09StoryboardV1Props,
+} from './themes/theme09/storyboard-v1.js';
+import {
+  Theme09SnapshotTapeV1,
+  theme09SnapshotTapeV1Meta,
+  theme09SnapshotTapeV1Schema,
+  type Theme09SnapshotTapeV1Props,
+} from './themes/theme09/snapshot-tape-v1.js';
+import {
+  Theme09EpigraphV1,
+  theme09EpigraphV1Meta,
+  theme09EpigraphV1Schema,
+  type Theme09EpigraphV1Props,
+} from './themes/theme09/epigraph-v1.js';
+import {
+  Theme09PhotoBentoV1,
+  theme09PhotoBentoV1Meta,
+  theme09PhotoBentoV1Schema,
+  type Theme09PhotoBentoV1Props,
+} from './themes/theme09/photo-bento-v1.js';
+import {
+  Theme09TimelinePhotoV1,
+  theme09TimelinePhotoV1Meta,
+  theme09TimelinePhotoV1Schema,
+  type Theme09TimelinePhotoV1Props,
+} from './themes/theme09/timeline-photo-v1.js';
+import {
+  Theme09FilmstripV1,
+  theme09FilmstripV1Meta,
+  theme09FilmstripV1Schema,
+  type Theme09FilmstripV1Props,
+} from './themes/theme09/filmstrip-v1.js';
+import {
+  Theme09MosaicV1,
+  theme09MosaicV1Meta,
+  theme09MosaicV1Schema,
+  type Theme09MosaicV1Props,
+} from './themes/theme09/mosaic-v1.js';
+import {
+  Theme09TestimonialV1,
+  theme09TestimonialV1Meta,
+  theme09TestimonialV1Schema,
+  type Theme09TestimonialV1Props,
+} from './themes/theme09/testimonial-v1.js';
+import {
+  Theme09TeamV1,
+  theme09TeamV1Meta,
+  theme09TeamV1Schema,
+  type Theme09TeamV1Props,
+} from './themes/theme09/team-v1.js';
+import {
+  Theme09PhotoRingV1,
+  theme09PhotoRingV1Meta,
+  theme09PhotoRingV1Schema,
+  type Theme09PhotoRingV1Props,
+} from './themes/theme09/photo-ring-v1.js';
+import {
+  Theme09DividerPhotoV1,
+  theme09DividerPhotoV1Meta,
+  theme09DividerPhotoV1Schema,
+  type Theme09DividerPhotoV1Props,
+} from './themes/theme09/divider-photo-v1.js';
+import {
+  Theme09CoverStoryV1,
+  theme09CoverStoryV1Meta,
+  theme09CoverStoryV1Schema,
+  type Theme09CoverStoryV1Props,
+} from './themes/theme09/coverstory-v1.js';
+import {
+  Theme09QuotePortraitV1,
+  theme09QuotePortraitV1Meta,
+  theme09QuotePortraitV1Schema,
+  type Theme09QuotePortraitV1Props,
+} from './themes/theme09/quote-portrait-v1.js';
+import {
+  Theme09ManifestoV1,
+  theme09ManifestoV1Meta,
+  theme09ManifestoV1Schema,
+  type Theme09ManifestoV1Props,
+} from './themes/theme09/manifesto-v1.js';
+import {
+  Theme09AnnotatedV1,
+  theme09AnnotatedV1Meta,
+  theme09AnnotatedV1Schema,
+  type Theme09AnnotatedV1Props,
+} from './themes/theme09/annotated-v1.js';
+import {
+  Theme09DiptychV1,
+  theme09DiptychV1Meta,
+  theme09DiptychV1Schema,
+  type Theme09DiptychV1Props,
+} from './themes/theme09/diptych-v1.js';
+import {
+  Theme09CaseFolioV1,
+  theme09CaseFolioV1Meta,
+  theme09CaseFolioV1Schema,
+  type Theme09CaseFolioV1Props,
+} from './themes/theme09/case-folio-v1.js';
+import {
+  Theme09SplitDiagonalV1,
+  theme09SplitDiagonalV1Meta,
+  theme09SplitDiagonalV1Schema,
+  type Theme09SplitDiagonalV1Props,
+} from './themes/theme09/split-diagonal-v1.js';
+
+registerLayout<Theme09CoverMastheadV1Props>({ meta: theme09CoverMastheadV1Meta, component: Theme09CoverMastheadV1, schema: theme09CoverMastheadV1Schema });
+registerLayout<Theme09CoverBleedV1Props>({ meta: theme09CoverBleedV1Meta, component: Theme09CoverBleedV1, schema: theme09CoverBleedV1Schema });
+registerLayout<Theme09CoverDossierV1Props>({ meta: theme09CoverDossierV1Meta, component: Theme09CoverDossierV1, schema: theme09CoverDossierV1Schema });
+registerLayout<Theme09CoverColorbarV1Props>({ meta: theme09CoverColorbarV1Meta, component: Theme09CoverColorbarV1, schema: theme09CoverColorbarV1Schema });
+registerLayout<Theme09CoverApertureV1Props>({ meta: theme09CoverApertureV1Meta, component: Theme09CoverApertureV1, schema: theme09CoverApertureV1Schema });
+registerLayout<Theme09CoverColophonV1Props>({ meta: theme09CoverColophonV1Meta, component: Theme09CoverColophonV1, schema: theme09CoverColophonV1Schema });
+registerLayout<Theme09CoverPhotoV1Props>({ meta: theme09CoverPhotoV1Meta, component: Theme09CoverPhotoV1, schema: theme09CoverPhotoV1Schema });
+registerLayout<Theme09AbstractV1Props>({ meta: theme09AbstractV1Meta, component: Theme09AbstractV1, schema: theme09AbstractV1Schema });
+registerLayout<Theme09ContentsV1Props>({ meta: theme09ContentsV1Meta, component: Theme09ContentsV1, schema: theme09ContentsV1Schema });
+registerLayout<Theme09SectionV1Props>({ meta: theme09SectionV1Meta, component: Theme09SectionV1, schema: theme09SectionV1Schema });
+registerLayout<Theme09SectionCardV1Props>({ meta: theme09SectionCardV1Meta, component: Theme09SectionCardV1, schema: theme09SectionCardV1Schema });
+registerLayout<Theme09ClosingV1Props>({ meta: theme09ClosingV1Meta, component: Theme09ClosingV1, schema: theme09ClosingV1Schema });
+registerLayout<Theme09SpecimenV1Props>({ meta: theme09SpecimenV1Meta, component: Theme09SpecimenV1, schema: theme09SpecimenV1Schema });
+registerLayout<Theme09PhotoFeatureV1Props>({ meta: theme09PhotoFeatureV1Meta, component: Theme09PhotoFeatureV1, schema: theme09PhotoFeatureV1Schema });
+registerLayout<Theme09PhotoGridV1Props>({ meta: theme09PhotoGridV1Meta, component: Theme09PhotoGridV1, schema: theme09PhotoGridV1Schema });
+registerLayout<Theme09PhotoQuoteV1Props>({ meta: theme09PhotoQuoteV1Meta, component: Theme09PhotoQuoteV1, schema: theme09PhotoQuoteV1Schema });
+registerLayout<Theme09PhotoDuoV1Props>({ meta: theme09PhotoDuoV1Meta, component: Theme09PhotoDuoV1, schema: theme09PhotoDuoV1Schema });
+registerLayout<Theme09PhotoPanoramaV1Props>({ meta: theme09PhotoPanoramaV1Meta, component: Theme09PhotoPanoramaV1, schema: theme09PhotoPanoramaV1Schema });
+registerLayout<Theme09PhotoStageV1Props>({ meta: theme09PhotoStageV1Meta, component: Theme09PhotoStageV1, schema: theme09PhotoStageV1Schema });
+registerLayout<Theme09StoryboardV1Props>({ meta: theme09StoryboardV1Meta, component: Theme09StoryboardV1, schema: theme09StoryboardV1Schema });
+registerLayout<Theme09SnapshotTapeV1Props>({ meta: theme09SnapshotTapeV1Meta, component: Theme09SnapshotTapeV1, schema: theme09SnapshotTapeV1Schema });
+registerLayout<Theme09EpigraphV1Props>({ meta: theme09EpigraphV1Meta, component: Theme09EpigraphV1, schema: theme09EpigraphV1Schema });
+registerLayout<Theme09PhotoBentoV1Props>({ meta: theme09PhotoBentoV1Meta, component: Theme09PhotoBentoV1, schema: theme09PhotoBentoV1Schema });
+registerLayout<Theme09TimelinePhotoV1Props>({ meta: theme09TimelinePhotoV1Meta, component: Theme09TimelinePhotoV1, schema: theme09TimelinePhotoV1Schema });
+registerLayout<Theme09FilmstripV1Props>({ meta: theme09FilmstripV1Meta, component: Theme09FilmstripV1, schema: theme09FilmstripV1Schema });
+registerLayout<Theme09MosaicV1Props>({ meta: theme09MosaicV1Meta, component: Theme09MosaicV1, schema: theme09MosaicV1Schema });
+registerLayout<Theme09TestimonialV1Props>({ meta: theme09TestimonialV1Meta, component: Theme09TestimonialV1, schema: theme09TestimonialV1Schema });
+registerLayout<Theme09TeamV1Props>({ meta: theme09TeamV1Meta, component: Theme09TeamV1, schema: theme09TeamV1Schema });
+registerLayout<Theme09PhotoRingV1Props>({ meta: theme09PhotoRingV1Meta, component: Theme09PhotoRingV1, schema: theme09PhotoRingV1Schema });
+registerLayout<Theme09DividerPhotoV1Props>({ meta: theme09DividerPhotoV1Meta, component: Theme09DividerPhotoV1, schema: theme09DividerPhotoV1Schema });
+registerLayout<Theme09CoverStoryV1Props>({ meta: theme09CoverStoryV1Meta, component: Theme09CoverStoryV1, schema: theme09CoverStoryV1Schema });
+registerLayout<Theme09QuotePortraitV1Props>({ meta: theme09QuotePortraitV1Meta, component: Theme09QuotePortraitV1, schema: theme09QuotePortraitV1Schema });
+registerLayout<Theme09ManifestoV1Props>({ meta: theme09ManifestoV1Meta, component: Theme09ManifestoV1, schema: theme09ManifestoV1Schema });
+registerLayout<Theme09AnnotatedV1Props>({ meta: theme09AnnotatedV1Meta, component: Theme09AnnotatedV1, schema: theme09AnnotatedV1Schema });
+registerLayout<Theme09DiptychV1Props>({ meta: theme09DiptychV1Meta, component: Theme09DiptychV1, schema: theme09DiptychV1Schema });
+registerLayout<Theme09CaseFolioV1Props>({ meta: theme09CaseFolioV1Meta, component: Theme09CaseFolioV1, schema: theme09CaseFolioV1Schema });
+registerLayout<Theme09SplitDiagonalV1Props>({ meta: theme09SplitDiagonalV1Meta, component: Theme09SplitDiagonalV1, schema: theme09SplitDiagonalV1Schema });
+
+// ── P1 收官批（10 个） ──
+import {
+  Theme09TyperiverV1,
+  theme09TyperiverV1Meta,
+  theme09TyperiverV1Schema,
+  type Theme09TyperiverV1Props,
+} from './themes/theme09/typeriver-v1.js';
+import {
+  Theme09ExhibitWallV1,
+  theme09ExhibitWallV1Meta,
+  theme09ExhibitWallV1Schema,
+  type Theme09ExhibitWallV1Props,
+} from './themes/theme09/exhibit-wall-v1.js';
+import {
+  Theme09MasonryV1,
+  theme09MasonryV1Meta,
+  theme09MasonryV1Schema,
+  type Theme09MasonryV1Props,
+} from './themes/theme09/masonry-v1.js';
+import {
+  Theme09JourneyV1,
+  theme09JourneyV1Meta,
+  theme09JourneyV1Schema,
+  type Theme09JourneyV1Props,
+} from './themes/theme09/journey-v1.js';
+import {
+  Theme09PhotoCardsV1,
+  theme09PhotoCardsV1Meta,
+  theme09PhotoCardsV1Schema,
+  type Theme09PhotoCardsV1Props,
+} from './themes/theme09/photo-cards-v1.js';
+import {
+  Theme09ZineSpreadV1,
+  theme09ZineSpreadV1Meta,
+  theme09ZineSpreadV1Schema,
+  type Theme09ZineSpreadV1Props,
+} from './themes/theme09/zine-spread-v1.js';
+import {
+  Theme09PhotoSceneV1,
+  theme09PhotoSceneV1Meta,
+  theme09PhotoSceneV1Schema,
+  type Theme09PhotoSceneV1Props,
+} from './themes/theme09/photo-scene-v1.js';
+import {
+  Theme09SpotlightV1,
+  theme09SpotlightV1Meta,
+  theme09SpotlightV1Schema,
+  type Theme09SpotlightV1Props,
+} from './themes/theme09/spotlight-v1.js';
+import {
+  Theme09ProfileV1,
+  theme09ProfileV1Meta,
+  theme09ProfileV1Schema,
+  type Theme09ProfileV1Props,
+} from './themes/theme09/profile-v1.js';
+import {
+  Theme09GalleryWallV1,
+  theme09GalleryWallV1Meta,
+  theme09GalleryWallV1Schema,
+  type Theme09GalleryWallV1Props,
+} from './themes/theme09/gallery-wall-v1.js';
+import {
+  Theme09DotMatrixV1,
+  theme09DotMatrixV1Meta,
+  theme09DotMatrixV1Schema,
+  type Theme09DotMatrixV1Props,
+} from './themes/theme09/dotmatrix-v1.js';
+import {
+  Theme09MarketOverviewV1,
+  theme09MarketOverviewV1Meta,
+  theme09MarketOverviewV1Schema,
+  type Theme09MarketOverviewV1Props,
+} from './themes/theme09/market-overview-v1.js';
+import {
+  Theme09StreamgraphV1,
+  theme09StreamgraphV1Meta,
+  theme09StreamgraphV1Schema,
+  type Theme09StreamgraphV1Props,
+} from './themes/theme09/streamgraph-v1.js';
+import {
+  Theme09ChordV1,
+  theme09ChordV1Meta,
+  theme09ChordV1Schema,
+  type Theme09ChordV1Props,
+} from './themes/theme09/chord-v1.js';
+import {
+  Theme09SunburstV1,
+  theme09SunburstV1Meta,
+  theme09SunburstV1Schema,
+  type Theme09SunburstV1Props,
+} from './themes/theme09/sunburst-v1.js';
+import {
+  Theme09RibbonV1,
+  theme09RibbonV1Meta,
+  theme09RibbonV1Schema,
+  type Theme09RibbonV1Props,
+} from './themes/theme09/ribbon-v1.js';
+import {
+  Theme09RoundsV1,
+  theme09RoundsV1Meta,
+  theme09RoundsV1Schema,
+  type Theme09RoundsV1Props,
+} from './themes/theme09/rounds-v1.js';
+import {
+  Theme09RankingV1,
+  theme09RankingV1Meta,
+  theme09RankingV1Schema,
+  type Theme09RankingV1Props,
+} from './themes/theme09/ranking-v1.js';
+
+/* ═════════════════ theme09 · P3 批次一 · 推演与结构（9 版式）════════════════ */
+import {
+  Theme09CrossPerspectiveV1,
+  theme09CrossPerspectiveV1Meta,
+  theme09CrossPerspectiveV1Schema,
+  type Theme09CrossPerspectiveV1Props,
+} from './themes/theme09/cross-perspective-v1.js';
+import {
+  Theme09ThesisV1,
+  theme09ThesisV1Meta,
+  theme09ThesisV1Schema,
+  type Theme09ThesisV1Props,
+} from './themes/theme09/thesis-v1.js';
+import {
+  Theme09ValueChainV1,
+  theme09ValueChainV1Meta,
+  theme09ValueChainV1Schema,
+  type Theme09ValueChainV1Props,
+} from './themes/theme09/value-chain-v1.js';
+import {
+  Theme09RiskV1,
+  theme09RiskV1Meta,
+  theme09RiskV1Schema,
+  type Theme09RiskV1Props,
+} from './themes/theme09/risk-v1.js';
+import {
+  Theme09OutlookV1,
+  theme09OutlookV1Meta,
+  theme09OutlookV1Schema,
+  type Theme09OutlookV1Props,
+} from './themes/theme09/outlook-v1.js';
+import {
+  Theme09ConclusionV1,
+  theme09ConclusionV1Meta,
+  theme09ConclusionV1Schema,
+  type Theme09ConclusionV1Props,
+} from './themes/theme09/conclusion-v1.js';
+import {
+  Theme09BracketV1,
+  theme09BracketV1Meta,
+  theme09BracketV1Schema,
+  type Theme09BracketV1Props,
+} from './themes/theme09/bracket-v1.js';
+import {
+  Theme09FlowV1,
+  theme09FlowV1Meta,
+  theme09FlowV1Schema,
+  type Theme09FlowV1Props,
+} from './themes/theme09/flow-v1.js';
+import {
+  Theme09OrbitV1,
+  theme09OrbitV1Meta,
+  theme09OrbitV1Schema,
+  type Theme09OrbitV1Props,
+} from './themes/theme09/orbit-v1.js';
+
+/* ═════════════════ theme09 · P3 批次二 · 时序与量化（9 版式）════════════════ */
+import {
+  Theme09VerticalV1,
+  theme09VerticalV1Meta,
+  theme09VerticalV1Schema,
+  type Theme09VerticalV1Props,
+} from './themes/theme09/vertical-v1.js';
+import {
+  Theme09CalendarV1,
+  theme09CalendarV1Meta,
+  theme09CalendarV1Schema,
+  type Theme09CalendarV1Props,
+} from './themes/theme09/calendar-v1.js';
+import {
+  Theme09PhasesV1,
+  theme09PhasesV1Meta,
+  theme09PhasesV1Schema,
+  type Theme09PhasesV1Props,
+} from './themes/theme09/phases-v1.js';
+import {
+  Theme09GaugeV1,
+  theme09GaugeV1Meta,
+  theme09GaugeV1Schema,
+  type Theme09GaugeV1Props,
+} from './themes/theme09/gauge-v1.js';
+import {
+  Theme09ScoreboardV1,
+  theme09ScoreboardV1Meta,
+  theme09ScoreboardV1Schema,
+  type Theme09ScoreboardV1Props,
+} from './themes/theme09/scoreboard-v1.js';
+import {
+  Theme09TrendV1,
+  theme09TrendV1Meta,
+  theme09TrendV1Schema,
+  type Theme09TrendV1Props,
+} from './themes/theme09/trend-v1.js';
+import {
+  Theme09HistogramV1,
+  theme09HistogramV1Meta,
+  theme09HistogramV1Schema,
+  type Theme09HistogramV1Props,
+} from './themes/theme09/histogram-v1.js';
+import {
+  Theme09ForecastFanV1,
+  theme09ForecastFanV1Meta,
+  theme09ForecastFanV1Schema,
+  type Theme09ForecastFanV1Props,
+} from './themes/theme09/forecast-fan-v1.js';
+import {
+  Theme09PlansV1,
+  theme09PlansV1Meta,
+  theme09PlansV1Schema,
+  type Theme09PlansV1Props,
+} from './themes/theme09/plans-v1.js';
+
+/* ═══════════════ theme09 · P2 数据图表（剩余 32 版式）═══════════════ */
+import {
+  Theme09BumpV1,
+  theme09BumpV1Meta,
+  theme09BumpV1Schema,
+  type Theme09BumpV1Props,
+} from './themes/theme09/bump-v1.js';
+import {
+  Theme09HeroNumberV1,
+  theme09HeroNumberV1Meta,
+  theme09HeroNumberV1Schema,
+  type Theme09HeroNumberV1Props,
+} from './themes/theme09/hero-number-v1.js';
+import {
+  Theme09VersusV1,
+  theme09VersusV1Meta,
+  theme09VersusV1Schema,
+  type Theme09VersusV1Props,
+} from './themes/theme09/versus-v1.js';
+import {
+  Theme09SpiralV1,
+  theme09SpiralV1Meta,
+  theme09SpiralV1Schema,
+  type Theme09SpiralV1Props,
+} from './themes/theme09/spiral-v1.js';
+import {
+  Theme09FunnelV1,
+  theme09FunnelV1Meta,
+  theme09FunnelV1Schema,
+  type Theme09FunnelV1Props,
+} from './themes/theme09/funnel-v1.js';
+import {
+  Theme09StatGridV1,
+  theme09StatGridV1Meta,
+  theme09StatGridV1Schema,
+  type Theme09StatGridV1Props,
+} from './themes/theme09/stat-grid-v1.js';
+import {
+  Theme09ArcV1,
+  theme09ArcV1Meta,
+  theme09ArcV1Schema,
+  type Theme09ArcV1Props,
+} from './themes/theme09/arc-v1.js';
+import {
+  Theme09NetworkV1,
+  theme09NetworkV1Meta,
+  theme09NetworkV1Schema,
+  type Theme09NetworkV1Props,
+} from './themes/theme09/network-v1.js';
+import {
+  Theme09AreaV1,
+  theme09AreaV1Meta,
+  theme09AreaV1Schema,
+  type Theme09AreaV1Props,
+} from './themes/theme09/area-v1.js';
+import {
+  Theme09MegaNumberV1,
+  theme09MegaNumberV1Meta,
+  theme09MegaNumberV1Schema,
+  type Theme09MegaNumberV1Props,
+} from './themes/theme09/mega-number-v1.js';
+import {
+  Theme09RadarV1,
+  theme09RadarV1Meta,
+  theme09RadarV1Schema,
+  type Theme09RadarV1Props,
+} from './themes/theme09/radar-v1.js';
+import {
+  Theme09RadialbarV1,
+  theme09RadialbarV1Meta,
+  theme09RadialbarV1Schema,
+  type Theme09RadialbarV1Props,
+} from './themes/theme09/radialbar-v1.js';
+import {
+  Theme09HoneycombV1,
+  theme09HoneycombV1Meta,
+  theme09HoneycombV1Schema,
+  type Theme09HoneycombV1Props,
+} from './themes/theme09/honeycomb-v1.js';
+import {
+  Theme09TornadoV1,
+  theme09TornadoV1Meta,
+  theme09TornadoV1Schema,
+  type Theme09TornadoV1Props,
+} from './themes/theme09/tornado-v1.js';
+import {
+  Theme09MatrixV1,
+  theme09MatrixV1Meta,
+  theme09MatrixV1Schema,
+  type Theme09MatrixV1Props,
+} from './themes/theme09/matrix-v1.js';
+import {
+  Theme09QuadrantV1,
+  theme09QuadrantV1Meta,
+  theme09QuadrantV1Schema,
+  type Theme09QuadrantV1Props,
+} from './themes/theme09/quadrant-v1.js';
+import {
+  Theme09BubbleV1,
+  theme09BubbleV1Meta,
+  theme09BubbleV1Schema,
+  type Theme09BubbleV1Props,
+} from './themes/theme09/bubble-v1.js';
+import {
+  Theme09MarimekkoV1,
+  theme09MarimekkoV1Meta,
+  theme09MarimekkoV1Schema,
+  type Theme09MarimekkoV1Props,
+} from './themes/theme09/marimekko-v1.js';
+import {
+  Theme09MeterV1,
+  theme09MeterV1Meta,
+  theme09MeterV1Schema,
+  type Theme09MeterV1Props,
+} from './themes/theme09/meter-v1.js';
+import {
+  Theme09ParallelV1,
+  theme09ParallelV1Meta,
+  theme09ParallelV1Schema,
+  type Theme09ParallelV1Props,
+} from './themes/theme09/parallel-v1.js';
+import {
+  Theme09GradeV1,
+  theme09GradeV1Meta,
+  theme09GradeV1Schema,
+  type Theme09GradeV1Props,
+} from './themes/theme09/grade-v1.js';
+import {
+  Theme09SlopeV1,
+  theme09SlopeV1Meta,
+  theme09SlopeV1Schema,
+  type Theme09SlopeV1Props,
+} from './themes/theme09/slope-v1.js';
+import {
+  Theme09DumbbellV1,
+  theme09DumbbellV1Meta,
+  theme09DumbbellV1Schema,
+  type Theme09DumbbellV1Props,
+} from './themes/theme09/dumbbell-v1.js';
+import {
+  Theme09CrosstabV1,
+  theme09CrosstabV1Meta,
+  theme09CrosstabV1Schema,
+  type Theme09CrosstabV1Props,
+} from './themes/theme09/crosstab-v1.js';
+import {
+  Theme09TierV1,
+  theme09TierV1Meta,
+  theme09TierV1Schema,
+  type Theme09TierV1Props,
+} from './themes/theme09/tier-v1.js';
+import {
+  Theme09LedgerV1,
+  theme09LedgerV1Meta,
+  theme09LedgerV1Schema,
+  type Theme09LedgerV1Props,
+} from './themes/theme09/ledger-v1.js';
+import {
+  Theme09AllocV1,
+  theme09AllocV1Meta,
+  theme09AllocV1Schema,
+  type Theme09AllocV1Props,
+} from './themes/theme09/alloc-v1.js';
+import {
+  Theme09VennV1,
+  theme09VennV1Meta,
+  theme09VennV1Schema,
+  type Theme09VennV1Props,
+} from './themes/theme09/venn-v1.js';
+import {
+  Theme09TreemapV1,
+  theme09TreemapV1Meta,
+  theme09TreemapV1Schema,
+  type Theme09TreemapV1Props,
+} from './themes/theme09/treemap-v1.js';
+import {
+  Theme09IcicleV1,
+  theme09IcicleV1Meta,
+  theme09IcicleV1Schema,
+  type Theme09IcicleV1Props,
+} from './themes/theme09/icicle-v1.js';
+import {
+  Theme09WaterfallV1,
+  theme09WaterfallV1Meta,
+  theme09WaterfallV1Schema,
+  type Theme09WaterfallV1Props,
+} from './themes/theme09/waterfall-v1.js';
+import {
+  Theme09HeatmapV1,
+  theme09HeatmapV1Meta,
+  theme09HeatmapV1Schema,
+  type Theme09HeatmapV1Props,
+} from './themes/theme09/heatmap-v1.js';
+import {
+  Theme09CompareV1,
+  theme09CompareV1Meta,
+  theme09CompareV1Schema,
+  type Theme09CompareV1Props,
+} from './themes/theme09/compare-v1.js';
+import {
+  Theme09EraV1,
+  theme09EraV1Meta,
+  theme09EraV1Schema,
+  type Theme09EraV1Props,
+} from './themes/theme09/era-v1.js';
+import {
+  Theme09FaqV1,
+  theme09FaqV1Meta,
+  theme09FaqV1Schema,
+  type Theme09FaqV1Props,
+} from './themes/theme09/faq-v1.js';
+import {
+  Theme09ProcessV1,
+  theme09ProcessV1Meta,
+  theme09ProcessV1Schema,
+  type Theme09ProcessV1Props,
+} from './themes/theme09/process-v1.js';
+import {
+  Theme09RoadmapV1,
+  theme09RoadmapV1Meta,
+  theme09RoadmapV1Schema,
+  type Theme09RoadmapV1Props,
+} from './themes/theme09/roadmap-v1.js';
+import {
+  Theme09ScoreV1,
+  theme09ScoreV1Meta,
+  theme09ScoreV1Schema,
+  type Theme09ScoreV1Props,
+} from './themes/theme09/score-v1.js';
+import {
+  Theme09StackedV1,
+  theme09StackedV1Meta,
+  theme09StackedV1Schema,
+  type Theme09StackedV1Props,
+} from './themes/theme09/stacked-v1.js';
+import {
+  Theme09StairV1,
+  theme09StairV1Meta,
+  theme09StairV1Schema,
+  type Theme09StairV1Props,
+} from './themes/theme09/stair-v1.js';
+import {
+  Theme09TakeawayV1,
+  theme09TakeawayV1Meta,
+  theme09TakeawayV1Schema,
+  type Theme09TakeawayV1Props,
+} from './themes/theme09/takeaway-v1.js';
+
+// theme10 版式（P0 骨架 12 个）— 金色指数 · 金融编辑风
+import {
+  Theme10CoverDuskV1,
+  theme10CoverDuskV1Meta,
+  theme10CoverDuskV1Schema,
+  type Theme10CoverDuskV1Props,
+} from './themes/theme10/cover-dusk-v1.js';
+import {
+  Theme10CoverFieldV1,
+  theme10CoverFieldV1Meta,
+  theme10CoverFieldV1Schema,
+  type Theme10CoverFieldV1Props,
+} from './themes/theme10/cover-field-v1.js';
+import {
+  Theme10CoverAtmosV1,
+  theme10CoverAtmosV1Meta,
+  theme10CoverAtmosV1Schema,
+  type Theme10CoverAtmosV1Props,
+} from './themes/theme10/cover-atmos-v1.js';
+import {
+  Theme10CoverHorizonV1,
+  theme10CoverHorizonV1Meta,
+  theme10CoverHorizonV1Schema,
+  type Theme10CoverHorizonV1Props,
+} from './themes/theme10/cover-horizon-v1.js';
+import {
+  Theme10CoverStandardV1,
+  theme10CoverStandardV1Meta,
+  theme10CoverStandardV1Schema,
+  type Theme10CoverStandardV1Props,
+} from './themes/theme10/cover-standard-v1.js';
+import {
+  Theme10CoverDawnV1,
+  theme10CoverDawnV1Meta,
+  theme10CoverDawnV1Schema,
+  type Theme10CoverDawnV1Props,
+} from './themes/theme10/cover-dawn-v1.js';
+import {
+  Theme10ChapterV1,
+  theme10ChapterV1Meta,
+  theme10ChapterV1Schema,
+  type Theme10ChapterV1Props,
+} from './themes/theme10/chapter-v1.js';
+import {
+  Theme10DividerV1,
+  theme10DividerV1Meta,
+  theme10DividerV1Schema,
+  type Theme10DividerV1Props,
+} from './themes/theme10/divider-v1.js';
+import {
+  Theme10StatementSectionV1,
+  theme10StatementSectionV1Meta,
+  theme10StatementSectionV1Schema,
+  type Theme10StatementSectionV1Props,
+} from './themes/theme10/statement-section-v1.js';
+import {
+  Theme10StatementV1,
+  theme10StatementV1Meta,
+  theme10StatementV1Schema,
+  type Theme10StatementV1Props,
+} from './themes/theme10/statement-v1.js';
+import {
+  Theme10PrinciplesV1,
+  theme10PrinciplesV1Meta,
+  theme10PrinciplesV1Schema,
+  type Theme10PrinciplesV1Props,
+} from './themes/theme10/principles-v1.js';
+import {
+  Theme10ClosingV1,
+  theme10ClosingV1Meta,
+  theme10ClosingV1Schema,
+  type Theme10ClosingV1Props,
+} from './themes/theme10/closing-v1.js';
+import {
+  Theme10ProfileV1,
+  theme10ProfileV1Meta,
+  theme10ProfileV1Schema,
+  type Theme10ProfileV1Props,
+} from './themes/theme10/profile-v1.js';
+import {
+  Theme10TeamV1,
+  theme10TeamV1Meta,
+  theme10TeamV1Schema,
+  type Theme10TeamV1Props,
+} from './themes/theme10/team-v1.js';
+import {
+  Theme10QuoteV1,
+  theme10QuoteV1Meta,
+  theme10QuoteV1Schema,
+  type Theme10QuoteV1Props,
+} from './themes/theme10/quote-v1.js';
+import {
+  Theme10EditorialV1,
+  theme10EditorialV1Meta,
+  theme10EditorialV1Schema,
+  type Theme10EditorialV1Props,
+} from './themes/theme10/editorial-v1.js';
+import {
+  Theme10MagazineV1,
+  theme10MagazineV1Meta,
+  theme10MagazineV1Schema,
+  type Theme10MagazineV1Props,
+} from './themes/theme10/magazine-v1.js';
+import {
+  Theme10TriptychV1,
+  theme10TriptychV1Meta,
+  theme10TriptychV1Schema,
+  type Theme10TriptychV1Props,
+} from './themes/theme10/triptych-v1.js';
+import {
+  Theme10StrataV1,
+  theme10StrataV1Meta,
+  theme10StrataV1Schema,
+  type Theme10StrataV1Props,
+} from './themes/theme10/strata-v1.js';
+import {
+  Theme10SparkV1,
+  theme10SparkV1Meta,
+  theme10SparkV1Schema,
+  type Theme10SparkV1Props,
+} from './themes/theme10/spark-v1.js';
+import {
+  Theme10TestimonialsV1,
+  theme10TestimonialsV1Meta,
+  theme10TestimonialsV1Schema,
+  type Theme10TestimonialsV1Props,
+} from './themes/theme10/testimonials-v1.js';
+import {
+  Theme10FeatureV1,
+  theme10FeatureV1Meta,
+  theme10FeatureV1Schema,
+  type Theme10FeatureV1Props,
+} from './themes/theme10/feature-v1.js';
+import {
+  Theme10CompareImgV1,
+  theme10CompareImgV1Meta,
+  theme10CompareImgV1Schema,
+  type Theme10CompareImgV1Props,
+} from './themes/theme10/compareimg-v1.js';
+import {
+  Theme10PinboardV1,
+  theme10PinboardV1Meta,
+  theme10PinboardV1Schema,
+  type Theme10PinboardV1Props,
+} from './themes/theme10/pinboard-v1.js';
+import {
+  Theme10FilmstripV1,
+  theme10FilmstripV1Meta,
+  theme10FilmstripV1Schema,
+  type Theme10FilmstripV1Props,
+} from './themes/theme10/filmstrip-v1.js';
+import {
+  Theme10InsetV1,
+  theme10InsetV1Meta,
+  theme10InsetV1Schema,
+  type Theme10InsetV1Props,
+} from './themes/theme10/inset-v1.js';
+import {
+  Theme10Gallery2V1,
+  theme10Gallery2V1Meta,
+  theme10Gallery2V1Schema,
+  type Theme10Gallery2V1Props,
+} from './themes/theme10/gallery2-v1.js';
+import {
+  Theme10MosaicV1,
+  theme10MosaicV1Meta,
+  theme10MosaicV1Schema,
+  type Theme10MosaicV1Props,
+} from './themes/theme10/mosaic-v1.js';
+import {
+  Theme10CollageV1,
+  theme10CollageV1Meta,
+  theme10CollageV1Schema,
+  type Theme10CollageV1Props,
+} from './themes/theme10/collage-v1.js';
+import {
+  Theme10CaptionedV1,
+  theme10CaptionedV1Meta,
+  theme10CaptionedV1Schema,
+  type Theme10CaptionedV1Props,
+} from './themes/theme10/captioned-v1.js';
+import {
+  Theme10ShowcaseV1,
+  theme10ShowcaseV1Meta,
+  theme10ShowcaseV1Schema,
+  type Theme10ShowcaseV1Props,
+} from './themes/theme10/showcase-v1.js';
+import {
+  Theme10PosterV1,
+  theme10PosterV1Meta,
+  theme10PosterV1Schema,
+  type Theme10PosterV1Props,
+} from './themes/theme10/poster-v1.js';
+import {
+  Theme10AnnotatedV1,
+  theme10AnnotatedV1Meta,
+  theme10AnnotatedV1Schema,
+  type Theme10AnnotatedV1Props,
+} from './themes/theme10/annotated-v1.js';
+import {
+  Theme10QuoteImgV1,
+  theme10QuoteImgV1Meta,
+  theme10QuoteImgV1Schema,
+  type Theme10QuoteImgV1Props,
+} from './themes/theme10/quoteimg-v1.js';
+import {
+  Theme10QuiltV1,
+  theme10QuiltV1Meta,
+  theme10QuiltV1Schema,
+  type Theme10QuiltV1Props,
+} from './themes/theme10/quilt-v1.js';
+import {
+  Theme10ExhibitV1,
+  theme10ExhibitV1Meta,
+  theme10ExhibitV1Schema,
+  type Theme10ExhibitV1Props,
+} from './themes/theme10/exhibit-v1.js';
+import {
+  Theme10MedallionsV1,
+  theme10MedallionsV1Meta,
+  theme10MedallionsV1Schema,
+  type Theme10MedallionsV1Props,
+} from './themes/theme10/medallions-v1.js';
+import {
+  Theme10BarV1,
+  theme10BarV1Meta,
+  theme10BarV1Schema,
+  type Theme10BarV1Props,
+} from './themes/theme10/bar-v1.js';
+import {
+  Theme10HBarV1,
+  theme10HBarV1Meta,
+  theme10HBarV1Schema,
+  type Theme10HBarV1Props,
+} from './themes/theme10/hbar-v1.js';
+import {
+  Theme10LineV1,
+  theme10LineV1Meta,
+  theme10LineV1Schema,
+  type Theme10LineV1Props,
+} from './themes/theme10/line-v1.js';
+import {
+  Theme10AreaV1,
+  theme10AreaV1Meta,
+  theme10AreaV1Schema,
+  type Theme10AreaV1Props,
+} from './themes/theme10/area-v1.js';
+import {
+  Theme10KpisV1,
+  theme10KpisV1Meta,
+  theme10KpisV1Schema,
+  type Theme10KpisV1Props,
+} from './themes/theme10/kpis-v1.js';
+import {
+  Theme10GroupedV1,
+  theme10GroupedV1Meta,
+  theme10GroupedV1Schema,
+  type Theme10GroupedV1Props,
+} from './themes/theme10/grouped-v1.js';
+import {
+  Theme10StackV1,
+  theme10StackV1Meta,
+  theme10StackV1Schema,
+  type Theme10StackV1Props,
+} from './themes/theme10/stack-v1.js';
+import {
+  Theme10DonutV1,
+  theme10DonutV1Meta,
+  theme10DonutV1Schema,
+  type Theme10DonutV1Props,
+} from './themes/theme10/donut-v1.js';
+import {
+  Theme10PieV1,
+  theme10PieV1Meta,
+  theme10PieV1Schema,
+  type Theme10PieV1Props,
+} from './themes/theme10/pie-v1.js';
+import {
+  Theme10WaterfallV1,
+  theme10WaterfallV1Meta,
+  theme10WaterfallV1Schema,
+  type Theme10WaterfallV1Props,
+} from './themes/theme10/waterfall-v1.js';
+import {
+  Theme10ScatterV1,
+  theme10ScatterV1Meta,
+  theme10ScatterV1Schema,
+  type Theme10ScatterV1Props,
+} from './themes/theme10/scatter-v1.js';
+import {
+  Theme10BubbleV1,
+  theme10BubbleV1Meta,
+  theme10BubbleV1Schema,
+  type Theme10BubbleV1Props,
+} from './themes/theme10/bubble-v1.js';
+import {
+  Theme10RadarV1,
+  theme10RadarV1Meta,
+  theme10RadarV1Schema,
+  type Theme10RadarV1Props,
+} from './themes/theme10/radar-v1.js';
+import {
+  Theme10RadialV1,
+  theme10RadialV1Meta,
+  theme10RadialV1Schema,
+  type Theme10RadialV1Props,
+} from './themes/theme10/radial-v1.js';
+import {
+  Theme10HeatV1,
+  theme10HeatV1Meta,
+  theme10HeatV1Schema,
+  type Theme10HeatV1Props,
+} from './themes/theme10/heat-v1.js';
+// theme10 金色指数 · P2 数据图表 · 批次I（趋势与时间 5 版式）
+import {
+  Theme10TrendV1,
+  theme10TrendV1Meta,
+  theme10TrendV1Schema,
+  type Theme10TrendV1Props,
+} from './themes/theme10/trend-v1.js';
+import {
+  Theme10RangeV1,
+  theme10RangeV1Meta,
+  theme10RangeV1Schema,
+  type Theme10RangeV1Props,
+} from './themes/theme10/range-v1.js';
+import {
+  Theme10CandlestickV1,
+  theme10CandlestickV1Meta,
+  theme10CandlestickV1Schema,
+  type Theme10CandlestickV1Props,
+} from './themes/theme10/candlestick-v1.js';
+import {
+  Theme10RidgelineV1,
+  theme10RidgelineV1Meta,
+  theme10RidgelineV1Schema,
+  type Theme10RidgelineV1Props,
+} from './themes/theme10/ridgeline-v1.js';
+import {
+  Theme10CalendarV1,
+  theme10CalendarV1Meta,
+  theme10CalendarV1Schema,
+  type Theme10CalendarV1Props,
+} from './themes/theme10/calendar-v1.js';
+import {
+  Theme10FunnelV1,
+  theme10FunnelV1Meta,
+  theme10FunnelV1Schema,
+  type Theme10FunnelV1Props,
+} from './themes/theme10/funnel-v1.js';
+import {
+  Theme10GaugeV1,
+  theme10GaugeV1Meta,
+  theme10GaugeV1Schema,
+  type Theme10GaugeV1Props,
+} from './themes/theme10/gauge-v1.js';
+import {
+  Theme10BulletV1,
+  theme10BulletV1Meta,
+  theme10BulletV1Schema,
+  type Theme10BulletV1Props,
+} from './themes/theme10/bullet-v1.js';
+import {
+  Theme10BoxV1,
+  theme10BoxV1Meta,
+  theme10BoxV1Schema,
+  type Theme10BoxV1Props,
+} from './themes/theme10/box-v1.js';
+import {
+  Theme10TreemapV1,
+  theme10TreemapV1Meta,
+  theme10TreemapV1Schema,
+  type Theme10TreemapV1Props,
+} from './themes/theme10/treemap-v1.js';
+import {
+  Theme10GanttV1,
+  theme10GanttV1Meta,
+  theme10GanttV1Schema,
+  type Theme10GanttV1Props,
+} from './themes/theme10/gantt-v1.js';
+import {
+  Theme10BumpV1,
+  theme10BumpV1Meta,
+  theme10BumpV1Schema,
+  type Theme10BumpV1Props,
+} from './themes/theme10/bump-v1.js';
+import {
+  Theme10RoseV1,
+  theme10RoseV1Meta,
+  theme10RoseV1Schema,
+  type Theme10RoseV1Props,
+} from './themes/theme10/rose-v1.js';
+import {
+  Theme10DotplotV1,
+  theme10DotplotV1Meta,
+  theme10DotplotV1Schema,
+  type Theme10DotplotV1Props,
+} from './themes/theme10/dotplot-v1.js';
+import {
+  Theme10TimelineV1,
+  theme10TimelineV1Meta,
+  theme10TimelineV1Schema,
+  type Theme10TimelineV1Props,
+} from './themes/theme10/timeline-v1.js';
+import {
+  Theme10OrgchartV1,
+  theme10OrgchartV1Meta,
+  theme10OrgchartV1Schema,
+  type Theme10OrgchartV1Props,
+} from './themes/theme10/orgchart-v1.js';
+import {
+  Theme10ParallelV1,
+  theme10ParallelV1Meta,
+  theme10ParallelV1Schema,
+  type Theme10ParallelV1Props,
+} from './themes/theme10/parallel-v1.js';
+import {
+  Theme10CirclepackV1,
+  theme10CirclepackV1Meta,
+  theme10CirclepackV1Schema,
+  type Theme10CirclepackV1Props,
+} from './themes/theme10/circlepack-v1.js';
+import {
+  Theme10CscatterV1,
+  theme10CscatterV1Meta,
+  theme10CscatterV1Schema,
+  type Theme10CscatterV1Props,
+} from './themes/theme10/cscatter-v1.js';
+import {
+  Theme10MarimekkoV1,
+  theme10MarimekkoV1Meta,
+  theme10MarimekkoV1Schema,
+  type Theme10MarimekkoV1Props,
+} from './themes/theme10/marimekko-v1.js';
+import {
+  Theme10SankeyV1,
+  theme10SankeyV1Meta,
+  theme10SankeyV1Schema,
+  type Theme10SankeyV1Props,
+} from './themes/theme10/sankey-v1.js';
+import {
+  Theme10DumbbellV1,
+  theme10DumbbellV1Meta,
+  theme10DumbbellV1Schema,
+  type Theme10DumbbellV1Props,
+} from './themes/theme10/dumbbell-v1.js';
+import {
+  Theme10HistogramV1,
+  theme10HistogramV1Meta,
+  theme10HistogramV1Schema,
+  type Theme10HistogramV1Props,
+} from './themes/theme10/histogram-v1.js';
+import {
+  Theme10SlopeV1,
+  theme10SlopeV1Meta,
+  theme10SlopeV1Schema,
+  type Theme10SlopeV1Props,
+} from './themes/theme10/slope-v1.js';
+import {
+  Theme10WaffleV1,
+  theme10WaffleV1Meta,
+  theme10WaffleV1Schema,
+  type Theme10WaffleV1Props,
+} from './themes/theme10/waffle-v1.js';
+// theme10 P3 结构 / 流程 / 长尾（11 版式）
+import {
+  Theme10StepsV1,
+  theme10StepsV1Meta,
+  theme10StepsV1Schema,
+  type Theme10StepsV1Props,
+} from './themes/theme10/steps-v1.js';
+import {
+  Theme10CycleV1,
+  theme10CycleV1Meta,
+  theme10CycleV1Schema,
+  type Theme10CycleV1Props,
+} from './themes/theme10/cycle-v1.js';
+import {
+  Theme10SwimlaneV1,
+  theme10SwimlaneV1Meta,
+  theme10SwimlaneV1Schema,
+  type Theme10SwimlaneV1Props,
+} from './themes/theme10/swimlane-v1.js';
+import {
+  Theme10ChecklistV1,
+  theme10ChecklistV1Meta,
+  theme10ChecklistV1Schema,
+  type Theme10ChecklistV1Props,
+} from './themes/theme10/checklist-v1.js';
+import {
+  Theme10PlansV1,
+  theme10PlansV1Meta,
+  theme10PlansV1Schema,
+  type Theme10PlansV1Props,
+} from './themes/theme10/plans-v1.js';
+import {
+  Theme10JourneyV1,
+  theme10JourneyV1Meta,
+  theme10JourneyV1Schema,
+  type Theme10JourneyV1Props,
+} from './themes/theme10/journey-v1.js';
+import {
+  Theme10GoalsV1,
+  theme10GoalsV1Meta,
+  theme10GoalsV1Schema,
+  type Theme10GoalsV1Props,
+} from './themes/theme10/goals-v1.js';
+import {
+  Theme10GlossaryV1,
+  theme10GlossaryV1Meta,
+  theme10GlossaryV1Schema,
+  type Theme10GlossaryV1Props,
+} from './themes/theme10/glossary-v1.js';
+import {
+  Theme10FaqV1,
+  theme10FaqV1Meta,
+  theme10FaqV1Schema,
+  type Theme10FaqV1Props,
+} from './themes/theme10/faq-v1.js';
+import {
+  Theme10IsotypeV1,
+  theme10IsotypeV1Meta,
+  theme10IsotypeV1Schema,
+  type Theme10IsotypeV1Props,
+} from './themes/theme10/isotype-v1.js';
+import {
+  Theme10VennV1,
+  theme10VennV1Meta,
+  theme10VennV1Schema,
+  type Theme10VennV1Props,
+} from './themes/theme10/venn-v1.js';
+import {
+  Theme10MetricHeroV1,
+  theme10MetricHeroV1Meta,
+  theme10MetricHeroV1Schema,
+  type Theme10MetricHeroV1Props,
+} from './themes/theme10/metric-hero-v1.js';
+import {
+  Theme10ScorecardV1,
+  theme10ScorecardV1Meta,
+  theme10ScorecardV1Schema,
+  type Theme10ScorecardV1Props,
+} from './themes/theme10/scorecard-v1.js';
+import {
+  Theme10ComparisonStatV1,
+  theme10ComparisonStatV1Meta,
+  theme10ComparisonStatV1Schema,
+  type Theme10ComparisonStatV1Props,
+} from './themes/theme10/comparison-stat-v1.js';
+import {
+  Theme10SmallMultiplesV1,
+  theme10SmallMultiplesV1Meta,
+  theme10SmallMultiplesV1Schema,
+  type Theme10SmallMultiplesV1Props,
+} from './themes/theme10/small-multiples-v1.js';
+import {
+  Theme10StatStripV1,
+  theme10StatStripV1Meta,
+  theme10StatStripV1Schema,
+  type Theme10StatStripV1Props,
+} from './themes/theme10/stat-strip-v1.js';
+import {
+  Theme10QuoteStatV1,
+  theme10QuoteStatV1Meta,
+  theme10QuoteStatV1Schema,
+  type Theme10QuoteStatV1Props,
+} from './themes/theme10/quote-stat-v1.js';
+import {
+  Theme10IndexBoardV1,
+  theme10IndexBoardV1Meta,
+  theme10IndexBoardV1Schema,
+  type Theme10IndexBoardV1Props,
+} from './themes/theme10/index-board-v1.js';
+
+registerLayout<Theme09TyperiverV1Props>({ meta: theme09TyperiverV1Meta, component: Theme09TyperiverV1, schema: theme09TyperiverV1Schema });
+registerLayout<Theme09ExhibitWallV1Props>({ meta: theme09ExhibitWallV1Meta, component: Theme09ExhibitWallV1, schema: theme09ExhibitWallV1Schema });
+registerLayout<Theme09MasonryV1Props>({ meta: theme09MasonryV1Meta, component: Theme09MasonryV1, schema: theme09MasonryV1Schema });
+registerLayout<Theme09JourneyV1Props>({ meta: theme09JourneyV1Meta, component: Theme09JourneyV1, schema: theme09JourneyV1Schema });
+registerLayout<Theme09PhotoCardsV1Props>({ meta: theme09PhotoCardsV1Meta, component: Theme09PhotoCardsV1, schema: theme09PhotoCardsV1Schema });
+registerLayout<Theme09ZineSpreadV1Props>({ meta: theme09ZineSpreadV1Meta, component: Theme09ZineSpreadV1, schema: theme09ZineSpreadV1Schema });
+registerLayout<Theme09PhotoSceneV1Props>({ meta: theme09PhotoSceneV1Meta, component: Theme09PhotoSceneV1, schema: theme09PhotoSceneV1Schema });
+registerLayout<Theme09SpotlightV1Props>({ meta: theme09SpotlightV1Meta, component: Theme09SpotlightV1, schema: theme09SpotlightV1Schema });
+registerLayout<Theme09ProfileV1Props>({ meta: theme09ProfileV1Meta, component: Theme09ProfileV1, schema: theme09ProfileV1Schema });
+registerLayout<Theme09GalleryWallV1Props>({ meta: theme09GalleryWallV1Meta, component: Theme09GalleryWallV1, schema: theme09GalleryWallV1Schema });
+registerLayout<Theme09DotMatrixV1Props>({ meta: theme09DotMatrixV1Meta, component: Theme09DotMatrixV1, schema: theme09DotMatrixV1Schema });
+registerLayout<Theme09MarketOverviewV1Props>({ meta: theme09MarketOverviewV1Meta, component: Theme09MarketOverviewV1, schema: theme09MarketOverviewV1Schema });
+registerLayout<Theme09StreamgraphV1Props>({ meta: theme09StreamgraphV1Meta, component: Theme09StreamgraphV1, schema: theme09StreamgraphV1Schema });
+registerLayout<Theme09ChordV1Props>({ meta: theme09ChordV1Meta, component: Theme09ChordV1, schema: theme09ChordV1Schema });
+registerLayout<Theme09SunburstV1Props>({ meta: theme09SunburstV1Meta, component: Theme09SunburstV1, schema: theme09SunburstV1Schema });
+registerLayout<Theme09RibbonV1Props>({ meta: theme09RibbonV1Meta, component: Theme09RibbonV1, schema: theme09RibbonV1Schema });
+registerLayout<Theme09RoundsV1Props>({ meta: theme09RoundsV1Meta, component: Theme09RoundsV1, schema: theme09RoundsV1Schema });
+registerLayout<Theme09RankingV1Props>({ meta: theme09RankingV1Meta, component: Theme09RankingV1, schema: theme09RankingV1Schema });
+
+/* theme09 · P2 数据图表（剩余 32 版式） */
+registerLayout<Theme09BumpV1Props>({ meta: theme09BumpV1Meta, component: Theme09BumpV1, schema: theme09BumpV1Schema });
+registerLayout<Theme09HeroNumberV1Props>({ meta: theme09HeroNumberV1Meta, component: Theme09HeroNumberV1, schema: theme09HeroNumberV1Schema });
+registerLayout<Theme09VersusV1Props>({ meta: theme09VersusV1Meta, component: Theme09VersusV1, schema: theme09VersusV1Schema });
+registerLayout<Theme09SpiralV1Props>({ meta: theme09SpiralV1Meta, component: Theme09SpiralV1, schema: theme09SpiralV1Schema });
+registerLayout<Theme09FunnelV1Props>({ meta: theme09FunnelV1Meta, component: Theme09FunnelV1, schema: theme09FunnelV1Schema });
+registerLayout<Theme09StatGridV1Props>({ meta: theme09StatGridV1Meta, component: Theme09StatGridV1, schema: theme09StatGridV1Schema });
+registerLayout<Theme09ArcV1Props>({ meta: theme09ArcV1Meta, component: Theme09ArcV1, schema: theme09ArcV1Schema });
+registerLayout<Theme09NetworkV1Props>({ meta: theme09NetworkV1Meta, component: Theme09NetworkV1, schema: theme09NetworkV1Schema });
+registerLayout<Theme09AreaV1Props>({ meta: theme09AreaV1Meta, component: Theme09AreaV1, schema: theme09AreaV1Schema });
+registerLayout<Theme09MegaNumberV1Props>({ meta: theme09MegaNumberV1Meta, component: Theme09MegaNumberV1, schema: theme09MegaNumberV1Schema });
+registerLayout<Theme09RadarV1Props>({ meta: theme09RadarV1Meta, component: Theme09RadarV1, schema: theme09RadarV1Schema });
+registerLayout<Theme09RadialbarV1Props>({ meta: theme09RadialbarV1Meta, component: Theme09RadialbarV1, schema: theme09RadialbarV1Schema });
+registerLayout<Theme09HoneycombV1Props>({ meta: theme09HoneycombV1Meta, component: Theme09HoneycombV1, schema: theme09HoneycombV1Schema });
+registerLayout<Theme09TornadoV1Props>({ meta: theme09TornadoV1Meta, component: Theme09TornadoV1, schema: theme09TornadoV1Schema });
+registerLayout<Theme09MatrixV1Props>({ meta: theme09MatrixV1Meta, component: Theme09MatrixV1, schema: theme09MatrixV1Schema });
+registerLayout<Theme09QuadrantV1Props>({ meta: theme09QuadrantV1Meta, component: Theme09QuadrantV1, schema: theme09QuadrantV1Schema });
+registerLayout<Theme09BubbleV1Props>({ meta: theme09BubbleV1Meta, component: Theme09BubbleV1, schema: theme09BubbleV1Schema });
+registerLayout<Theme09MarimekkoV1Props>({ meta: theme09MarimekkoV1Meta, component: Theme09MarimekkoV1, schema: theme09MarimekkoV1Schema });
+registerLayout<Theme09MeterV1Props>({ meta: theme09MeterV1Meta, component: Theme09MeterV1, schema: theme09MeterV1Schema });
+registerLayout<Theme09ParallelV1Props>({ meta: theme09ParallelV1Meta, component: Theme09ParallelV1, schema: theme09ParallelV1Schema });
+registerLayout<Theme09GradeV1Props>({ meta: theme09GradeV1Meta, component: Theme09GradeV1, schema: theme09GradeV1Schema });
+registerLayout<Theme09SlopeV1Props>({ meta: theme09SlopeV1Meta, component: Theme09SlopeV1, schema: theme09SlopeV1Schema });
+registerLayout<Theme09DumbbellV1Props>({ meta: theme09DumbbellV1Meta, component: Theme09DumbbellV1, schema: theme09DumbbellV1Schema });
+registerLayout<Theme09CrosstabV1Props>({ meta: theme09CrosstabV1Meta, component: Theme09CrosstabV1, schema: theme09CrosstabV1Schema });
+registerLayout<Theme09TierV1Props>({ meta: theme09TierV1Meta, component: Theme09TierV1, schema: theme09TierV1Schema });
+registerLayout<Theme09LedgerV1Props>({ meta: theme09LedgerV1Meta, component: Theme09LedgerV1, schema: theme09LedgerV1Schema });
+registerLayout<Theme09AllocV1Props>({ meta: theme09AllocV1Meta, component: Theme09AllocV1, schema: theme09AllocV1Schema });
+registerLayout<Theme09VennV1Props>({ meta: theme09VennV1Meta, component: Theme09VennV1, schema: theme09VennV1Schema });
+registerLayout<Theme09TreemapV1Props>({ meta: theme09TreemapV1Meta, component: Theme09TreemapV1, schema: theme09TreemapV1Schema });
+registerLayout<Theme09IcicleV1Props>({ meta: theme09IcicleV1Meta, component: Theme09IcicleV1, schema: theme09IcicleV1Schema });
+registerLayout<Theme09WaterfallV1Props>({ meta: theme09WaterfallV1Meta, component: Theme09WaterfallV1, schema: theme09WaterfallV1Schema });
+registerLayout<Theme09HeatmapV1Props>({ meta: theme09HeatmapV1Meta, component: Theme09HeatmapV1, schema: theme09HeatmapV1Schema });
+
+/* theme09 · P3 批次一（9 版式） */
+registerLayout<Theme09CrossPerspectiveV1Props>({ meta: theme09CrossPerspectiveV1Meta, component: Theme09CrossPerspectiveV1, schema: theme09CrossPerspectiveV1Schema });
+registerLayout<Theme09ThesisV1Props>({ meta: theme09ThesisV1Meta, component: Theme09ThesisV1, schema: theme09ThesisV1Schema });
+registerLayout<Theme09ValueChainV1Props>({ meta: theme09ValueChainV1Meta, component: Theme09ValueChainV1, schema: theme09ValueChainV1Schema });
+registerLayout<Theme09RiskV1Props>({ meta: theme09RiskV1Meta, component: Theme09RiskV1, schema: theme09RiskV1Schema });
+registerLayout<Theme09OutlookV1Props>({ meta: theme09OutlookV1Meta, component: Theme09OutlookV1, schema: theme09OutlookV1Schema });
+registerLayout<Theme09ConclusionV1Props>({ meta: theme09ConclusionV1Meta, component: Theme09ConclusionV1, schema: theme09ConclusionV1Schema });
+registerLayout<Theme09BracketV1Props>({ meta: theme09BracketV1Meta, component: Theme09BracketV1, schema: theme09BracketV1Schema });
+registerLayout<Theme09FlowV1Props>({ meta: theme09FlowV1Meta, component: Theme09FlowV1, schema: theme09FlowV1Schema });
+registerLayout<Theme09OrbitV1Props>({ meta: theme09OrbitV1Meta, component: Theme09OrbitV1, schema: theme09OrbitV1Schema });
+
+/* theme09 · P3 批次二（9 版式） */
+registerLayout<Theme09VerticalV1Props>({ meta: theme09VerticalV1Meta, component: Theme09VerticalV1, schema: theme09VerticalV1Schema });
+registerLayout<Theme09CalendarV1Props>({ meta: theme09CalendarV1Meta, component: Theme09CalendarV1, schema: theme09CalendarV1Schema });
+registerLayout<Theme09PhasesV1Props>({ meta: theme09PhasesV1Meta, component: Theme09PhasesV1, schema: theme09PhasesV1Schema });
+registerLayout<Theme09GaugeV1Props>({ meta: theme09GaugeV1Meta, component: Theme09GaugeV1, schema: theme09GaugeV1Schema });
+registerLayout<Theme09ScoreboardV1Props>({ meta: theme09ScoreboardV1Meta, component: Theme09ScoreboardV1, schema: theme09ScoreboardV1Schema });
+registerLayout<Theme09TrendV1Props>({ meta: theme09TrendV1Meta, component: Theme09TrendV1, schema: theme09TrendV1Schema });
+registerLayout<Theme09HistogramV1Props>({ meta: theme09HistogramV1Meta, component: Theme09HistogramV1, schema: theme09HistogramV1Schema });
+registerLayout<Theme09ForecastFanV1Props>({ meta: theme09ForecastFanV1Meta, component: Theme09ForecastFanV1, schema: theme09ForecastFanV1Schema });
+registerLayout<Theme09PlansV1Props>({ meta: theme09PlansV1Meta, component: Theme09PlansV1, schema: theme09PlansV1Schema });
+
+/* theme09 · P3 批次三（9 版式） */
+registerLayout<Theme09StairV1Props>({ meta: theme09StairV1Meta, component: Theme09StairV1, schema: theme09StairV1Schema });
+registerLayout<Theme09StackedV1Props>({ meta: theme09StackedV1Meta, component: Theme09StackedV1, schema: theme09StackedV1Schema });
+registerLayout<Theme09EraV1Props>({ meta: theme09EraV1Meta, component: Theme09EraV1, schema: theme09EraV1Schema });
+registerLayout<Theme09RoadmapV1Props>({ meta: theme09RoadmapV1Meta, component: Theme09RoadmapV1, schema: theme09RoadmapV1Schema });
+registerLayout<Theme09ScoreV1Props>({ meta: theme09ScoreV1Meta, component: Theme09ScoreV1, schema: theme09ScoreV1Schema });
+registerLayout<Theme09TakeawayV1Props>({ meta: theme09TakeawayV1Meta, component: Theme09TakeawayV1, schema: theme09TakeawayV1Schema });
+registerLayout<Theme09CompareV1Props>({ meta: theme09CompareV1Meta, component: Theme09CompareV1, schema: theme09CompareV1Schema });
+registerLayout<Theme09ProcessV1Props>({ meta: theme09ProcessV1Meta, component: Theme09ProcessV1, schema: theme09ProcessV1Schema });
+registerLayout<Theme09FaqV1Props>({ meta: theme09FaqV1Meta, component: Theme09FaqV1, schema: theme09FaqV1Schema });
+
+// theme10 金色指数 · 金融编辑风（P0 骨架 12 个版式）
+registerLayout<Theme10CoverDuskV1Props>({ meta: theme10CoverDuskV1Meta, component: Theme10CoverDuskV1, schema: theme10CoverDuskV1Schema });
+registerLayout<Theme10CoverFieldV1Props>({ meta: theme10CoverFieldV1Meta, component: Theme10CoverFieldV1, schema: theme10CoverFieldV1Schema });
+registerLayout<Theme10CoverAtmosV1Props>({ meta: theme10CoverAtmosV1Meta, component: Theme10CoverAtmosV1, schema: theme10CoverAtmosV1Schema });
+registerLayout<Theme10CoverHorizonV1Props>({ meta: theme10CoverHorizonV1Meta, component: Theme10CoverHorizonV1, schema: theme10CoverHorizonV1Schema });
+registerLayout<Theme10CoverStandardV1Props>({ meta: theme10CoverStandardV1Meta, component: Theme10CoverStandardV1, schema: theme10CoverStandardV1Schema });
+registerLayout<Theme10CoverDawnV1Props>({ meta: theme10CoverDawnV1Meta, component: Theme10CoverDawnV1, schema: theme10CoverDawnV1Schema });
+registerLayout<Theme10ChapterV1Props>({ meta: theme10ChapterV1Meta, component: Theme10ChapterV1, schema: theme10ChapterV1Schema });
+registerLayout<Theme10DividerV1Props>({ meta: theme10DividerV1Meta, component: Theme10DividerV1, schema: theme10DividerV1Schema });
+registerLayout<Theme10StatementSectionV1Props>({ meta: theme10StatementSectionV1Meta, component: Theme10StatementSectionV1, schema: theme10StatementSectionV1Schema });
+registerLayout<Theme10StatementV1Props>({ meta: theme10StatementV1Meta, component: Theme10StatementV1, schema: theme10StatementV1Schema });
+registerLayout<Theme10PrinciplesV1Props>({ meta: theme10PrinciplesV1Meta, component: Theme10PrinciplesV1, schema: theme10PrinciplesV1Schema });
+registerLayout<Theme10ClosingV1Props>({ meta: theme10ClosingV1Meta, component: Theme10ClosingV1, schema: theme10ClosingV1Schema });
+
+// theme10 金色指数 · 金融编辑风（P1 影像图文 批次A · 5 版式）
+registerLayout<Theme10ProfileV1Props>({ meta: theme10ProfileV1Meta, component: Theme10ProfileV1, schema: theme10ProfileV1Schema });
+registerLayout<Theme10TeamV1Props>({ meta: theme10TeamV1Meta, component: Theme10TeamV1, schema: theme10TeamV1Schema });
+registerLayout<Theme10QuoteV1Props>({ meta: theme10QuoteV1Meta, component: Theme10QuoteV1, schema: theme10QuoteV1Schema });
+registerLayout<Theme10EditorialV1Props>({ meta: theme10EditorialV1Meta, component: Theme10EditorialV1, schema: theme10EditorialV1Schema });
+registerLayout<Theme10MagazineV1Props>({ meta: theme10MagazineV1Meta, component: Theme10MagazineV1, schema: theme10MagazineV1Schema });
+// theme10 金色指数 · 金融编辑风（P1 影像图文 批次B · 5 版式）
+registerLayout<Theme10TriptychV1Props>({ meta: theme10TriptychV1Meta, component: Theme10TriptychV1, schema: theme10TriptychV1Schema });
+registerLayout<Theme10StrataV1Props>({ meta: theme10StrataV1Meta, component: Theme10StrataV1, schema: theme10StrataV1Schema });
+registerLayout<Theme10SparkV1Props>({ meta: theme10SparkV1Meta, component: Theme10SparkV1, schema: theme10SparkV1Schema });
+registerLayout<Theme10TestimonialsV1Props>({ meta: theme10TestimonialsV1Meta, component: Theme10TestimonialsV1, schema: theme10TestimonialsV1Schema });
+registerLayout<Theme10FeatureV1Props>({ meta: theme10FeatureV1Meta, component: Theme10FeatureV1, schema: theme10FeatureV1Schema });
+// theme10 金色指数 · 金融编辑风（P1 影像图文 批次C · 5 版式）
+registerLayout<Theme10CompareImgV1Props>({ meta: theme10CompareImgV1Meta, component: Theme10CompareImgV1, schema: theme10CompareImgV1Schema });
+registerLayout<Theme10PinboardV1Props>({ meta: theme10PinboardV1Meta, component: Theme10PinboardV1, schema: theme10PinboardV1Schema });
+registerLayout<Theme10FilmstripV1Props>({ meta: theme10FilmstripV1Meta, component: Theme10FilmstripV1, schema: theme10FilmstripV1Schema });
+registerLayout<Theme10InsetV1Props>({ meta: theme10InsetV1Meta, component: Theme10InsetV1, schema: theme10InsetV1Schema });
+registerLayout<Theme10Gallery2V1Props>({ meta: theme10Gallery2V1Meta, component: Theme10Gallery2V1, schema: theme10Gallery2V1Schema });
+// theme10 金色指数 · 金融编辑风（P1 影像图文 批次D · 5 版式）
+registerLayout<Theme10MosaicV1Props>({ meta: theme10MosaicV1Meta, component: Theme10MosaicV1, schema: theme10MosaicV1Schema });
+registerLayout<Theme10CollageV1Props>({ meta: theme10CollageV1Meta, component: Theme10CollageV1, schema: theme10CollageV1Schema });
+registerLayout<Theme10CaptionedV1Props>({ meta: theme10CaptionedV1Meta, component: Theme10CaptionedV1, schema: theme10CaptionedV1Schema });
+registerLayout<Theme10ShowcaseV1Props>({ meta: theme10ShowcaseV1Meta, component: Theme10ShowcaseV1, schema: theme10ShowcaseV1Schema });
+registerLayout<Theme10PosterV1Props>({ meta: theme10PosterV1Meta, component: Theme10PosterV1, schema: theme10PosterV1Schema });
+// theme10 金色指数 · 金融编辑风（P1 影像图文 批次E · 5 版式）
+registerLayout<Theme10AnnotatedV1Props>({ meta: theme10AnnotatedV1Meta, component: Theme10AnnotatedV1, schema: theme10AnnotatedV1Schema });
+registerLayout<Theme10QuoteImgV1Props>({ meta: theme10QuoteImgV1Meta, component: Theme10QuoteImgV1, schema: theme10QuoteImgV1Schema });
+registerLayout<Theme10QuiltV1Props>({ meta: theme10QuiltV1Meta, component: Theme10QuiltV1, schema: theme10QuiltV1Schema });
+registerLayout<Theme10ExhibitV1Props>({ meta: theme10ExhibitV1Meta, component: Theme10ExhibitV1, schema: theme10ExhibitV1Schema });
+registerLayout<Theme10MedallionsV1Props>({ meta: theme10MedallionsV1Meta, component: Theme10MedallionsV1, schema: theme10MedallionsV1Schema });
+// theme10 金色指数 · P2 数据图表 · 批次F（基础图表 5 版式）
+registerLayout<Theme10BarV1Props>({ meta: theme10BarV1Meta, component: Theme10BarV1, schema: theme10BarV1Schema });
+registerLayout<Theme10HBarV1Props>({ meta: theme10HBarV1Meta, component: Theme10HBarV1, schema: theme10HBarV1Schema });
+registerLayout<Theme10LineV1Props>({ meta: theme10LineV1Meta, component: Theme10LineV1, schema: theme10LineV1Schema });
+registerLayout<Theme10AreaV1Props>({ meta: theme10AreaV1Meta, component: Theme10AreaV1, schema: theme10AreaV1Schema });
+registerLayout<Theme10KpisV1Props>({ meta: theme10KpisV1Meta, component: Theme10KpisV1, schema: theme10KpisV1Schema });
+// theme10 金色指数 · P2 数据图表 · 批次G（对比与构成 5 版式）
+registerLayout<Theme10GroupedV1Props>({ meta: theme10GroupedV1Meta, component: Theme10GroupedV1, schema: theme10GroupedV1Schema });
+registerLayout<Theme10StackV1Props>({ meta: theme10StackV1Meta, component: Theme10StackV1, schema: theme10StackV1Schema });
+registerLayout<Theme10DonutV1Props>({ meta: theme10DonutV1Meta, component: Theme10DonutV1, schema: theme10DonutV1Schema });
+registerLayout<Theme10PieV1Props>({ meta: theme10PieV1Meta, component: Theme10PieV1, schema: theme10PieV1Schema });
+registerLayout<Theme10WaterfallV1Props>({ meta: theme10WaterfallV1Meta, component: Theme10WaterfallV1, schema: theme10WaterfallV1Schema });
+// theme10 金色指数 · P2 数据图表 · 批次H（分布与关系 5 版式）
+registerLayout<Theme10ScatterV1Props>({ meta: theme10ScatterV1Meta, component: Theme10ScatterV1, schema: theme10ScatterV1Schema });
+registerLayout<Theme10BubbleV1Props>({ meta: theme10BubbleV1Meta, component: Theme10BubbleV1, schema: theme10BubbleV1Schema });
+registerLayout<Theme10RadarV1Props>({ meta: theme10RadarV1Meta, component: Theme10RadarV1, schema: theme10RadarV1Schema });
+registerLayout<Theme10RadialV1Props>({ meta: theme10RadialV1Meta, component: Theme10RadialV1, schema: theme10RadialV1Schema });
+registerLayout<Theme10HeatV1Props>({ meta: theme10HeatV1Meta, component: Theme10HeatV1, schema: theme10HeatV1Schema });
+// theme10 金色指数 · P2 数据图表 · 批次I（趋势与时间 5 版式）
+registerLayout<Theme10TrendV1Props>({ meta: theme10TrendV1Meta, component: Theme10TrendV1, schema: theme10TrendV1Schema });
+registerLayout<Theme10RangeV1Props>({ meta: theme10RangeV1Meta, component: Theme10RangeV1, schema: theme10RangeV1Schema });
+registerLayout<Theme10CandlestickV1Props>({ meta: theme10CandlestickV1Meta, component: Theme10CandlestickV1, schema: theme10CandlestickV1Schema });
+registerLayout<Theme10RidgelineV1Props>({ meta: theme10RidgelineV1Meta, component: Theme10RidgelineV1, schema: theme10RidgelineV1Schema });
+registerLayout<Theme10CalendarV1Props>({ meta: theme10CalendarV1Meta, component: Theme10CalendarV1, schema: theme10CalendarV1Schema });
+// theme10 金色指数 · P2 数据图表 · 批次J（分布与构成进阶 5 版式）
+registerLayout<Theme10FunnelV1Props>({ meta: theme10FunnelV1Meta, component: Theme10FunnelV1, schema: theme10FunnelV1Schema });
+registerLayout<Theme10GaugeV1Props>({ meta: theme10GaugeV1Meta, component: Theme10GaugeV1, schema: theme10GaugeV1Schema });
+registerLayout<Theme10BulletV1Props>({ meta: theme10BulletV1Meta, component: Theme10BulletV1, schema: theme10BulletV1Schema });
+registerLayout<Theme10BoxV1Props>({ meta: theme10BoxV1Meta, component: Theme10BoxV1, schema: theme10BoxV1Schema });
+registerLayout<Theme10TreemapV1Props>({ meta: theme10TreemapV1Meta, component: Theme10TreemapV1, schema: theme10TreemapV1Schema });
+// theme10 金色指数 · P2 数据图表 · 批次K（关系与构成进阶 5 版式）
+registerLayout<Theme10SankeyV1Props>({ meta: theme10SankeyV1Meta, component: Theme10SankeyV1, schema: theme10SankeyV1Schema });
+registerLayout<Theme10DumbbellV1Props>({ meta: theme10DumbbellV1Meta, component: Theme10DumbbellV1, schema: theme10DumbbellV1Schema });
+registerLayout<Theme10HistogramV1Props>({ meta: theme10HistogramV1Meta, component: Theme10HistogramV1, schema: theme10HistogramV1Schema });
+registerLayout<Theme10SlopeV1Props>({ meta: theme10SlopeV1Meta, component: Theme10SlopeV1, schema: theme10SlopeV1Schema });
+registerLayout<Theme10WaffleV1Props>({ meta: theme10WaffleV1Meta, component: Theme10WaffleV1, schema: theme10WaffleV1Schema });
+// theme10 金色指数 · P2 数据图表 · 批次L（时序与分布 5 版式）
+registerLayout<Theme10GanttV1Props>({ meta: theme10GanttV1Meta, component: Theme10GanttV1, schema: theme10GanttV1Schema });
+registerLayout<Theme10BumpV1Props>({ meta: theme10BumpV1Meta, component: Theme10BumpV1, schema: theme10BumpV1Schema });
+registerLayout<Theme10RoseV1Props>({ meta: theme10RoseV1Meta, component: Theme10RoseV1, schema: theme10RoseV1Schema });
+registerLayout<Theme10DotplotV1Props>({ meta: theme10DotplotV1Meta, component: Theme10DotplotV1, schema: theme10DotplotV1Schema });
+registerLayout<Theme10TimelineV1Props>({ meta: theme10TimelineV1Meta, component: Theme10TimelineV1, schema: theme10TimelineV1Schema });
+// theme10 金色指数 · P2 数据图表 · 批次M（结构与关系 5 版式）
+registerLayout<Theme10OrgchartV1Props>({ meta: theme10OrgchartV1Meta, component: Theme10OrgchartV1, schema: theme10OrgchartV1Schema });
+registerLayout<Theme10ParallelV1Props>({ meta: theme10ParallelV1Meta, component: Theme10ParallelV1, schema: theme10ParallelV1Schema });
+registerLayout<Theme10CirclepackV1Props>({ meta: theme10CirclepackV1Meta, component: Theme10CirclepackV1, schema: theme10CirclepackV1Schema });
+registerLayout<Theme10CscatterV1Props>({ meta: theme10CscatterV1Meta, component: Theme10CscatterV1, schema: theme10CscatterV1Schema });
+registerLayout<Theme10MarimekkoV1Props>({ meta: theme10MarimekkoV1Meta, component: Theme10MarimekkoV1, schema: theme10MarimekkoV1Schema });
+// theme10 P3 结构 / 流程 / 长尾（11 版式）
+registerLayout<Theme10StepsV1Props>({ meta: theme10StepsV1Meta, component: Theme10StepsV1, schema: theme10StepsV1Schema });
+registerLayout<Theme10CycleV1Props>({ meta: theme10CycleV1Meta, component: Theme10CycleV1, schema: theme10CycleV1Schema });
+registerLayout<Theme10SwimlaneV1Props>({ meta: theme10SwimlaneV1Meta, component: Theme10SwimlaneV1, schema: theme10SwimlaneV1Schema });
+registerLayout<Theme10ChecklistV1Props>({ meta: theme10ChecklistV1Meta, component: Theme10ChecklistV1, schema: theme10ChecklistV1Schema });
+registerLayout<Theme10PlansV1Props>({ meta: theme10PlansV1Meta, component: Theme10PlansV1, schema: theme10PlansV1Schema });
+registerLayout<Theme10JourneyV1Props>({ meta: theme10JourneyV1Meta, component: Theme10JourneyV1, schema: theme10JourneyV1Schema });
+registerLayout<Theme10GoalsV1Props>({ meta: theme10GoalsV1Meta, component: Theme10GoalsV1, schema: theme10GoalsV1Schema });
+registerLayout<Theme10GlossaryV1Props>({ meta: theme10GlossaryV1Meta, component: Theme10GlossaryV1, schema: theme10GlossaryV1Schema });
+registerLayout<Theme10FaqV1Props>({ meta: theme10FaqV1Meta, component: Theme10FaqV1, schema: theme10FaqV1Schema });
+registerLayout<Theme10IsotypeV1Props>({ meta: theme10IsotypeV1Meta, component: Theme10IsotypeV1, schema: theme10IsotypeV1Schema });
+registerLayout<Theme10VennV1Props>({ meta: theme10VennV1Meta, component: Theme10VennV1, schema: theme10VennV1Schema });
+registerLayout<Theme10MetricHeroV1Props>({ meta: theme10MetricHeroV1Meta, component: Theme10MetricHeroV1, schema: theme10MetricHeroV1Schema });
+registerLayout<Theme10ScorecardV1Props>({ meta: theme10ScorecardV1Meta, component: Theme10ScorecardV1, schema: theme10ScorecardV1Schema });
+registerLayout<Theme10ComparisonStatV1Props>({ meta: theme10ComparisonStatV1Meta, component: Theme10ComparisonStatV1, schema: theme10ComparisonStatV1Schema });
+registerLayout<Theme10SmallMultiplesV1Props>({ meta: theme10SmallMultiplesV1Meta, component: Theme10SmallMultiplesV1, schema: theme10SmallMultiplesV1Schema });
+registerLayout<Theme10StatStripV1Props>({ meta: theme10StatStripV1Meta, component: Theme10StatStripV1, schema: theme10StatStripV1Schema });
+registerLayout<Theme10QuoteStatV1Props>({ meta: theme10QuoteStatV1Meta, component: Theme10QuoteStatV1, schema: theme10QuoteStatV1Schema });
+registerLayout<Theme10IndexBoardV1Props>({ meta: theme10IndexBoardV1Meta, component: Theme10IndexBoardV1, schema: theme10IndexBoardV1Schema });

@@ -1,0 +1,105 @@
+name: lemonppt
+display_name: lemonPPT
+short_description: 根据一句话主题或结构化 goal.json 生成精美、可编辑的 PPT（HTML/PPTX/PDF）。
+version: 0.2.0
+author: lemonforme
+license: AGPL-3.0-or-later
+default_prompt: |
+  你是 lemonPPT 助手，负责把用户的需求转换为可交付的 PPT。
+
+  能力边界：
+  - 只能基于 lemonPPT 项目生成/渲染/导出 PPT。
+  - 不解析 Word/PDF/Markdown；如需“上传文档生成 PPT”，外层 Agent 需先提取文本/结构再交给你。
+  - 不联网抓取网页；不生成图片/图表数据本身，但可以渲染用户提供的数据。
+
+  工作流：
+  1. 如果用户只给了一句话或简单描述，调用 `lemonppt generate "<完整主题>" --pages N --theme <id> --language zh --out ./goal.json` 生成 goal.json。
+  2. 如果用户提供了结构化内容，构造或修改 `goal.json`。
+     - `theme` 可用 `themePack` 作为别名。
+     - `pageCount` 可省略，系统会自动设为 slides.length。
+     - 每页 `role` 可省略，系统会尝试从 `layout` ID 推断。
+  3. （推荐）校验：`lemonppt validate-goal-spec ./goal.json`。
+  4. 渲染：`lemonppt render ./goal.json --out ./output`；如需可编辑 HTML 预览则加 `--editable`。
+  5. 导出：`lemonppt export ./goal.json --pptx ./deck.pptx [--pdf ./deck.pdf]`。
+  6. 如果已启动 API 服务（`lemonppt serve --port 3456`），也可直接调用 HTTP 端点：
+     - `POST /api/render`：goal.json → HTML
+     - `POST /api/export/pptx`：goal.json → PPTX
+     - `POST /api/export/pdf`：goal.json → PDF
+     - `POST /api/render-editor`：goal.json → 编辑器渲染数据
+     - `POST /api/stage-media`：上传 base64 图片，返回可引用 URL
+
+  注意事项：
+  - 优先只写 `role`，不要手动指定每个 slide 的 `layout`，除非用户明确要求某一款版式。
+  - 远程图片在 PPTX 中可能显示占位符，建议用本地图片或先通过 `/api/stage-media` 上传。
+  - 默认主题 `theme01`，常用主题还有 theme02~theme10，可用 `lemonppt list-themes` 查看。
+
+tools:
+  - name: generate_goal
+    description: 根据自然语言主题生成 goal.json。
+    parameters:
+      type: object
+      required: [prompt]
+      additionalProperties: false
+      properties:
+        prompt:
+          type: string
+          description: 完整的 PPT 主题与要求。
+        pages:
+          type: integer
+          description: 页数，建议 5~20。
+          default: 8
+        theme:
+          type: string
+          description: 主题 ID，如 theme01、theme02。
+          default: theme01
+        language:
+          type: string
+          enum: [zh, en]
+          default: zh
+        out:
+          type: string
+          description: 输出文件路径。
+          default: ./goal.json
+
+  - name: render_deck
+    description: 将 goal.json 渲染为 HTML。
+    parameters:
+      type: object
+      required: [goal]
+      additionalProperties: false
+      properties:
+        goal:
+          type: string
+          description: goal.json 文件路径。
+        out:
+          type: string
+          description: 输出目录。
+          default: ./output
+        editable:
+          type: boolean
+          description: 是否生成可编辑的单页编辑器 HTML。
+          default: false
+
+  - name: export_pptx
+    description: 将 goal.json 导出为 PPTX。
+    parameters:
+      type: object
+      required: [goal, pptx]
+      additionalProperties: false
+      properties:
+        goal:
+          type: string
+          description: goal.json 文件路径。
+        pptx:
+          type: string
+          description: 输出 PPTX 文件路径。
+        pdf:
+          type: string
+          description: 可选的 PDF 输出路径。
+
+  - name: list_themes
+    description: 列出所有可用主题。
+    parameters:
+      type: object
+      additionalProperties: false
+      properties: {}

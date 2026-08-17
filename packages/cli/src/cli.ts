@@ -3,9 +3,12 @@
 // Copyright (c) 2026 lemonforme
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import { createServer } from 'node:http';
+import { createServer as createHttpServer } from 'node:http';
+import { spawn } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { stat, readFile } from 'node:fs/promises';
-import { extname, join, resolve } from 'node:path';
+import { extname, join, resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   exportGoalToPdf,
   exportGoalToPptx,
@@ -26,7 +29,8 @@ function printUsage(): void {
   lemonppt generate "<input>" [--pages N] [--theme <id>] [--language zh|en] [--out goal.json] [--api-key KEY]
   lemonppt render <goal.json> [--out ./output] [--editable]
   lemonppt export <goal.json> --pptx out.pptx [--pdf out.pdf]
-  lemonppt serve [<dir>] [--port N]
+  lemonppt serve [<dir>] [--port N]   # start API server if built, else static preview
+  lemonppt server [<dir>] [--port N]  # alias for serve
   lemonppt install-skill [--claude] [--codex] [--cursor] [--all]
 
   lemonppt list-themes
@@ -64,6 +68,33 @@ function parseArgs(argv: string[]): ParsedArgs {
   return { positional, options };
 }
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const projectRoot = resolve(__dirname, '../../..');
+const apiServerPath = join(projectRoot, 'apps/server/dist/index.js');
+
+async function startApiServer(dir: string, port: number): Promise<void> {
+  if (!existsSync(apiServerPath)) {
+    throw new Error(
+      `API server not found at ${apiServerPath}. Run 'pnpm -r build' first.`,
+    );
+  }
+  const child = spawn('node', [apiServerPath], {
+    stdio: 'inherit',
+    env: {
+      ...process.env,
+      LEMONPPT_PORT: String(port),
+      LEMONPPT_OUTPUT_DIR: resolve(dir),
+    },
+  });
+  return new Promise((resolve, reject) => {
+    child.on('error', reject);
+    child.on('exit', (code) => {
+      if (code === 0) resolve();
+      else reject(new Error(`API server exited with code ${code}`));
+    });
+  });
+}
+
 async function serveDir(dir: string, port: number): Promise<void> {
   const root = resolve(dir);
   const mimeTypes: Record<string, string> = {
@@ -83,7 +114,7 @@ async function serveDir(dir: string, port: number): Promise<void> {
     '.eot': 'application/vnd.ms-fontobject',
   };
 
-  const server = createServer(async (req, res) => {
+  const server = createHttpServer(async (req, res) => {
     const url = new URL(req.url || '/', `http://${req.headers.host}`);
     let pathname = decodeURIComponent(url.pathname);
 
@@ -203,12 +234,19 @@ async function main(): Promise<void> {
         break;
       }
 
-      case 'serve': {
+      case 'serve':
+      case 'server': {
         const dir = positional[0] || './output';
         const port = args.options.port ? Number(args.options.port) : 3456;
-        await serveDir(dir, port);
-        // 保持进程运行
-        await new Promise(() => {});
+        if (existsSync(apiServerPath)) {
+          console.log(`Starting API server on port ${port}...`);
+          await startApiServer(dir, port);
+        } else {
+          console.log(`API server not built, falling back to static preview.`);
+          await serveDir(dir, port);
+          // 保持进程运行
+          await new Promise(() => {});
+        }
         break;
       }
 

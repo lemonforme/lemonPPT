@@ -17,7 +17,9 @@ export type LpEChartType =
   | 'bar'
   | 'line'
   | 'scatter'
-  | 'pie';
+  | 'pie'
+  | 'themeRiver'
+  | 'custom';
 
 export interface LpEChartProps {
   type: LpEChartType;

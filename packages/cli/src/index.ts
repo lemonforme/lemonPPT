@@ -4,11 +4,12 @@
 
 import { generateGoal } from '@lemonppt/agent-prompts';
 import type { DeckGoal } from '@lemonppt/core';
-import { normalizeDeckGoal, validateDeckGoal, validateDeckGoalContent, validateSlideCount } from '@lemonppt/core';
+import { normalizeDeckGoal, preprocessAgentGoal, validateDeckGoal, validateDeckGoalContent, validateSlideCount } from '@lemonppt/core';
 import {
   exportDeckToPdf,
   exportDeckToPptx,
   renderDeck,
+  renderEditorData,
   type RenderOptions,
 } from '@lemonppt/renderer';
 import { getTheme, themes } from '@lemonppt/themes';
@@ -54,7 +55,7 @@ function resolveTheme(themeId?: string): string {
   return getTheme(id) ? id : 'theme01';
 }
 
-async function copyThemeAssets(themeId: string, assetsDir: string): Promise<void> {
+export async function copyThemeAssets(themeId: string, assetsDir: string): Promise<void> {
   const theme = resolveTheme(themeId);
   await mkdir(assetsDir, { recursive: true });
   const cssSource = resolvePackagePath('@lemonppt/themes', 'src', theme, 'styles.css');
@@ -66,15 +67,25 @@ async function copyThemeAssets(themeId: string, assetsDir: string): Promise<void
   const fontsDest = path.join(assetsDir, 'fonts');
   await cp(fontsSource, fontsDest, { recursive: true, force: true });
 
-  // 复制客户端离线渲染脚本，支持静态文件模式下结构编辑
-  const clientRenderSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client-render.js');
+  // 复制浏览器可执行 bundle（IIFE 格式），支持静态文件模式下结构编辑
+  const clientRenderSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'client-render.js');
   const clientRenderDest = path.join(assetsDir, 'client-render.js');
   await copyFile(clientRenderSource, clientRenderDest);
+
+  // 复制 ECharts 主题脚本
+  const themeEChartsSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'theme-echarts.js');
+  const themeEChartsDest = path.join(assetsDir, 'theme-echarts.js');
+  await copyFile(themeEChartsSource, themeEChartsDest);
 
   // 复制 jQuery，供编辑器初始化自定义滚动条样式类
   const jquerySource = resolvePackagePath('jquery', 'dist', 'jquery.min.js');
   const jqueryDest = path.join(assetsDir, 'jquery.min.js');
   await copyFile(jquerySource, jqueryDest);
+
+  // 复制编辑器交互脚本，供单页编辑器动态初始化
+  const editorScriptSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'editor-script.js');
+  const editorScriptDest = path.join(assetsDir, 'editor-script.js');
+  await copyFile(editorScriptSource, editorScriptDest);
 }
 
 function resolvePackagePath(pkg: string, ...segments: string[]): string {
@@ -131,13 +142,15 @@ export async function generateGoalToFile(options: GenerateCliOptions): Promise<D
  */
 export async function readGoalFromFile(filePath: string): Promise<DeckGoal> {
   const raw = await readFile(path.resolve(filePath), 'utf-8');
-  const parsed = JSON.parse(raw) as DeckGoal;
+  const parsed = preprocessAgentGoal(JSON.parse(raw)) as unknown as DeckGoal;
   parsed.theme = resolveTheme(parsed.theme);
   return normalizeDeckGoal(parsed);
 }
 
 /**
  * 渲染 deck 到输出目录。
+ * editable 模式下使用单页编辑器架构：复制 server 的 editor.html/editor.js，
+ * 内嵌 renderEditorData 生成的 EditorData，资源路径使用相对路径。
  */
 export async function renderGoalToDir(
   goal: DeckGoal,
@@ -147,12 +160,44 @@ export async function renderGoalToDir(
   const outputDir = path.resolve(outDir);
   const assetsDir = path.join(outputDir, 'assets');
 
-  const result = renderDeck(goal, { width, height, editable });
   await copyThemeAssets(goal.theme, assetsDir);
-
-  const indexName = editable ? 'editor.html' : 'index.html';
-  const indexPath = path.join(outputDir, indexName);
   await mkdir(outputDir, { recursive: true });
+
+  if (editable) {
+    const data = renderEditorData(goal, { width: width ?? 1280, height: height ?? 720 });
+    const rendererTemplatesDir = resolvePackagePath('@lemonppt/renderer', 'templates');
+
+    let editorHtml = await readFile(path.join(rendererTemplatesDir, 'editor.html'), 'utf-8');
+    let editorJs = await readFile(path.join(rendererTemplatesDir, 'editor.js'), 'utf-8');
+
+    // 静态文件模式下使用相对资源路径
+    editorHtml = editorHtml.replace(/\/deck\/assets\//g, './assets/');
+    editorHtml = editorHtml.replace(/src="\/editor\.js"/g, 'src="./editor.js"');
+
+    // 内嵌 EditorData，让 editor.js 在静态模式下无需请求 API
+    const embeddedData = `<script>
+window.__lemonPPT_assetsBase = './assets/';
+window.__lemonPPT_editorData = ${JSON.stringify(data)};
+</script>`;
+    editorHtml = editorHtml.replace('</head>', `${embeddedData}\n</head>`);
+
+    const indexPath = path.join(outputDir, 'editor.html');
+    await writeFile(indexPath, editorHtml, 'utf-8');
+    await writeFile(path.join(outputDir, 'editor.js'), editorJs, 'utf-8');
+
+    const assets = [
+      './assets/fonts/fonts.css',
+      `./assets/${data.theme}.css`,
+      './assets/jquery.min.js',
+      './assets/editor-script.js',
+      './assets/client-render.js',
+      './assets/theme-echarts.js',
+    ];
+    return { html: editorHtml, indexPath, assetsDir, assets };
+  }
+
+  const result = renderDeck(goal, { width, height });
+  const indexPath = path.join(outputDir, 'index.html');
   await writeFile(indexPath, result.html, 'utf-8');
 
   return { html: result.html, indexPath, assetsDir, assets: result.assets };
@@ -455,28 +500,28 @@ export async function writeSafePropsToFile(options: { goalPath: string; write?: 
   goal: DeckGoal;
 }> {
   const { goalPath, write } = options;
-  const raw = JSON.parse(await readFile(path.resolve(goalPath), 'utf-8')) as DeckGoal & { slides: { role: string; layout?: string; props: Record<string, unknown> }[] };
+  const preprocessed = preprocessAgentGoal(JSON.parse(await readFile(path.resolve(goalPath), 'utf-8'))) as unknown as DeckGoal & { slides: { role: string; layout?: string; props: Record<string, unknown> }[] };
 
   const { composeDeckFromRaw: compose } = await import('@lemonppt/composer');
   const composed = compose({
-    title: raw.title,
-    goal: raw.goal,
-    audience: raw.audience,
-    owner: raw.owner,
-    theme: raw.theme,
-    language: raw.language,
-    colorScheme: raw.colorScheme,
-    appearance: raw.appearance,
-    pageCount: raw.pageCount,
-    randomSeed: raw.randomSeed,
-    slides: raw.slides.map((s) => ({ role: s.role as import('@lemonppt/core').SlideRole, layout: s.layout, props: s.props })),
+    title: preprocessed.title,
+    goal: preprocessed.goal,
+    audience: preprocessed.audience,
+    owner: preprocessed.owner,
+    theme: preprocessed.theme,
+    language: preprocessed.language,
+    colorScheme: preprocessed.colorScheme,
+    appearance: preprocessed.appearance,
+    pageCount: preprocessed.pageCount,
+    randomSeed: preprocessed.randomSeed,
+    slides: preprocessed.slides.map((s) => ({ role: s.role as import('@lemonppt/core').SlideRole, layout: s.layout, props: s.props })),
   });
 
   const layoutChanges: { index: number; from: string; to: string }[] = [];
   const unknownFields: { index: number; layout: string; keys: string[] }[] = [];
 
   const safeSlides = composed.slides.map((slide, index) => {
-    const originalLayout = raw.slides[index]?.layout;
+    const originalLayout = preprocessed.slides[index]?.layout;
     const registered = getLayout(slide.layout);
     const schema = registered ? getLayoutSchema(slide.layout) : undefined;
 
@@ -517,7 +562,7 @@ export async function validateGoalSpec(goalPath: string, strict?: boolean): Prom
   errors: { type: string; detail: unknown }[];
   warnings: string[];
 }> {
-  const raw = JSON.parse(await readFile(path.resolve(goalPath), 'utf-8'));
+  const raw = preprocessAgentGoal(JSON.parse(await readFile(path.resolve(goalPath), 'utf-8'))) as unknown as DeckGoal;
 
   const result = {
     valid: false,

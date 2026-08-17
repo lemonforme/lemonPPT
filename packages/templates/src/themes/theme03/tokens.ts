@@ -11,6 +11,7 @@ export interface Theme03Tokens {
   ink2: string;
   ink3: string;
   textInverse: string;
+  textOnAccent: string;
   accent: string;
   accent2: string;
   accentCool: string;
@@ -67,7 +68,7 @@ interface AccentScheme {
 
 const schemeA: AccentScheme = {
   accent: '#00b4ff',
-  accent2: '#ff2a6d',
+  accent2: '#ff5c8a',
   accentCool: '#8b5cf6',
 };
 
@@ -80,8 +81,9 @@ const schemeB: AccentScheme = {
 const darkBase = {
   ink: '#e8edf3',
   ink2: 'rgba(232, 237, 243, 0.66)',
-  ink3: 'rgba(232, 237, 243, 0.40)',
+  ink3: 'rgba(232, 237, 243, 0.60)',
   textInverse: '#05080d',
+  textOnAccent: '#05080d',
   bg: '#05080d',
   bgGradientStart: '#05080d',
   bgGradientEnd: '#0d1118',
@@ -107,8 +109,9 @@ const darkBase = {
 const lightBase = {
   ink: '#05080d',
   ink2: 'rgba(5, 8, 13, 0.72)',
-  ink3: 'rgba(5, 8, 13, 0.52)',
+  ink3: 'rgba(5, 8, 13, 0.68)',
   textInverse: '#e8edf3',
+  textOnAccent: '#ffffff',
   bg: '#f1f3f5',
   bgGradientStart: '#f1f3f5',
   bgGradientEnd: '#e5e8eb',
@@ -141,8 +144,8 @@ function hexToRgba(hex: string, alpha: number): string {
 
 function adjustSchemeForLight(scheme: AccentScheme): AccentScheme {
   return {
-    accent: scheme.accent === '#00b4ff' ? '#0077b6' : scheme.accent === '#ff9f1c' ? '#b45309' : scheme.accent,
-    accent2: scheme.accent2 === '#ff2a6d' ? '#c2185b' : scheme.accent2 === '#00b4ff' ? '#0077b6' : scheme.accent2,
+    accent: scheme.accent === '#00b4ff' ? '#006699' : scheme.accent === '#ff9f1c' ? '#b45309' : scheme.accent,
+    accent2: scheme.accent2 === '#ff5c8a' ? '#a8184e' : scheme.accent2 === '#00b4ff' ? '#006699' : scheme.accent2,
     accentCool: scheme.accentCool === '#8b5cf6' ? '#6b21a8' : scheme.accentCool,
   };
 }
@@ -155,16 +158,16 @@ function makeTokens(scheme: AccentScheme, appearance: Theme03Appearance = 'dark'
     accent: effectiveScheme.accent,
     accent2: effectiveScheme.accent2,
     accentCool: effectiveScheme.accentCool,
-    red: isLight ? '#c2185b' : '#ff2a6d',
-    blue: isLight ? '#0077b6' : '#00b4ff',
-    green: isLight ? '#0077b6' : '#22d3ee',
+    red: isLight ? '#c2185b' : '#ff4d7d',
+    blue: isLight ? '#006699' : '#00b4ff',
+    green: isLight ? '#006699' : '#22d3ee',
     amber: isLight ? '#b45309' : '#ff9f1c',
     violet: isLight ? '#6b21a8' : '#8b5cf6',
-    cyan: isLight ? '#0077b6' : '#00b4ff',
+    cyan: isLight ? '#006699' : '#00b4ff',
     pink: isLight ? '#c2185b' : '#ff2a6d',
     orange: isLight ? '#c2410c' : '#ff7b54',
-    lime: isLight ? '#0077b6' : '#00b4ff',
-    series: [effectiveScheme.accent, effectiveScheme.accent2, effectiveScheme.accentCool, isLight ? '#c2410c' : '#ff7b54', isLight ? '#b45309' : '#ff9f1c', isLight ? '#0077b6' : '#22d3ee'],
+    lime: isLight ? '#006699' : '#00b4ff',
+    series: [effectiveScheme.accent, effectiveScheme.accent2, effectiveScheme.accentCool, isLight ? '#c2410c' : '#ff7b54', isLight ? '#b45309' : '#ff9f1c', isLight ? '#006699' : '#22d3ee'],
     ...base,
     glowAccent: hexToRgba(scheme.accent, 0.20),
     glowAccentStrong: hexToRgba(scheme.accent, 0.30),
@@ -198,6 +201,7 @@ function buildCssVarsFromTokens(tokens: Theme03Tokens): string {
   --lp-ink2: ${tokens.ink2};
   --lp-ink3: ${tokens.ink3};
   --lp-text-inverse: ${tokens.textInverse};
+  --lp-text-on-accent: ${tokens.textOnAccent};
   --lp-accent: ${tokens.accent};
   --lp-accent-2: ${tokens.accent2};
   --lp-accent-cool: ${tokens.accentCool};

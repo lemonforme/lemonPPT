@@ -3,8 +3,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { generateGoal } from '@lemonppt/agent-prompts';
-import type { DeckGoal } from '@lemonppt/core';
+import { preprocessAgentGoal, type DeckGoal } from '@lemonppt/core';
 import {
+  copyThemeAssets,
   exportGoalToPdf,
   exportGoalToPptx,
   inspectLayout,
@@ -17,14 +18,22 @@ import {
   writeSafePropsToFile,
 } from '@lemonppt/cli';
 import { getTheme } from '@lemonppt/themes';
+import { renderEditorData } from '@lemonppt/renderer';
 import express, { type Express, type NextFunction, type Request, type Response } from 'express';
-import { writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { log } from './logger.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '../../..');
+
+function parseGoalBody(body: unknown, fallbackTheme = 'theme01'): DeckGoal {
+  const goal = preprocessAgentGoal(body) as unknown as DeckGoal;
+  const requested = typeof goal.theme === 'string' ? goal.theme : fallbackTheme;
+  goal.theme = getTheme(requested) ? requested : fallbackTheme;
+  return goal;
+}
 
 export interface ServerOptions {
   port: number;
@@ -38,6 +47,14 @@ export function createServer(options: ServerOptions): Express {
   // 请求日志
   app.use((req, _res, next) => {
     log('info', `${req.method} ${req.path}`, { ip: req.ip });
+    next();
+  });
+
+  // 基础安全响应头
+  app.use((_req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     next();
   });
 
@@ -61,7 +78,7 @@ export function createServer(options: ServerOptions): Express {
   // 渲染并保存
   app.post('/api/render', async (req, res) => {
     try {
-      const goal = req.body as DeckGoal;
+      const goal = parseGoalBody(req.body);
       const result = await renderGoalToDir(goal, { outDir: options.outputDir });
 
       log('info', 'Rendered deck', { theme: goal.theme, slides: goal.slides.length });
@@ -74,7 +91,7 @@ export function createServer(options: ServerOptions): Express {
   // 导出 PPTX
   app.post('/api/export/pptx', async (req, res) => {
     try {
-      const goal = req.body as DeckGoal;
+      const goal = parseGoalBody(req.body);
       const filePath = path.join(options.outputDir, 'deck.pptx');
       await exportGoalToPptx(goal, { outFile: filePath });
 
@@ -88,7 +105,7 @@ export function createServer(options: ServerOptions): Express {
   // 导出 PDF
   app.post('/api/export/pdf', async (req, res) => {
     try {
-      const goal = req.body as DeckGoal;
+      const goal = parseGoalBody(req.body);
       const filePath = path.join(options.outputDir, 'deck.pdf');
       await exportGoalToPdf(goal, { outFile: filePath });
 
@@ -104,18 +121,70 @@ export function createServer(options: ServerOptions): Express {
     res.redirect('/create.html');
   });
 
-  // 直接打开编辑器（使用 sample-goal.json 示例）
-  app.get('/editor', async (req, res) => {
+  // 单页编辑器入口：所有主题共享同一页面，主题由前端根据 URL 或 API 动态加载
+  app.get('/editor', (_req, res) => {
+    res.sendFile(path.join(rootDir, 'packages', 'renderer', 'templates', 'editor.html'));
+  });
+
+  // 单页编辑器前端逻辑
+  app.get('/editor.js', (_req, res) => {
+    res.sendFile(path.join(rootDir, 'packages', 'renderer', 'templates', 'editor.js'));
+  });
+
+  // 编辑器渲染数据 API：返回单页编辑器所需的 EditorData，不再写静态文件
+  app.get('/api/render-editor', async (req, res) => {
     try {
       const samplePath = path.join(rootDir, 'examples/sample-goal.json');
       const goal = await readGoalFromFile(samplePath);
       const themeId = String(req.query.theme || goal.theme || 'theme01');
       goal.theme = getTheme(themeId) ? themeId : 'theme01';
 
-      await renderGoalToDir(goal, { outDir: options.outputDir, editable: true });
+      const assetsDir = path.join(options.outputDir, 'assets');
+      await copyThemeAssets(goal.theme, assetsDir);
 
-      log('info', 'Opened editor', { theme: goal.theme });
-      res.redirect('/deck/editor.html');
+      const data = renderEditorData(goal, { width: 1280, height: 720 });
+
+      log('info', 'Rendered editor data', { theme: goal.theme, slides: goal.slides.length });
+      res.json({ success: true, data });
+    } catch (err) {
+      handleError(err, req, res);
+    }
+  });
+
+  app.post('/api/render-editor', async (req, res) => {
+    try {
+      const goal = parseGoalBody(req.body);
+      const themeId = String(req.query.theme || goal.theme || 'theme01');
+      goal.theme = getTheme(themeId) ? themeId : 'theme01';
+
+      const assetsDir = path.join(options.outputDir, 'assets');
+      await copyThemeAssets(goal.theme, assetsDir);
+
+      const data = renderEditorData(goal, { width: 1280, height: 720 });
+
+      log('info', 'Rendered editor data', { theme: goal.theme, slides: goal.slides.length });
+      res.json({ success: true, data });
+    } catch (err) {
+      handleError(err, req, res);
+    }
+  });
+
+  // 临时上传本地媒体（base64），返回可在 goal.json 中引用的 URL
+  app.post('/api/stage-media', async (req, res) => {
+    try {
+      const { filename, data } = req.body as { filename?: string; data?: string };
+      if (!filename || typeof data !== 'string') {
+        res.status(400).json({ success: false, error: '缺少 filename 或 base64 data' });
+        return;
+      }
+      const safeName = path.basename(filename).replace(/[^a-zA-Z0-9._-]/g, '_');
+      const mediaDir = path.join(options.outputDir, 'media');
+      await mkdir(mediaDir, { recursive: true });
+      const filePath = path.join(mediaDir, safeName);
+      await writeFile(filePath, Buffer.from(data, 'base64'));
+
+      log('info', 'Staged media', { filename: safeName });
+      res.json({ success: true, url: `/deck/media/${safeName}`, localPath: filePath });
     } catch (err) {
       handleError(err, req, res);
     }
@@ -249,19 +318,6 @@ export function createServer(options: ServerOptions): Express {
 
       log('info', 'Generated goal', { input: String(input).slice(0, 40), pageCount });
       res.json({ success: true, goal: result.goal, source: result.source });
-    } catch (err) {
-      handleError(err, req, res);
-    }
-  });
-
-  // 渲染可编辑版本
-  app.post('/api/render-editor', async (req, res) => {
-    try {
-      const goal = req.body as DeckGoal;
-      const result = await renderGoalToDir(goal, { outDir: options.outputDir, editable: true });
-
-      log('info', 'Rendered editor', { theme: goal.theme, slides: goal.slides.length });
-      res.json({ success: true, assets: result.assets });
     } catch (err) {
       handleError(err, req, res);
     }

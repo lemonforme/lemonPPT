@@ -72,8 +72,8 @@ interface ColorSchemePalette {
 
 const schemePalettes: Record<Theme06ColorScheme, { dark: ColorSchemePalette; light: ColorSchemePalette }> = {
   volt: {
-    dark: { accent: '#B6FF2B', accent2: '#00E5B0', accentCool: '#2E9FFF' },
-    light: { accent: '#7BC800', accent2: '#009E7A', accentCool: '#1A6FD6' },
+    dark: { accent: '#5DA300', accent2: '#00E5B0', accentCool: '#2E9FFF' },
+    light: { accent: '#447000', accent2: '#00705A', accentCool: '#1A6FD6' },
   },
   magma: {
     dark: { accent: '#FF6B45', accent2: '#FFC700', accentCool: '#00C2FF' },
@@ -85,14 +85,14 @@ const schemePalettes: Record<Theme06ColorScheme, { dark: ColorSchemePalette; lig
   },
   nova: {
     dark: { accent: '#FFD100', accent2: '#FF6B45', accentCool: '#00E5B0' },
-    light: { accent: '#C78F00', accent2: '#D94E2B', accentCool: '#009E7A' },
+    light: { accent: '#9A6B00', accent2: '#D94E2B', accentCool: '#009E7A' },
   },
 };
 
 const darkBase = {
   ink: '#F2F4F7',
   ink2: 'rgba(242, 244, 247, 0.72)',
-  ink3: 'rgba(242, 244, 247, 0.48)',
+  ink3: 'rgba(242, 244, 247, 0.60)',
   textInverse: '#05070A',
   bg: '#0B0F17',
   bgGradientStart: '#0B0F17',
@@ -126,7 +126,7 @@ const darkBase = {
 const lightBase = {
   ink: '#0F172A',
   ink2: 'rgba(15, 23, 42, 0.68)',
-  ink3: 'rgba(15, 23, 42, 0.44)',
+  ink3: 'rgba(15, 23, 42, 0.66)',
   textInverse: '#F7F8FA',
   bg: '#F7F8FA',
   bgGradientStart: '#F7F8FA',
@@ -166,12 +166,12 @@ function makeCssTokens(appearance: Theme06Appearance = 'dark', colorScheme: Them
     accent,
     accent2,
     accentCool,
-    red: isLight ? '#C73E2F' : '#FF6B6B',
-    orange: isLight ? '#C25E00' : '#FF9F43',
-    amber: isLight ? '#B45309' : '#FFC700',
+    red: isLight ? '#A82E22' : '#FF6B6B',
+    orange: isLight ? '#A85100' : '#FF9F43',
+    amber: isLight ? '#8A4200' : '#FFC700',
     yellow: isLight ? '#A16207' : '#FFD100',
     teal: isLight ? '#0B7A85' : '#00E5B0',
-    green: isLight ? '#15803D' : '#22C55E',
+    green: isLight ? '#0E6B30' : '#22C55E',
     cyan: isLight ? '#0B7A85' : '#22D3EE',
     blue: isLight ? '#1A6FD6' : '#2E9FFF',
     indigo: isLight ? '#4338CA' : '#6366F1',

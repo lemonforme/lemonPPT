@@ -15,6 +15,7 @@ export interface Theme05Tokens {
   accent: string;
   accent2: string;
   accentCool: string;
+  coralPill: string;
   red: string;
   orange: string;
   amber: string;
@@ -65,23 +66,23 @@ interface ColorSchemePalette {
 
 const schemePalettes: Record<Theme05ColorScheme, { dark: ColorSchemePalette; light: ColorSchemePalette }> = {
   coral: {
-    dark: { accent: '#E85D4E', accent2: '#F5A623', accentCool: '#4A58D9' },
-    light: { accent: '#C73E2F', accent2: '#C47B08', accentCool: '#3A46B0' },
+    dark: { accent: '#F4715C', accent2: '#C77E12', accentCool: '#5B6BE8' },
+    light: { accent: '#A82E22', accent2: '#C47B08', accentCool: '#3A46B0' },
   },
   amber: {
-    dark: { accent: '#F5A623', accent2: '#E85D4E', accentCool: '#0FA3B1' },
+    dark: { accent: '#E08A1E', accent2: '#F4715C', accentCool: '#0B6B61' },
     light: { accent: '#C47B08', accent2: '#C73E2F', accentCool: '#0B7A85' },
   },
   teal: {
-    dark: { accent: '#0FA3B1', accent2: '#4A58D9', accentCool: '#F5A623' },
+    dark: { accent: '#14A0A0', accent2: '#5B6BE8', accentCool: '#C77E12' },
     light: { accent: '#0B7A85', accent2: '#3A46B0', accentCool: '#C47B08' },
   },
   indigo: {
-    dark: { accent: '#4A58D9', accent2: '#0FA3B1', accentCool: '#F5A623' },
+    dark: { accent: '#5B6BE8', accent2: '#0B6B61', accentCool: '#C77E12' },
     light: { accent: '#3A46B0', accent2: '#0B7A85', accentCool: '#C47B08' },
   },
   violet: {
-    dark: { accent: '#7C3AED', accent2: '#F5A623', accentCool: '#0FA3B1' },
+    dark: { accent: '#9B6BF0', accent2: '#C77E12', accentCool: '#0B6B61' },
     light: { accent: '#5B25C1', accent2: '#C47B08', accentCool: '#0B7A85' },
   },
 };
@@ -89,7 +90,7 @@ const schemePalettes: Record<Theme05ColorScheme, { dark: ColorSchemePalette; lig
 const darkBase = {
   ink: '#F4F4F5',
   ink2: 'rgba(244, 244, 245, 0.72)',
-  ink3: 'rgba(244, 244, 245, 0.48)',
+  ink3: 'rgba(244, 244, 245, 0.60)',
   textInverse: '#15151A',
   bg: '#15151A',
   bgGradientStart: '#15151A',
@@ -116,7 +117,7 @@ const darkBase = {
 const lightBase = {
   ink: '#1A1A1A',
   ink2: 'rgba(26, 26, 26, 0.72)',
-  ink3: 'rgba(26, 26, 26, 0.48)',
+  ink3: 'rgba(26, 26, 26, 0.66)',
   textInverse: '#F7F4EF',
   bg: '#F7F4EF',
   bgGradientStart: '#F7F4EF',
@@ -149,18 +150,19 @@ function makeCssTokens(appearance: Theme05Appearance = 'dark', colorScheme: Them
     accent,
     accent2,
     accentCool,
-    red: isLight ? '#C73E2F' : '#E85D4E',
-    orange: isLight ? '#C25E00' : '#F5A623',
-    amber: isLight ? '#C47B08' : '#F5A623',
-    yellow: isLight ? '#A16207' : '#F5A623',
-    teal: isLight ? '#0B7A85' : '#0FA3B1',
-    green: isLight ? '#15803D' : '#22C55E',
-    cyan: isLight ? '#0B7A85' : '#0FA3B1',
-    blue: isLight ? '#3A46B0' : '#4A58D9',
-    indigo: isLight ? '#3A46B0' : '#4A58D9',
-    violet: isLight ? '#5B25C1' : '#7C3AED',
-    purple: isLight ? '#5B25C1' : '#7C3AED',
-    series: [accent, accent2, accentCool, '#E85D4E', '#0FA3B1', '#7C3AED'],
+    red: isLight ? '#A82E22' : '#F4715C',
+    orange: isLight ? '#C25E00' : '#E08A1E',
+    amber: isLight ? '#9A5B00' : '#6B4200',
+    yellow: isLight ? '#A16207' : '#6B4200',
+    teal: isLight ? '#0B6B61' : '#0B6B61',
+    green: isLight ? '#0E6B30' : '#2ED47A',
+    cyan: isLight ? '#0B6B61' : '#0B6B61',
+    blue: isLight ? '#2E3596' : '#5B6BE8',
+    indigo: isLight ? '#2E3596' : '#2E3596',
+    violet: isLight ? '#4A1D9E' : '#9B6BF0',
+    purple: isLight ? '#5B25C1' : '#9B6BF0',
+    coralPill: isLight ? '#A82E22' : '#B81D2A',
+    series: [accent, accent2, accentCool, '#F4715C', '#0B6B61', '#9B6BF0'],
     ...base,
     font: '"Inter", "Noto Sans SC", "PingFang SC", system-ui, sans-serif',
     fontMono: '"Space Mono", "JetBrains Mono", ui-monospace, monospace',
@@ -179,6 +181,7 @@ function buildCssVarsFromTokens(tokens: Theme05Tokens): string {
   --lp-accent: ${tokens.accent};
   --lp-accent-2: ${tokens.accent2};
   --lp-accent-cool: ${tokens.accentCool};
+  --lp-coral: ${tokens.coralPill};
   --lp-red: ${tokens.red};
   --lp-orange: ${tokens.orange};
   --lp-amber: ${tokens.amber};

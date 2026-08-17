@@ -65,7 +65,7 @@ export type Theme04Tone = 'green' | 'yellow' | 'blue' | 'pink';
 const darkBase = {
   ink: '#f4f4f5',
   ink2: 'rgba(244, 244, 245, 0.72)',
-  ink3: 'rgba(244, 244, 245, 0.48)',
+  ink3: 'rgba(244, 244, 245, 0.60)',
   textInverse: '#0a0a0a',
   bg: '#0a0a0a',
   bgGradientStart: '#0a0a0a',
@@ -92,7 +92,7 @@ const darkBase = {
 const lightBase = {
   ink: '#1a1a1a',
   ink2: 'rgba(26, 26, 26, 0.72)',
-  ink3: 'rgba(26, 26, 26, 0.48)',
+  ink3: 'rgba(26, 26, 26, 0.66)',
   textInverse: '#fafaf8',
   bg: '#fafaf8',
   bgGradientStart: '#fafaf8',
@@ -125,7 +125,7 @@ interface TonePalette {
 const tonePalettes: Record<Theme04Tone, { dark: TonePalette; light: TonePalette }> = {
   green: {
     dark: { accent: '#3ade80', accent2: '#ff6b9d', accentCool: '#4ecdc4' },
-    light: { accent: '#22a55c', accent2: '#db2777', accentCool: '#0d9488' },
+    light: { accent: '#157a43', accent2: '#b81e63', accentCool: '#0a6b61' },
   },
   yellow: {
     dark: { accent: '#ffd166', accent2: '#ff6b9d', accentCool: '#4ecdc4' },
@@ -153,7 +153,7 @@ function makeTokens(appearance: Theme04Appearance = 'dark', tone: Theme04Tone = 
     red: isLight ? '#ef4444' : '#ff6b6b',
     blue: accentCool,
     green: accent,
-    yellow: isLight ? '#d97706' : '#ffd166',
+    yellow: isLight ? '#9a5b00' : '#ffd166',
     violet: isLight ? '#7c3aed' : '#a78bfa',
     pink: accent2,
     orange: isLight ? '#ea580c' : '#ff8a5b',

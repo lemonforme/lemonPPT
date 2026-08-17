@@ -18,7 +18,7 @@ async function main() {
   const http = await import('node:http');
   const fs = await import('node:fs/promises');
   const server = http.createServer(async (req, res) => {
-    const filePath = path.join(rootDir, 'output', req.url === '/' ? '/editor-theme06-audit.html' : req.url);
+    const filePath = path.join(rootDir, 'output', req.url === '/' ? '/editor.html' : req.url);
     try {
       const data = await fs.readFile(filePath);
       res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -31,7 +31,7 @@ async function main() {
   await new Promise((resolve) => server.listen(9877, resolve));
 
   try {
-    await page.goto('http://localhost:9877/editor-theme06-audit.html', { waitUntil: 'networkidle' });
+    await page.goto('http://localhost:9877/editor.html', { waitUntil: 'networkidle' });
     await page.waitForTimeout(1500);
 
     // 点击封面主标题（限定在主编辑区 active slide 内，避免命中左侧缩略图）
@@ -45,7 +45,12 @@ async function main() {
     await page.waitForTimeout(800);
 
     // 读取 localStorage 中的 goal
-    const goalJson = await page.evaluate(() => localStorage.getItem('lemonppt:editor:v2:theme06-audit'));
+    const goalJson = await page.evaluate(() => {
+      const goal = window.__lemonPPT_editorData?.goal;
+      if (!goal) return null;
+      const key = 'lemonppt:editor:v2:' + (goal.theme || 'theme01') + ':' + (goal.randomSeed || goal.title || 'default');
+      return localStorage.getItem(key);
+    });
     if (!goalJson) {
       console.log('未在 localStorage 中找到保存的 goal');
       return;

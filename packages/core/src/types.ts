@@ -162,10 +162,10 @@ export interface DeckGoal {
   owner?: string;
   /** 主题，由生成阶段根据 prompt 关键词决定，编辑器内不可切换 */
   theme: ThemeId;
-  /** 外观模式：浅色 / 深色 / 主题 02 双配色方案 / 主题 04 糖果色调 / 主题 05 光谱强调色 */
-  colorScheme?: 'light' | 'dark' | 'scheme-a' | 'scheme-b' | 'green' | 'yellow' | 'blue' | 'pink' | 'coral' | 'amber' | 'teal' | 'indigo' | 'violet' | 'volt' | 'magma' | 'nebula' | 'nova';
-  /** 深浅外观模式（theme03 专用） */
-  appearance?: 'light' | 'dark';
+  /** 外观模式：浅色 / 深色 / 主题 02 双配色方案 / 主题 04 糖果色调 / 主题 05 光谱强调色 / 主题 08 黑金 */
+  colorScheme?: 'light' | 'dark' | 'scheme-a' | 'scheme-b' | 'green' | 'yellow' | 'blue' | 'pink' | 'coral' | 'amber' | 'teal' | 'indigo' | 'violet' | 'volt' | 'magma' | 'nebula' | 'nova' | 'obsidian-gold' | 'ink-editorial';
+  /** 深浅外观模式（theme03 专用；theme08 / theme09 使用 primary/muted） */
+  appearance?: 'light' | 'dark' | 'primary' | 'muted';
   /** 语言 */
   language?: 'zh' | 'en';
   /** 页数 */
@@ -182,4 +182,35 @@ export interface RenderOutput {
   html: string;
   /** 依赖资源列表 */
   assets: string[];
+}
+
+/**
+ * 单页编辑器所需数据。
+ * 由服务端根据 goal 生成后注入 editor.html，主题切换时也可通过 API 重新获取。
+ */
+export interface EditorData {
+  /** 当前 goal */
+  goal: DeckGoal;
+  /** 主题 ID */
+  theme: string;
+  /** 当前配色方案 */
+  colorScheme: string;
+  /** 当前外观模式 */
+  appearance?: string;
+  /** 画布 slides 的完整 HTML（包含 lp-deck 容器） */
+  slidesMarkup: string;
+  /** 每页独立 HTML，用于缩略图渲染 */
+  slideHtmls: string[];
+  /** 主题 CSS 变量 */
+  themeCssVars: string;
+  /** 编辑器顶部栏 HTML */
+  editorBarMarkup: string;
+  /** 左侧缩略图面板 HTML */
+  leftPanelMarkup: string;
+  /** 右侧属性面板 HTML */
+  rightPanelMarkup: string;
+  /** 添加幻灯片弹窗 HTML */
+  addSlideModalMarkup: string;
+  /** 编辑器交互脚本 HTML（包含 window.__lemonPPT_goal） */
+  editorScriptMarkup: string;
 }

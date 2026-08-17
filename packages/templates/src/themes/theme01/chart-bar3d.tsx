@@ -67,7 +67,9 @@ export const theme01ChartBar3dSchema: PropsSchema = {
     }
   ]
 };
-const THEME_COLORS = ['var(--lp-blue)', 'var(--lp-green)', 'var(--lp-amber)', 'var(--lp-red)', 'var(--lp-violet)', 'var(--lp-pink)'];
+// 注意：adjustColor 做十六进制运算，必须喂入 hex，不能喂 var(--lp-*) 字符串
+// （否则会产生 rgb(NaN)，柱子不渲染）。这里直接用 token 的 hex 值，与 ECharts 运行时调色板一致。
+const THEME_COLORS = ['#6E9BC4', '#8FAE84', '#D9A441', '#C76B5A', '#A07CAE', '#C98BA0'];
 export function Theme01ChartBar3d(props: Theme01ChartBar3dProps): ReactNode {
   const { title, kicker, _slideIdx, _editable } = props;
   const labels = props.labels ?? ['Q1', 'Q2', 'Q3', 'Q4'];
@@ -185,6 +187,8 @@ function darken(hex: string, percent: number): string {
   return adjustColor(hex, -percent);
 }
 function adjustColor(hex: string, percent: number): string {
+  // 防御：非 hex（如 var(--lp-*)）直接原样返回，避免产生 rgb(NaN)
+  if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return hex;
   const num = Number.parseInt(hex.replace('#', ''), 16);
   const r = Math.min(255, Math.max(0, (num >> 16) + percent * 2.55));
   const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + percent * 2.55));

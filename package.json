@@ -11,9 +11,11 @@
     "typecheck": "pnpm -r typecheck",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
+    "server": "node apps/server/dist/index.js",
     "render": "node scripts/render.mjs",
-    "render:editor": "node scripts/render-editor.mjs",
-    "render:editor:theme03": "node scripts/render-editor-theme03.mjs",
+    "render:editor": "node packages/cli/dist/cli.js render examples/sample-goal.json --out ./output --editable",
+    "render:editor:theme03": "node packages/cli/dist/cli.js render examples/theme03-sample-goal.json --out ./output --editable",
     "export:pptx": "node scripts/export-pptx.mjs",
     "export:pdf": "node scripts/export-pdf.mjs",
     "generate:goal": "node scripts/generate-goal.mjs",
@@ -64,5 +66,11 @@
     "url": "https://github.com/lemonforme/lemonPPT/issues"
   },
   "homepage": "https://github.com/lemonforme/lemonPPT#readme",
-  "license": "AGPL-3.0"
+  "license": "AGPL-3.0",
+  "pnpm": {
+    "overrides": {
+      "nanoid@3": "^3.3.18",
+      "postcss": "^8.5.23"
+    }
+  }
 }

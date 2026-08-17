@@ -82,7 +82,7 @@ function makeTokens(scheme: AccentScheme): Theme02Tokens {
   return {
     ink: '#f0f4f8',
     ink2: 'rgba(240, 244, 248, 0.68)',
-    ink3: 'rgba(240, 244, 248, 0.40)',
+    ink3: 'rgba(240, 244, 248, 0.64)',
     textInverse: '#080a0e',
     accent: scheme.accent,
     accent2: scheme.accent2,

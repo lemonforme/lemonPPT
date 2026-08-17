@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Sheet, GlassCard, Folio } from './shared.js';
 
 export interface Theme01ContentV1Props {
   title?: string;
@@ -21,6 +22,8 @@ export const theme01ContentV1Meta: LayoutMeta = {
   displayName: 'Theme 01 内容页',
   description: '玻璃卡片 + 圆点列表',
   needsMedia: false,
+  tags: ['content', 'text', 'list', 'light'],
+  contentShape: 'content',
 };
 
 export const theme01ContentV1Schema: PropsSchema = {
@@ -54,8 +57,8 @@ export function Theme01ContentV1(props: Theme01ContentV1Props): ReactNode {
   const { title = '', bullets = [], _slideIdx, _editable } = props;
 
   return (
-  <div className="lp-slide lp-content-v1">
-      <div className="lp-card lp-content-card">
+  <Sheet substrate="light" frame="sidebar" className="lp-content-v1">
+      <GlassCard className="lp-content-card">
     <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-head lp-content-title lp-rise">
           {title}
     </EditableField>
@@ -73,7 +76,14 @@ export function Theme01ContentV1(props: Theme01ContentV1Props): ReactNode {
       </li>
           ))}
     </ul>
-      </div>
-  </div>
+      </GlassCard>
+      <Folio
+        left="主题一 · 内容"
+        page="03"
+        right="LEMONPPT"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+  </Sheet>
   );
 }

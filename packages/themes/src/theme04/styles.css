@@ -3146,7 +3146,7 @@
   font-size: var(--lp-font-size-h2);
   font-weight: 900;
   color: var(--lp-ink);
-  opacity: 0.35;
+  opacity: 1;
 }
 
 .lp-theme04-cover-index-card-title {
@@ -3397,7 +3397,7 @@
 }
 
 .lp-theme04-quadrant-axis-end {
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .lp-theme04-quadrant-grid {
@@ -3787,7 +3787,7 @@
   font-size: var(--lp-font-size-h3);
   font-weight: 900;
   color: var(--lp-ink3);
-  opacity: 0.5;
+  opacity: 1;
 }
 
 .lp-theme04-stat-label-small {
@@ -8047,7 +8047,7 @@
   font-family: var(--lp-font-mono);
   font-size: 11px;
   color: var(--lp-ink3);
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .lp-theme04-calendar-event {
@@ -8735,5 +8735,24 @@
   .lp-theme04-ledger-trend-wrap {
     justify-content: flex-start;
   }
+}
+
+/* 对比度修复 #321：浅底版式容器内次级文字加深
+   默认 :root（dark 外观）的 --lp-ink2/--lp-ink3 为浅色，落在浅 substrate（#FAFAF8）上不达标。
+   这些版式容器统一为浅底，故在本地把 ink 设为深色，其下级 footnote/subtitle/caption/kicker 自动继承。 */
+.lp-theme04-chaintable,
+.lp-theme04-closing,
+/* 浅底容器：次级文字/标题加深。chapter/closing 的 tag 与 closing-cta 落在绿色 accent 徽标上，
+   不能在此强制深色，须沿用 base 的 var(--lp-text-inverse)（浅外观=白字、深外观=深色字），
+   故此处仅保留落在浅色卡面上的 tag。 */
+.lp-theme04-chaintable .lp-theme04-tag,
+.lp-theme04-layers .lp-theme04-tag,
+.lp-theme04-ledger .lp-theme04-tag,
+.lp-theme04-matrix .lp-theme04-tag,
+.lp-theme04-content .lp-theme04-tag,
+.lp-theme04-image .lp-theme04-tag,
+.lp-theme04-chainflow .lp-theme04-tag,
+.lp-theme04-calendar .lp-theme04-tag {
+  color: #0A0A0A;
 }
 

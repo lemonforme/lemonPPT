@@ -154,6 +154,8 @@ body {
   flex-direction: column;
   color: var(--lp-ink);
   background:
+    var(--lp-cat-tint, transparent),
+    radial-gradient(circle at 1px 1px, rgba(242, 233, 220, 0.05) 1px, transparent 1.6px) 0 0 / 30px 30px,
     radial-gradient(circle at 12% 18%, var(--lp-glow-blue), transparent 38%),
     radial-gradient(circle at 88% 24%, var(--lp-glow-amber), transparent 42%),
     radial-gradient(circle at 72% 86%, var(--lp-glow-violet), transparent 40%),
@@ -197,6 +199,20 @@ body {
     0 28px 70px rgba(var(--lp-shadow-rgb), 0.16);
 }
 
+/* 卡片顶部强调条 —— 随类别强调色（--lp-accent）变化，增加版面层次 */
+.lp-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: var(--lp-radius-large) var(--lp-radius-large) 0 0;
+  background: linear-gradient(90deg, var(--lp-accent), transparent);
+  opacity: 0.92;
+  pointer-events: none;
+}
+
 .lp-card::after {
   content: '';
   position: absolute;
@@ -230,7 +246,7 @@ body {
 
 .lp-editable-image-placeholder:hover {
   background: var(--lp-surface-strong, rgba(255, 255, 255, 0.75));
-  border-color: var(--lp-blue, #5b9bd5);
+  border-color: var(--lp-blue, #6E9BC4);
 }
 
 .lp-editable-image-placeholder-icon {
@@ -302,8 +318,8 @@ body {
   font-size: 14px;
   letter-spacing: 0.04em;
   line-height: 1.3;
-  color: var(--lp-white);
-  background: var(--lp-blue);
+  color: #16130F;
+  background: var(--lp-accent);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
     0 4px 12px rgba(0, 0, 0, 0.12);
@@ -378,6 +394,13 @@ body {
   object-fit: cover;
   opacity: 0.35;
   z-index: 0;
+}
+
+/* 共享原语 LpPhoto 接入封面：满版形态中和玻璃卡片边框/圆角 */
+.lp-cover-v1 .lp-theme01-photo.lp-cover-image {
+  border: none;
+  border-radius: 0;
+  background: transparent;
 }
 
 .lp-cover-v1 .lp-cover-content {
@@ -857,7 +880,7 @@ body {
 
 .lp-case-study-quote {
   padding: 32px 36px;
-  background: linear-gradient(135deg, rgba(91, 155, 213, 0.12) 0%, rgba(91, 155, 213, 0.03) 100%);
+  background: linear-gradient(135deg, rgba(201, 106, 67, 0.12) 0%, rgba(201, 106, 67, 0.03) 100%);
   border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius-large);
 }
@@ -997,7 +1020,7 @@ body {
 
 .lp-metric-big-metric--accent {
   border-color: var(--lp-blue);
-  background: linear-gradient(135deg, rgba(91, 155, 213, 0.22) 0%, rgba(91, 155, 213, 0.06) 100%);
+  background: linear-gradient(135deg, rgba(201, 106, 67, 0.22) 0%, rgba(201, 106, 67, 0.06) 100%);
 }
 
 .lp-metric-big-metric--accent .lp-metric-big-metric-value {
@@ -1914,7 +1937,7 @@ body {
 }
 
 .lp-chart-dot {
-  filter: drop-shadow(0 2px 4px rgba(91, 155, 213, 0.35));
+  filter: drop-shadow(0 2px 4px rgba(201, 106, 67, 0.35));
   transition: filter 0.2s ease, transform 0.2s ease, stroke-width 0.2s ease;
   transform-box: fill-box;
   transform-origin: center;
@@ -1923,7 +1946,7 @@ body {
 }
 
 .lp-chart-dot:hover {
-  filter: drop-shadow(0 3px 6px rgba(91, 155, 213, 0.45));
+  filter: drop-shadow(0 3px 6px rgba(201, 106, 67, 0.45));
   transform: scale(1.25);
   stroke-width: 5;
 }
@@ -1955,7 +1978,7 @@ body {
   stroke: var(--lp-blue);
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 3px 6px rgba(91, 155, 213, 0.28));
+  filter: drop-shadow(0 3px 6px rgba(201, 106, 67, 0.28));
   stroke-dasharray: 2000;
   stroke-dashoffset: 2000;
   animation: lp-chart-line-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -1963,7 +1986,7 @@ body {
 }
 
 .lp-chart-line:hover {
-  filter: drop-shadow(0 5px 12px rgba(91, 155, 213, 0.42));
+  filter: drop-shadow(0 5px 12px rgba(201, 106, 67, 0.42));
   stroke-width: 6.5;
 }
 
@@ -2107,15 +2130,15 @@ body {
 }
 
 .lp-chart-insight-badge--accent {
-  background: linear-gradient(135deg, var(--lp-blue) 0%, #7ab8e8 100%);
+  background: linear-gradient(135deg, #8A3D1E 0%, #C56A43 100%);
 }
 
 .lp-chart-insight-badge--success {
-  background: linear-gradient(135deg, var(--lp-green) 0%, #6fd1a8 100%);
+  background: linear-gradient(135deg, #5E7A55 0%, #8FAE84 100%);
 }
 
 .lp-chart-insight-badge--warning {
-  background: linear-gradient(135deg, var(--lp-amber) 0%, #f0c06a 100%);
+  background: linear-gradient(135deg, #8A4A22 0%, #C97E4E 100%);
 }
 
 .lp-chart-footer {
@@ -2442,7 +2465,7 @@ body {
   border-radius: 50%;
   font-size: 14px;
   font-weight: 700;
-  color: var(--lp-white);
+  color: #16130F;
 }
 
 .lp-faq-q {
@@ -3126,7 +3149,7 @@ body {
 }
 
 .lp-table-data-table thead {
-  background: linear-gradient(135deg, var(--lp-blue) 0%, #7ab8e8 100%);
+  background: linear-gradient(135deg, var(--lp-blue) 0%, #E0B27A 100%);
 }
 
 .lp-table-data-th {
@@ -3154,7 +3177,7 @@ body {
 }
 
 .lp-table-data-tr:hover {
-  background: rgba(91, 155, 213, 0.08);
+  background: rgba(201, 106, 67, 0.08);
 }
 
 .lp-table-data-tr--highlight .lp-table-data-td {
@@ -3163,7 +3186,7 @@ body {
 }
 
 .lp-table-data-tr--highlight {
-  background: linear-gradient(90deg, rgba(91, 155, 213, 0.16) 0%, rgba(91, 155, 213, 0.04) 100%);
+  background: linear-gradient(90deg, rgba(201, 106, 67, 0.16) 0%, rgba(201, 106, 67, 0.04) 100%);
 }
 
 .lp-table-data-table tbody tr:last-child .lp-table-data-td {
@@ -3629,6 +3652,7 @@ body {
   justify-content: center;
   padding: 0;
   overflow: hidden;
+  background: linear-gradient(135deg, var(--lp-bg-gradient-start) 0%, var(--lp-bg-gradient-end) 100%);
 }
 
 .lp-chapter-v3-bg {
@@ -3654,9 +3678,9 @@ body {
   max-width: 860px;
   padding: 56px 72px;
   text-align: center;
-  background: var(--lp-surface);
+  background: rgba(17, 24, 39, 0.88);
   backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid var(--lp-border);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--lp-radius-large);
   box-shadow: 0 24px 64px rgba(var(--lp-shadow-rgb), 0.18);
 }
@@ -3671,6 +3695,17 @@ body {
   line-height: 1.1;
   margin: 0 0 16px 0;
   color: var(--lp-white);
+}
+
+.lp-chapter-v3 .lp-editable-image-placeholder {
+  background: var(--lp-surface-strong);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.lp-chapter-v3 .lp-editable-image-placeholder-text,
+.lp-chapter-v3 .lp-editable-image-placeholder-icon {
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .lp-chapter-v3-subtitle {
@@ -3743,7 +3778,7 @@ body {
 
 .lp-pricing-period {
   font-size: 15px;
-  color: var(--lp-ink3);
+  color: var(--lp-gray-600);
   font-family: var(--lp-font-mono);
 }
 
@@ -3770,7 +3805,7 @@ body {
   padding: 12px 28px;
   border-radius: 999px;
   background: var(--lp-blue);
-  color: var(--lp-white);
+  color: #16130F;
   font-weight: 700;
   font-size: 15px;
 }
@@ -4793,4 +4828,544 @@ body {
   font-size: 13px;
   color: var(--lp-ink3);
   font-family: var(--lp-font-mono);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * theme01 共享版面原语（Glass Primitives）—— 与 shared.tsx 配套
+ * 方法论对齐 theme09：基底（light / tint）+ 骨架（frame）声明，
+ * 但保留 theme01 浅色玻璃外观，不复制 theme09 纸/墨印刷语汇。
+ * ═══════════════════════════════════════════════════════════════ */
+
+.lp-theme01 {
+  font-family: var(--lp-font);
+}
+
+/* 基底：浅着色（tint）—— 在默认玻璃渐变上叠加一层极淡蓝紫，形成翻页节奏 */
+.lp-theme01-sub-tint {
+  background:
+    linear-gradient(135deg, rgba(201, 106, 67, 0.12) 0%, rgba(160, 124, 174, 0.07) 100%),
+    linear-gradient(135deg, var(--lp-bg-gradient-start) 0%, var(--lp-bg-gradient-end) 100%);
+}
+.lp-theme01-sub-tint::before {
+  background:
+    radial-gradient(120% 80% at 12% 8%, rgba(201, 106, 67, 0.10) 0%, transparent 60%),
+    radial-gradient(120% 80% at 92% 96%, rgba(160, 124, 174, 0.08) 0%, transparent 60%);
+}
+
+/* 骨架（frame）—— 审计标记，不直接改变布局；声明空规则以保持类名可定位 */
+.lp-theme01-frame-full-bleed,
+.lp-theme01-frame-spread,
+.lp-theme01-frame-column-3,
+.lp-theme01-frame-sidebar,
+.lp-theme01-frame-grid,
+.lp-theme01-frame-stage,
+.lp-theme01-frame-chart-canvas {
+  /* intentionally empty — layout is driven by the layout-specific class */
+}
+
+/* 刊头 Masthead */
+.lp-theme01-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 8px 14px;
+}
+.lp-theme01-masthead-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lp-theme01-masthead-bar {
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--lp-blue), var(--lp-violet));
+  box-shadow: 0 0 12px var(--lp-glow-blue);
+}
+.lp-theme01-masthead-name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--lp-ink);
+}
+.lp-theme01-masthead-en {
+  font-size: 11px;
+  font-family: var(--lp-font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lp-ink3);
+}
+.lp-theme01-masthead-mark {
+  font-size: 11px;
+  font-family: var(--lp-font-mono);
+  letter-spacing: 0.08em;
+  color: var(--lp-ink3);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-border);
+}
+
+/* 骑缝 Folio —— 页脚三段式，绝对定位于底部 */
+.lp-theme01-folio {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 40px;
+  font-family: var(--lp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--lp-ink3);
+}
+.lp-theme01-folio.inverse {
+  color: var(--lp-white-alpha-85);
+}
+.lp-theme01-folio-left,
+.lp-theme01-folio-right {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lp-theme01-folio-right {
+  text-align: right;
+}
+.lp-theme01-folio-rule {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 1px;
+  background: var(--lp-border);
+}
+.lp-theme01-folio-page {
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--lp-surface-strong);
+  border: 1px solid var(--lp-border);
+  color: var(--lp-ink);
+  font-weight: 700;
+}
+
+/* 玻璃卡片别名（GlassCard 已渲染 lp-card，此处仅作语义锚点） */
+.lp-theme01-card {
+  /* inherits .lp-card */
+}
+
+/* 影像位 LpPhoto */
+.lp-theme01-photo {
+  position: relative;
+  margin: 0;
+  border-radius: var(--lp-radius-large);
+  overflow: hidden;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-border);
+}
+.lp-theme01-photo.fit-fill {
+  width: 100%;
+  height: 100%;
+}
+.lp-theme01-photo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lp-theme01-photo.empty .lp-theme01-photo-slot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--lp-radius-large);
+  border: 1.5px dashed var(--lp-glow-blue);
+  background:
+    linear-gradient(135deg, rgba(201, 106, 67, 0.10) 0%, rgba(255, 255, 255, 0) 60%),
+    var(--lp-surface);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+.lp-theme01-photo-reg {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--lp-glow-blue);
+  position: relative;
+}
+.lp-theme01-photo-reg::before,
+.lp-theme01-photo-reg::after {
+  content: '';
+  position: absolute;
+  background: var(--lp-blue);
+  opacity: 0.7;
+}
+.lp-theme01-photo-reg::before {
+  left: 50%;
+  top: 22%;
+  width: 1.5px;
+  height: 56%;
+  transform: translateX(-50%);
+}
+.lp-theme01-photo-reg::after {
+  top: 50%;
+  left: 22%;
+  height: 1.5px;
+  width: 56%;
+  transform: translateY(-50%);
+}
+.lp-theme01-photo-hint {
+  font-size: 12px;
+  color: var(--lp-ink2);
+  font-family: var(--lp-font);
+}
+.lp-theme01-photo-spec {
+  font-size: 10px;
+  font-family: var(--lp-font-mono);
+  letter-spacing: 0.1em;
+  color: var(--lp-ink3);
+}
+.lp-theme01-photo-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px 18px;
+  background: linear-gradient(180deg, transparent, rgba(20, 22, 28, 0.55));
+  color: #fff;
+}
+
+/* 双语标题 Headline */
+.lp-theme01-headline {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lp-theme01-headline-en {
+  font-size: 12px;
+  font-family: var(--lp-font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lp-ink3);
+}
+.lp-theme01-headline-cn {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.12;
+  color: var(--lp-ink);
+}
+.lp-theme01-headline.size-display .lp-theme01-headline-cn {
+  font-size: 60px;
+}
+.lp-theme01-headline.size-medium .lp-theme01-headline-cn {
+  font-size: 30px;
+}
+
+/* 装饰：规线 / 中缝 */
+.lp-theme01-rule {
+  display: inline-block;
+  width: 100%;
+  height: 1px;
+  background: var(--lp-border);
+}
+.lp-theme01-rule.strong {
+  height: 2px;
+  background: linear-gradient(90deg, var(--lp-blue), transparent);
+}
+.lp-theme01-gutter {
+  display: inline-block;
+  width: 1px;
+  height: 100%;
+  background: var(--lp-border);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * 类别强调色 & 基底氛围（设计深度优化）
+ * 通过 .lp-slide[class*="lp-<类别>-"] 按版面类型轮换强调色与基底氛围，
+ * 使 71 个版式形成 light / tint 节奏与色相差异，消除“全蓝玻璃单一感”。
+ * 仅作用于 CSS 变量（--lp-accent / --lp-cat-tint），不改动任何组件源码。
+ * ═══════════════════════════════════════════════════════════════ */
+
+/* 图表族：紫调 + 网格画布感 */
+.lp-slide[class*="lp-chart-"],
+.lp-slide[class*="lp-echart-slide"],
+.lp-slide[class*="lp-trend-"] {
+  --lp-accent: #A07CAE;
+  --lp-cat-tint:
+    radial-gradient(circle at 1px 1px, rgba(160, 124, 174, 0.05) 1px, transparent 1.6px) 0 0 / 26px 26px,
+    radial-gradient(circle at 86% 12%, rgba(160, 124, 174, 0.12), transparent 55%);
+}
+
+/* 封面族：品牌蓝，强化光晕 */
+.lp-slide[class*="lp-cover-"],
+.lp-slide[class*="lp-image-"],
+.lp-slide[class*="lp-case-"] {
+  --lp-accent: #C56A43;
+  --lp-cat-tint: radial-gradient(circle at 88% 18%, rgba(201, 106, 67, 0.14), transparent 55%);
+}
+
+/* 章节族：琥珀调 + 底部暖光 */
+.lp-slide[class*="lp-chapter-"] {
+  --lp-accent: #C9883A;
+  --lp-cat-tint: radial-gradient(circle at 50% 118%, rgba(201, 136, 58, 0.16), transparent 60%);
+}
+
+/* 金句 / 结论 / 收束族：暖橙调 + 居中聚光 */
+.lp-slide[class*="lp-quote-"],
+.lp-slide[class*="lp-closing-"],
+.lp-slide[class*="lp-conclusion-"] {
+  --lp-accent: #C97E4E;
+  --lp-cat-tint: radial-gradient(circle at 50% 50%, rgba(201, 126, 78, 0.12), transparent 62%);
+}
+
+/* 对比 / 双联族：绿调 + 左右分色微光 */
+.lp-slide[class*="lp-comparison-"],
+.lp-slide[class*="lp-diptych"] {
+  --lp-accent: #8FAE84;
+  --lp-cat-tint:
+    radial-gradient(circle at 12% 50%, rgba(143, 174, 132, 0.12), transparent 50%),
+    radial-gradient(circle at 88% 50%, rgba(143, 174, 132, 0.10), transparent 50%);
+}
+
+/* 内容族：青调 */
+.lp-slide[class*="lp-content-"] {
+  --lp-accent: #5FA8A0;
+  --lp-cat-tint: radial-gradient(circle at 18% 82%, rgba(95, 168, 160, 0.12), transparent 55%);
+}
+
+/* 指标 / 数字族：青调 + 数字网格 */
+.lp-slide[class*="lp-metric-"],
+.lp-slide[class*="lp-stat"],
+.lp-slide[class*="lp-scorecard-"] {
+  --lp-accent: #5FA8A0;
+  --lp-cat-tint:
+    radial-gradient(circle at 1px 1px, rgba(95, 168, 160, 0.045) 1px, transparent 1.6px) 0 0 / 28px 28px,
+    radial-gradient(circle at 82% 16%, rgba(95, 168, 160, 0.12), transparent 55%);
+}
+
+/* 目录 / 附录族：品牌蓝 */
+.lp-slide[class*="lp-toc-"],
+.lp-slide[class*="lp-appendix-"] {
+  --lp-accent: #C56A43;
+  --lp-cat-tint: radial-gradient(circle at 14% 20%, rgba(201, 106, 67, 0.10), transparent 55%);
+}
+
+/* 表格族：中性蓝 */
+.lp-slide[class*="lp-table-"] {
+  --lp-accent: #C56A43;
+  --lp-cat-tint: radial-gradient(circle at 90% 88%, rgba(201, 106, 67, 0.08), transparent 55%);
+}
+
+/* 特性 / 流程 / 路线 / 时间轴 / 展望 / FAQ 族：绿调 */
+.lp-slide[class*="lp-feature-"],
+.lp-slide[class*="lp-process-"],
+.lp-slide[class*="lp-timeline-"],
+.lp-slide[class*="lp-roadmap-"],
+.lp-slide[class*="lp-gantt-"],
+.lp-slide[class*="lp-outlook-"],
+.lp-slide[class*="lp-faq-"] {
+  --lp-accent: #8FAE84;
+  --lp-cat-tint: radial-gradient(circle at 16% 16%, rgba(143, 174, 132, 0.11), transparent 55%);
+}
+
+/* SWOT / PEST / 风险 / 象限族：琥珀调 */
+.lp-slide[class*="lp-swot-"],
+.lp-slide[class*="lp-pest-"],
+.lp-slide[class*="lp-risk-"],
+.lp-slide[class*="lp-quadrant-"] {
+  --lp-accent: #D9A441;
+  --lp-cat-tint: radial-gradient(circle at 84% 84%, rgba(217, 164, 65, 0.12), transparent 55%);
+}
+
+/* 标签 / 便当 / 画廊 / 胶片 / 聚焦族：粉调 */
+.lp-slide[class*="lp-tags-"],
+.lp-slide[class*="lp-bento-"],
+.lp-slide[class*="lp-gallery-"],
+.lp-slide[class*="lp-filmstrip-"],
+.lp-slide[class*="lp-spotlight-"] {
+  --lp-accent: #C98BA0;
+  --lp-cat-tint: radial-gradient(circle at 20% 80%, rgba(201, 139, 160, 0.12), transparent 55%);
+}
+
+/* 团队 / 伙伴 / 证言 / 定价 / 区域 / 排行族：紫调 */
+.lp-slide[class*="lp-team-"],
+.lp-slide[class*="lp-partners-"],
+.lp-slide[class*="lp-testimonial-"],
+.lp-slide[class*="lp-pricing-"],
+.lp-slide[class*="lp-region-"],
+.lp-slide[class*="lp-ranking-"] {
+  --lp-accent: #A07CAE;
+  --lp-cat-tint: radial-gradient(circle at 82% 18%, rgba(160, 124, 174, 0.12), transparent 55%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * Label —— 编辑语汇标签（number / symbol / keyword 三型）
+ * ═══════════════════════════════════════════════════════════════ */
+.lp-theme01-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--lp-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--lp-t1-hairline);
+  color: var(--lp-ink2);
+  background: var(--lp-t1-accent-soft);
+  line-height: 1.4;
+}
+.lp-theme01-label.kind-number {
+  color: var(--lp-accent);
+  border-color: var(--lp-accent);
+  background: #16130F;
+}
+.lp-theme01-label.kind-symbol {
+  color: var(--lp-ink);
+  background: var(--lp-surface-strong);
+}
+.lp-theme01-label.kind-keyword {
+  color: var(--lp-ink2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * Focus —— 聚光切换（left / right）
+ * ═══════════════════════════════════════════════════════════════ */
+.lp-theme01-focus {
+  position: relative;
+  border-radius: var(--lp-radius-medium);
+  overflow: hidden;
+}
+.lp-theme01-focus > * {
+  position: relative;
+  z-index: 1;
+}
+.lp-theme01-focus::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at var(--lp-focus-x, 18%) 50%, var(--lp-glow-blue-subtle), transparent 62%);
+}
+.lp-theme01-focus.side-left {
+  --lp-focus-x: 18%;
+}
+.lp-theme01-focus.side-right {
+  --lp-focus-x: 82%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * components-v1 —— 设计系统总览页
+ * ═══════════════════════════════════════════════════════════════ */
+.lp-components-v1 {
+  padding: 48px 56px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  background:
+    radial-gradient(circle at 86% 12%, var(--lp-glow-blue-subtle), transparent 55%),
+    linear-gradient(160deg, var(--lp-bg-gradient-start), var(--lp-bg-gradient-end));
+}
+.lp-components-head {
+  margin-top: 4px;
+}
+.lp-components-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 18px;
+  flex: 1;
+  min-height: 0;
+}
+.lp-components-panel {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.lp-components-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--lp-font);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--lp-ink);
+  letter-spacing: 0.01em;
+}
+.lp-components-swatches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 14px;
+}
+.lp-components-swatch {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.lp-components-swatch-chip {
+  width: 100%;
+  height: 34px;
+  border-radius: 9px;
+  border: 1px solid var(--lp-border);
+  box-shadow: var(--lp-shadow-inset);
+}
+.lp-components-swatch-name {
+  font-size: 12px;
+  color: var(--lp-ink);
+  font-weight: 600;
+}
+.lp-components-swatch-token {
+  font-family: var(--lp-font-mono);
+  font-size: 10.5px;
+  color: var(--lp-ink3);
+  letter-spacing: 0.02em;
+}
+.lp-components-label-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.lp-components-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--lp-ink3);
+}
+.lp-components-note code {
+  font-family: var(--lp-font-mono);
+  font-size: 11px;
+  color: var(--lp-ink2);
+  background: var(--lp-surface-strong);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+.lp-components-focus-demo {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  background: var(--lp-surface-strong);
+  border: 1px solid var(--lp-border);
+}
+.lp-components-focus-text {
+  font-size: 13px;
+  color: var(--lp-ink);
+  font-weight: 600;
+}
+.lp-components-mini-chart {
+  width: 100%;
+  height: auto;
+  max-height: 120px;
 }

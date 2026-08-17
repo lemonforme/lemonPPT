@@ -12,7 +12,8 @@
   },
   "files": [
     "dist",
-    "assets/fonts"
+    "assets/fonts",
+    "templates"
   ],
   "publishConfig": {
     "access": "public"
@@ -27,7 +28,7 @@
   },
   "homepage": "https://github.com/lemonforme/lemonPPT#readme",
   "scripts": {
-    "build": "tsc && esbuild src/client-render.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_clientRender --outfile=dist/client/client-render.js --alias:react-dom/server=react-dom/server.browser --target=es2019 --minify && esbuild src/theme-echarts.ts --bundle --platform=browser --format=iife --outfile=dist/client/theme-echarts.js --target=es2019 --minify",
+    "build": "tsc && node scripts/build-editor-script.js && esbuild src/client-render.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_clientRender --outfile=dist/client/client-render.js --alias:react-dom/server=react-dom/server.browser --target=es2019 --minify && esbuild src/theme-echarts.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_themeECharts --outfile=dist/client/theme-echarts.js --target=es2019 --minify",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "tsc"
   },

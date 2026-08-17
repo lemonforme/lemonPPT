@@ -199,7 +199,7 @@ const darkBase = {
 const lightBase = {
   ink: '#05080d',
   ink2: 'rgba(5, 8, 13, 0.72)',
-  ink3: 'rgba(5, 8, 13, 0.52)',
+  ink3: 'rgba(5, 8, 13, 0.68)',
   textInverse: '#e8edf3',
   bg: '#f1f3f5',
   bgGradientStart: '#f1f3f5',

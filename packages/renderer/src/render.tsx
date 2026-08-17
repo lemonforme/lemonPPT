@@ -6,8 +6,6 @@ import type { DeckGoal, RenderOutput } from '@lemonppt/core';
 import { normalizeDeckGoal } from '@lemonppt/core';
 import {
   renderSlide,
-  listLayouts,
-  getLayoutSchema,
   generateThemeCssVariablesWithDark,
   generateTheme02CssVariablesWithSchemes,
   generateTheme03CssVariablesWithSchemes,
@@ -16,25 +14,22 @@ import {
   generateTheme06CssVariablesWithSchemesAndAppearance,
 } from '@lemonppt/templates';
 import ReactDOMServer from 'react-dom/server';
-import { editorScript } from './editor-script.js';
 
 export interface RenderOptions {
   /** 页面宽度，默认 1280 */
   width?: number;
   /** 页面高度，默认 720 */
   height?: number;
-  /** 是否开启浏览器端编辑 */
-  editable?: boolean;
 }
 
 export function renderDeck(goal: DeckGoal, options: RenderOptions = {}): RenderOutput {
   goal = normalizeDeckGoal(goal);
-  const { width = 1280, height = 720, editable = false } = options;
+  const { width = 1280, height = 720 } = options;
 
   const slideCount = goal.slides.length;
 
   const slideElements = goal.slides.map((slide, index) => {
-    const element = renderSlide(slide, { slideIdx: index, editable, theme: goal.theme });
+    const element = renderSlide(slide, { slideIdx: index, editable: false, theme: goal.theme });
     const stateClass = index === 0 ? 'active' : '';
     return (
       <div
@@ -63,7 +58,6 @@ export function renderDeck(goal: DeckGoal, options: RenderOptions = {}): RenderO
       className="lp-deck"
       data-theme={goal.theme}
       data-lp-transition="none"
-      data-editable={editable ? 'true' : undefined}
       style={{
         width: `${width}px`,
         height: `${height}px`,
@@ -73,57 +67,9 @@ export function renderDeck(goal: DeckGoal, options: RenderOptions = {}): RenderO
     </div>
   );
 
-  const slideHtmls = goal.slides.map((slide, index) => {
-    const element = renderSlide(slide, { slideIdx: index, editable, theme: goal.theme });
-    return ReactDOMServer.renderToStaticMarkup(
-      <div
-        style={{
-          width: `${width}px`,
-          height: `${height}px`,
-          boxSizing: 'border-box',
-        }}
-      >
-        {element ?? (
-          <div className="lp-error">
-            未找到版式: {slide.layout}
-          </div>
-        )}
-      </div>
-    );
-  });
-
   const navMarkup = buildNavMarkup(slideCount);
-  const scriptMarkup = editable ? buildEditorScriptMarkup(goal) : buildScriptMarkup();
-  const editorBarMarkup = editable ? buildEditorBarMarkup(goal) : '';
-  const leftPanelMarkup = editable ? buildLeftPanelMarkup(goal, slideHtmls, width, height) : '';
-  const rightPanelMarkup = editable ? buildRightPanelMarkup() : '';
-  const addSlideModalMarkup = editable ? buildAddSlideModalMarkup(goal) : '';
-  const bodyClass = editable ? 'lp-editor-body' : '';
-
-  const bodyMarkup = editable
-    ? `<div class="lp-editor-root">
-${editorBarMarkup}
-<div class="lp-editor-workspace">
-${leftPanelMarkup}
-<main class="lp-editor-stage">
-  <div class="lp-editor-stage-scaler">
-    ${slidesMarkup}
-    <div class="lp-editor-page-counter"><span id="lp-current">1</span> / ${slideCount}</div>
-  </div>
-  <div class="lp-editor-zoom-bar">
-    <button id="lp-zoom-out" title="缩小">－</button>
-    <input type="range" id="lp-zoom-slider" min="35" max="150" value="100">
-    <button id="lp-zoom-in" title="放大">＋</button>
-    <button id="lp-zoom-fit" title="适应画布">适应</button>
-    <span id="lp-zoom-value">100%</span>
-  </div>
-</main>
-${rightPanelMarkup}
-</div>
-${addSlideModalMarkup}
-${scriptMarkup}
-</div>`
-    : `${slidesMarkup}${navMarkup}${scriptMarkup}`;
+  const scriptMarkup = buildScriptMarkup();
+  const bodyMarkup = `${slidesMarkup}${navMarkup}${scriptMarkup}`;
 
   const theme = goal.theme || 'theme01';
   const colorScheme = goal.colorScheme || (theme === 'theme02' || theme === 'theme03' ? 'scheme-a' : theme === 'theme04' ? 'green' : theme === 'theme05' ? 'coral' : theme === 'theme06' ? 'volt' : 'light');
@@ -1494,7 +1440,7 @@ ${themeCssVars}
     }
   </style>
 </head>
-<body class="${bodyClass}">
+<body>
 ${bodyMarkup}
 </body>
 </html>`;
@@ -1522,280 +1468,6 @@ function buildNavMarkup(slideCount: number): string {
 </div>
 <div class="lp-page-counter"><span id="lp-current">1</span> / ${slideCount}</div>
 <div class="lp-hint">← → 翻页</div>`;
-}
-
-function buildEditorBarMarkup(goal: DeckGoal): string {
-  const theme = goal.theme || 'theme01';
-  const isTheme02 = theme === 'theme02';
-  const isTheme03 = theme === 'theme03';
-  const isTheme04 = theme === 'theme04';
-  const isTheme05 = theme === 'theme05';
-  const isTheme06 = theme === 'theme06';
-  const colorScheme = goal.colorScheme || (isTheme02 || isTheme03 ? 'scheme-a' : isTheme04 ? 'green' : isTheme05 ? 'coral' : isTheme06 ? 'volt' : 'light');
-  const appearance = goal.appearance || ((isTheme03 || isTheme04 || isTheme05 || isTheme06) ? 'dark' : undefined);
-
-  let appearanceButtons = '';
-  if (isTheme02) {
-    appearanceButtons = `<button class="lp-appearance-btn ${colorScheme === 'scheme-a' ? 'lp-appearance-active' : ''}" data-appearance="scheme-a" title="电光青绿" aria-pressed="${colorScheme === 'scheme-a'}">
-      电光青绿
-    </button>
-    <button class="lp-appearance-btn ${colorScheme === 'scheme-b' ? 'lp-appearance-active' : ''}" data-appearance="scheme-b" title="靛蓝珊瑚" aria-pressed="${colorScheme === 'scheme-b'}">
-      靛蓝珊瑚
-    </button>`;
-  } else if (isTheme03) {
-    appearanceButtons = `<button class="lp-appearance-btn ${appearance === 'light' ? 'lp-appearance-active' : ''}" data-appearance="light" title="浅色" aria-pressed="${appearance === 'light'}">
-      浅色
-    </button>
-    <button class="lp-appearance-btn ${appearance === 'dark' ? 'lp-appearance-active' : ''}" data-appearance="dark" title="深色" aria-pressed="${appearance === 'dark'}">
-      深色
-    </button>`;
-  } else if (isTheme04) {
-    appearanceButtons = `<button class="lp-appearance-btn ${colorScheme === 'green' ? 'lp-appearance-active' : ''}" data-theme="green" title="糖果绿" aria-pressed="${colorScheme === 'green'}">
-      糖果绿
-    </button>
-    <button class="lp-appearance-btn ${colorScheme === 'yellow' ? 'lp-appearance-active' : ''}" data-theme="yellow" title="柠檬黄" aria-pressed="${colorScheme === 'yellow'}">
-      柠檬黄
-    </button>
-    <button class="lp-appearance-btn ${colorScheme === 'blue' ? 'lp-appearance-active' : ''}" data-theme="blue" title="冰晶蓝" aria-pressed="${colorScheme === 'blue'}">
-      冰晶蓝
-    </button>
-    <button class="lp-appearance-btn ${colorScheme === 'pink' ? 'lp-appearance-active' : ''}" data-theme="pink" title="糖果粉" aria-pressed="${colorScheme === 'pink'}">
-      糖果粉
-    </button>`;
-  } else if (isTheme05) {
-    const scheme = String(colorScheme);
-    appearanceButtons = `<button class="lp-appearance-btn ${scheme === 'coral' ? 'lp-appearance-active' : ''}" data-theme="coral" title="珊瑚红" aria-pressed="${scheme === 'coral'}">
-      珊瑚红
-    </button>
-    <button class="lp-appearance-btn ${scheme === 'amber' ? 'lp-appearance-active' : ''}" data-theme="amber" title="琥珀黄" aria-pressed="${scheme === 'amber'}">
-      琥珀黄
-    </button>
-    <button class="lp-appearance-btn ${scheme === 'teal' ? 'lp-appearance-active' : ''}" data-theme="teal" title="青绿" aria-pressed="${scheme === 'teal'}">
-      青绿
-    </button>
-    <button class="lp-appearance-btn ${scheme === 'indigo' ? 'lp-appearance-active' : ''}" data-theme="indigo" title="靛蓝" aria-pressed="${scheme === 'indigo'}">
-      靛蓝
-    </button>
-    <button class="lp-appearance-btn ${scheme === 'violet' ? 'lp-appearance-active' : ''}" data-theme="violet" title="紫罗兰" aria-pressed="${scheme === 'violet'}">
-      紫罗兰
-    </button>`;
-  } else if (isTheme06) {
-    const scheme = String(colorScheme);
-    appearanceButtons = `<button class="lp-appearance-btn ${scheme === 'volt' ? 'lp-appearance-active' : ''}" data-theme="volt" title="电光青柠" aria-pressed="${scheme === 'volt'}">
-      电光青柠
-    </button>
-    <button class="lp-appearance-btn ${scheme === 'magma' ? 'lp-appearance-active' : ''}" data-theme="magma" title="熔岩珊瑚" aria-pressed="${scheme === 'magma'}">
-      熔岩珊瑚
-    </button>
-    <button class="lp-appearance-btn ${scheme === 'nebula' ? 'lp-appearance-active' : ''}" data-theme="nebula" title="星云蓝紫" aria-pressed="${scheme === 'nebula'}">
-      星云蓝紫
-    </button>
-    <button class="lp-appearance-btn ${scheme === 'nova' ? 'lp-appearance-active' : ''}" data-theme="nova" title="新星金黄" aria-pressed="${scheme === 'nova'}">
-      新星金黄
-    </button>`;
-  } else {
-    appearanceButtons = `<button class="lp-appearance-btn ${colorScheme === 'light' ? 'lp-appearance-active' : ''}" data-appearance="light" title="浅色" aria-pressed="${colorScheme === 'light'}">
-      浅色
-    </button>
-    <button class="lp-appearance-btn ${colorScheme === 'dark' ? 'lp-appearance-active' : ''}" data-appearance="dark" title="深色" aria-pressed="${colorScheme === 'dark'}">
-      深色
-    </button>`;
-  }
-
-  let lightDarkButtons = '';
-  if (isTheme04 || isTheme05 || isTheme06) {
-    lightDarkButtons = `<div class="lp-appearance-switcher lp-appearance-switcher--lightdark" role="group" aria-label="深浅模式">
-      <button class="lp-appearance-btn ${appearance === 'light' ? 'lp-appearance-active' : ''}" data-appearance="light" title="浅色" aria-pressed="${appearance === 'light'}">
-        浅色
-      </button>
-      <button class="lp-appearance-btn ${appearance === 'dark' ? 'lp-appearance-active' : ''}" data-appearance="dark" title="深色" aria-pressed="${appearance === 'dark'}">
-        深色
-      </button>
-    </div>`;
-  }
-
-  return `<div class="lp-editor-bar">
-  <span class="lp-editor-title">lemonPPT 编辑器</span>
-  <div class="lp-appearance-switcher" role="group" aria-label="外观">
-    ${appearanceButtons}
-  </div>
-  ${lightDarkButtons}
-  <button class="lp-editor-btn" id="lp-add-slide" title="添加新幻灯片">＋ 添加幻灯片</button>
-  <button class="lp-editor-btn lp-editor-btn-primary" id="lp-play" title="播放演示">▶ 播放</button>
-  <button class="lp-editor-btn" id="lp-undo" title="撤销 (Ctrl+Z)">↩ 撤销</button>
-  <button class="lp-editor-btn" id="lp-redo" title="重做 (Ctrl+Y)">↪ 重做</button>
-  <div class="lp-editor-export" id="lp-editor-export">
-    <button class="lp-editor-btn lp-editor-export-toggle" id="lp-export-toggle" type="button" aria-haspopup="true" aria-expanded="false">
-      <span>⬇</span> 导出 <span class="lp-editor-caret">⌄</span>
-    </button>
-    <div class="lp-editor-export-menu" id="lp-export-menu" hidden>
-      <button class="lp-editor-export-item" id="lp-export-html" type="button">
-        <span class="lp-editor-export-icon">&lt;/&gt;</span>
-        <span class="lp-editor-export-label">HTML</span>
-        <span class="lp-editor-export-tag">离线包</span>
-      </button>
-      <button class="lp-editor-export-item" id="lp-export-pdf" type="button">
-        <span class="lp-editor-export-icon">🗎</span>
-        <span class="lp-editor-export-label">PDF</span>
-        <span class="lp-editor-export-tag">下载</span>
-      </button>
-      <button class="lp-editor-export-item" id="lp-export-pptx" type="button">
-        <span class="lp-editor-export-icon">🖵</span>
-        <span class="lp-editor-export-label">PPTX</span>
-        <span class="lp-editor-export-tag">可编辑</span>
-      </button>
-    </div>
-  </div>
-</div>`;
-}
-
-const LAYOUT_ICONS: Record<string, string> = {
-  cover: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>',
-  tableOfContents: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
-  content: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h16"/></svg>',
-  metric: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>',
-  quote: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10c0-3 2-5 5-5m-5 5v5h5m6-5c0-3 2-5 5-5m-5 5v5h5"/></svg>',
-  closing: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M12 5l7 7-7 7"/></svg>',
-  feature: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>',
-  process: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>',
-  chapter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6"/></svg>',
-  comparison: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h7v12H4zM13 6h7v12h-7z"/></svg>',
-  stats: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v16h16"/></svg>',
-  timeline: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M4 12h4m8 0h4"/></svg>',
-  testimonial: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>',
-  roadmap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h16"/></svg>',
-  chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19v-6m5 6V9m5 10V5m5 14v-8"/></svg>',
-  bento: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="18" height="8" rx="1"/></svg>',
-  gallery: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5-5 6-3-3-5 5"/></svg>',
-  table: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 10h18M3 14h18M3 18h18"/></svg>',
-  tags: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h14"/></svg>',
-  filmstrip: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 6v12M18 6v12"/></svg>',
-  faq: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-1a3 3 0 0 1 3-3h0a3 3 0 0 0 3-3h0a3 3 0 0 0-3-3h0a3 3 0 0 0-3 3v1"/><circle cx="12" cy="17" r=".5" fill="currentColor"/></svg>',
-  team: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>',
-  pricing: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>',
-  partners: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><circle cx="17" cy="7" r="4"/></svg>',
-  image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5-5 6-3-3-5 5"/></svg>',
-  swot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h8v8H4zM12 4h8v8h-8zM4 12h8v8H4zM12 12h8v8h-8z"/></svg>',
-  pest: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM4 9h16M4 15h16M9 4v16"/></svg>',
-};
-
-function getLayoutIcon(role: string): string {
-  return LAYOUT_ICONS[role] ?? LAYOUT_ICONS.content;
-}
-
-function buildAddSlideModalMarkup(goal: DeckGoal): string {
-  const theme = goal.theme || 'theme01';
-  const layouts = listLayouts()
-    .filter((l) => l.theme === theme)
-    .sort((a, b) => a.role.localeCompare(b.role) || a.displayName.localeCompare(b.displayName));
-
-  const options = layouts.map((layout) => {
-    const icon = getLayoutIcon(layout.role);
-    const label = (layout.displayName || layout.id).replace(/^Theme\s+\d+\s*/, '');
-    return `<div class="lp-add-slide-option" data-layout="${escapeHtml(layout.id)}" data-role="${escapeHtml(layout.role)}">
-  <div class="lp-add-slide-icon">${icon}</div>
-  <span class="lp-add-slide-label">${escapeHtml(label)}</span>
-</div>`;
-  }).join('\n');
-
-  return `<div id="lp-add-slide-modal" class="lp-add-slide-modal" hidden>
-  <div class="lp-add-slide-modal-overlay" data-close-modal></div>
-  <div class="lp-add-slide-modal-content">
-    <button class="lp-add-slide-modal-close" data-close-modal aria-label="关闭">&times;</button>
-    <h3 class="lp-add-slide-modal-title">请选择你想添加的幻灯片版式</h3>
-    <div class="lp-add-slide-grid" data-scrollbar>
-      ${options}
-    </div>
-    <button class="lp-add-slide-modal-btn" id="lp-add-slide-confirm" disabled>添加幻灯片</button>
-  </div>
-</div>`;
-}
-
-function buildLeftPanelMarkup(
-  goal: DeckGoal,
-  slideHtmls: string[],
-  slideWidth: number,
-  slideHeight: number,
-): string {
-  const thumbInnerWidth = 156;
-  const scale = thumbInnerWidth / slideWidth;
-
-  const showDragHandle = goal.slides.length > 1;
-  const dragHandleHtml = showDragHandle
-    ? '<span class="lp-thumbnail-drag-handle" data-lp-action="drag-handle" aria-hidden="true">' +
-        '<svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor" aria-hidden="true">' +
-          '<circle cx="2.5" cy="2.5" r="1.5"/>' +
-          '<circle cx="9.5" cy="2.5" r="1.5"/>' +
-          '<circle cx="2.5" cy="8" r="1.5"/>' +
-          '<circle cx="9.5" cy="8" r="1.5"/>' +
-          '<circle cx="2.5" cy="13.5" r="1.5"/>' +
-          '<circle cx="9.5" cy="13.5" r="1.5"/>' +
-        '</svg>' +
-      '</span>'
-    : '';
-
-  const buttons = goal.slides.map((slide, index) => {
-    const label = getSlideLabel(slide);
-    const activeClass = index === 0 ? 'active' : '';
-    const slideHtml = slideHtmls[index] || '';
-    const draggableAttr = goal.slides.length > 1 ? 'draggable="true"' : '';
-    return `<div class="lp-thumbnail ${activeClass}" data-index="${index}" role="button" tabindex="0" ${draggableAttr} aria-label="幻灯片 ${index + 1}，拖动可调整顺序">
-  ${dragHandleHtml}
-  <div class="lp-thumbnail-render">
-    <div class="lp-thumbnail-scaler" style="width:${slideWidth}px;height:${slideHeight}px;transform:scale(${scale});transform-origin:top left;">
-      ${slideHtml}
-    </div>
-  </div>
-  <div class="lp-thumbnail-scrim"></div>
-  <div class="lp-thumbnail-content">
-    <div class="lp-thumbnail-index">${index + 1} / ${goal.slides.length}</div>
-    <div class="lp-thumbnail-title">${escapeHtml(label)}</div>
-    <div class="lp-thumbnail-layout">${escapeHtml(slide.layout)}</div>
-  </div>
-  <span class="lp-thumbnail-delete" data-lp-action="delete-slide" data-index="${index}" title="删除幻灯片" aria-label="删除幻灯片">×</span>
-</div>`;
-  }).join('');
-
-  return `<aside class="lp-editor-left-panel" data-scrollbar aria-label="幻灯片缩略图">
-  <div class="lp-delete-confirm-toast" id="lp-delete-confirm-toast" hidden>
-    <div class="lp-delete-confirm-text" id="lp-delete-confirm-text">确定删除该幻灯片？</div>
-    <div class="lp-delete-confirm-actions">
-      <button class="lp-delete-confirm-cancel" id="lp-delete-confirm-cancel" type="button">取消</button>
-      <button class="lp-delete-confirm-confirm" id="lp-delete-confirm-confirm" type="button">删除</button>
-    </div>
-  </div>
-  <div class="lp-editor-thumbnails">
-    ${buttons}
-  </div>
-</aside>`;
-}
-
-function getSlideLabel(slide: DeckGoal['slides'][number]): string {
-  const props = slide.props as Record<string, unknown> | undefined;
-  if (!props) return slide.layout;
-  const candidates = [
-    props.title,
-    props.name,
-    props.kicker,
-    props.quote,
-    props.heading,
-    (props.items && Array.isArray(props.items) ? props.items[0] : undefined),
-    (props.features && Array.isArray(props.features) ? (props.features[0] as { title?: string })?.title : undefined),
-    (props.members && Array.isArray(props.members) ? (props.members[0] as { name?: string })?.name : undefined),
-  ];
-  for (const value of candidates) {
-    if (value != null && String(value).trim()) return String(value).trim();
-  }
-  return slide.layout;
-}
-
-function buildRightPanelMarkup(): string {
-  return `<aside class="lp-editor-right-panel" data-scrollbar aria-label="属性面板">
-  <div class="lp-property-header">属性</div>
-  <div id="lp-property-content">
-    <div class="lp-property-empty">点击幻灯片中的文本或图片以编辑属性</div>
-  </div>
-</aside>`;
 }
 
 function buildScriptMarkup(): string {
@@ -1912,25 +1584,6 @@ function buildScriptMarkup(): string {
     window.__lemonPPT_initECharts();
   }
 })();
-</script>`;
-}
-
-function buildEditorScriptMarkup(goal: DeckGoal): string {
-  const goalJson = JSON.stringify(goal, null, 2).replace(/</g, '\\u003c');
-  const schemas: Record<string, unknown> = {};
-  listLayouts().forEach((layout) => {
-    const schema = getLayoutSchema(layout.id);
-    if (schema) {
-      schemas[layout.id] = schema;
-    }
-  });
-  const schemasJson = JSON.stringify(schemas).replace(/</g, '\\u003c');
-  return `<script src="./assets/client-render.js"></script>
-<script src="./assets/theme-echarts.js"></script>
-<script>
-window.__lemonPPT_goal = ${goalJson};
-window.__lemonPPT_layoutSchemas = ${schemasJson};
-${editorScript}
 </script>`;
 }
 

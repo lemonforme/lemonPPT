@@ -6,12 +6,10 @@ import type { DeckGoal, Slide } from '@lemonppt/core';
 import { renderSlide } from '@lemonppt/templates';
 import ReactDOMClient from 'react-dom/client';
 import ReactDOMServer from 'react-dom/server';
-import { renderDeck } from './render.js';
 
 declare global {
   interface Window {
     __lemonPPT_goal?: DeckGoal;
-    __lemonPPT_renderEditableHtml?: (goal: DeckGoal) => string;
     __lemonPPT_renderSlideHtml?: (slide: Slide, options: { slideIdx: number; editable: boolean; theme?: string }) => string;
     __lemonPPT_renderSlideToRoot?: (container: HTMLElement, slide: Slide, options: { slideIdx: number; editable: boolean; theme?: string }) => void;
     __lemonPPT_initECharts?: (theme?: string, root?: Element | null) => Promise<void>;
@@ -26,15 +24,6 @@ function escapeHtml(text: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
-}
-
-/**
- * 浏览器端离线渲染入口。
- * 将当前 goal 渲染为完整的 editor.html 字符串，供静态文件模式下结构变更后重新加载。
- */
-function renderEditableHtml(goal: DeckGoal): string {
-  const output = renderDeck(goal, { editable: true });
-  return output.html;
 }
 
 function renderSlideHtml(slide: Slide, options: { slideIdx: number; editable: boolean; theme?: string }): string {
@@ -89,10 +78,9 @@ async function disposeECharts(theme?: string): Promise<void> {
   }
 }
 
-window.__lemonPPT_renderEditableHtml = renderEditableHtml;
 window.__lemonPPT_renderSlideHtml = renderSlideHtml;
 window.__lemonPPT_renderSlideToRoot = renderSlideToRoot;
 window.__lemonPPT_initECharts = initECharts;
 window.__lemonPPT_disposeECharts = disposeECharts;
 
-export { renderEditableHtml, renderSlideHtml, renderSlideToRoot, initECharts, disposeECharts };
+export { renderSlideHtml, renderSlideToRoot, initECharts, disposeECharts };

@@ -35,6 +35,12 @@ export async function loadEChartsTheme(theme: string): Promise<EChartsThemeModul
     case 'theme06':
       module = await import('./theme06-init.js');
       break;
+    case 'theme09':
+      module = await import('./theme09-init.js');
+      break;
+    case 'theme10':
+      module = await import('./theme10-init.js');
+      break;
     case 'theme01':
     default:
       module = await import('./theme01-init.js');

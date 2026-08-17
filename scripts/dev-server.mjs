@@ -11,7 +11,7 @@ import { createServer } from 'node:http';
 import { readFile, writeFile, mkdir, copyFile, cp } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderDeck, exportDeckToPptx, exportDeckToPdf } from '@lemonppt/renderer';
+import { renderDeck, renderEditorData, exportDeckToPptx, exportDeckToPdf } from '@lemonppt/renderer';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -54,7 +54,7 @@ async function copyThemeAssets(theme, destAssetsDir) {
 
 async function copyAllThemeAssets(destAssetsDir) {
   await mkdir(destAssetsDir, { recursive: true });
-  for (const theme of ['theme01', 'theme02', 'theme03', 'theme04', 'theme05']) {
+  for (const theme of ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06', 'theme07', 'theme08', 'theme09', 'theme10']) {
     const cssSource = path.join(rootDir, 'packages/themes/src', theme, 'styles.css');
     const cssDest = path.join(destAssetsDir, `${theme}.css`);
     await copyFile(cssSource, cssDest);
@@ -72,13 +72,39 @@ async function copyAllThemeAssets(destAssetsDir) {
   const themeEchartsSource = path.join(rootDir, 'packages/renderer/dist/client/theme-echarts.js');
   const themeEchartsDest = path.join(destAssetsDir, 'theme-echarts.js');
   await copyFile(themeEchartsSource, themeEchartsDest);
+
+  // 同步编辑器交互脚本
+  const editorScriptSource = path.join(rootDir, 'packages/renderer/dist/client/editor-script.js');
+  const editorScriptDest = path.join(destAssetsDir, 'editor-script.js');
+  await copyFile(editorScriptSource, editorScriptDest);
+
+  // 同步 jQuery
+  const jquerySource = path.join(rootDir, 'node_modules/jquery/dist/jquery.min.js');
+  const jqueryDest = path.join(destAssetsDir, 'jquery.min.js');
+  await copyFile(jquerySource, jqueryDest);
 }
 
 async function writeEditorHtml(goal) {
-  const result = renderDeck(goal, { editable: true });
+  const data = renderEditorData(goal, { width: 1280, height: 720 });
   const assetsDir = path.join(outputDir, 'assets');
   await copyAllThemeAssets(assetsDir);
-  await writeFile(path.join(outputDir, 'editor.html'), result.html, 'utf-8');
+
+  const templatesDir = path.join(rootDir, 'packages/renderer/templates');
+  let editorHtml = await readFile(path.join(templatesDir, 'editor.html'), 'utf-8');
+  let editorJs = await readFile(path.join(templatesDir, 'editor.js'), 'utf-8');
+
+  // 静态文件模式下使用相对资源路径
+  editorHtml = editorHtml.replace(/\/deck\/assets\//g, './assets/');
+  editorHtml = editorHtml.replace(/src="\/editor\.js"/g, 'src="./editor.js"');
+
+  const embeddedData = `<script>
+window.__lemonPPT_assetsBase = './assets/';
+window.__lemonPPT_editorData = ${JSON.stringify(data)};
+</script>`;
+  editorHtml = editorHtml.replace('</head>', `${embeddedData}\n</head>`);
+
+  await writeFile(path.join(outputDir, 'editor.html'), editorHtml, 'utf-8');
+  await writeFile(path.join(outputDir, 'editor.js'), editorJs, 'utf-8');
 }
 
 async function writeDeckHtml(goal) {

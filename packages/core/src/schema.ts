@@ -63,8 +63,8 @@ export const deckGoalSchema = z.object({
   audience: z.string().min(1),
   owner: z.string().optional(),
   theme: z.string().min(1),
-  colorScheme: z.enum(['light', 'dark', 'scheme-a', 'scheme-b', 'green', 'yellow', 'blue', 'pink', 'coral', 'amber', 'teal', 'indigo', 'violet', 'volt', 'magma', 'nebula', 'nova']).default('light'),
-  appearance: z.enum(['light', 'dark']).optional(),
+  colorScheme: z.enum(['light', 'dark', 'scheme-a', 'scheme-b', 'green', 'yellow', 'blue', 'pink', 'coral', 'amber', 'teal', 'indigo', 'violet', 'volt', 'magma', 'nebula', 'nova', 'obsidian-gold', 'ink-editorial']).default('light'),
+  appearance: z.enum(['light', 'dark', 'primary', 'muted']).optional(),
   language: z.enum(['zh', 'en']).default('zh'),
   pageCount: z.number().int().min(1).max(200),
   randomSeed: z.string().optional(),
@@ -83,8 +83,8 @@ export const rawDeckGoalSchema = z.object({
   audience: z.string().min(1),
   owner: z.string().optional(),
   theme: z.string().min(1),
-  colorScheme: z.enum(['light', 'dark', 'scheme-a', 'scheme-b', 'green', 'yellow', 'blue', 'pink', 'coral', 'amber', 'teal', 'indigo', 'violet', 'volt', 'magma', 'nebula', 'nova']).default('light'),
-  appearance: z.enum(['light', 'dark']).optional(),
+  colorScheme: z.enum(['light', 'dark', 'scheme-a', 'scheme-b', 'green', 'yellow', 'blue', 'pink', 'coral', 'amber', 'teal', 'indigo', 'violet', 'volt', 'magma', 'nebula', 'nova', 'obsidian-gold', 'ink-editorial']).default('light'),
+  appearance: z.enum(['light', 'dark', 'primary', 'muted']).optional(),
   language: z.enum(['zh', 'en']).default('zh'),
   pageCount: z.number().int().min(1).max(200),
   randomSeed: z.string().optional(),
@@ -139,6 +139,42 @@ export function validateSlideContent(slide: Slide, index?: number): string[] {
   const layoutId = slide.layout ?? '';
 
   // theme04 部分版式使用自定义字段名，优先按 layoutId 校验以避免误报。
+  if (layoutId.startsWith('theme10_')) {
+    const theme10Checks: Record<string, () => void> = {
+      theme10_calendar_v1: () => {
+        if (typeof props.year !== 'number') add('calendar year missing');
+        if (typeof props.values !== 'string') add('calendar values missing');
+      },
+      theme10_cscatter_v1: () => {
+        if (arr('points').length === 0) add('scatter points missing');
+      },
+      theme10_gantt_v1: () => {
+        if (arr('tasks').length === 0) add('gantt tasks missing');
+      },
+      theme10_gauge_v1: () => {
+        if (props.value === undefined || props.value === '') add('gauge value missing');
+      },
+      theme10_orgchart_v1: () => {
+        if (!props.rootName) add('orgchart rootName missing');
+        if (arr('children').length === 0) add('orgchart children missing');
+      },
+      theme10_sankey_v1: () => {
+        if (arr('links').length === 0) add('sankey links missing');
+      },
+      theme10_small_multiples_v1: () => {
+        if (arr('panels').length === 0) add('small multiples panels missing');
+      },
+      theme10_timeline_v1: () => {
+        if (arr('events').length === 0) add('timeline events missing');
+      },
+    };
+    const check = theme10Checks[layoutId];
+    if (check) {
+      check();
+      return errors;
+    }
+  }
+
   if (layoutId.startsWith('theme05_')) {
     const theme05Checks: Record<string, () => void> = {
       theme05_heatmap_v1: () => {
@@ -304,33 +340,110 @@ export function validateSlideContent(slide: Slide, index?: number): string[] {
         const chartLabels = arr('labels');
         const chartBars = arr('bars');
         const chartSegments = arr('segments');
-        if (chartLabels.length === 0 && chartBars.length === 0 && chartSegments.length === 0) {
+        const chartSeries = arr('series');
+        const chartItems = arr('items');
+        const chartRows = arr('rows');
+        const chartValues = arr('values');
+        const chartNodes = arr('nodes');
+        const chartLinks = arr('links');
+        const chartIntervals = arr('intervals');
+        const chartCategories = arr('categories');
+        const chartAxes = arr('axes');
+        const chartAxis = arr('axis');
+        const chartEvents = arr('events');
+        const chartTasks = arr('tasks');
+        const chartChildren = arr('children');
+        const chartPanels = arr('panels');
+        const chartPoints = arr('points');
+        const hasSeriesData =
+          chartSeries.length > 0 &&
+          chartSeries.every(
+            (s) =>
+              (Array.isArray((s as Record<string, unknown>).data) && ((s as Record<string, unknown>).data as unknown[]).length > 0) ||
+              typeof (s as Record<string, unknown>).values === 'string' ||
+              typeof (s as Record<string, unknown>).points === 'string' ||
+              typeof (s as Record<string, unknown>).name === 'string'
+          );
+        const hasLabels =
+          chartLabels.length > 0 ||
+          chartIntervals.length > 0 ||
+          chartItems.length > 0 ||
+          chartRows.length > 0 ||
+          chartNodes.length > 0 ||
+          chartCategories.length > 0 ||
+          chartAxes.length > 0 ||
+          chartAxis.length > 0 ||
+          hasSeriesData;
+        const hasData =
+          arr('data').length > 0 ||
+          chartBars.length > 0 ||
+          chartSegments.length > 0 ||
+          hasSeriesData ||
+          chartItems.length > 0 ||
+          chartRows.length > 0 ||
+          chartValues.length > 0 ||
+          chartNodes.length > 0 ||
+          chartLinks.length > 0 ||
+          chartEvents.length > 0 ||
+          chartTasks.length > 0 ||
+          chartChildren.length > 0 ||
+          chartPanels.length > 0 ||
+          chartPoints.length > 0 ||
+          typeof props.values === 'string' ||
+          typeof props.value === 'number';
+        if (!hasLabels) {
           add('chart labels missing');
         }
         if (layoutId === 'chart_v2') {
           const datasets = arr('datasets');
-          const hasData = datasets.some(
+          const hasDatasetData = datasets.some(
             (d) => Array.isArray((d as Record<string, unknown>).data) && ((d as Record<string, unknown>).data as unknown[]).length > 0
           );
-          if (datasets.length === 0 || !hasData) add('chart datasets missing or empty');
-        } else if (
-          arr('data').length === 0 &&
-          chartBars.length === 0 &&
-          chartSegments.length === 0
-        ) {
+          if (datasets.length === 0 || !hasDatasetData) add('chart datasets missing or empty');
+        } else if (!hasData) {
           add('chart data missing');
         }
       }
       break;
     }
-    case 'stats':
-      if (arr('stats').length === 0) add('stats missing');
+    case 'stats': {
+      const left = props.left as Record<string, unknown> | undefined;
+      const right = props.right as Record<string, unknown> | undefined;
+      const statItems = arr('items');
+      const statRows = arr('rows');
+      const hasSideValue =
+        (left && (left.value || left.metric)) ||
+        (right && (right.value || right.metric));
+      const hasItemValue = statItems.some(
+        (m) =>
+          (m as Record<string, unknown>).value ||
+          (m as Record<string, unknown>).metric ||
+          (m as Record<string, unknown>).score
+      );
+      const hasRowValue = statRows.some(
+        (m) =>
+          (m as Record<string, unknown>).value ||
+          (m as Record<string, unknown>).metric
+      );
+      const hasMainValue =
+        typeof props.value === 'string' || typeof props.value === 'number';
+      if (
+        arr('stats').length === 0 &&
+        !hasSideValue &&
+        !hasItemValue &&
+        !hasRowValue &&
+        !hasMainValue
+      ) {
+        add('stats missing');
+      }
       break;
+    }
     case 'process':
       if (arr('steps').length === 0) add('steps missing');
       break;
     case 'timeline':
-      if (arr('milestones').length === 0) add('milestones missing');
+      if (arr('milestones').length === 0 && arr('rounds').length === 0 && arr('phases').length === 0)
+        add('milestones missing');
       break;
     case 'roadmap': {
       const layoutId = slide.layout ?? '';
@@ -377,18 +490,23 @@ export function validateSlideContent(slide: Slide, index?: number): string[] {
       if (arr('tags').length === 0) add('tags missing');
       break;
     case 'tableOfContents':
-      if (arr('items').length === 0) add('toc items missing');
+      if (arr('items').length === 0 && arr('entries').length === 0) add('toc items missing');
       break;
     case 'metric': {
       const metrics = arr('metrics');
       const items = arr('items');
+      const supporting = arr('supporting');
+      const hasMain = props.value || props.metric || props.number;
       if (metrics.length > 0) {
         const hasValue = metrics.some((m) => (m as Record<string, unknown>).value || (m as Record<string, unknown>).metric);
         if (!hasValue) add('metric value missing');
       } else if (items.length > 0) {
         const hasValue = items.some((m) => (m as Record<string, unknown>).value || (m as Record<string, unknown>).metric);
         if (!hasValue) add('metric value missing');
-      } else if (!props.value && !props.metric) {
+      } else if (supporting.length > 0) {
+        const hasValue = supporting.some((m) => (m as Record<string, unknown>).value || (m as Record<string, unknown>).metric);
+        if (!hasValue) add('metric value missing');
+      } else if (!hasMain) {
         add('metric value missing');
       }
       break;
@@ -399,7 +517,7 @@ export function validateSlideContent(slide: Slide, index?: number): string[] {
       break;
     case 'cover':
     case 'closing':
-      if (!props.title) add('title missing');
+      if (!props.title && !props.statement && !props.quote && !props.headline && !props.word) add('title missing');
       break;
     case 'swot':
       if (

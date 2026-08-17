@@ -32,12 +32,6 @@ describe('renderDeck', () => {
     expect(result.html.match(/class="lp-slide-wrapper/g)?.length).toBe(2);
   });
 
-  it('should include editor bar when editable', () => {
-    const result = renderDeck(sampleGoal, { editable: true });
-    expect(result.html).toContain('<div class="lp-editor-bar">');
-    expect(result.html).toContain('window.__lemonPPT_goal');
-  });
-
   it('should not include editor bar by default', () => {
     const result = renderDeck(sampleGoal);
     expect(result.html).not.toContain('<div class="lp-editor-bar">');

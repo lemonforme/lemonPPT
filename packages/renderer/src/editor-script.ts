@@ -4,25 +4,6 @@
 
 export const editorScript = `
 (function () {
-  // #region debug-point logging-helper
-  const __dbgUrl = 'http://127.0.0.1:7777/event';
-  const __dbgSession = 'add-slide-null-regression';
-  function __dbg(hypothesisId, location, msg, data) {
-    try {
-      fetch(__dbgUrl, {
-        method: 'POST',
-        body: JSON.stringify({ sessionId: __dbgSession, runId: 'pre-fix', hypothesisId, location, msg: '[DEBUG] ' + msg, data: data || {}, ts: Date.now() })
-      }).catch(function () {});
-    } catch (e) {}
-  }
-  window.addEventListener('error', (e) => {
-    __dbg('ERR', 'window.onerror', e.message, { filename: e.filename, lineno: e.lineno, colno: e.colno, stack: e.error && e.error.stack });
-  });
-  window.addEventListener('unhandledrejection', (e) => {
-    __dbg('ERR', 'window.unhandledrejection', String(e.reason), { stack: e.reason && e.reason.stack });
-  });
-  // #endregion
-
   // 用 jQuery 为所有带 data-scrollbar 的容器添加自定义滚动条样式类
   if (typeof jQuery !== 'undefined') {
     jQuery(function ($) {
@@ -30,17 +11,20 @@ export const editorScript = `
     });
   }
 
-  const STORAGE_KEY = 'lemonppt:editor:v2:' + (window.__lemonPPT_goal?.randomSeed || window.__lemonPPT_goal?.title || 'default');
   const MIGRATION_KEY = 'lemonppt:editor:migration:showInsight:v1';
   const MAX_HISTORY = 50;
 
   let goal = window.__lemonPPT_goal;
   if (!goal) return;
 
+  function getStorageKey() {
+    return 'lemonppt:editor:v2:' + (goal.theme || 'theme01') + ':' + (goal.randomSeed || goal.title || 'default');
+  }
+
   // 优先从 localStorage 恢复
   let needsDomRebuild = false;
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(getStorageKey());
     if (saved) {
       const parsed = JSON.parse(saved);
       if (parsed && parsed.slides) {
@@ -146,7 +130,7 @@ export const editorScript = `
     autoSaveTimer = setTimeout(() => {
       autoSaveTimer = null;
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(goal));
+        localStorage.setItem(getStorageKey(), JSON.stringify(goal));
       } catch (err) {
         console.warn('自动保存失败', err);
       }
@@ -468,11 +452,32 @@ export const editorScript = `
   if (undoBtn) undoBtn.addEventListener('click', undo);
   if (redoBtn) redoBtn.addEventListener('click', redo);
 
+  const saveDeckBtn = document.getElementById('lp-save-deck');
+  if (saveDeckBtn) {
+    saveDeckBtn.addEventListener('click', () => {
+      try {
+        localStorage.setItem(getStorageKey(), JSON.stringify(goal));
+        const original = saveDeckBtn.textContent;
+        saveDeckBtn.textContent = '已保存';
+        saveDeckBtn.disabled = true;
+        setTimeout(() => {
+          saveDeckBtn.textContent = original;
+          saveDeckBtn.disabled = false;
+        }, 1200);
+      } catch (err) {
+        console.warn('手动保存失败', err);
+        alert('保存失败，请检查浏览器存储权限。');
+      }
+    });
+  }
+
   function syncAppearanceFromGoal() {
     const t = goal.theme || 'theme01';
-    if (t === 'theme04' || t === 'theme05' || t === 'theme06') {
-      const scheme = goal.colorScheme || (t === 'theme05' ? 'coral' : t === 'theme06' ? 'volt' : 'green');
-      const appearance = goal.appearance || 'dark';
+    if (t === 'theme04' || t === 'theme05' || t === 'theme06' || t === 'theme07' || t === 'theme08' || t === 'theme09' || t === 'theme10') {
+      const scheme = goal.colorScheme || (t === 'theme05' ? 'coral' : t === 'theme06' ? 'volt' : t === 'theme07' ? 'cold-white' : t === 'theme08' ? 'obsidian-gold' : t === 'theme09' ? 'ink-editorial' : t === 'theme10' ? 'gold-index' : 'green');
+      const rawAppearance = goal.appearance || (t === 'theme07' ? 'light' : t === 'theme08' || t === 'theme09' || t === 'theme10' ? 'primary' : 'dark');
+      /* theme08 / theme09 归一化：light→muted / dark→primary */
+      const appearance = (t === 'theme08' || t === 'theme09') ? ((rawAppearance === 'light' || rawAppearance === 'muted') ? 'muted' : 'primary') : rawAppearance;
       document.documentElement.setAttribute('data-theme', scheme);
       document.documentElement.setAttribute('data-appearance', appearance);
     } else if (t === 'theme03') {
@@ -492,11 +497,14 @@ export const editorScript = `
       if (!appearanceValue && !themeValue) return;
 
       let active = false;
-      if (t === 'theme04' || t === 'theme05' || t === 'theme06') {
+      if (t === 'theme04' || t === 'theme05' || t === 'theme06' || t === 'theme07' || t === 'theme08' || t === 'theme09' || t === 'theme10') {
         if (themeValue) {
-          active = themeValue === (goal.colorScheme || (t === 'theme05' ? 'coral' : t === 'theme06' ? 'volt' : 'green'));
+          active = themeValue === (goal.colorScheme || (t === 'theme05' ? 'coral' : t === 'theme06' ? 'volt' : t === 'theme07' ? 'cold-white' : t === 'theme08' ? 'obsidian-gold' : t === 'theme09' ? 'ink-editorial' : t === 'theme10' ? 'gold-index' : 'green'));
         } else if (appearanceValue) {
-          active = appearanceValue === (goal.appearance || 'dark');
+          const rawGoal = goal.appearance || (t === 'theme07' ? 'light' : t === 'theme08' || t === 'theme09' || t === 'theme10' ? 'primary' : 'dark');
+          const normGoal = (t === 'theme08' || t === 'theme09') ? ((rawGoal === 'light' || rawGoal === 'muted') ? 'muted' : 'primary') : rawGoal;
+          const normBtn = (t === 'theme08' || t === 'theme09') ? ((appearanceValue === 'light' || appearanceValue === 'muted') ? 'muted' : 'primary') : appearanceValue;
+          active = normBtn === normGoal;
         }
       } else if (t === 'theme03') {
         active = appearanceValue === (goal.appearance || 'dark');
@@ -511,8 +519,11 @@ export const editorScript = `
   function applyAppearanceClientSide(newMode) {
     const t = goal.theme || 'theme01';
 
-    if (t === 'theme04' || t === 'theme05' || t === 'theme06') {
-      if (newMode === goal.appearance) return;
+    if (t === 'theme04' || t === 'theme05' || t === 'theme06' || t === 'theme07' || t === 'theme08' || t === 'theme09' || t === 'theme10') {
+      /* theme08 / theme09 归一化：light→muted / dark→primary */
+      const normMode = (t === 'theme08' || t === 'theme09') ? ((newMode === 'light' || newMode === 'muted') ? 'muted' : 'primary') : newMode;
+      const curNorm = (t === 'theme08' || t === 'theme09') ? ((goal.appearance === 'light' || goal.appearance === 'muted') ? 'muted' : 'primary') : goal.appearance;
+      if (normMode === curNorm) return;
       recordHistory();
       goal.appearance = newMode;
       autoSave();
@@ -1547,18 +1558,12 @@ export const editorScript = `
   }
 
   function confirmAddSlide() {
-    // #region debug-point C:add-slide
-    __dbg('C', 'editor-script.ts:confirmAddSlide', 'start', { selectedLayoutId, selectedRole, slidesLength: goal.slides.length });
-    // #endregion
     if (!selectedLayoutId) return;
     const newSlide = createDefaultSlide(selectedLayoutId, selectedRole || selectedLayoutId.split('_')[0]);
     recordHistory();
     goal.slides.push(newSlide);
     selectedSlideIdx = goal.slides.length - 1;
     // current 会在 rebuildSlidesAndThumbnails 中同步，避免在 DOM 重建前访问越界
-    // #region debug-point C:add-slide
-    __dbg('C', 'editor-script.ts:confirmAddSlide', 'pushed', { newIndex: selectedSlideIdx, newSlideLayout: newSlide.layout, newSlideProps: JSON.parse(JSON.stringify(newSlide.props)) });
-    // #endregion
     autoSave();
     closeAddSlideModal();
     reloadEditor();
@@ -1633,31 +1638,11 @@ export const editorScript = `
   }
 
   function updateClasses() {
-    // #region debug-point B:update-classes
-    const activeBefore = Array.from(slides).map((s, i) => ({ i, active: s.classList.contains('active'), prev: s.classList.contains('prev') }));
-    slides.forEach((slide, index) => {
-      slide.classList.remove('active', 'prev', 'enter', 'leave');
-      if (index === current) slide.classList.add('active');
-      else if (index < current) slide.classList.add('prev');
-    });
-    const activeAfter = Array.from(slides).map((s, i) => ({ i, active: s.classList.contains('active'), prev: s.classList.contains('prev'), layout: s.dataset.layout }));
-    const computed = Array.from(slides).map((s, i) => {
-      const st = window.getComputedStyle(s);
-      return { i, opacity: st.opacity, transform: st.transform, zIndex: st.zIndex, display: st.display, visibility: st.visibility };
-    });
-    __dbg('B', 'editor-script.ts:updateClasses', 'classes updated', { current, activeBefore, activeAfter, computed });
-    // #endregion
     updateEditorUI();
   }
 
   function goTo(index) {
-    // #region debug-point A:goto-entry
-    __dbg('A', 'editor-script.ts:goTo', 'goTo called', { from: current, to: index, slidesLength: slides.length, isTransitioning, deckExists: !!deck });
-    // #endregion
     if (index === current || index < 0 || index >= slides.length || isTransitioning) {
-      // #region debug-point A:goto-bail
-      __dbg('A', 'editor-script.ts:goTo', 'goTo bailed', { reason: index === current ? 'same' : index < 0 ? 'negative' : index >= slides.length ? 'overflow' : 'transitioning', current, index, slidesLength: slides.length });
-      // #endregion
       return;
     }
     const leaving = slides[current];
@@ -2251,9 +2236,6 @@ export const editorScript = `
   // 静态文件模式下，增删幻灯片后不再使用 document.write 重写整页（会中断 CSS/资源加载），
   // 而是直接在现有 DOM 中重建 slide 容器和缩略图，并复用 React root 重新渲染内容。
   function rebuildSlidesAndThumbnails() {
-    // #region debug-point D:rebuild
-    __dbg('D', 'editor-script.ts:rebuildSlidesAndThumbnails', 'start', { current, selectedSlideIdx, slidesLength: goal.slides.length });
-    // #endregion
     if (!deck) return;
     if (typeof window.__lemonPPT_renderSlideHtml !== 'function') return;
 
@@ -2325,16 +2307,10 @@ export const editorScript = `
     }
 
     refreshSlidesAndThumbnails();
-    // #region debug-point D:rebuild
-    __dbg('D', 'editor-script.ts:rebuildSlidesAndThumbnails', 'refreshed', { current, slidesLength: slides.length, thumbnailsLength: thumbnails.length });
-    // #endregion
     attachThumbnailListeners();
     updateClasses();
     renderAllSlidesToRoot();
     initThumbnailVirtualScroll();
-    // #region debug-point D:rebuild
-    __dbg('D', 'editor-script.ts:rebuildSlidesAndThumbnails', 'done', { current, slidesLength: slides.length });
-    // #endregion
   }
 
   function refreshCurrentSlide() {
@@ -3241,14 +3217,8 @@ export const editorScript = `
     if (typeof window.__lemonPPT_renderSlideToRoot !== 'function') return;
     const slide = goal.slides[index];
     if (!slide || !wrapper) {
-      // #region debug-point C:render-missing
-      __dbg('C', 'editor-script.ts:renderSlideToRootByIndex', 'missing slide or wrapper', { index, hasSlide: !!slide, hasWrapper: !!wrapper });
-      // #endregion
       return;
     }
-    // #region debug-point C:render-start
-    __dbg('C', 'editor-script.ts:renderSlideToRootByIndex', 'rendering slide', { index, layout: slide.layout, wrapperChildren: wrapper.childNodes.length });
-    // #endregion
     window.__lemonPPT_renderSlideToRoot(wrapper, slide, { slideIdx: index, editable: true, theme: goal.theme });
     initEditableElements(wrapper);
   }
@@ -3285,15 +3255,9 @@ export const editorScript = `
   // 预创建所有 slide 的 React root 并渲染，使切页和非 active slide 更新都无需重新构建 DOM
   function renderAllSlidesToRoot() {
     if (typeof window.__lemonPPT_renderSlideToRoot !== 'function') {
-      // #region debug-point C:render-all-noop
-      __dbg('C', 'editor-script.ts:renderAllSlidesToRoot', 'renderSlideToRoot not available', {});
-      // #endregion
       return;
     }
     const wrappers = document.querySelectorAll('.lp-slide-wrapper');
-    // #region debug-point C:render-all-start
-    __dbg('C', 'editor-script.ts:renderAllSlidesToRoot', 'rendering all slides', { wrapperCount: wrappers.length, goalSlideCount: goal.slides.length });
-    // #endregion
     wrappers.forEach((wrapper, index) => {
       renderSlideToRootByIndex(index, wrapper);
     });
@@ -3353,5 +3317,44 @@ export const editorScript = `
     // 预创建并渲染所有 slide 的 React root，使切页与后续更新都走 React reconcile
     renderAllSlidesToRoot();
   }
+
+  // 暴露给 editor.js：无刷新切换主题时重置内部状态
+  window.__lemonPPT_applyTheme = function(newGoal, newSlidesMarkup) {
+    try {
+      const oldKey = 'lemonppt:editor:v2:' + (goal.theme || 'theme01') + ':' + (goal.randomSeed || goal.title || 'default');
+      localStorage.setItem(oldKey, JSON.stringify(goal));
+    } catch (err) {
+      console.warn('切换主题前保存失败', err);
+    }
+    goal = newGoal;
+    window.__lemonPPT_goal = goal;
+
+    // 尝试恢复当前主题的本地编辑状态
+    try {
+      const newKey = 'lemonppt:editor:v2:' + (goal.theme || 'theme01') + ':' + (goal.randomSeed || goal.title || 'default');
+      const saved = localStorage.getItem(newKey);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && Array.isArray(parsed.slides)) {
+          goal = parsed;
+          window.__lemonPPT_goal = goal;
+        }
+      }
+    } catch (err) {
+      console.warn('切换主题后恢复失败', err);
+    }
+
+    const slidesContainer = document.getElementById('lp-slides');
+    if (slidesContainer) {
+      slidesContainer.innerHTML = newSlidesMarkup;
+    }
+    current = 0;
+    selectedSlideIdx = 0;
+    rebuildSlidesAndThumbnails();
+    selectSlide(current);
+    syncAppearanceFromGoal();
+    autoSave();
+    updateUndoRedoButtons();
+  };
 })();
 `;

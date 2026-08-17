@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Sheet, LpPhoto } from './shared.js';
 
 export interface Theme01CoverV1Props {
   kicker?: string;
@@ -24,6 +25,9 @@ export const theme01CoverV1Meta: LayoutMeta = {
   displayName: 'Theme 01 封面',
   description: '弥散渐变背景 + 玻璃质感内容区',
   needsMedia: true,
+  mediaSlots: [{ name: '封面影像', fieldPath: 'image', canPresetMedia: true }],
+  tags: ['cover', 'hero', 'photo', 'light'],
+  contentShape: 'cover',
 };
 
 export const theme01CoverV1Schema: PropsSchema = {
@@ -65,20 +69,19 @@ export function Theme01CoverV1(props: Theme01CoverV1Props): ReactNode {
   const { kicker, title, subtitle, date, image, _slideIdx, _editable } = props;
 
   return (
-  <div className="lp-slide lp-cover-v1">
-      {image && (
-    <img
-          className="lp-cover-image"
-          src={image}
-          alt=""
-          data-lp-editable-image="true"
-          data-lp-slide-idx={_slideIdx}
-          data-lp-prop="image"
-    />
-      )}
+  <Sheet substrate="light" frame="stage" className="lp-cover-v1">
+      <LpPhoto
+        prop="image"
+        src={image}
+        slideIdx={_slideIdx}
+        editable={_editable}
+        ratio="fill"
+        hint="点击上传封面影像"
+        className="lp-cover-image"
+      />
       <div className="lp-cover-content">
     {kicker && (
-          <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill lp-rise">
+          <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill lp-rise lp-cover-kicker">
       {kicker}
           </EditableField>
     )}
@@ -96,6 +99,6 @@ export function Theme01CoverV1(props: Theme01CoverV1Props): ReactNode {
           </EditableField>
     )}
       </div>
-  </div>
+  </Sheet>
   );
 }
