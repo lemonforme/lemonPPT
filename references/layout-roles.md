@@ -2520,7 +2520,7 @@
   - 媒体槽：无
   - 字段：`imageUrl`: image, `kicker`: text, `title`: text, `subtitle`: textarea, `description`: textarea, `cards`: array, `footnote`: textarea, `imageRatio`: select
 - **`theme07_case_grid_v1`** — Theme 07 调研案例（三列）
-  - 描述：三列并排案例卡片：公司名 + 图片 + 标签 + 关键指标，对齐大师案例页网格
+  - 描述：三列并排案例卡片：公司名 + 图片 + 标签 + 关键指标，对齐参考案例页网格
   - 媒体槽：无
   - 字段：`imageUrl`: image, `kicker`: text, `title`: text, `subtitle`: textarea, `description`: textarea, `cards`: array, `footnote`: textarea, `imageRatio`: select
 - **`theme07_sources_v1`** — Theme 07 数据来源

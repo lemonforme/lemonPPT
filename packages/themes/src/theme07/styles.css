@@ -2,7 +2,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  * 冷白底 + 深墨文字 + 低饱和强调色 + 衬线标题 + 结构化数据卡片
  * 借鉴「冷白机构视觉系统」思路：柔和光晕、数据条码、卡片水印、章节深色变体
- * 所有色值/类名均为原创，不复制 Dashi theme07 具体实现
+ * 所有色值/类名均为原创，不复制 third-party theme07 具体实现
  */
 
 /* ============ 基础布局与氛围背景 ============ */
@@ -1728,7 +1728,7 @@
   overflow: hidden;
 }
 
-/* ============ 通用聚焦高亮（数据页统一，对齐大师 focusEnabled/focusIndex） ============ */
+/* ============ 通用聚焦高亮（数据页统一，对齐参考 focusEnabled/focusIndex） ============ */
 .lp-theme07 .lp-focus {
   position: relative;
   border-color: var(--lp-accent) !important;
@@ -3401,7 +3401,7 @@
   }
 }
 
-/* ============ DROP MEDIA 图片占位（大师 PPT 签名设计） ============ */
+/* ============ DROP MEDIA 图片占位（参考 PPT 签名设计） ============ */
 
 .lp-theme07-drop-media {
   position: relative;
@@ -3476,7 +3476,7 @@
   border-top: 1px solid rgba(123, 158, 123, 0.12);
 }
 
-/* --- company-layout 图片区域升级（匹配大师 PPT page056/057） --- */
+/* --- company-layout 图片区域升级（匹配参考 PPT page056/057） --- */
 
 .lp-theme07-company-image {
   width: 100%;
@@ -3512,7 +3512,7 @@
     );
 }
 
-/* --- case-v1 每张卡片图片区域（匹配大师 PPT page009） --- */
+/* --- case-v1 每张卡片图片区域（匹配参考 PPT page009） --- */
 
 .lp-theme07-case-card-image {
   width: 100%;
@@ -3530,7 +3530,7 @@
   object-fit: cover;
 }
 
-/* --- sector-layout 右侧图片区域（匹配大师 PPT page030） --- */
+/* --- sector-layout 右侧图片区域（匹配参考 PPT page030） --- */
 
 .lp-theme07-sector-image {
   width: 100%;
@@ -3540,7 +3540,7 @@
   flex-shrink: 0;
 }
 
-/* --- closing-layout / about_lab 右侧图片区域（匹配大师 PPT page071） --- */
+/* --- closing-layout / about_lab 右侧图片区域（匹配参考 PPT page071） --- */
 
 .lp-theme07-closing-aside {
   display: flex;
@@ -3557,7 +3557,7 @@
   overflow: hidden;
 }
 
-/* --- geo-layout 装饰圆圈元素（匹配大师 PPT page053） --- */
+/* --- geo-layout 装饰圆圈元素（匹配参考 PPT page053） --- */
 
 .lp-theme07-geo-deco {
   position: relative;

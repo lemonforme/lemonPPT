@@ -6,7 +6,7 @@
  * theme10 · 图表共享工具（chartkit）
  * 手绘 SVG 图表辅助：比例尺 / 数值格式化 / 网格 / 图例 / 路径生成。
  * 全部使用 theme10 自有 CSS 变量（--lp-t10-* / --lp-series-* / --lp-ink*），
- * 不引入任何 theme08/09/Dashi 色值与骨架名。
+ * 不引入任何 theme08/09/third-party 色值与骨架名。
  */
 
 import type { ReactNode } from 'react';

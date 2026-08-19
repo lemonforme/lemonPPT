@@ -38,7 +38,7 @@ export const theme07CaseGridV1Meta: LayoutMeta = {
   theme: 'theme07',
   role: 'content',
   displayName: 'Theme 07 调研案例（三列）',
-  description: '三列并排案例卡片：公司名 + 图片 + 标签 + 关键指标，对齐大师案例页网格',
+  description: '三列并排案例卡片：公司名 + 图片 + 标签 + 关键指标，对齐参考案例页网格',
   needsMedia: true,
   tags: ['case', 'study', 'research', 'grid'],
   contentShape: 'case-study',

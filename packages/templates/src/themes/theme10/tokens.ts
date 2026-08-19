@@ -12,12 +12,12 @@
  * theme10 设计 Token。
  * 风格：金色指数 · 金融编辑风 / Gold Index · Financial Editorial。
  *
- * 视觉坐标（与 theme08 黑金实验、theme09 墨韵专色、Dashi theme10 全部区分开）：
+ * 视觉坐标（与 theme08 黑金实验、theme09 墨韵专色、third-party theme10 全部区分开）：
  *   冰蓝主强调 #4a7fd4 + 香槟金/铜点睛 #d9b977 / #c97a52 + mono 数据字体 + 账本细线/刻度质感。
- *   三情绪渐变（aurora / obsidian / ember）全部自写，不抄 theme10 Dashi 的 dusk/midnight/dawn，
+ *   三情绪渐变（aurora / obsidian / ember）全部自写，不抄 theme10 third-party 的 dusk/midnight/dawn，
  *   也不抄 theme08 的荧光金 #ECEF35 / Anton / 手绘箭头。
  *
- * 所有色值、类名、装饰语汇均为原创，不复制 Dashi theme10 的实现、专色族
+ * 所有色值、类名、装饰语汇均为原创，不复制 third-party theme10 的实现、专色族
  * （含其同族错值）、类名（lp-theme10-* 仅 our 自创骨架）与保留前缀变量。
  */
 
@@ -103,7 +103,7 @@ const MOOD_GRADIENT: Record<Theme10Mood, string> = {
 };
 
 /* ────────────────────────────────────────────────────────────────
- * 强调色系统（冰蓝主 + 金铜点睛，自写 hex，与 Dashi 同族错值）
+ * 强调色系统（冰蓝主 + 金铜点睛，自写 hex，与 third-party 同族错值）
  * 全部经 WCAG 2.1 AA 预校验（近白 #eef1f6 在 #05070b 上 ≥ 15:1；
  *  冰蓝 #4a7fd4 / 香槟金 #d9b977 在深底上 ≥ 4.5:1）
  * ──────────────────────────────────────────────────────────────── */

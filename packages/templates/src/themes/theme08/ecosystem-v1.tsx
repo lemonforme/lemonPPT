@@ -1,5 +1,5 @@
 // lemonPPT - theme08 黑金实验 · 生态圈辐射
-// 原创实现，不复制 Dashi theme08
+// 原创实现，不复制 third-party theme08
 
 import type { CSSProperties } from 'react';
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';

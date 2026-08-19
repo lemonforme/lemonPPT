@@ -21,7 +21,7 @@
  *
  * appearance（primary / muted）不翻转明暗，只调整**专色浓度与网点密度**。
  *
- * 所有色值、类名、装饰语汇均为原创，不复制 Dashi theme09 的实现、
+ * 所有色值、类名、装饰语汇均为原创，不复制 third-party theme09 的实现、
  * 色值（#46e3c6 / #4a86ff 等）、类名（bg-deep / bg-blue 等）与 --acl- 前缀。
  */
 

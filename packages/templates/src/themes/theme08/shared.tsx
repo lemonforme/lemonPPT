@@ -1,4 +1,4 @@
-// lemonPPT - theme08 黑金实验风 / 共享版式原型库（原创，不复制 Dashi 实现）
+// lemonPPT - theme08 黑金实验风 / 共享版式原型库（原创，不复制 third-party 实现）
 // 供 theme08 全部变体版式复用，统一黑金视觉、双外观适配与防溢出排版。
 
 import type { LayoutMeta, PropsSchema, SlideRole } from '@lemonppt/core';

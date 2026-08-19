@@ -2040,7 +2040,7 @@ export function renderTheme07CompanyV1(slide: PptxSlide, props: any): void {
     });
   }
 
-  // 右侧图片区域（匹配大师 PPT DROP MEDIA 设计）
+  // 右侧图片区域（匹配参考 PPT DROP MEDIA 设计）
   const rightX = 5.6;
   const rightW = 3.75;
   const imgH = 2.6;
@@ -2148,7 +2148,7 @@ export function renderTheme07GeoV1(slide: PptxSlide, props: any): void {
     });
   }
 
-  // 右侧装饰圆圈（匹配大师 PPT page053）
+  // 右侧装饰圆圈（匹配参考 PPT page053）
   if (props.imageUrl) {
     addImageMaybe(slide, props.imageUrl, rightX + 0.1, 1.5, rightW - 0.2, 3.0);
   } else {
@@ -2226,7 +2226,7 @@ export function renderTheme07ClosingV1(slide: PptxSlide, props: any): void {
     });
   }
 
-  // 右侧图片区域（匹配大师 PPT page071）
+  // 右侧图片区域（匹配参考 PPT page071）
   if (hasImages) {
     const imgH = 1.7;
     const imgGap = 0.15;

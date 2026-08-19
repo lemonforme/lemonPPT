@@ -1,5 +1,5 @@
 // lemonPPT - theme08 黑金实验 · 月度热力图
-// 原创实现，不复制 Dashi theme08
+// 原创实现，不复制 third-party theme08
 
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';

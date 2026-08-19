@@ -13,7 +13,7 @@
  * 风格：黑金实验风 / Black Gold Experimental。
  * 深黑底 + 荧光金主强调 + 玫红/冷蓝/淡紫灰点缀，适合高端发布、品牌提案、实验性概念。
  * 数字使用展示型字体（Anton，项目字体库已内嵌 @font-face）增强冲击力；双背景 primary(深黑)/muted(象牙暖白)。
- * 所有色值/类名均为原创，不复制 Dashi theme08 具体实现与 --acl- 前缀。
+ * 所有色值/类名均为原创，不复制 third-party theme08 具体实现与 --acl- 前缀。
  */
 
 export interface Theme08Tokens {
@@ -99,7 +99,7 @@ export interface Theme08Tokens {
 export type Theme08Appearance = 'primary' | 'muted';
 
 /**
- * 黑金实验风色板（原创设计，非复制 Dashi）。
+ * 黑金实验风色板（原创设计，非复制 third-party）。
  * primary：深黑底 + 荧光金高饱和点缀，强发布会海报感。
  * muted：象牙暖白底 + 古铜金强调，保持黑金调性的可读浅色外观。
  */

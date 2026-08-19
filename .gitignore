@@ -84,10 +84,10 @@ scripts/verify-theme07-visual.mjs
 # Local presentation artifact (regenerated, do not commit)
 Presentation.pptx
 
-# Internal Dashi PPT reference analysis (third-party assets, not for public repo)
+# Internal third-party reference analysis (third-party assets, not for public repo)
 docs/analysis/theme*-all/
 
-# Internal development docs (sensitive: contains Dashi analyses and internal plans)
+# Internal development docs (sensitive: contains third-party analyses and internal plans)
 # Kept locally for reference, not published to public repo
 docs/
 

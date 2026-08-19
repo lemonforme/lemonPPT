@@ -10,7 +10,7 @@
 //      paper 纸底 #F4F1EA（数据/目录/正文密集页）
 //      ink   墨底 #14161C（影像/章节/金句/跨页）
 //  - appearance（primary / muted）不翻转明暗，只调专色浓度与网点密度。
-//  - 所有色值取自 tokens.ts 的预校验专色系统，未复制 Dashi theme09 实现。
+//  - 所有色值取自 tokens.ts 的预校验专色系统，未复制 third-party theme09 实现。
 
 import { type Slide as PptxSlide } from 'pptxgenjs';
 

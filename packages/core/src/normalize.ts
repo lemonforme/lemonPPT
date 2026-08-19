@@ -21,7 +21,7 @@ function inferRoleFromLayout(layoutId: string): SlideRole | undefined {
 }
 
 /**
- * 预处理外部 Agent 传入的 goal.json，兼容 Dashi PPT 等外部契约。
+ * 预处理外部 Agent 传入的 goal.json，兼容 third-party PPT 等外部契约。
  * - 将 `themePack` 映射为 `theme`
  * - 未传 `pageCount` 时默认等于 slides.length
  * - 未传 `role` 时尝试从 layout ID 推断

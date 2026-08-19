@@ -12,7 +12,7 @@ export interface Theme07DropMediaProps {
   /** 自定义宽高比，默认 4/3 */
   aspectRatio?: number;
   /**
-   * 图片比例控件（对齐大师 imageRatio）。
+   * 图片比例控件（对齐参考 imageRatio）。
    * portrait=3/4，landscape=4/3，square=1，auto=由容器决定。
    * 优先于 aspectRatio 数值。
    */
@@ -32,7 +32,7 @@ const IMAGE_RATIO_MAP: Record<string, number> = {
 /**
  * theme07 "DROP MEDIA" 图片占位组件。
  *
- * 匹配大师 PPT 参考设计的签名视觉：
+ * 匹配参考 PPT 参考设计的签名视觉：
  * - 鼠尾草绿斜纹背景
  * - 左上角标签 pill
  * - 居中 "DROP MEDIA" 文字

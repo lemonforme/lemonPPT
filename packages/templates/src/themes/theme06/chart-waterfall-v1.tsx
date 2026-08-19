@@ -70,7 +70,7 @@ function buildOption(labels: string[], values: number[]): Record<string, unknown
   const categoryData = labels.map((label) => label ?? '');
   const lastIndex = values.length - 1;
 
-  // Dashi 风格：首末柱用 accent，中间柱用 muted 灰，负值用柔和红
+  // Agent Skill 风格：首末柱用 accent，中间柱用 muted 灰，负值用柔和红
   const colorAccent = 'var(--lp-accent)';
   const colorMuted = 'rgba(255,255,255,0.16)';
   const colorMutedRed = 'rgba(232,93,78,0.65)';

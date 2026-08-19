@@ -9,7 +9,7 @@
 //  - 单一深色基底（墨黑金线底），但按 mood（aurora / obsidian / ember）给三档背景色，
 //    翻页形成金融终端的明暗呼吸（与 Web 端三情绪渐变同源，PPTX 不支持渐变故取渐变首色）。
 //  - 强调色系统：冰蓝主 #4A7FD4 + 香槟金 #D9B977 / 铜 #C97A52 点睛，
-//    全部经 WCAG 预校验，未复制 Dashi theme10 实现。
+//    全部经 WCAG 预校验，未复制 third-party theme10 实现。
 //  - appearance（primary / muted）仅调强调色浓度，不翻转明暗。
 
 import { type Slide as PptxSlide } from 'pptxgenjs';

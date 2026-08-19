@@ -186,7 +186,7 @@ node scripts/export-pdf.mjs examples/sample-goal.json output/sample-goal.pdf
 
 本项目采用 [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE) 开源协议。
 
-lemonPPT 是独立开发的 AI 演示文稿生成工具，与 Dashi PPT 无代码或资产层面的依赖关系。详见 [`docs/LEGAL.md`](docs/LEGAL.md)。
+lemonPPT 是独立开发的 AI 演示文稿生成工具，与第三方 PPT 工具无代码或资产层面的依赖关系。
 
 ## 贡献
 

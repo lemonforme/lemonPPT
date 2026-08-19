@@ -66,7 +66,7 @@ export interface Theme07Tokens {
 export type Theme07Appearance = 'light' | 'dark';
 
 /**
- * 冷白调研风色板（原创设计，非复制 Dashi）。
+ * 冷白调研风色板（原创设计，非复制 third-party）。
  * 明亮鲜艳：电光蓝主色 + 翠绿辅色 + 暖橙警示，高饱和冷调，仍保持白底通透学术感。
  */
 const coldWhitePalette = {

@@ -2,7 +2,7 @@
   "name": "lemonppt",
   "version": "0.2.0",
   "private": true,
-  "description": "Self-developed AI PPT generation agent. Independent from dashi-ppt-skill.",
+  "description": "Self-developed AI PPT generation agent.",
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",

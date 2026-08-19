@@ -1,5 +1,5 @@
 // lemonPPT - theme08 装饰层（手绘箭头 / 火花 / 批注 / 条码）
-// 原创实现，不复制 Dashi 装饰资源
+// 原创实现，不复制 third-party 装饰资源
 
 import type { ReactElement } from 'react';
 

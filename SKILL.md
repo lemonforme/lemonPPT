@@ -281,7 +281,7 @@ lemonppt install-skill --target ./my-agent/skills/lemonppt
 
 ---
 
-## Skill 包内 npm scripts（Dashi 风格）
+## Skill 包内 npm scripts
 
 将 `skills/lemonppt/` 复制到 Agent 技能目录后，也可以直接进入 skill 目录调用 npm scripts：
 

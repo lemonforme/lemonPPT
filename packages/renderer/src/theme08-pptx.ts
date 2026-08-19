@@ -1366,7 +1366,7 @@ const RENDERERS: Record<string, T08RenderFn> = {
   theme08_compare_v1: renderTheme08Compare,
   theme08_table_v1: renderTheme08Table,
   theme08_chain_v1: renderTheme08Chain,
-  // ---- v2 变体版式（对齐大师 theme08 共 84 组件页） ----
+  // ---- v2 变体版式（对齐参考 theme08 共 84 组件页） ----
   theme08_cover_v2: renderT08Cover2,
   theme08_cover_v3: renderT08Cover2,
   theme08_cover_v4: renderT08Cover2,
