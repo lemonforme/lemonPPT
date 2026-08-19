@@ -19,6 +19,9 @@ import {
   readGoalFromFile,
   renderGoalToDir,
   scaffoldGoalToFile,
+  stageMediaToFile,
+  validateDeck,
+  validateGoalCopy,
   validateGoalSpec,
   writeSafePropsToFile,
 } from './index.js';
@@ -31,7 +34,7 @@ function printUsage(): void {
   lemonppt export <goal.json> --pptx out.pptx [--pdf out.pdf]
   lemonppt serve [<dir>] [--port N]   # start API server if built, else static preview
   lemonppt server [<dir>] [--port N]  # alias for serve
-  lemonppt install-skill [--claude] [--codex] [--cursor] [--all]
+  lemonppt install-skill [--claude] [--codex] [--cursor] [--all] [--target <dir>]
 
   lemonppt list-themes
   lemonppt layout-query --theme <id> --role <role> [--keyword K] [--needs-media] [--limit N] [--seed S]
@@ -39,6 +42,9 @@ function printUsage(): void {
   lemonppt goal-scaffold --title T --goal G --theme <id> --pages N [--out goal.json]
   lemonppt write-safe-props <goal.json> [--write]
   lemonppt validate-goal-spec <goal.json> [--strict]
+  lemonppt validate-deck <deckDir> [--goal goal.json]
+  lemonppt validate-copy <goal.json> <deckDir>
+  lemonppt stage-media <file> [--out ./output]
 `);
 }
 
@@ -368,7 +374,53 @@ async function main(): Promise<void> {
         break;
       }
 
+      case 'stage-media': {
+        const filePath = positional[0];
+        if (!filePath) {
+          console.error('Error: stage-media requires a file path.');
+          process.exit(1);
+        }
+        const result = await stageMediaToFile({
+          filePath,
+          outDir: (args.options.out as string) || './output',
+        });
+        console.log(JSON.stringify({ success: true, ...result }, null, 2));
+        break;
+      }
+
+      case 'validate-deck': {
+        const deckDir = positional[0];
+        if (!deckDir) {
+          console.error('Error: validate-deck requires a deck directory path.');
+          process.exit(1);
+        }
+        const result = await validateDeck({
+          deckDir,
+          goalPath: args.options.goal as string | undefined,
+        });
+        console.log(JSON.stringify(result, null, 2));
+        if (!result.valid) process.exit(1);
+        break;
+      }
+
+      case 'validate-copy': {
+        const goalPath = positional[0];
+        const deckDir = positional[1];
+        if (!goalPath || !deckDir) {
+          console.error('Error: validate-copy requires <goal.json> <deckDir>.');
+          process.exit(1);
+        }
+        const result = await validateGoalCopy({ goalPath, deckDir });
+        console.log(JSON.stringify(result, null, 2));
+        if (!result.valid) process.exit(1);
+        break;
+      }
+
       case 'install-skill': {
+        if (args.options.target) {
+          await installSkill({ target: args.options.target as string });
+          break;
+        }
         const agents: string[] = [];
         if (args.options.claude) agents.push('claude');
         if (args.options.codex) agents.push('codex');

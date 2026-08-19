@@ -16,6 +16,7 @@ import { getTheme, themes } from '@lemonppt/themes';
 
 import { getLayout, getLayoutSchema, listLayoutsByRoleAndTheme } from '@lemonppt/templates';
 import { copyFile, cp, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -86,6 +87,40 @@ export async function copyThemeAssets(themeId: string, assetsDir: string): Promi
   const editorScriptSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'editor-script.js');
   const editorScriptDest = path.join(assetsDir, 'editor-script.js');
   await copyFile(editorScriptSource, editorScriptDest);
+}
+
+export interface StageMediaOptions {
+  /** 源文件路径 */
+  filePath: string;
+  /** 输出目录，默认 ./output */
+  outDir?: string;
+}
+
+export interface StageMediaResult {
+  /** 安全化后的文件名 */
+  filename: string;
+  /** 本地绝对路径 */
+  localPath: string;
+  /** 相对于输出目录的引用路径 */
+  relativePath: string;
+}
+
+/**
+ * 把本地媒体文件复制到输出目录的 media/ 下，供 goal.json 引用。
+ */
+export async function stageMediaToFile(options: StageMediaOptions): Promise<StageMediaResult> {
+  const outDir = options.outDir || './output';
+  const originalName = path.basename(options.filePath);
+  const safeName = originalName.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const mediaDir = path.join(outDir, 'media');
+  await mkdir(mediaDir, { recursive: true });
+  const localPath = path.resolve(path.join(mediaDir, safeName));
+  await copyFile(options.filePath, localPath);
+  return {
+    filename: safeName,
+    localPath,
+    relativePath: path.join('media', safeName),
+  };
 }
 
 function resolvePackagePath(pkg: string, ...segments: string[]): string {
@@ -597,6 +632,133 @@ export async function validateGoalSpec(goalPath: string, strict?: boolean): Prom
   if (lastSlide?.role !== 'closing') result.warnings.push('最后一页建议使用 closing 角色');
 
   if (result.errors.length === 0) {
+    result.valid = true;
+  }
+
+  return result;
+}
+
+export interface ValidateDeckOptions {
+  /** 渲染输出目录（应包含 index.html） */
+  deckDir: string;
+  /** 可选的 goal.json 路径，用于比对页数 */
+  goalPath?: string;
+}
+
+export interface ValidateDeckResult {
+  valid: boolean;
+  slides: number;
+  errors: string[];
+  warnings: string[];
+}
+
+/**
+ * 校验渲染后的 HTML deck 结构是否完整。
+ */
+export async function validateDeck(options: ValidateDeckOptions): Promise<ValidateDeckResult> {
+  const result: ValidateDeckResult = { valid: false, slides: 0, errors: [], warnings: [] };
+  const indexPath = path.resolve(options.deckDir, 'index.html');
+  if (!existsSync(indexPath)) {
+    result.errors.push(`deck index.html not found: ${indexPath}`);
+    return result;
+  }
+
+  const html = await readFile(indexPath, 'utf-8');
+  if (html.length < 100) {
+    result.errors.push('index.html is too short, render may have failed');
+    return result;
+  }
+
+  // 估算 slide 数量：通过 lp-slide-wrapper 容器
+  const wrapperMatches = html.match(/class="[^"]*\blp-slide-wrapper\b[^"]*"/g) ?? [];
+  const indexMatches = html.match(/data-slide-index="\d+"/g) ?? [];
+  result.slides = Math.max(wrapperMatches.length, indexMatches.length);
+
+  if (result.slides === 0) {
+    result.errors.push('no slides found in index.html');
+  }
+
+  if (options.goalPath) {
+    const goal = JSON.parse(await readFile(path.resolve(options.goalPath), 'utf-8')) as DeckGoal;
+    const expected = goal.slides.length;
+    if (result.slides !== expected) {
+      result.errors.push(`slide count mismatch: deck=${result.slides}, goal=${expected}`);
+    }
+  }
+
+  if (!html.includes('</html>')) {
+    result.warnings.push('index.html may be truncated (missing closing </html>)');
+  }
+
+  if (result.errors.length === 0) {
+    result.valid = true;
+  }
+  return result;
+}
+
+export interface ValidateCopyOptions {
+  goalPath: string;
+  deckDir: string;
+}
+
+export interface ValidateCopyResult {
+  valid: boolean;
+  missing: string[];
+  checked: number;
+  errors: string[];
+}
+
+function collectTextStrings(value: unknown): string[] {
+  const results: string[] = [];
+  function walk(v: unknown): void {
+    if (typeof v === 'string') {
+      const trimmed = v.trim();
+      if (trimmed.length >= 4) results.push(trimmed);
+    } else if (Array.isArray(v)) {
+      v.forEach(walk);
+    } else if (v && typeof v === 'object') {
+      Object.values(v).forEach(walk);
+    }
+  }
+  walk(value);
+  return [...new Set(results)];
+}
+
+/**
+ * 校验 goal.json 中的文案是否都出现在渲染后的 HTML 中。
+ */
+export async function validateGoalCopy(options: ValidateCopyOptions): Promise<ValidateCopyResult> {
+  const result: ValidateCopyResult = { valid: false, missing: [], checked: 0, errors: [] };
+  const indexPath = path.resolve(options.deckDir, 'index.html');
+  if (!existsSync(indexPath)) {
+    result.errors.push(`deck index.html not found: ${indexPath}`);
+    return result;
+  }
+
+  const goal = JSON.parse(await readFile(path.resolve(options.goalPath), 'utf-8')) as DeckGoal;
+  const html = await readFile(indexPath, 'utf-8');
+
+  const texts = collectTextStrings(goal.slides.map((s) => s.props));
+  result.checked = texts.length;
+  const normalizedHtml = html
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ');
+  for (const text of texts) {
+    const normalizedText = text.replace(/\s+/g, ' ');
+    if (!normalizedHtml.includes(normalizedText)) {
+      result.missing.push(text.slice(0, 80));
+    }
+  }
+
+  if (result.missing.length > 0) {
+    result.errors.push(`${result.missing.length} / ${result.checked} text snippets missing in rendered HTML`);
+  } else if (result.checked === 0) {
+    result.errors.push('no text found in goal.json to validate');
+  } else {
     result.valid = true;
   }
 
