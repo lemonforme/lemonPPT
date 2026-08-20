@@ -63,15 +63,16 @@ async function waitForECharts(page) {
 async function captureTheme(browser, theme) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   const url = fileUrl(theme);
-  await page.goto(url, { waitUntil: 'networkidle' });
+  // CI 中 networkidle 容易因字体/异步资源pending而超时，改用 load + 固定等待
+  await page.goto(url, { waitUntil: 'load', timeout: 60000 });
   // 禁用进入动画，避免截图时机不同导致像素差异
   await page.addStyleTag({
     content: '*, *::before, *::after { animation: none !important; transition: none !important; }',
   });
-  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => document.fonts.ready).catch(() => {});
   await waitForECharts(page);
   // 额外等待 ECharts 内部动画（力导向图布局、入场动画）稳定，避免截图时节点/线条尚未到位。
-  await page.waitForTimeout(1500);
+  await page.waitForTimeout(500);
 
   const items = await page.locator('.lp-gallery-item').all();
   const themeSnapshotDir = path.join(snapshotDir, theme);
