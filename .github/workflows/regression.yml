@@ -10,9 +10,57 @@ permissions:
   contents: read
 
 jobs:
-  gallery-and-snapshot:
+  gallery:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm -r build
+
+      - name: Generate gallery
+        run: pnpm gallery
+
+      - name: Upload gallery artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gallery
+          path: output/gallery
+          if-no-files-found: error
+
+  snapshot:
+    needs: gallery
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        theme:
+          - theme01
+          - theme02
+          - theme03
+          - theme04
+          - theme05
+          - theme06
+          - theme07
+          - theme08
+          - theme09
+          - theme10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,28 +84,60 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Generate gallery
-        run: pnpm gallery
-
-      - name: Generate snapshots
-        run: pnpm snapshot
-
-      - name: Visual regression diff
-        run: pnpm regression
-
-      - name: Upload gallery artifact
-        uses: actions/upload-artifact@v4
+      - name: Download gallery artifact
+        uses: actions/download-artifact@v4
         with:
           name: gallery
           path: output/gallery
-          if-no-files-found: error
+
+      - name: Generate snapshots for ${{ matrix.theme }}
+        run: pnpm snapshot ${{ matrix.theme }}
 
       - name: Upload snapshots artifact
         uses: actions/upload-artifact@v4
         with:
-          name: snapshots
-          path: output/snapshots
+          name: snapshots-${{ matrix.theme }}
+          path: output/snapshots/${{ matrix.theme }}
           if-no-files-found: error
+
+  regression-diff:
+    needs: snapshot
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Restore baseline cache
+        uses: actions/cache@v4
+        with:
+          path: output/snapshots/baseline
+          key: visual-baseline-${{ github.ref }}-${{ github.run_id }}
+          restore-keys: |
+            visual-baseline-${{ github.ref }}-
+            visual-baseline-main-
+
+      - name: Download all snapshot artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: output/snapshots
+          pattern: snapshots-*
+
+      - name: Visual regression diff
+        run: pnpm regression
 
       - name: Upload diff artifact
         if: failure()

@@ -77,6 +77,13 @@ async function compare() {
     // baseline 目录可能不存在
   }
 
+  // 首次运行或缓存未命中时，用当前快照初始化基线，避免 CI 直接失败。
+  if (baselineFiles.length === 0) {
+    console.log('未找到基线快照，使用当前快照初始化基线...');
+    await updateBaseline();
+    return;
+  }
+
   const currentSet = new Set(currentFiles);
   const baselineSet = new Set(baselineFiles);
 
