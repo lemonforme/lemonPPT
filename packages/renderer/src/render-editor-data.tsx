@@ -195,18 +195,39 @@ function buildEditorBarMarkup(goal: DeckGoal): string {
 </div>`;
 }
 
-function buildLeftPanelMarkup(goal: DeckGoal): string {
+function buildLeftPanelMarkup(goal: DeckGoal, data: EditorData, width: number, height: number): string {
   const slideCount = goal.slides.length;
+  const showDragHandle = slideCount > 1;
+  const dragHandleHtml = showDragHandle
+    ? '<span class="lp-thumbnail-drag-handle" data-lp-action="drag-handle" aria-hidden="true">' +
+        '<svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor" aria-hidden="true">' +
+          '<circle cx="2.5" cy="2.5" r="1.5"/>' +
+          '<circle cx="9.5" cy="2.5" r="1.5"/>' +
+          '<circle cx="2.5" cy="8" r="1.5"/>' +
+          '<circle cx="9.5" cy="8" r="1.5"/>' +
+          '<circle cx="2.5" cy="13.5" r="1.5"/>' +
+          '<circle cx="9.5" cy="13.5" r="1.5"/>' +
+        '</svg>' +
+      '</span>'
+    : '';
+  const scale = 156 / width;
   const thumbnails = goal.slides
     .map((slide, index) => {
       const activeClass = index === 0 ? ' active' : '';
-      return `<div class="lp-thumbnail${activeClass}" tabindex="0" draggable="true" data-slide-index="${index}" data-layout="${slide.layout}">
-  <div class="lp-thumbnail-drag-handle" aria-hidden="true">⋮⋮</div>
-  <div class="lp-thumbnail-index">${index + 1} / ${slideCount}</div>
-  <div class="lp-thumbnail-title">${slide.props.title ? escapeHtml(String(slide.props.title)) : `Slide ${index + 1}`}</div>
-  <div class="lp-thumbnail-layout">${slide.layout}</div>
-  <div class="lp-thumbnail-drop-indicator" data-drop-position="before"></div>
-  <div class="lp-thumbnail-drop-indicator" data-drop-position="after"></div>
+      const slideHtml = data.slideHtmls[index] || '';
+      const draggableAttr = showDragHandle ? 'draggable="true"' : '';
+      return `<div class="lp-thumbnail${activeClass}" role="button" tabindex="0" ${draggableAttr} data-index="${index}" data-layout="${slide.layout}" aria-label="幻灯片 ${index + 1}，拖动可调整顺序">
+  ${dragHandleHtml}
+  <div class="lp-thumbnail-render">
+    <div class="lp-thumbnail-scaler" style="width:${width}px;height:${height}px;transform:scale(${scale});transform-origin:top left;">${slideHtml}</div>
+  </div>
+  <div class="lp-thumbnail-scrim"></div>
+  <div class="lp-thumbnail-content">
+    <div class="lp-thumbnail-index">${index + 1} / ${slideCount}</div>
+    <div class="lp-thumbnail-title">${slide.props.title ? escapeHtml(String(slide.props.title)) : `Slide ${index + 1}`}</div>
+    <div class="lp-thumbnail-layout">${escapeHtml(slide.layout)}</div>
+  </div>
+  <span class="lp-thumbnail-delete" data-lp-action="delete-slide" data-index="${index}" title="删除幻灯片" aria-label="删除幻灯片">×</span>
 </div>`;
     })
     .join('\n');
@@ -221,7 +242,9 @@ function buildLeftPanelMarkup(goal: DeckGoal): string {
 function buildRightPanelMarkup(): string {
   return `<aside class="lp-editor-right-panel">
   <div class="lp-property-header">属性面板</div>
-  <div class="lp-property-empty">点击左侧缩略图选择幻灯片，然后编辑内容。</div>
+  <div class="lp-property-content" id="lp-property-content">
+    <div class="lp-property-empty">点击左侧缩略图选择幻灯片，然后编辑内容。</div>
+  </div>
 </aside>`;
 }
 
@@ -258,11 +281,15 @@ window.__lemonPPT_goal = ${JSON.stringify(goal)};
  * 补全 EditorData 中的 UI 片段字段。
  * 将渲染数据与 UI 组件解耦，方便服务端返回纯数据。
  */
-export function fillEditorDataUi(data: EditorData): EditorData {
+export function fillEditorDataUi(
+  data: EditorData,
+  width = 1280,
+  height = 720,
+): EditorData {
   return {
     ...data,
     editorBarMarkup: buildEditorBarMarkup(data.goal),
-    leftPanelMarkup: buildLeftPanelMarkup(data.goal),
+    leftPanelMarkup: buildLeftPanelMarkup(data.goal, data, width, height),
     rightPanelMarkup: buildRightPanelMarkup(),
     addSlideModalMarkup: buildAddSlideModalMarkup(data.goal),
     editorScriptMarkup: buildEditorScriptMarkup(data.goal),
@@ -274,8 +301,8 @@ export function fillEditorDataUi(data: EditorData): EditorData {
  * 这是为兼容旧版 renderDeck(editable: true) 保留的封装。
  */
 export function renderEditorHtmlFromData(data: EditorData, options: RenderEditorOptions = {}): RenderOutput {
-  const { width = 1280 } = options;
-  const { goal, theme, colorScheme, appearance, slidesMarkup, themeCssVars, editorBarMarkup, leftPanelMarkup, rightPanelMarkup, addSlideModalMarkup, editorScriptMarkup } = fillEditorDataUi(data);
+  const { width = 1280, height = 720 } = options;
+  const { goal, theme, colorScheme, appearance, slidesMarkup, themeCssVars, editorBarMarkup, leftPanelMarkup, rightPanelMarkup, addSlideModalMarkup, editorScriptMarkup } = fillEditorDataUi(data, width, height);
   const slideCount = goal.slides.length;
   const appearanceAttr = appearance ? ` data-appearance="${appearance}"` : '';
 

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1] - 2026-08-30
+
+### Fixed
+
+- 修复 editor 页面左侧缩略图不显示幻灯片预览且无法点击切换的问题，统一客户端与服务端渲染的缩略图 HTML 结构。
+- 修复 editor 页面右侧属性面板缺少 `lp-property-content` 容器导致控件属性无法渲染的问题。
+- 补充 editor.html 中缩略图预览所需的 CSS 样式，确保预览图、遮罩、标题和删除按钮正确叠放。
+
 ## [1.0.0] - 2026-08-30
 
 ### Added

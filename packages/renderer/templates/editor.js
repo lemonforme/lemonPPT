@@ -66,25 +66,46 @@
       </div>`;
   }
 
-  function buildLeftPanel(goal) {
+  function buildLeftPanel(goal, slideHtmls, width, height) {
     const slideCount = goal.slides.length;
+    const showDragHandle = slideCount > 1;
+    const dragHandleHtml = showDragHandle
+      ? '<span class="lp-thumbnail-drag-handle" data-lp-action="drag-handle" aria-hidden="true">' +
+          '<svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor" aria-hidden="true">' +
+            '<circle cx="2.5" cy="2.5" r="1.5"/>' +
+            '<circle cx="9.5" cy="2.5" r="1.5"/>' +
+            '<circle cx="2.5" cy="8" r="1.5"/>' +
+            '<circle cx="9.5" cy="8" r="1.5"/>' +
+            '<circle cx="2.5" cy="13.5" r="1.5"/>' +
+            '<circle cx="9.5" cy="13.5" r="1.5"/>' +
+          '</svg>' +
+        '</span>'
+      : '';
+    const scale = 156 / width;
     const thumbnails = goal.slides.map((slide, index) => {
       const activeClass = index === 0 ? ' active' : '';
       const title = slide.props && slide.props.title ? String(slide.props.title) : `Slide ${index + 1}`;
-      return `<div class="lp-thumbnail${activeClass}" tabindex="0" draggable="true" data-slide-index="${index}" data-layout="${slide.layout}">
-  <div class="lp-thumbnail-drag-handle" aria-hidden="true">⋮⋮</div>
-  <div class="lp-thumbnail-index">${index + 1} / ${slideCount}</div>
-  <div class="lp-thumbnail-title">${escapeHtml(title)}</div>
-  <div class="lp-thumbnail-layout">${slide.layout}</div>
-  <div class="lp-thumbnail-drop-indicator" data-drop-position="before"></div>
-  <div class="lp-thumbnail-drop-indicator" data-drop-position="after"></div>
+      const slideHtml = slideHtmls[index] || '';
+      const draggableAttr = showDragHandle ? 'draggable="true"' : '';
+      return `<div class="lp-thumbnail${activeClass}" role="button" tabindex="0" ${draggableAttr} data-index="${index}" data-layout="${slide.layout}" aria-label="幻灯片 ${index + 1}，拖动可调整顺序">
+  ${dragHandleHtml}
+  <div class="lp-thumbnail-render">
+    <div class="lp-thumbnail-scaler" style="width:${width}px;height:${height}px;transform:scale(${scale});transform-origin:top left;">${slideHtml}</div>
+  </div>
+  <div class="lp-thumbnail-scrim"></div>
+  <div class="lp-thumbnail-content">
+    <div class="lp-thumbnail-index">${index + 1} / ${slideCount}</div>
+    <div class="lp-thumbnail-title">${escapeHtml(title)}</div>
+    <div class="lp-thumbnail-layout">${escapeHtml(slide.layout)}</div>
+  </div>
+  <span class="lp-thumbnail-delete" data-lp-action="delete-slide" data-index="${index}" title="删除幻灯片" aria-label="删除幻灯片">×</span>
 </div>`;
     }).join('\n');
     return `<div class="lp-editor-thumbnails" id="lp-thumbnails">${thumbnails}</div>`;
   }
 
   function buildRightPanel() {
-    return `<div class="lp-property-header">属性面板</div><div class="lp-property-empty">点击左侧缩略图选择幻灯片，然后编辑内容。</div>`;
+    return `<div class="lp-property-header">属性面板</div><div class="lp-property-content" id="lp-property-content"><div class="lp-property-empty">点击左侧缩略图选择幻灯片，然后编辑内容。</div></div>`;
   }
 
   function buildAddSlideModal(goal) {
@@ -142,13 +163,19 @@
       setTimeout(resolve, 100);
     });
 
-    // 填充 UI
-    document.getElementById('lp-editor-bar').innerHTML = buildEditorBar(goal, theme, staticMode);
-    document.getElementById('lp-left-panel').innerHTML = buildLeftPanel(goal);
-    document.getElementById('lp-right-panel').innerHTML = buildRightPanel();
-    document.getElementById('lp-modal').innerHTML = buildAddSlideModal(goal);
+    // 先填充画布，才能从 slide 容器读取真实宽高
     document.getElementById('lp-slides').innerHTML = data.slidesMarkup;
     document.getElementById('lp-total').textContent = String(goal.slides.length);
+
+    const firstWrapper = document.querySelector('#lp-slides .lp-slide-wrapper');
+    const width = firstWrapper ? parseInt(firstWrapper.style.width, 10) || 1280 : 1280;
+    const height = firstWrapper ? parseInt(firstWrapper.style.height, 10) || 720 : 720;
+
+    // 填充 UI
+    document.getElementById('lp-editor-bar').innerHTML = buildEditorBar(goal, theme, staticMode);
+    document.getElementById('lp-left-panel').innerHTML = buildLeftPanel(goal, data.slideHtmls, width, height);
+    document.getElementById('lp-right-panel').innerHTML = buildRightPanel();
+    document.getElementById('lp-modal').innerHTML = buildAddSlideModal(goal);
 
     // 暴露 goal 给 editor-script
     window.__lemonPPT_goal = goal;
