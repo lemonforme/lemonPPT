@@ -1,0 +1,48 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.0.0] - 2026-08-30
+
+### Added
+
+- **lemonPPT 1.0 正式发布**：统一单页编辑器架构，所有主题共享同一个 editor 页面，按 `goal.theme` 动态加载主题样式。
+- **外部 Agent 调用能力**：提供 Dashi / Codex / Claude / Cursor 风格的 Skill 包，支持通过 CLI 或 HTTP API 被外部 Agent 调用。
+- **无 scope CLI 别名包 `lemonppt`**：除 `@lemonppt/cli` 外，新增可直接 `npm install -g lemonppt` / `npx lemonppt` 安装的别名包。
+- **视觉回归测试**：新增版式画廊、主题快照、像素级 diff 与基线缓存机制。
+- **端到端测试**：使用 Playwright 覆盖 editor 页面加载、主题切换与状态保留。
+- **布局角色速查表**：自动生成 `references/layout-roles.md`，方便外部 Agent 选择版式。
+
+### Changed
+
+- 主题体系扩展为 `theme01` ~ `theme10`，统一视觉 tokens 与导出样式。
+- `lemonppt serve` 启动真正的 API 服务（apps/server），支持 render / export / editor-data / stage-media 端点。
+- 将 Playwright Chromium 安装提前到 CI 测试步骤之前，避免 PDF 导出测试因缺少浏览器而失败。
+- 视觉回归 workflow 改为按主题并行截图，并在 `main` 分支 push 时自动更新基线。
+
+### Removed
+
+- 清理代码与文档中所有第三方竞品名称（`Dashi` / `dashi` / `大师`）的引用。
+- 移除旧的 per-theme editor 生成路径，统一为单页 editor。
+
+### Fixed
+
+- 修复 `@lemonppt/cli` 在某些环境下 `package.json` 子路径无法解析的问题，`lemonppt` 别名包通过 `import.meta.resolve` 定位主入口。
+- 修复视觉回归基线缺失时直接退出 1 的问题，首次运行自动用当前快照初始化基线。
+- 修复 `regression.yml` 单 job 超时问题，将 10 个主题截图拆分为矩阵并行任务。
+
+## [0.2.0] - 2026-08-19
+
+### Added
+
+- 统一编辑器与主题扩展骨架。
+- Agent API（layout/props/validation）初版。
+- 自托管字体资源（SIL OFL 1.1）。
+- CI / CLA / regression 工作流。
+
+## [0.1.6] - 2026-08-15
+
+### Changed
+
+- 切换到 AGPL-3.0 许可。
+- 主题 tokens 与布局规模化重构。
