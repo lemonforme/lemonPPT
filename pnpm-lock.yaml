@@ -166,6 +166,12 @@ importers:
         specifier: ^5.5.0
         version: 5.9.3
 
+  packages/lemonppt:
+    dependencies:
+      '@lemonppt/cli':
+        specifier: workspace:*
+        version: link:../cli
+
   packages/renderer:
     dependencies:
       '@lemonppt/core':

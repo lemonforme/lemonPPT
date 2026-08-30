@@ -65,8 +65,8 @@ function resolveCliWrapper(repoRoot: string): { sh: string; ps1: string; type: '
   }
   return {
     type: 'published',
-    sh: `#!/bin/bash\nset -e\nexec npx @lemonppt/cli "$@"\n`,
-    ps1: `#Requires -Version 5.1\n& npx @lemonppt/cli @args\n`,
+    sh: `#!/bin/bash\nset -e\nexec npx lemonppt "$@"\n`,
+    ps1: `#Requires -Version 5.1\n& npx lemonppt @args\n`,
   };
 }
 

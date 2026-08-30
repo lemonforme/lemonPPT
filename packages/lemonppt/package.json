@@ -1,0 +1,24 @@
+{
+  "name": "lemonppt",
+  "version": "0.2.3",
+  "description": "lemonPPT CLI — AI-powered presentation generation (alias for @lemonppt/cli)",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "bin": {
+    "lemonppt": "./cli.js"
+  },
+  "files": [
+    "cli.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "@lemonppt/cli": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemonforme/lemonPPT.git"
+  }
+}

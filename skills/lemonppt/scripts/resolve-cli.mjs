@@ -21,7 +21,7 @@ export async function resolveCli() {
       return { type: cfg.type || 'source', cmd: cfg.cli, args: [] };
     }
     if (cfg.type === 'published') {
-      return { type: 'published', cmd: 'npx', args: ['@lemonppt/cli'] };
+      return { type: 'published', cmd: 'npx', args: ['lemonppt'] };
     }
   }
 
@@ -32,5 +32,5 @@ export async function resolveCli() {
   }
 
   // Fallback to published package
-  return { type: 'published', cmd: 'npx', args: ['@lemonppt/cli'] };
+  return { type: 'published', cmd: 'npx', args: ['lemonppt'] };
 }
