@@ -186,6 +186,9 @@
 
     // 首次加载需要注入 editor-script，后续直接复用已初始化的实例
     if (!editorScriptLoaded) {
+      // editor-script 依赖 client-render 的渲染函数与 ECharts 主题脚本
+      await loadScript(assetUrl('client-render.js'));
+      await loadScript(assetUrl('theme-echarts.js'));
       await loadScript(assetUrl('editor-script.js'));
       editorScriptLoaded = true;
     } else if (typeof window.__lemonPPT_applyTheme === 'function') {

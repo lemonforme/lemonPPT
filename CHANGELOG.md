@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2] - 2026-08-30
+
+### Fixed
+
+- 修复 editor 页面功能缺失问题：`editor.js` 在注入 `editor-script.js` 之前先加载 `client-render.js` 与 `theme-echarts.js`，使属性面板、缩略图切换、撤销/重做等交互恢复正常。
+- 修复画布缩放按钮被边栏遮挡、位置不对的问题，补充 `.lp-editor-zoom-bar` 定位与 `z-index` 样式。
+- 补齐右侧属性面板缺失的 CSS（`.lp-property-section`、`.lp-property-toggle`、`.lp-property-segmented`、`.lp-property-color-grid`、`.lp-property-slider-*`、`.lp-property-array`、`.lp-property-btn*` 等）。
+- CLI 静态输出额外内嵌 `window.__lemonPPT_goal`，确保 `editor-script` 能直接读取目标数据。
+
 ## [1.0.1] - 2026-08-30
 
 ### Fixed

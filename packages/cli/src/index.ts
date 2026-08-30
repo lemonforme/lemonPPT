@@ -212,6 +212,7 @@ export async function renderGoalToDir(
     // 内嵌 EditorData，让 editor.js 在静态模式下无需请求 API
     const embeddedData = `<script>
 window.__lemonPPT_assetsBase = './assets/';
+window.__lemonPPT_goal = ${JSON.stringify(goal)};
 window.__lemonPPT_editorData = ${JSON.stringify(data)};
 </script>`;
     editorHtml = editorHtml.replace('</head>', `${embeddedData}\n</head>`);
