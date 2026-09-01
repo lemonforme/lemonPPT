@@ -61,6 +61,7 @@ jobs:
           - theme08
           - theme09
           - theme10
+          - theme11
     steps:
       - name: Checkout
         uses: actions/checkout@v4
