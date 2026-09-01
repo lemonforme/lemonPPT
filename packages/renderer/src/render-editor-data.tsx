@@ -16,6 +16,7 @@ import {
   generateTheme08CssVariablesWithSchemesAndAppearance,
   generateTheme09CssVariablesWithSchemesAndAppearance,
   generateTheme10CssVariables,
+  generateTheme11CssVariables,
 } from '@lemonppt/templates';
 import ReactDOMServer from 'react-dom/server';
 
@@ -76,7 +77,9 @@ function resolveThemeMeta(goal: DeckGoal) {
                       ? generateTheme09CssVariablesWithSchemesAndAppearance()
                       : theme === 'theme10'
                         ? generateTheme10CssVariables()
-                        : '';
+                        : theme === 'theme11'
+                          ? generateTheme11CssVariables()
+                          : '';
 
   return { theme, colorScheme, appearance, themeCssVars };
 }

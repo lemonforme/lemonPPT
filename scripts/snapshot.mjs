@@ -24,7 +24,7 @@ const rootDir = path.resolve(__dirname, '..');
 const galleryDir = path.join(rootDir, 'output', 'gallery');
 const snapshotDir = path.join(rootDir, 'output', 'snapshots');
 
-const THEMES = ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06', 'theme07', 'theme08', 'theme09', 'theme10'];
+const THEMES = ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06', 'theme07', 'theme08', 'theme09', 'theme10', 'theme11'];
 
 function fileUrl(theme) {
   return 'file://' + path.join(galleryDir, theme, 'index.html');
@@ -67,7 +67,7 @@ async function captureTheme(browser, theme) {
   await page.goto(url, { waitUntil: 'load', timeout: 60000 });
   // 禁用进入动画，避免截图时机不同导致像素差异
   await page.addStyleTag({
-    content: '*, *::before, *::after { animation: none !important; transition: none !important; }',
+    content: '*, *::before, *::after { animation: none !important; transition: none !important; } .lp-rise, .lp-theme11 .lp-rise { opacity: 1 !important; transform: none !important; }',
   });
   await page.evaluate(() => document.fonts.ready).catch(() => {});
   await waitForECharts(page);

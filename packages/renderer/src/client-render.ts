@@ -52,6 +52,7 @@ function renderSlideToRoot(
   }
   root.render(element);
 }
+// #endregion
 
 /**
  * 根据当前主题初始化对应分包的 ECharts 模块。

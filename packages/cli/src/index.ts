@@ -209,11 +209,20 @@ export async function renderGoalToDir(
     editorHtml = editorHtml.replace(/\/deck\/assets\//g, './assets/');
     editorHtml = editorHtml.replace(/src="\/editor\.js"/g, 'src="./editor.js"');
 
+    // 收集当前 goal 用到的版式 Schema，注入 editor-script 以在属性面板显示中文标签和数组控件
+    const layoutIds = [...new Set(goal.slides.map((s) => s.layout))];
+    const layoutSchemas: Record<string, unknown> = {};
+    for (const id of layoutIds) {
+      const schema = getLayoutSchema(id);
+      if (schema) layoutSchemas[id] = schema;
+    }
+
     // 内嵌 EditorData，让 editor.js 在静态模式下无需请求 API
     const embeddedData = `<script>
 window.__lemonPPT_assetsBase = './assets/';
 window.__lemonPPT_goal = ${JSON.stringify(goal)};
 window.__lemonPPT_editorData = ${JSON.stringify(data)};
+window.__lemonPPT_layoutSchemas = ${JSON.stringify(layoutSchemas)};
 </script>`;
     editorHtml = editorHtml.replace('</head>', `${embeddedData}\n</head>`);
 

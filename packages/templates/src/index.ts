@@ -514,3 +514,98 @@ export * from './themes/theme10/glossary-v1.js';
 export * from './themes/theme10/faq-v1.js';
 export * from './themes/theme10/isotype-v1.js';
 export * from './themes/theme10/venn-v1.js';
+
+// theme11 视觉 Token（流光科技 · 浅色扁平科技风，mood 三情绪渐变）
+export {
+  theme11Tokens,
+  getTheme11Tokens,
+  generateTheme11CssVariables,
+  type Theme11Tokens,
+  type Theme11Mood,
+} from './themes/theme11/tokens.js';
+
+// theme11 版式（P0 骨架 12 个）— 流光科技 · 浅色扁平科技风
+export * from './themes/theme11/cover-aurora-v1.js';
+export * from './themes/theme11/cover-daylight-v1.js';
+export * from './themes/theme11/cover-sunset-v1.js';
+export * from './themes/theme11/cover-split-v1.js';
+export * from './themes/theme11/cover-product-v1.js';
+export * from './themes/theme11/chapter-v1.js';
+export * from './themes/theme11/chapter-numbered-v1.js';
+export * from './themes/theme11/divider-v1.js';
+export * from './themes/theme11/statement-v1.js';
+export * from './themes/theme11/principles-v1.js';
+export * from './themes/theme11/contents-v1.js';
+export * from './themes/theme11/closing-v1.js';
+export * from './themes/theme11/components-showcase-v1.js';
+export * from './themes/theme11/summary-v1.js';
+export * from './themes/theme11/bento-v1.js';
+export * from './themes/theme11/big-number-v1.js';
+// theme11 数据图表版式（P2 批次）
+export * from './themes/theme11/chart-bar-v1.js';
+export * from './themes/theme11/chart-line-v1.js';
+export * from './themes/theme11/chart-area-v1.js';
+export * from './themes/theme11/chart-stack-v1.js';
+export * from './themes/theme11/chart-grouped-v1.js';
+export * from './themes/theme11/chart-hbar-v1.js';
+export * from './themes/theme11/chart-donut-v1.js';
+export * from './themes/theme11/chart-pie-v1.js';
+export * from './themes/theme11/chart-radar-v1.js';
+export * from './themes/theme11/chart-gauge-v1.js';
+// theme11 数据图表版式（P2 第二批）
+export * from './themes/theme11/chart-treemap-v1.js';
+export * from './themes/theme11/chart-sunburst-v1.js';
+export * from './themes/theme11/chart-funnel-v1.js';
+export * from './themes/theme11/chart-heatmap-v1.js';
+export * from './themes/theme11/chart-scatter-v1.js';
+export * from './themes/theme11/chart-bubble-v1.js';
+export * from './themes/theme11/chart-waterfall-v1.js';
+export * from './themes/theme11/chart-sankey-v1.js';
+export * from './themes/theme11/chart-candlestick-v1.js';
+export * from './themes/theme11/chart-parallel-v1.js';
+export * from './themes/theme11/chart-radian-v1.js';
+export * from './themes/theme11/chart-bump-v1.js';
+// theme11 数据图表版式（P2 第三批：graph + 数据看板 / 指标 / 进度 / 甘特 / 日历 / 矩阵等）
+export * from './themes/theme11/chart-graph-v1.js';
+export * from './themes/theme11/small-multiples-v1.js';
+export * from './themes/theme11/index-board-v1.js';
+export * from './themes/theme11/scorecard-v1.js';
+export * from './themes/theme11/kpi-strip-v1.js';
+export * from './themes/theme11/trend-v1.js';
+export * from './themes/theme11/progress-v1.js';
+export * from './themes/theme11/swimlane-v1.js';
+export * from './themes/theme11/gantt-v1.js';
+export * from './themes/theme11/calendar-v1.js';
+export * from './themes/theme11/ranking-v1.js';
+export * from './themes/theme11/quadrant-v1.js';
+export * from './themes/theme11/matrix-v1.js';
+// theme11 结构 / 长尾版式（P3 批次）
+export * from './themes/theme11/cycle-v1.js';
+export * from './themes/theme11/pyramid-v1.js';
+export * from './themes/theme11/venn-v1.js';
+export * from './themes/theme11/orgchart-v1.js';
+export * from './themes/theme11/network-v1.js';
+export * from './themes/theme11/table-v1.js';
+export * from './themes/theme11/table-data-v1.js';
+export * from './themes/theme11/risk-v1.js';
+export * from './themes/theme11/swot-v1.js';
+export * from './themes/theme11/pest-v1.js';
+export * from './themes/theme11/case-v1.js';
+export * from './themes/theme11/case-study-v1.js';
+export * from './themes/theme11/editorial-v1.js';
+export * from './themes/theme11/showcase-v1.js';
+export * from './themes/theme11/closing-cta-v1.js';
+// theme11 P4 结尾 / 封底版式
+export * from './themes/theme11/back-cover-v1.js';
+export * from './themes/theme11/closing-minimal-v1.js';
+export * from './themes/theme11/closing-contact-v1.js';
+export * from './themes/theme11/closing-social-v1.js';
+export * from './themes/theme11/closing-quote-v1.js';
+export * from './themes/theme11/closing-split-v1.js';
+// theme11 P5 过渡 / 章节版式
+export * from './themes/theme11/chapter-split-v1.js';
+export * from './themes/theme11/chapter-hero-v1.js';
+export * from './themes/theme11/chapter-cards-v1.js';
+export * from './themes/theme11/chapter-timeline-v1.js';
+export * from './themes/theme11/transition-image-v1.js';
+export * from './themes/theme11/transition-minimal-v1.js';

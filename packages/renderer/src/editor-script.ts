@@ -485,6 +485,12 @@ export const editorScript = `
       const appearance = goal.appearance || 'dark';
       document.documentElement.setAttribute('data-theme', scheme);
       document.documentElement.setAttribute('data-appearance', appearance);
+    } else if (t === 'theme11') {
+      // theme11 视觉由每页 mood class 驱动，根属性仅作占位避免落入 else 被误删
+      const scheme = goal.colorScheme || 'theme11';
+      const appearance = goal.appearance || 'light';
+      document.documentElement.setAttribute('data-theme', scheme);
+      document.documentElement.setAttribute('data-appearance', appearance);
     } else {
       const scheme = goal.colorScheme || (t === 'theme02' ? 'scheme-a' : 'light');
       document.documentElement.setAttribute('data-theme', scheme);
@@ -508,6 +514,8 @@ export const editorScript = `
         }
       } else if (t === 'theme03') {
         active = appearanceValue === (goal.appearance || 'dark');
+      } else if (t === 'theme11') {
+        active = appearanceValue === (goal.appearance || 'light');
       } else {
         active = appearanceValue === (goal.colorScheme || (t === 'theme02' ? 'scheme-a' : 'light'));
       }
@@ -529,6 +537,13 @@ export const editorScript = `
       autoSave();
       document.documentElement.setAttribute('data-appearance', newMode);
     } else if (t === 'theme03') {
+      if (newMode === goal.appearance) return;
+      recordHistory();
+      goal.appearance = newMode;
+      autoSave();
+      document.documentElement.setAttribute('data-appearance', newMode);
+    } else if (t === 'theme11') {
+      // theme11 由每页 mood class 驱动，顶部外观按钮仅同步根属性与 goal.appearance
       if (newMode === goal.appearance) return;
       recordHistory();
       goal.appearance = newMode;
@@ -2843,7 +2858,7 @@ export const editorScript = `
       if (field.type === 'boolean') return false;
       if (field.type === 'number') return 100;
       if (field.type === 'textarea') return '示例内容';
-      return '示例项';
+      return '示例文字';
     }
     const item = {};
     itemSchema.forEach((field) => {
@@ -2865,7 +2880,7 @@ export const editorScript = `
       } else if (field.type === 'image') {
         item[field.key] = '';
       } else if (field.type === 'text') {
-        item[field.key] = '';
+        item[field.key] = '示例文字';
       } else if (field.type === 'select') {
         const firstOption = Array.isArray(field.options) && field.options.length > 0 ? field.options[0] : undefined;
         item[field.key] = firstOption && typeof firstOption === 'object' ? firstOption.value : '';
@@ -2965,15 +2980,9 @@ export const editorScript = `
       }
     });
 
-    // 显示当前条目的可编辑字段（简单文字字段仍在画布上编辑，此处跳过）
+    // 显示当前条目的可编辑字段（数组项始终展示，避免新增空白条目无法编辑）
     const isPrimitiveItem = field.itemSchema && field.itemSchema.length === 1 && field.itemSchema[0].key === 'item';
-    const allSubFieldsAreCanvasEditable = skipCanvasEditable && (() => {
-      if (!field.itemSchema) return true;
-      if (isPrimitiveItem) {
-        return ['text', 'textarea', 'image'].includes(field.itemSchema[0].type);
-      }
-      return field.itemSchema.every((subField) => ['text', 'textarea', 'image'].includes(subField.type));
-    })();
+    const allSubFieldsAreCanvasEditable = false;
 
     if (!allSubFieldsAreCanvasEditable) {
       const list = createEl('div', 'lp-property-array', section);

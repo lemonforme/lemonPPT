@@ -1,0 +1,1018 @@
+{
+  "title": "theme11 图表说明面板验证",
+  "goal": "验证 theme11 P2 图表接入 ChartInsightPanel 后的编辑器效果",
+  "audience": "内部测试",
+  "owner": "lemonPPT",
+  "theme": "theme11",
+  "language": "zh",
+  "pageCount": 22,
+  "randomSeed": "theme11-insight-mock-20260901",
+  "slides": [
+    {
+      "role": "chart",
+      "layout": "theme11_chart_bar_v1",
+      "props": {
+        "eyebrow": "BAR CHART",
+        "title": "季度增长趋势",
+        "subtitle": "各季度核心业务指标对比",
+        "unit": "%",
+        "categories": [
+          {
+            "text": "Q1"
+          },
+          {
+            "text": "Q2"
+          },
+          {
+            "text": "Q3"
+          },
+          {
+            "text": "Q4"
+          }
+        ],
+        "values": "24,38,52,67",
+        "insightTitle": "数据洞察 / INSIGHT",
+        "insightMetricValue": "—",
+        "insightMetricLabel": "核心指标 / METRIC",
+        "insightItems": [],
+        "insightNote": "",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_line_v1",
+      "props": {
+        "eyebrow": "LINE CHART",
+        "title": "用户增长曲线",
+        "subtitle": "过去 6 个月活跃用户变化",
+        "unit": "k",
+        "categories": [
+          {
+            "text": "1月"
+          },
+          {
+            "text": "2月"
+          },
+          {
+            "text": "3月"
+          },
+          {
+            "text": "4月"
+          },
+          {
+            "text": "5月"
+          },
+          {
+            "text": "6月"
+          }
+        ],
+        "values": "12,18,25,34,45,58",
+        "area": true,
+        "insightTitle": "数据洞察 / INSIGHT",
+        "insightMetricValue": "—",
+        "insightMetricLabel": "核心指标 / METRIC",
+        "insightItems": [],
+        "insightNote": "",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_area_v1",
+      "props": {
+        "eyebrow": "AREA CHART",
+        "title": "多产品线收入趋势",
+        "subtitle": "三条核心产品线的月度表现",
+        "unit": "万",
+        "categories": [
+          {
+            "text": "1月"
+          },
+          {
+            "text": "2月"
+          },
+          {
+            "text": "3月"
+          },
+          {
+            "text": "4月"
+          },
+          {
+            "text": "5月"
+          },
+          {
+            "text": "6月"
+          }
+        ],
+        "series": [
+          {
+            "name": "SaaS",
+            "values": "30,45,55,70,85,100"
+          },
+          {
+            "name": "服务",
+            "values": "20,25,30,35,40,48"
+          },
+          {
+            "name": "许可",
+            "values": "15,22,28,36,42,50"
+          }
+        ],
+        "insightTitle": "数据洞察 / INSIGHT",
+        "insightMetricValue": "—",
+        "insightMetricLabel": "核心指标 / METRIC",
+        "insightItems": [],
+        "insightNote": "",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_stack_v1",
+      "props": {
+        "eyebrow": "STACK CHART",
+        "title": "成本结构拆解",
+        "subtitle": "研发、市场与运营支出占比",
+        "unit": "万",
+        "categories": [
+          {
+            "text": "Q1"
+          },
+          {
+            "text": "Q2"
+          },
+          {
+            "text": "Q3"
+          },
+          {
+            "text": "Q4"
+          }
+        ],
+        "series": [
+          {
+            "name": "研发",
+            "values": "40,45,55,60"
+          },
+          {
+            "name": "市场",
+            "values": "30,35,40,45"
+          },
+          {
+            "name": "运营",
+            "values": "20,22,25,28"
+          }
+        ],
+        "insightTitle": "数据洞察 / INSIGHT",
+        "insightMetricValue": "—",
+        "insightMetricLabel": "核心指标 / METRIC",
+        "insightItems": [],
+        "insightNote": "",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_grouped_v1",
+      "props": {
+        "eyebrow": "GROUPED CHART",
+        "title": "渠道转化对比",
+        "subtitle": "不同获客渠道的季度表现",
+        "unit": "%",
+        "categories": [
+          {
+            "text": "Q1"
+          },
+          {
+            "text": "Q2"
+          },
+          {
+            "text": "Q3"
+          },
+          {
+            "text": "Q4"
+          }
+        ],
+        "series": [
+          {
+            "name": "线上",
+            "values": "35,42,48,55"
+          },
+          {
+            "name": "线下",
+            "values": "25,28,30,34"
+          },
+          {
+            "name": "合作伙伴",
+            "values": "18,22,26,30"
+          }
+        ],
+        "insightTitle": "数据洞察 / INSIGHT",
+        "insightMetricValue": "—",
+        "insightMetricLabel": "核心指标 / METRIC",
+        "insightItems": [],
+        "insightNote": "",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_hbar_v1",
+      "props": {
+        "eyebrow": "RANKING",
+        "title": "功能使用热度",
+        "subtitle": "按用户活跃度排序的核心功能",
+        "unit": "k",
+        "categories": [
+          {
+            "text": "AI 生成"
+          },
+          {
+            "text": "协同编辑"
+          },
+          {
+            "text": "版本管理"
+          },
+          {
+            "text": "数据看板"
+          },
+          {
+            "text": "导出分享"
+          }
+        ],
+        "values": "85,72,58,45,33",
+        "insightTitle": "数据洞察 / INSIGHT",
+        "insightMetricValue": "—",
+        "insightMetricLabel": "核心指标 / METRIC",
+        "insightItems": [],
+        "insightNote": "",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_donut_v1",
+      "props": {
+        "eyebrow": "DONUT CHART",
+        "title": "用户设备分布",
+        "subtitle": "访问来源占比分析",
+        "centerLabel": "100%",
+        "centerSub": "Total",
+        "items": [
+          {
+            "name": "桌面端",
+            "value": 45
+          },
+          {
+            "name": "移动端",
+            "value": 35
+          },
+          {
+            "name": "平板",
+            "value": 12
+          },
+          {
+            "name": "其他",
+            "value": 8
+          }
+        ],
+        "insightTitle": "数据洞察 / INSIGHT",
+        "insightMetricValue": "—",
+        "insightMetricLabel": "核心指标 / METRIC",
+        "insightItems": [],
+        "insightNote": "",
+        "mood": "aurora"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_pie_v1",
+      "props": {
+        "eyebrow": "PIE CHART",
+        "title": "预算分配",
+        "subtitle": "年度预算按部门划分",
+        "items": [
+          {
+            "name": "研发",
+            "value": 40
+          },
+          {
+            "name": "市场",
+            "value": 25
+          },
+          {
+            "name": "销售",
+            "value": 20
+          },
+          {
+            "name": "运营",
+            "value": 15
+          }
+        ],
+        "insightTitle": "数据洞察 / INSIGHT",
+        "insightMetricValue": "—",
+        "insightMetricLabel": "核心指标 / METRIC",
+        "insightItems": [],
+        "insightNote": "",
+        "mood": "sunset"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_radar_v1",
+      "props": {
+        "eyebrow": "RADAR",
+        "title": "产品能力模型",
+        "subtitle": "六维核心能力评估",
+        "max": 100,
+        "items": [
+          {
+            "name": "性能",
+            "value": 88
+          },
+          {
+            "name": "体验",
+            "value": 76
+          },
+          {
+            "name": "安全",
+            "value": 92
+          },
+          {
+            "name": "扩展",
+            "value": 80
+          },
+          {
+            "name": "成本",
+            "value": 72
+          },
+          {
+            "name": "稳定",
+            "value": 85
+          }
+        ],
+        "insightTitle": "数据洞察 / INSIGHT",
+        "insightMetricValue": "—",
+        "insightMetricLabel": "核心指标 / METRIC",
+        "insightItems": [],
+        "insightNote": "",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_gauge_v1",
+      "props": {
+        "eyebrow": "GAUGE",
+        "title": "系统健康度",
+        "subtitle": "实时可用性指标",
+        "value": 94,
+        "max": 100,
+        "unit": "%",
+        "label": "可用性",
+        "insightTitle": "数据洞察 / INSIGHT",
+        "insightMetricValue": "—",
+        "insightMetricLabel": "核心指标 / METRIC",
+        "insightItems": [],
+        "insightNote": "",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_treemap_v1",
+      "props": {
+        "eyebrow": "TREEMAP",
+        "title": "资源分布",
+        "subtitle": "按模块占比的矩形树图",
+        "items": [
+          {
+            "name": "研发",
+            "value": 420
+          },
+          {
+            "name": "市场",
+            "value": 280
+          },
+          {
+            "name": "运营",
+            "value": 190
+          },
+          {
+            "name": "产品",
+            "value": 150
+          },
+          {
+            "name": "设计",
+            "value": 110
+          }
+        ],
+        "insightTitle": "占比概览 / SHARE",
+        "insightMetricValue": "1,150",
+        "insightMetricLabel": "总计 / TOTAL",
+        "insightItems": [
+          {
+            "label": "研发",
+            "value": "420",
+            "sub": "36.5%",
+            "tone": "accent"
+          },
+          {
+            "label": "市场",
+            "value": "280",
+            "sub": "24.3%",
+            "tone": "violet"
+          },
+          {
+            "label": "运营",
+            "value": "190",
+            "sub": "16.5%",
+            "tone": "cyan"
+          }
+        ],
+        "insightNote": "→ 研发投入占据最大份额，是资源分配的核心。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_sunburst_v1",
+      "props": {
+        "eyebrow": "SUNBURST",
+        "title": "层级构成",
+        "subtitle": "多层占比的旭日图",
+        "items": [
+          {
+            "name": "云",
+            "value": 50,
+            "children": [
+              {
+                "name": "IaaS",
+                "value": 30
+              },
+              {
+                "name": "PaaS",
+                "value": 20
+              }
+            ]
+          },
+          {
+            "name": "端",
+            "value": 30,
+            "children": [
+              {
+                "name": "iOS",
+                "value": 18
+              },
+              {
+                "name": "Android",
+                "value": 12
+              }
+            ]
+          },
+          {
+            "name": "网",
+            "value": 20,
+            "children": [
+              {
+                "name": "5G",
+                "value": 12
+              },
+              {
+                "name": "WiFi",
+                "value": 8
+              }
+            ]
+          }
+        ],
+        "insightTitle": "层级构成 / COMPOSITION",
+        "insightMetricValue": "100%",
+        "insightMetricLabel": "总占比 / TOTAL",
+        "insightItems": [
+          {
+            "label": "线上",
+            "value": "62%",
+            "sub": "L1",
+            "tone": "accent"
+          },
+          {
+            "label": "线下",
+            "value": "38%",
+            "sub": "L1",
+            "tone": "violet"
+          }
+        ],
+        "insightNote": "→ 线上渠道在整体结构中占主导地位。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_funnel_v1",
+      "props": {
+        "eyebrow": "FUNNEL",
+        "title": "转化漏斗",
+        "subtitle": "从曝光到成交的阶段转化",
+        "items": [
+          {
+            "name": "访问",
+            "value": 100
+          },
+          {
+            "name": "注册",
+            "value": 72
+          },
+          {
+            "name": "加购",
+            "value": 45
+          },
+          {
+            "name": "下单",
+            "value": 28
+          },
+          {
+            "name": "支付",
+            "value": 16
+          }
+        ],
+        "insightTitle": "转化概览 / CONVERSION",
+        "insightMetricValue": "16%",
+        "insightMetricLabel": "总体转化率 / RATE",
+        "insightItems": [
+          {
+            "label": "访问→注册",
+            "value": "72%",
+            "sub": "STEP 1",
+            "tone": "accent"
+          },
+          {
+            "label": "注册→下单",
+            "value": "39%",
+            "sub": "STEP 2",
+            "tone": "violet"
+          },
+          {
+            "label": "下单→支付",
+            "value": "57%",
+            "sub": "STEP 3",
+            "tone": "cyan"
+          }
+        ],
+        "insightNote": "→ 支付环节流失明显，建议优化结账体验。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_heatmap_v1",
+      "props": {
+        "eyebrow": "HEATMAP",
+        "title": "活跃度热力图",
+        "subtitle": "不同时间段的用户活跃分布",
+        "xLabels": [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri"
+        ],
+        "yLabels": [
+          "早",
+          "中",
+          "晚"
+        ],
+        "values": "5,12,18,9,14,8,22,28,15,10,30,35,20,16,25",
+        "insightTitle": "热力峰值 / PEAK",
+        "insightMetricValue": "35",
+        "insightMetricLabel": "最高值 / MAX",
+        "insightItems": [
+          {
+            "label": "周五·晚",
+            "value": "35",
+            "sub": "PEAK",
+            "tone": "accent"
+          },
+          {
+            "label": "周三·中",
+            "value": "28",
+            "sub": "HOT",
+            "tone": "orange"
+          },
+          {
+            "label": "周一·早",
+            "value": "22",
+            "sub": "WARM",
+            "tone": "cyan"
+          }
+        ],
+        "insightNote": "→ 周五晚间出现明显高峰，适合重点投放。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_scatter_v1",
+      "props": {
+        "eyebrow": "SCATTER",
+        "title": "投入产出分布",
+        "subtitle": "各项目的投入与收益散点",
+        "xName": "投入",
+        "yName": "产出",
+        "unit": "k",
+        "points": "12,18|24,36|18,22|30,48|42,55|36,40|50,62|28,30",
+        "insightTitle": "分布特征 / DISTRIBUTION",
+        "insightMetricValue": "R²=0.82",
+        "insightMetricLabel": "拟合度 / FIT",
+        "insightItems": [
+          {
+            "label": "样本量",
+            "value": "24",
+            "sub": "N",
+            "tone": "accent"
+          },
+          {
+            "label": "X 均值",
+            "value": "58.4",
+            "sub": "AVG",
+            "tone": "violet"
+          },
+          {
+            "label": "Y 均值",
+            "value": "72.1",
+            "sub": "AVG",
+            "tone": "cyan"
+          }
+        ],
+        "insightNote": "→ X 与 Y 呈现强正相关，趋势稳定。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_bubble_v1",
+      "props": {
+        "eyebrow": "BUBBLE",
+        "title": "市场规模气泡图",
+        "subtitle": "横轴为增长率，纵轴为利润率，大小为市场规模",
+        "xName": "增长率",
+        "yName": "利润率",
+        "unit": "%",
+        "points": "12,18,24|24,36,40|18,22,18|30,48,55|42,55,30|36,40,22|50,62,48|28,30,15",
+        "insightTitle": "规模对比 / SCALE",
+        "insightMetricValue": "3.2x",
+        "insightMetricLabel": "最大倍数 / MULTIPLE",
+        "insightItems": [
+          {
+            "label": "头部气泡",
+            "value": "120",
+            "sub": "SIZE",
+            "tone": "accent"
+          },
+          {
+            "label": "平均气泡",
+            "value": "38",
+            "sub": "AVG",
+            "tone": "violet"
+          },
+          {
+            "label": "中位数",
+            "value": "32",
+            "sub": "MED",
+            "tone": "cyan"
+          }
+        ],
+        "insightNote": "→ 头部气泡体积显著高于均值，存在明显集中。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_waterfall_v1",
+      "props": {
+        "eyebrow": "WATERFALL",
+        "title": "利润拆解",
+        "subtitle": "从收入到净利润的增减构成",
+        "unit": "万",
+        "labels": [
+          "收入",
+          "成本",
+          "毛利",
+          "研发",
+          "市场",
+          "净利"
+        ],
+        "values": "100,-42,58,-18,-12,28",
+        "insightTitle": "累计变动 / CHANGE",
+        "insightMetricValue": "+58",
+        "insightMetricLabel": "净增长 / NET",
+        "insightItems": [
+          {
+            "label": "正向项",
+            "value": "+82",
+            "sub": "POS",
+            "tone": "green"
+          },
+          {
+            "label": "负向项",
+            "value": "-24",
+            "sub": "NEG",
+            "tone": "orange"
+          },
+          {
+            "label": "项目数",
+            "value": "6",
+            "sub": "COUNT",
+            "tone": "accent"
+          }
+        ],
+        "insightNote": "→ 下半年增长主要来自 Q3 新品上线。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_sankey_v1",
+      "props": {
+        "eyebrow": "SANKEY",
+        "title": "流量来源与转化",
+        "subtitle": "用户从来源到成交的流向",
+        "nodes": [
+          {
+            "name": "搜索"
+          },
+          {
+            "name": "社媒"
+          },
+          {
+            "name": "直接"
+          },
+          {
+            "name": "首页"
+          },
+          {
+            "name": "商品页"
+          },
+          {
+            "name": "加购"
+          },
+          {
+            "name": "支付"
+          }
+        ],
+        "links": [
+          {
+            "source": "搜索",
+            "target": "首页",
+            "value": 40
+          },
+          {
+            "source": "社媒",
+            "target": "商品页",
+            "value": 30
+          },
+          {
+            "source": "直接",
+            "target": "首页",
+            "value": 20
+          },
+          {
+            "source": "首页",
+            "target": "商品页",
+            "value": 35
+          },
+          {
+            "source": "商品页",
+            "target": "加购",
+            "value": 45
+          },
+          {
+            "source": "加购",
+            "target": "支付",
+            "value": 25
+          }
+        ],
+        "insightTitle": "流量分配 / FLOW",
+        "insightMetricValue": "1,000",
+        "insightMetricLabel": "总流量 / TOTAL",
+        "insightItems": [
+          {
+            "label": "搜索",
+            "value": "420",
+            "sub": "SOURCE",
+            "tone": "accent"
+          },
+          {
+            "label": "社媒",
+            "value": "310",
+            "sub": "SOURCE",
+            "tone": "violet"
+          },
+          {
+            "label": "直接访问",
+            "value": "270",
+            "sub": "SOURCE",
+            "tone": "cyan"
+          }
+        ],
+        "insightNote": "→ 搜索渠道是主要流量入口，值得加大投入。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_candlestick_v1",
+      "props": {
+        "eyebrow": "CANDLESTICK",
+        "title": "价格走势",
+        "subtitle": "最近 7 个交易日的 OHLC 数据",
+        "labels": [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun"
+        ],
+        "values": "20,34,10,38|40,35,20,45|33,38,30,48|38,15,10,42|52,48,40,58|48,52,42,62|55,60,48,65",
+        "insightTitle": "波动区间 / RANGE",
+        "insightMetricValue": "+12.5%",
+        "insightMetricLabel": "区间涨幅 / CHANGE",
+        "insightItems": [
+          {
+            "label": "最高",
+            "value": "158",
+            "sub": "HIGH",
+            "tone": "green"
+          },
+          {
+            "label": "最低",
+            "value": "124",
+            "sub": "LOW",
+            "tone": "orange"
+          },
+          {
+            "label": "成交量",
+            "value": "2.4M",
+            "sub": "VOL",
+            "tone": "accent"
+          }
+        ],
+        "insightNote": "→ 近期波动率放大，关注突破方向。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_parallel_v1",
+      "props": {
+        "eyebrow": "PARALLEL",
+        "title": "多维指标对比",
+        "subtitle": "不同方案在多个维度上的表现",
+        "dimensions": [
+          "性价比",
+          "性能",
+          "稳定性",
+          "易用性",
+          "扩展性"
+        ],
+        "series": [
+          {
+            "name": "方案 A",
+            "values": "85,90,78,88,82"
+          },
+          {
+            "name": "方案 B",
+            "values": "70,95,85,75,90"
+          },
+          {
+            "name": "方案 C",
+            "values": "92,72,90,85,70"
+          }
+        ],
+        "insightTitle": "维度极值 / EXTREMES",
+        "insightMetricValue": "6",
+        "insightMetricLabel": "维度数 / DIMS",
+        "insightItems": [
+          {
+            "label": "收入",
+            "value": "92",
+            "sub": "MAX",
+            "tone": "accent"
+          },
+          {
+            "label": "成本",
+            "value": "78",
+            "sub": "MAX",
+            "tone": "violet"
+          },
+          {
+            "label": "满意度",
+            "value": "88",
+            "sub": "MAX",
+            "tone": "cyan"
+          }
+        ],
+        "insightNote": "→ 各维度分布差异显著，需分别制定策略。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_radian_v1",
+      "props": {
+        "eyebrow": "RADIAN",
+        "title": "渠道占比",
+        "subtitle": "各渠道指标的径向对比",
+        "unit": "%",
+        "labels": [
+          "搜索",
+          "社媒",
+          "邮件",
+          "直访",
+          "推荐"
+        ],
+        "values": "78,65,42,88,56",
+        "insightTitle": "头部类目 / TOP",
+        "insightMetricValue": "28%",
+        "insightMetricLabel": "最大占比 / MAX",
+        "insightItems": [
+          {
+            "label": "消费电子",
+            "value": "28%",
+            "sub": "TOP 1",
+            "tone": "accent"
+          },
+          {
+            "label": "家居生活",
+            "value": "22%",
+            "sub": "TOP 2",
+            "tone": "violet"
+          },
+          {
+            "label": "运动户外",
+            "value": "19%",
+            "sub": "TOP 3",
+            "tone": "cyan"
+          }
+        ],
+        "insightNote": "→ 前三大类目贡献超过六成份额。",
+        "mood": "daylight"
+      }
+    },
+    {
+      "role": "chart",
+      "layout": "theme11_chart_bump_v1",
+      "props": {
+        "eyebrow": "BUMP",
+        "title": "品牌排名变化",
+        "subtitle": "各品牌在不同季度的排名走势",
+        "labels": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
+        "series": [
+          {
+            "name": "品牌 A",
+            "values": "3,2,1,1"
+          },
+          {
+            "name": "品牌 B",
+            "values": "1,3,2,3"
+          },
+          {
+            "name": "品牌 C",
+            "values": "2,1,3,2"
+          }
+        ],
+        "insightTitle": "最终排名 / RANK",
+        "insightMetricValue": "#1",
+        "insightMetricLabel": "品牌 A 最终领先",
+        "insightItems": [
+          {
+            "label": "品牌 A",
+            "value": "#1",
+            "sub": "Q4",
+            "tone": "accent"
+          },
+          {
+            "label": "品牌 C",
+            "value": "#2",
+            "sub": "Q4",
+            "tone": "violet"
+          },
+          {
+            "label": "品牌 B",
+            "value": "#3",
+            "sub": "Q4",
+            "tone": "cyan"
+          }
+        ],
+        "insightNote": "→ 品牌 A 在下半年实现反超并保持领先。",
+        "mood": "daylight"
+      }
+    }
+  ]
+}

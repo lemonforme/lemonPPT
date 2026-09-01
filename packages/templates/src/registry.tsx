@@ -5900,6 +5900,653 @@ import {
   type Theme10IndexBoardV1Props,
 } from './themes/theme10/index-board-v1.js';
 
+// theme11 版式（P0 骨架 12 个）— 流光科技 · 浅色扁平科技风
+import {
+  Theme11CoverAuroraV1,
+  theme11CoverAuroraV1Meta,
+  theme11CoverAuroraV1Schema,
+  type Theme11CoverAuroraV1Props,
+} from './themes/theme11/cover-aurora-v1.js';
+import {
+  Theme11CoverDaylightV1,
+  theme11CoverDaylightV1Meta,
+  theme11CoverDaylightV1Schema,
+  type Theme11CoverDaylightV1Props,
+} from './themes/theme11/cover-daylight-v1.js';
+import {
+  Theme11CoverSunsetV1,
+  theme11CoverSunsetV1Meta,
+  theme11CoverSunsetV1Schema,
+  type Theme11CoverSunsetV1Props,
+} from './themes/theme11/cover-sunset-v1.js';
+import {
+  Theme11CoverSplitV1,
+  theme11CoverSplitV1Meta,
+  theme11CoverSplitV1Schema,
+  type Theme11CoverSplitV1Props,
+} from './themes/theme11/cover-split-v1.js';
+import {
+  Theme11CoverProductV1,
+  theme11CoverProductV1Meta,
+  theme11CoverProductV1Schema,
+  type Theme11CoverProductV1Props,
+} from './themes/theme11/cover-product-v1.js';
+import {
+  Theme11ChapterV1,
+  theme11ChapterV1Meta,
+  theme11ChapterV1Schema,
+  type Theme11ChapterV1Props,
+} from './themes/theme11/chapter-v1.js';
+import {
+  Theme11ChapterNumberedV1,
+  theme11ChapterNumberedV1Meta,
+  theme11ChapterNumberedV1Schema,
+  type Theme11ChapterNumberedV1Props,
+} from './themes/theme11/chapter-numbered-v1.js';
+import {
+  Theme11DividerV1,
+  theme11DividerV1Meta,
+  theme11DividerV1Schema,
+  type Theme11DividerV1Props,
+} from './themes/theme11/divider-v1.js';
+import {
+  Theme11StatementV1,
+  theme11StatementV1Meta,
+  theme11StatementV1Schema,
+  type Theme11StatementV1Props,
+} from './themes/theme11/statement-v1.js';
+import {
+  Theme11PrinciplesV1,
+  theme11PrinciplesV1Meta,
+  theme11PrinciplesV1Schema,
+  type Theme11PrinciplesV1Props,
+} from './themes/theme11/principles-v1.js';
+import {
+  Theme11ClosingV1,
+  theme11ClosingV1Meta,
+  theme11ClosingV1Schema,
+  type Theme11ClosingV1Props,
+} from './themes/theme11/closing-v1.js';
+import {
+  Theme11ContentsV1,
+  theme11ContentsV1Meta,
+  theme11ContentsV1Schema,
+  type Theme11ContentsV1Props,
+} from './themes/theme11/contents-v1.js';
+
+// theme11 · P1 批次 28 个图文组件版式
+import {
+  Theme11FeatureV1,
+  theme11FeatureV1Meta,
+  theme11FeatureV1Schema,
+  type Theme11FeatureV1Props,
+} from './themes/theme11/feature-v1.js';
+import {
+  Theme11FeatureGridV1,
+  theme11FeatureGridV1Meta,
+  theme11FeatureGridV1Schema,
+  type Theme11FeatureGridV1Props,
+} from './themes/theme11/feature-grid-v1.js';
+import {
+  Theme11FeatureCardsV1,
+  theme11FeatureCardsV1Meta,
+  theme11FeatureCardsV1Schema,
+  type Theme11FeatureCardsV1Props,
+} from './themes/theme11/feature-cards-v1.js';
+import {
+  Theme11HeroNumberV1,
+  theme11HeroNumberV1Meta,
+  theme11HeroNumberV1Schema,
+  type Theme11HeroNumberV1Props,
+} from './themes/theme11/hero-number-v1.js';
+import {
+  Theme11MetricsV1,
+  theme11MetricsV1Meta,
+  theme11MetricsV1Schema,
+  type Theme11MetricsV1Props,
+} from './themes/theme11/metrics-v1.js';
+import {
+  Theme11MetricBigV1,
+  theme11MetricBigV1Meta,
+  theme11MetricBigV1Schema,
+  type Theme11MetricBigV1Props,
+} from './themes/theme11/metric-big-v1.js';
+import {
+  Theme11ComparisonV1,
+  theme11ComparisonV1Meta,
+  theme11ComparisonV1Schema,
+  type Theme11ComparisonV1Props,
+} from './themes/theme11/comparison-v1.js';
+import {
+  Theme11ComparisonCardsV1,
+  theme11ComparisonCardsV1Meta,
+  theme11ComparisonCardsV1Schema,
+  type Theme11ComparisonCardsV1Props,
+} from './themes/theme11/comparison-cards-v1.js';
+import {
+  Theme11StepsV1,
+  theme11StepsV1Meta,
+  theme11StepsV1Schema,
+  type Theme11StepsV1Props,
+} from './themes/theme11/steps-v1.js';
+import {
+  Theme11ProcessV1,
+  theme11ProcessV1Meta,
+  theme11ProcessV1Schema,
+  type Theme11ProcessV1Props,
+} from './themes/theme11/process-v1.js';
+import {
+  Theme11TimelineV1,
+  theme11TimelineV1Meta,
+  theme11TimelineV1Schema,
+  type Theme11TimelineV1Props,
+} from './themes/theme11/timeline-v1.js';
+import {
+  Theme11RoadmapV1,
+  theme11RoadmapV1Meta,
+  theme11RoadmapV1Schema,
+  type Theme11RoadmapV1Props,
+} from './themes/theme11/roadmap-v1.js';
+import {
+  Theme11GalleryV1,
+  theme11GalleryV1Meta,
+  theme11GalleryV1Schema,
+  type Theme11GalleryV1Props,
+} from './themes/theme11/gallery-v1.js';
+import {
+  Theme11GalleryWallV1,
+  theme11GalleryWallV1Meta,
+  theme11GalleryWallV1Schema,
+  type Theme11GalleryWallV1Props,
+} from './themes/theme11/gallery-wall-v1.js';
+import {
+  Theme11PhotoSplitV1,
+  theme11PhotoSplitV1Meta,
+  theme11PhotoSplitV1Schema,
+  type Theme11PhotoSplitV1Props,
+} from './themes/theme11/photo-split-v1.js';
+import {
+  Theme11PhotoFeatureV1,
+  theme11PhotoFeatureV1Meta,
+  theme11PhotoFeatureV1Schema,
+  type Theme11PhotoFeatureV1Props,
+} from './themes/theme11/photo-feature-v1.js';
+import {
+  Theme11TeamV1,
+  theme11TeamV1Meta,
+  theme11TeamV1Schema,
+  type Theme11TeamV1Props,
+} from './themes/theme11/team-v1.js';
+import {
+  Theme11TestimonialV1,
+  theme11TestimonialV1Meta,
+  theme11TestimonialV1Schema,
+  type Theme11TestimonialV1Props,
+} from './themes/theme11/testimonial-v1.js';
+import {
+  Theme11QuoteV1,
+  theme11QuoteV1Meta,
+  theme11QuoteV1Schema,
+  type Theme11QuoteV1Props,
+} from './themes/theme11/quote-v1.js';
+import {
+  Theme11QuotePortraitV1,
+  theme11QuotePortraitV1Meta,
+  theme11QuotePortraitV1Schema,
+  type Theme11QuotePortraitV1Props,
+} from './themes/theme11/quote-portrait-v1.js';
+import {
+  Theme11PricingV1,
+  theme11PricingV1Meta,
+  theme11PricingV1Schema,
+  type Theme11PricingV1Props,
+} from './themes/theme11/pricing-v1.js';
+import {
+  Theme11PlansV1,
+  theme11PlansV1Meta,
+  theme11PlansV1Schema,
+  type Theme11PlansV1Props,
+} from './themes/theme11/plans-v1.js';
+import {
+  Theme11ComponentsShowcaseV1,
+  theme11ComponentsShowcaseV1Meta,
+  theme11ComponentsShowcaseV1Schema,
+  type Theme11ComponentsShowcaseV1Props,
+} from './themes/theme11/components-showcase-v1.js';
+import {
+  Theme11FaqV1,
+  theme11FaqV1Meta,
+  theme11FaqV1Schema,
+  type Theme11FaqV1Props,
+} from './themes/theme11/faq-v1.js';
+import {
+  Theme11ChecklistV1,
+  theme11ChecklistV1Meta,
+  theme11ChecklistV1Schema,
+  type Theme11ChecklistV1Props,
+} from './themes/theme11/checklist-v1.js';
+import {
+  Theme11PartnersV1,
+  theme11PartnersV1Meta,
+  theme11PartnersV1Schema,
+  type Theme11PartnersV1Props,
+} from './themes/theme11/partners-v1.js';
+import {
+  Theme11TableOfContentsV1,
+  theme11TableOfContentsV1Meta,
+  theme11TableOfContentsV1Schema,
+  type Theme11TableOfContentsV1Props,
+} from './themes/theme11/table-of-contents-v1.js';
+import {
+  Theme11GlossaryV1,
+  theme11GlossaryV1Meta,
+  theme11GlossaryV1Schema,
+  type Theme11GlossaryV1Props,
+} from './themes/theme11/glossary-v1.js';
+import {
+  Theme11StatStripV1,
+  theme11StatStripV1Meta,
+  theme11StatStripV1Schema,
+  type Theme11StatStripV1Props,
+} from './themes/theme11/stat-strip-v1.js';
+import {
+  Theme11SummaryV1,
+  theme11SummaryV1Meta,
+  theme11SummaryV1Schema,
+  type Theme11SummaryV1Props,
+} from './themes/theme11/summary-v1.js';
+import {
+  Theme11BentoV1,
+  theme11BentoV1Meta,
+  theme11BentoV1Schema,
+  type Theme11BentoV1Props,
+} from './themes/theme11/bento-v1.js';
+import {
+  Theme11BigNumberV1,
+  theme11BigNumberV1Meta,
+  theme11BigNumberV1Schema,
+  type Theme11BigNumberV1Props,
+} from './themes/theme11/big-number-v1.js';
+// theme11 · P2 数据图表批次
+import {
+  Theme11ChartAreaV1,
+  theme11ChartAreaV1Meta,
+  theme11ChartAreaV1Schema,
+  type Theme11ChartAreaV1Props,
+} from './themes/theme11/chart-area-v1.js';
+import {
+  Theme11ChartBarV1,
+  theme11ChartBarV1Meta,
+  theme11ChartBarV1Schema,
+  type Theme11ChartBarV1Props,
+} from './themes/theme11/chart-bar-v1.js';
+import {
+  Theme11ChartDonutV1,
+  theme11ChartDonutV1Meta,
+  theme11ChartDonutV1Schema,
+  type Theme11ChartDonutV1Props,
+} from './themes/theme11/chart-donut-v1.js';
+import {
+  Theme11ChartGaugeV1,
+  theme11ChartGaugeV1Meta,
+  theme11ChartGaugeV1Schema,
+  type Theme11ChartGaugeV1Props,
+} from './themes/theme11/chart-gauge-v1.js';
+import {
+  Theme11ChartGroupedV1,
+  theme11ChartGroupedV1Meta,
+  theme11ChartGroupedV1Schema,
+  type Theme11ChartGroupedV1Props,
+} from './themes/theme11/chart-grouped-v1.js';
+import {
+  Theme11ChartHbarV1,
+  theme11ChartHbarV1Meta,
+  theme11ChartHbarV1Schema,
+  type Theme11ChartHbarV1Props,
+} from './themes/theme11/chart-hbar-v1.js';
+import {
+  Theme11ChartLineV1,
+  theme11ChartLineV1Meta,
+  theme11ChartLineV1Schema,
+  type Theme11ChartLineV1Props,
+} from './themes/theme11/chart-line-v1.js';
+import {
+  Theme11ChartPieV1,
+  theme11ChartPieV1Meta,
+  theme11ChartPieV1Schema,
+  type Theme11ChartPieV1Props,
+} from './themes/theme11/chart-pie-v1.js';
+import {
+  Theme11ChartRadarV1,
+  theme11ChartRadarV1Meta,
+  theme11ChartRadarV1Schema,
+  type Theme11ChartRadarV1Props,
+} from './themes/theme11/chart-radar-v1.js';
+import {
+  Theme11ChartStackV1,
+  theme11ChartStackV1Meta,
+  theme11ChartStackV1Schema,
+  type Theme11ChartStackV1Props,
+} from './themes/theme11/chart-stack-v1.js';
+// theme11 · P2 数据图表第二批
+import {
+  Theme11ChartBubbleV1,
+  theme11ChartBubbleV1Meta,
+  theme11ChartBubbleV1Schema,
+  type Theme11ChartBubbleV1Props,
+} from './themes/theme11/chart-bubble-v1.js';
+import {
+  Theme11ChartBumpV1,
+  theme11ChartBumpV1Meta,
+  theme11ChartBumpV1Schema,
+  type Theme11ChartBumpV1Props,
+} from './themes/theme11/chart-bump-v1.js';
+import {
+  Theme11ChartCandlestickV1,
+  theme11ChartCandlestickV1Meta,
+  theme11ChartCandlestickV1Schema,
+  type Theme11ChartCandlestickV1Props,
+} from './themes/theme11/chart-candlestick-v1.js';
+import {
+  Theme11ChartFunnelV1,
+  theme11ChartFunnelV1Meta,
+  theme11ChartFunnelV1Schema,
+  type Theme11ChartFunnelV1Props,
+} from './themes/theme11/chart-funnel-v1.js';
+import {
+  Theme11ChartHeatmapV1,
+  theme11ChartHeatmapV1Meta,
+  theme11ChartHeatmapV1Schema,
+  type Theme11ChartHeatmapV1Props,
+} from './themes/theme11/chart-heatmap-v1.js';
+import {
+  Theme11ChartParallelV1,
+  theme11ChartParallelV1Meta,
+  theme11ChartParallelV1Schema,
+  type Theme11ChartParallelV1Props,
+} from './themes/theme11/chart-parallel-v1.js';
+import {
+  Theme11ChartRadianV1,
+  theme11ChartRadianV1Meta,
+  theme11ChartRadianV1Schema,
+  type Theme11ChartRadianV1Props,
+} from './themes/theme11/chart-radian-v1.js';
+import {
+  Theme11ChartSankeyV1,
+  theme11ChartSankeyV1Meta,
+  theme11ChartSankeyV1Schema,
+  type Theme11ChartSankeyV1Props,
+} from './themes/theme11/chart-sankey-v1.js';
+import {
+  Theme11ChartScatterV1,
+  theme11ChartScatterV1Meta,
+  theme11ChartScatterV1Schema,
+  type Theme11ChartScatterV1Props,
+} from './themes/theme11/chart-scatter-v1.js';
+import {
+  Theme11ChartSunburstV1,
+  theme11ChartSunburstV1Meta,
+  theme11ChartSunburstV1Schema,
+  type Theme11ChartSunburstV1Props,
+} from './themes/theme11/chart-sunburst-v1.js';
+import {
+  Theme11ChartTreemapV1,
+  theme11ChartTreemapV1Meta,
+  theme11ChartTreemapV1Schema,
+  type Theme11ChartTreemapV1Props,
+} from './themes/theme11/chart-treemap-v1.js';
+import {
+  Theme11ChartWaterfallV1,
+  theme11ChartWaterfallV1Meta,
+  theme11ChartWaterfallV1Schema,
+  type Theme11ChartWaterfallV1Props,
+} from './themes/theme11/chart-waterfall-v1.js';
+// theme11 · P2 数据图表第三批（graph + 数据看板 / 指标 / 进度 / 甘特 / 日历 / 矩阵等）
+import {
+  Theme11CalendarV1,
+  theme11CalendarV1Meta,
+  theme11CalendarV1Schema,
+  type Theme11CalendarV1Props,
+} from './themes/theme11/calendar-v1.js';
+import {
+  Theme11ChartGraphV1,
+  theme11ChartGraphV1Meta,
+  theme11ChartGraphV1Schema,
+  type Theme11ChartGraphV1Props,
+} from './themes/theme11/chart-graph-v1.js';
+import {
+  Theme11GanttV1,
+  theme11GanttV1Meta,
+  theme11GanttV1Schema,
+  type Theme11GanttV1Props,
+} from './themes/theme11/gantt-v1.js';
+import {
+  Theme11IndexBoardV1,
+  theme11IndexBoardV1Meta,
+  theme11IndexBoardV1Schema,
+  type Theme11IndexBoardV1Props,
+} from './themes/theme11/index-board-v1.js';
+import {
+  Theme11KpiStripV1,
+  theme11KpiStripV1Meta,
+  theme11KpiStripV1Schema,
+  type Theme11KpiStripV1Props,
+} from './themes/theme11/kpi-strip-v1.js';
+import {
+  Theme11MatrixV1,
+  theme11MatrixV1Meta,
+  theme11MatrixV1Schema,
+  type Theme11MatrixV1Props,
+} from './themes/theme11/matrix-v1.js';
+import {
+  Theme11ProgressV1,
+  theme11ProgressV1Meta,
+  theme11ProgressV1Schema,
+  type Theme11ProgressV1Props,
+} from './themes/theme11/progress-v1.js';
+import {
+  Theme11QuadrantV1,
+  theme11QuadrantV1Meta,
+  theme11QuadrantV1Schema,
+  type Theme11QuadrantV1Props,
+} from './themes/theme11/quadrant-v1.js';
+import {
+  Theme11RankingV1,
+  theme11RankingV1Meta,
+  theme11RankingV1Schema,
+  type Theme11RankingV1Props,
+} from './themes/theme11/ranking-v1.js';
+import {
+  Theme11ScorecardV1,
+  theme11ScorecardV1Meta,
+  theme11ScorecardV1Schema,
+  type Theme11ScorecardV1Props,
+} from './themes/theme11/scorecard-v1.js';
+import {
+  Theme11SmallMultiplesV1,
+  theme11SmallMultiplesV1Meta,
+  theme11SmallMultiplesV1Schema,
+  type Theme11SmallMultiplesV1Props,
+} from './themes/theme11/small-multiples-v1.js';
+import {
+  Theme11SwimlaneV1,
+  theme11SwimlaneV1Meta,
+  theme11SwimlaneV1Schema,
+  type Theme11SwimlaneV1Props,
+} from './themes/theme11/swimlane-v1.js';
+import {
+  Theme11TrendV1,
+  theme11TrendV1Meta,
+  theme11TrendV1Schema,
+  type Theme11TrendV1Props,
+} from './themes/theme11/trend-v1.js';
+// theme11 · P3 结构 / 长尾版式
+import {
+  Theme11CaseV1,
+  theme11CaseV1Meta,
+  theme11CaseV1Schema,
+  type Theme11CaseV1Props,
+} from './themes/theme11/case-v1.js';
+import {
+  Theme11CaseStudyV1,
+  theme11CaseStudyV1Meta,
+  theme11CaseStudyV1Schema,
+  type Theme11CaseStudyV1Props,
+} from './themes/theme11/case-study-v1.js';
+import {
+  Theme11ClosingCtaV1,
+  theme11ClosingCtaV1Meta,
+  theme11ClosingCtaV1Schema,
+  type Theme11ClosingCtaV1Props,
+} from './themes/theme11/closing-cta-v1.js';
+import {
+  Theme11CycleV1,
+  theme11CycleV1Meta,
+  theme11CycleV1Schema,
+  type Theme11CycleV1Props,
+} from './themes/theme11/cycle-v1.js';
+import {
+  Theme11EditorialV1,
+  theme11EditorialV1Meta,
+  theme11EditorialV1Schema,
+  type Theme11EditorialV1Props,
+} from './themes/theme11/editorial-v1.js';
+import {
+  Theme11NetworkV1,
+  theme11NetworkV1Meta,
+  theme11NetworkV1Schema,
+  type Theme11NetworkV1Props,
+} from './themes/theme11/network-v1.js';
+import {
+  Theme11OrgchartV1,
+  theme11OrgchartV1Meta,
+  theme11OrgchartV1Schema,
+  type Theme11OrgchartV1Props,
+} from './themes/theme11/orgchart-v1.js';
+import {
+  Theme11PestV1,
+  theme11PestV1Meta,
+  theme11PestV1Schema,
+  type Theme11PestV1Props,
+} from './themes/theme11/pest-v1.js';
+import {
+  Theme11PyramidV1,
+  theme11PyramidV1Meta,
+  theme11PyramidV1Schema,
+  type Theme11PyramidV1Props,
+} from './themes/theme11/pyramid-v1.js';
+import {
+  Theme11RiskV1,
+  theme11RiskV1Meta,
+  theme11RiskV1Schema,
+  type Theme11RiskV1Props,
+} from './themes/theme11/risk-v1.js';
+import {
+  Theme11ShowcaseV1,
+  theme11ShowcaseV1Meta,
+  theme11ShowcaseV1Schema,
+  type Theme11ShowcaseV1Props,
+} from './themes/theme11/showcase-v1.js';
+import {
+  Theme11SwotV1,
+  theme11SwotV1Meta,
+  theme11SwotV1Schema,
+  type Theme11SwotV1Props,
+} from './themes/theme11/swot-v1.js';
+import {
+  Theme11TableDataV1,
+  theme11TableDataV1Meta,
+  theme11TableDataV1Schema,
+  type Theme11TableDataV1Props,
+} from './themes/theme11/table-data-v1.js';
+import {
+  Theme11TableV1,
+  theme11TableV1Meta,
+  theme11TableV1Schema,
+  type Theme11TableV1Props,
+} from './themes/theme11/table-v1.js';
+import {
+  Theme11VennV1,
+  theme11VennV1Meta,
+  theme11VennV1Schema,
+  type Theme11VennV1Props,
+} from './themes/theme11/venn-v1.js';
+// theme11 · P4 结尾 / 封底版式
+import {
+  Theme11BackCoverV1,
+  theme11BackCoverV1Meta,
+  theme11BackCoverV1Schema,
+  type Theme11BackCoverV1Props,
+} from './themes/theme11/back-cover-v1.js';
+import {
+  Theme11ClosingContactV1,
+  theme11ClosingContactV1Meta,
+  theme11ClosingContactV1Schema,
+  type Theme11ClosingContactV1Props,
+} from './themes/theme11/closing-contact-v1.js';
+import {
+  Theme11ClosingMinimalV1,
+  theme11ClosingMinimalV1Meta,
+  theme11ClosingMinimalV1Schema,
+  type Theme11ClosingMinimalV1Props,
+} from './themes/theme11/closing-minimal-v1.js';
+import {
+  Theme11ClosingQuoteV1,
+  theme11ClosingQuoteV1Meta,
+  theme11ClosingQuoteV1Schema,
+  type Theme11ClosingQuoteV1Props,
+} from './themes/theme11/closing-quote-v1.js';
+import {
+  Theme11ClosingSocialV1,
+  theme11ClosingSocialV1Meta,
+  theme11ClosingSocialV1Schema,
+  type Theme11ClosingSocialV1Props,
+} from './themes/theme11/closing-social-v1.js';
+import {
+  Theme11ClosingSplitV1,
+  theme11ClosingSplitV1Meta,
+  theme11ClosingSplitV1Schema,
+  type Theme11ClosingSplitV1Props,
+} from './themes/theme11/closing-split-v1.js';
+
+// theme11 · P5 过渡 / 章节版式
+import {
+  Theme11ChapterCardsV1,
+  theme11ChapterCardsV1Meta,
+  theme11ChapterCardsV1Schema,
+  type Theme11ChapterCardsV1Props,
+} from './themes/theme11/chapter-cards-v1.js';
+import {
+  Theme11ChapterHeroV1,
+  theme11ChapterHeroV1Meta,
+  theme11ChapterHeroV1Schema,
+  type Theme11ChapterHeroV1Props,
+} from './themes/theme11/chapter-hero-v1.js';
+import {
+  Theme11ChapterSplitV1,
+  theme11ChapterSplitV1Meta,
+  theme11ChapterSplitV1Schema,
+  type Theme11ChapterSplitV1Props,
+} from './themes/theme11/chapter-split-v1.js';
+import {
+  Theme11ChapterTimelineV1,
+  theme11ChapterTimelineV1Meta,
+  theme11ChapterTimelineV1Schema,
+  type Theme11ChapterTimelineV1Props,
+} from './themes/theme11/chapter-timeline-v1.js';
+import {
+  Theme11TransitionImageV1,
+  theme11TransitionImageV1Meta,
+  theme11TransitionImageV1Schema,
+  type Theme11TransitionImageV1Props,
+} from './themes/theme11/transition-image-v1.js';
+import {
+  Theme11TransitionMinimalV1,
+  theme11TransitionMinimalV1Meta,
+  theme11TransitionMinimalV1Schema,
+  type Theme11TransitionMinimalV1Props,
+} from './themes/theme11/transition-minimal-v1.js';
+
 registerLayout<Theme09TyperiverV1Props>({ meta: theme09TyperiverV1Meta, component: Theme09TyperiverV1, schema: theme09TyperiverV1Schema });
 registerLayout<Theme09ExhibitWallV1Props>({ meta: theme09ExhibitWallV1Meta, component: Theme09ExhibitWallV1, schema: theme09ExhibitWallV1Schema });
 registerLayout<Theme09MasonryV1Props>({ meta: theme09MasonryV1Meta, component: Theme09MasonryV1, schema: theme09MasonryV1Schema });
@@ -6097,3 +6744,121 @@ registerLayout<Theme10SmallMultiplesV1Props>({ meta: theme10SmallMultiplesV1Meta
 registerLayout<Theme10StatStripV1Props>({ meta: theme10StatStripV1Meta, component: Theme10StatStripV1, schema: theme10StatStripV1Schema });
 registerLayout<Theme10QuoteStatV1Props>({ meta: theme10QuoteStatV1Meta, component: Theme10QuoteStatV1, schema: theme10QuoteStatV1Schema });
 registerLayout<Theme10IndexBoardV1Props>({ meta: theme10IndexBoardV1Meta, component: Theme10IndexBoardV1, schema: theme10IndexBoardV1Schema });
+
+// theme11 注册
+registerLayout<Theme11CoverAuroraV1Props>({ meta: theme11CoverAuroraV1Meta, component: Theme11CoverAuroraV1, schema: theme11CoverAuroraV1Schema });
+registerLayout<Theme11CoverDaylightV1Props>({ meta: theme11CoverDaylightV1Meta, component: Theme11CoverDaylightV1, schema: theme11CoverDaylightV1Schema });
+registerLayout<Theme11CoverSunsetV1Props>({ meta: theme11CoverSunsetV1Meta, component: Theme11CoverSunsetV1, schema: theme11CoverSunsetV1Schema });
+registerLayout<Theme11CoverSplitV1Props>({ meta: theme11CoverSplitV1Meta, component: Theme11CoverSplitV1, schema: theme11CoverSplitV1Schema });
+registerLayout<Theme11CoverProductV1Props>({ meta: theme11CoverProductV1Meta, component: Theme11CoverProductV1, schema: theme11CoverProductV1Schema });
+registerLayout<Theme11ChapterV1Props>({ meta: theme11ChapterV1Meta, component: Theme11ChapterV1, schema: theme11ChapterV1Schema });
+registerLayout<Theme11ChapterNumberedV1Props>({ meta: theme11ChapterNumberedV1Meta, component: Theme11ChapterNumberedV1, schema: theme11ChapterNumberedV1Schema });
+registerLayout<Theme11DividerV1Props>({ meta: theme11DividerV1Meta, component: Theme11DividerV1, schema: theme11DividerV1Schema });
+registerLayout<Theme11StatementV1Props>({ meta: theme11StatementV1Meta, component: Theme11StatementV1, schema: theme11StatementV1Schema });
+registerLayout<Theme11PrinciplesV1Props>({ meta: theme11PrinciplesV1Meta, component: Theme11PrinciplesV1, schema: theme11PrinciplesV1Schema });
+registerLayout<Theme11ClosingV1Props>({ meta: theme11ClosingV1Meta, component: Theme11ClosingV1, schema: theme11ClosingV1Schema });
+registerLayout<Theme11ContentsV1Props>({ meta: theme11ContentsV1Meta, component: Theme11ContentsV1, schema: theme11ContentsV1Schema });
+
+// theme11 · P1 批次 28 个图文组件版式
+registerLayout<Theme11FeatureV1Props>({ meta: theme11FeatureV1Meta, component: Theme11FeatureV1, schema: theme11FeatureV1Schema });
+registerLayout<Theme11FeatureGridV1Props>({ meta: theme11FeatureGridV1Meta, component: Theme11FeatureGridV1, schema: theme11FeatureGridV1Schema });
+registerLayout<Theme11FeatureCardsV1Props>({ meta: theme11FeatureCardsV1Meta, component: Theme11FeatureCardsV1, schema: theme11FeatureCardsV1Schema });
+registerLayout<Theme11HeroNumberV1Props>({ meta: theme11HeroNumberV1Meta, component: Theme11HeroNumberV1, schema: theme11HeroNumberV1Schema });
+registerLayout<Theme11MetricsV1Props>({ meta: theme11MetricsV1Meta, component: Theme11MetricsV1, schema: theme11MetricsV1Schema });
+registerLayout<Theme11MetricBigV1Props>({ meta: theme11MetricBigV1Meta, component: Theme11MetricBigV1, schema: theme11MetricBigV1Schema });
+registerLayout<Theme11ComparisonV1Props>({ meta: theme11ComparisonV1Meta, component: Theme11ComparisonV1, schema: theme11ComparisonV1Schema });
+registerLayout<Theme11ComparisonCardsV1Props>({ meta: theme11ComparisonCardsV1Meta, component: Theme11ComparisonCardsV1, schema: theme11ComparisonCardsV1Schema });
+registerLayout<Theme11StepsV1Props>({ meta: theme11StepsV1Meta, component: Theme11StepsV1, schema: theme11StepsV1Schema });
+registerLayout<Theme11ProcessV1Props>({ meta: theme11ProcessV1Meta, component: Theme11ProcessV1, schema: theme11ProcessV1Schema });
+registerLayout<Theme11TimelineV1Props>({ meta: theme11TimelineV1Meta, component: Theme11TimelineV1, schema: theme11TimelineV1Schema });
+registerLayout<Theme11RoadmapV1Props>({ meta: theme11RoadmapV1Meta, component: Theme11RoadmapV1, schema: theme11RoadmapV1Schema });
+registerLayout<Theme11GalleryV1Props>({ meta: theme11GalleryV1Meta, component: Theme11GalleryV1, schema: theme11GalleryV1Schema });
+registerLayout<Theme11GalleryWallV1Props>({ meta: theme11GalleryWallV1Meta, component: Theme11GalleryWallV1, schema: theme11GalleryWallV1Schema });
+registerLayout<Theme11PhotoSplitV1Props>({ meta: theme11PhotoSplitV1Meta, component: Theme11PhotoSplitV1, schema: theme11PhotoSplitV1Schema });
+registerLayout<Theme11PhotoFeatureV1Props>({ meta: theme11PhotoFeatureV1Meta, component: Theme11PhotoFeatureV1, schema: theme11PhotoFeatureV1Schema });
+registerLayout<Theme11TeamV1Props>({ meta: theme11TeamV1Meta, component: Theme11TeamV1, schema: theme11TeamV1Schema });
+registerLayout<Theme11TestimonialV1Props>({ meta: theme11TestimonialV1Meta, component: Theme11TestimonialV1, schema: theme11TestimonialV1Schema });
+registerLayout<Theme11QuoteV1Props>({ meta: theme11QuoteV1Meta, component: Theme11QuoteV1, schema: theme11QuoteV1Schema });
+registerLayout<Theme11QuotePortraitV1Props>({ meta: theme11QuotePortraitV1Meta, component: Theme11QuotePortraitV1, schema: theme11QuotePortraitV1Schema });
+registerLayout<Theme11PricingV1Props>({ meta: theme11PricingV1Meta, component: Theme11PricingV1, schema: theme11PricingV1Schema });
+registerLayout<Theme11PlansV1Props>({ meta: theme11PlansV1Meta, component: Theme11PlansV1, schema: theme11PlansV1Schema });
+registerLayout<Theme11ComponentsShowcaseV1Props>({ meta: theme11ComponentsShowcaseV1Meta, component: Theme11ComponentsShowcaseV1, schema: theme11ComponentsShowcaseV1Schema });
+registerLayout<Theme11FaqV1Props>({ meta: theme11FaqV1Meta, component: Theme11FaqV1, schema: theme11FaqV1Schema });
+registerLayout<Theme11ChecklistV1Props>({ meta: theme11ChecklistV1Meta, component: Theme11ChecklistV1, schema: theme11ChecklistV1Schema });
+registerLayout<Theme11PartnersV1Props>({ meta: theme11PartnersV1Meta, component: Theme11PartnersV1, schema: theme11PartnersV1Schema });
+registerLayout<Theme11TableOfContentsV1Props>({ meta: theme11TableOfContentsV1Meta, component: Theme11TableOfContentsV1, schema: theme11TableOfContentsV1Schema });
+registerLayout<Theme11GlossaryV1Props>({ meta: theme11GlossaryV1Meta, component: Theme11GlossaryV1, schema: theme11GlossaryV1Schema });
+registerLayout<Theme11StatStripV1Props>({ meta: theme11StatStripV1Meta, component: Theme11StatStripV1, schema: theme11StatStripV1Schema });
+registerLayout<Theme11SummaryV1Props>({ meta: theme11SummaryV1Meta, component: Theme11SummaryV1, schema: theme11SummaryV1Schema });
+registerLayout<Theme11BentoV1Props>({ meta: theme11BentoV1Meta, component: Theme11BentoV1, schema: theme11BentoV1Schema });
+registerLayout<Theme11BigNumberV1Props>({ meta: theme11BigNumberV1Meta, component: Theme11BigNumberV1, schema: theme11BigNumberV1Schema });
+// theme11 · P2 数据图表批次
+registerLayout<Theme11ChartBarV1Props>({ meta: theme11ChartBarV1Meta, component: Theme11ChartBarV1, schema: theme11ChartBarV1Schema });
+registerLayout<Theme11ChartLineV1Props>({ meta: theme11ChartLineV1Meta, component: Theme11ChartLineV1, schema: theme11ChartLineV1Schema });
+registerLayout<Theme11ChartAreaV1Props>({ meta: theme11ChartAreaV1Meta, component: Theme11ChartAreaV1, schema: theme11ChartAreaV1Schema });
+registerLayout<Theme11ChartStackV1Props>({ meta: theme11ChartStackV1Meta, component: Theme11ChartStackV1, schema: theme11ChartStackV1Schema });
+registerLayout<Theme11ChartGroupedV1Props>({ meta: theme11ChartGroupedV1Meta, component: Theme11ChartGroupedV1, schema: theme11ChartGroupedV1Schema });
+registerLayout<Theme11ChartHbarV1Props>({ meta: theme11ChartHbarV1Meta, component: Theme11ChartHbarV1, schema: theme11ChartHbarV1Schema });
+registerLayout<Theme11ChartDonutV1Props>({ meta: theme11ChartDonutV1Meta, component: Theme11ChartDonutV1, schema: theme11ChartDonutV1Schema });
+registerLayout<Theme11ChartPieV1Props>({ meta: theme11ChartPieV1Meta, component: Theme11ChartPieV1, schema: theme11ChartPieV1Schema });
+registerLayout<Theme11ChartRadarV1Props>({ meta: theme11ChartRadarV1Meta, component: Theme11ChartRadarV1, schema: theme11ChartRadarV1Schema });
+registerLayout<Theme11ChartGaugeV1Props>({ meta: theme11ChartGaugeV1Meta, component: Theme11ChartGaugeV1, schema: theme11ChartGaugeV1Schema });
+registerLayout<Theme11ChartTreemapV1Props>({ meta: theme11ChartTreemapV1Meta, component: Theme11ChartTreemapV1, schema: theme11ChartTreemapV1Schema });
+registerLayout<Theme11ChartSunburstV1Props>({ meta: theme11ChartSunburstV1Meta, component: Theme11ChartSunburstV1, schema: theme11ChartSunburstV1Schema });
+registerLayout<Theme11ChartFunnelV1Props>({ meta: theme11ChartFunnelV1Meta, component: Theme11ChartFunnelV1, schema: theme11ChartFunnelV1Schema });
+registerLayout<Theme11ChartHeatmapV1Props>({ meta: theme11ChartHeatmapV1Meta, component: Theme11ChartHeatmapV1, schema: theme11ChartHeatmapV1Schema });
+registerLayout<Theme11ChartScatterV1Props>({ meta: theme11ChartScatterV1Meta, component: Theme11ChartScatterV1, schema: theme11ChartScatterV1Schema });
+registerLayout<Theme11ChartBubbleV1Props>({ meta: theme11ChartBubbleV1Meta, component: Theme11ChartBubbleV1, schema: theme11ChartBubbleV1Schema });
+registerLayout<Theme11ChartWaterfallV1Props>({ meta: theme11ChartWaterfallV1Meta, component: Theme11ChartWaterfallV1, schema: theme11ChartWaterfallV1Schema });
+registerLayout<Theme11ChartSankeyV1Props>({ meta: theme11ChartSankeyV1Meta, component: Theme11ChartSankeyV1, schema: theme11ChartSankeyV1Schema });
+registerLayout<Theme11ChartCandlestickV1Props>({ meta: theme11ChartCandlestickV1Meta, component: Theme11ChartCandlestickV1, schema: theme11ChartCandlestickV1Schema });
+registerLayout<Theme11ChartParallelV1Props>({ meta: theme11ChartParallelV1Meta, component: Theme11ChartParallelV1, schema: theme11ChartParallelV1Schema });
+registerLayout<Theme11ChartRadianV1Props>({ meta: theme11ChartRadianV1Meta, component: Theme11ChartRadianV1, schema: theme11ChartRadianV1Schema });
+registerLayout<Theme11ChartBumpV1Props>({ meta: theme11ChartBumpV1Meta, component: Theme11ChartBumpV1, schema: theme11ChartBumpV1Schema });
+// theme11 · P2 数据图表第三批
+registerLayout<Theme11ChartGraphV1Props>({ meta: theme11ChartGraphV1Meta, component: Theme11ChartGraphV1, schema: theme11ChartGraphV1Schema });
+registerLayout<Theme11SmallMultiplesV1Props>({ meta: theme11SmallMultiplesV1Meta, component: Theme11SmallMultiplesV1, schema: theme11SmallMultiplesV1Schema });
+registerLayout<Theme11IndexBoardV1Props>({ meta: theme11IndexBoardV1Meta, component: Theme11IndexBoardV1, schema: theme11IndexBoardV1Schema });
+registerLayout<Theme11ScorecardV1Props>({ meta: theme11ScorecardV1Meta, component: Theme11ScorecardV1, schema: theme11ScorecardV1Schema });
+registerLayout<Theme11KpiStripV1Props>({ meta: theme11KpiStripV1Meta, component: Theme11KpiStripV1, schema: theme11KpiStripV1Schema });
+registerLayout<Theme11TrendV1Props>({ meta: theme11TrendV1Meta, component: Theme11TrendV1, schema: theme11TrendV1Schema });
+registerLayout<Theme11ProgressV1Props>({ meta: theme11ProgressV1Meta, component: Theme11ProgressV1, schema: theme11ProgressV1Schema });
+registerLayout<Theme11SwimlaneV1Props>({ meta: theme11SwimlaneV1Meta, component: Theme11SwimlaneV1, schema: theme11SwimlaneV1Schema });
+registerLayout<Theme11GanttV1Props>({ meta: theme11GanttV1Meta, component: Theme11GanttV1, schema: theme11GanttV1Schema });
+registerLayout<Theme11CalendarV1Props>({ meta: theme11CalendarV1Meta, component: Theme11CalendarV1, schema: theme11CalendarV1Schema });
+registerLayout<Theme11RankingV1Props>({ meta: theme11RankingV1Meta, component: Theme11RankingV1, schema: theme11RankingV1Schema });
+registerLayout<Theme11QuadrantV1Props>({ meta: theme11QuadrantV1Meta, component: Theme11QuadrantV1, schema: theme11QuadrantV1Schema });
+registerLayout<Theme11MatrixV1Props>({ meta: theme11MatrixV1Meta, component: Theme11MatrixV1, schema: theme11MatrixV1Schema });
+// theme11 · P3 结构 / 长尾版式
+registerLayout<Theme11CycleV1Props>({ meta: theme11CycleV1Meta, component: Theme11CycleV1, schema: theme11CycleV1Schema });
+registerLayout<Theme11PyramidV1Props>({ meta: theme11PyramidV1Meta, component: Theme11PyramidV1, schema: theme11PyramidV1Schema });
+registerLayout<Theme11VennV1Props>({ meta: theme11VennV1Meta, component: Theme11VennV1, schema: theme11VennV1Schema });
+registerLayout<Theme11OrgchartV1Props>({ meta: theme11OrgchartV1Meta, component: Theme11OrgchartV1, schema: theme11OrgchartV1Schema });
+registerLayout<Theme11NetworkV1Props>({ meta: theme11NetworkV1Meta, component: Theme11NetworkV1, schema: theme11NetworkV1Schema });
+registerLayout<Theme11TableV1Props>({ meta: theme11TableV1Meta, component: Theme11TableV1, schema: theme11TableV1Schema });
+registerLayout<Theme11TableDataV1Props>({ meta: theme11TableDataV1Meta, component: Theme11TableDataV1, schema: theme11TableDataV1Schema });
+registerLayout<Theme11RiskV1Props>({ meta: theme11RiskV1Meta, component: Theme11RiskV1, schema: theme11RiskV1Schema });
+registerLayout<Theme11SwotV1Props>({ meta: theme11SwotV1Meta, component: Theme11SwotV1, schema: theme11SwotV1Schema });
+registerLayout<Theme11PestV1Props>({ meta: theme11PestV1Meta, component: Theme11PestV1, schema: theme11PestV1Schema });
+registerLayout<Theme11CaseV1Props>({ meta: theme11CaseV1Meta, component: Theme11CaseV1, schema: theme11CaseV1Schema });
+registerLayout<Theme11CaseStudyV1Props>({ meta: theme11CaseStudyV1Meta, component: Theme11CaseStudyV1, schema: theme11CaseStudyV1Schema });
+registerLayout<Theme11EditorialV1Props>({ meta: theme11EditorialV1Meta, component: Theme11EditorialV1, schema: theme11EditorialV1Schema });
+registerLayout<Theme11ShowcaseV1Props>({ meta: theme11ShowcaseV1Meta, component: Theme11ShowcaseV1, schema: theme11ShowcaseV1Schema });
+registerLayout<Theme11ClosingCtaV1Props>({ meta: theme11ClosingCtaV1Meta, component: Theme11ClosingCtaV1, schema: theme11ClosingCtaV1Schema });
+// theme11 · P4 结尾 / 封底版式
+registerLayout<Theme11BackCoverV1Props>({ meta: theme11BackCoverV1Meta, component: Theme11BackCoverV1, schema: theme11BackCoverV1Schema });
+registerLayout<Theme11ClosingMinimalV1Props>({ meta: theme11ClosingMinimalV1Meta, component: Theme11ClosingMinimalV1, schema: theme11ClosingMinimalV1Schema });
+registerLayout<Theme11ClosingContactV1Props>({ meta: theme11ClosingContactV1Meta, component: Theme11ClosingContactV1, schema: theme11ClosingContactV1Schema });
+registerLayout<Theme11ClosingSocialV1Props>({ meta: theme11ClosingSocialV1Meta, component: Theme11ClosingSocialV1, schema: theme11ClosingSocialV1Schema });
+registerLayout<Theme11ClosingQuoteV1Props>({ meta: theme11ClosingQuoteV1Meta, component: Theme11ClosingQuoteV1, schema: theme11ClosingQuoteV1Schema });
+registerLayout<Theme11ClosingSplitV1Props>({ meta: theme11ClosingSplitV1Meta, component: Theme11ClosingSplitV1, schema: theme11ClosingSplitV1Schema });
+
+// theme11 · P5 过渡 / 章节版式
+registerLayout<Theme11ChapterSplitV1Props>({ meta: theme11ChapterSplitV1Meta, component: Theme11ChapterSplitV1, schema: theme11ChapterSplitV1Schema });
+registerLayout<Theme11ChapterHeroV1Props>({ meta: theme11ChapterHeroV1Meta, component: Theme11ChapterHeroV1, schema: theme11ChapterHeroV1Schema });
+registerLayout<Theme11ChapterCardsV1Props>({ meta: theme11ChapterCardsV1Meta, component: Theme11ChapterCardsV1, schema: theme11ChapterCardsV1Schema });
+registerLayout<Theme11ChapterTimelineV1Props>({ meta: theme11ChapterTimelineV1Meta, component: Theme11ChapterTimelineV1, schema: theme11ChapterTimelineV1Schema });
+registerLayout<Theme11TransitionImageV1Props>({ meta: theme11TransitionImageV1Meta, component: Theme11TransitionImageV1, schema: theme11TransitionImageV1Schema });
+registerLayout<Theme11TransitionMinimalV1Props>({ meta: theme11TransitionMinimalV1Meta, component: Theme11TransitionMinimalV1, schema: theme11TransitionMinimalV1Schema });
+
+// theme10

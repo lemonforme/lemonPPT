@@ -13,6 +13,7 @@ import crypto from 'node:crypto';
 import { configureTheme08, registerTheme08Renderers } from './theme08-pptx.js';
 import { configureTheme09, registerTheme09Renderers } from './theme09-pptx.js';
 import { configureTheme10, registerTheme10Renderers } from './theme10-pptx.js';
+import { configureTheme11, registerTheme11Renderers } from './theme11-pptx.js';
 import { registerTheme01Renderers, cleanupTheme01TempImages } from './theme01-pptx.js';
 // 重新导出 theme01 通用渲染器，供 theme02-pptx.ts 等复用，避免 theme02→theme01→export-pptx 的循环依赖。
 export { renderChartV1, renderContentV1, renderCoverV1, renderClosing, renderComparisonV1 } from './theme01-pptx.js';
@@ -501,6 +502,31 @@ const THEME_CONFIGS: Record<string, ThemeConfig> = {
     fonts: { heading: 'Noto Sans SC', body: 'Noto Sans SC', mono: 'Space Mono' },
     chartColors: ['4A7FD4', 'D9B977', 'E8A23A', 'C97A52', '9A82DC', '6F9BD8'],
   },
+  theme11: {
+    // 流光科技 · 浅色扁平科技风：浅色底 + 多彩强调色，始终 light 外观。
+    colorsLight: {
+      primary: '1A202C',
+      secondary: '5A6578',
+      accent: '00BCD4',
+      white: 'FFFFFF',
+      light: 'F1F5F9',
+      border: 'E2E8F0',
+      surface: 'FFFFFF',
+      surfaceElevated: 'F8FAFC',
+    },
+    colorsDark: {
+      primary: '1A202C',
+      secondary: '5A6578',
+      accent: '00BCD4',
+      white: 'FFFFFF',
+      light: 'F1F5F9',
+      border: 'E2E8F0',
+      surface: 'FFFFFF',
+      surfaceElevated: 'F8FAFC',
+    },
+    fonts: { heading: 'Noto Sans SC', body: 'Noto Sans SC', mono: 'Space Mono' },
+    chartColors: ['00BCD4', '7C4DFF', '2979FF', 'FF9100', '00C853', 'FF5252'],
+  },
 };
 
 // Helper to load theme colors from snapshot
@@ -675,6 +701,11 @@ function resolveThemeConfig(
     // theme10 金色指数：始终深色墨黑金线底，专属渲染器内部按 layout 取强调色/基底。
     isDark = true;
     colors = config.colorsDark;
+    chartColors = config.chartColors;
+  } else if (theme === 'theme11') {
+    // theme11 流光科技：始终浅色底，情绪色由专属渲染器按 props.mood 覆盖背景。
+    isDark = false;
+    colors = config.colorsLight;
     chartColors = config.chartColors;
   } else {
     isDark = effectiveColorScheme === 'dark';
@@ -876,6 +907,15 @@ export async function exportDeckToPptx(goal: DeckGoal, options: PptxExportOption
     });
   }
 
+  // 注入 theme11 专属渲染器所需的状态（始终浅色底，appearance 仅调强调色浓度）
+  if (goal.theme === 'theme11') {
+    configureTheme11({
+      appearance: goal.appearance === 'muted' || goal.appearance === 'light' ? 'muted' : 'primary',
+      fonts: FONTS,
+      chartColors: CHART_COLORS,
+    });
+  }
+
   // Load gradient from snapshot
   CURRENT_GRADIENT = getSnapshotGradient(goal.theme ?? 'theme01');
 
@@ -953,6 +993,15 @@ function renderSlideToPptx(pptxSlide: PptxSlide, slide: CoreSlide): void {
     const t10 = resolvePptxRenderer(slide);
     if (t10) {
       t10(pptxSlide, slide.props);
+      return;
+    }
+  }
+
+  // theme11 流光科技：浅色底 + 多彩强调色，专属渲染器按角色通用渲染。
+  if (slide.layout.startsWith('theme11_')) {
+    const t11 = resolvePptxRenderer(slide);
+    if (t11) {
+      t11(pptxSlide, slide.props);
       return;
     }
   }
@@ -4426,6 +4475,8 @@ registerTheme08Renderers(registerPptxLayoutRenderer);
 registerTheme09Renderers(registerPptxLayoutRenderer);
 // theme10 金色指数 · 金融编辑风：注册 P0 全部 12 个版式专属 PPTX 渲染器
 registerTheme10Renderers(registerPptxLayoutRenderer);
+// theme11 流光科技 · 浅色扁平科技风：注册全部版式专属 PPTX 渲染器
+registerTheme11Renderers(registerPptxLayoutRenderer);
 registerTheme01Renderers(registerPptxLayoutRenderer);
 registerTheme02Renderers(registerPptxLayoutRenderer);
 registerTheme03Renderers(registerPptxLayoutRenderer);

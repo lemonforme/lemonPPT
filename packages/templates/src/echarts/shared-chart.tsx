@@ -17,8 +17,14 @@ export type LpEChartType =
   | 'bar'
   | 'line'
   | 'scatter'
+  | 'bubble'
   | 'pie'
   | 'themeRiver'
+  | 'waterfall'
+  | 'candlestick'
+  | 'parallel'
+  | 'radian'
+  | 'bump'
   | 'custom';
 
 export interface LpEChartProps {

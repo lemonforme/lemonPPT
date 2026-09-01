@@ -28,6 +28,7 @@ import {
   generateTheme08CssVariablesWithSchemesAndAppearance,
   generateTheme09CssVariablesWithSchemesAndAppearance,
   generateTheme10CssVariables,
+  generateTheme11CssVariables,
   getLayoutSchema,
   listLayoutsByTheme,
   renderSlide,
@@ -41,7 +42,7 @@ const outDir = path.join(rootDir, 'output', 'gallery');
 const assetsDir = path.join(outDir, 'assets');
 const themesDir = path.join(rootDir, 'packages', 'themes', 'src');
 
-const THEMES = ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06', 'theme07', 'theme08', 'theme09', 'theme10'];
+const THEMES = ['theme01', 'theme02', 'theme03', 'theme04', 'theme05', 'theme06', 'theme07', 'theme08', 'theme09', 'theme10', 'theme11'];
 
 import { sampleProps } from './lib/sample-props.mjs';
 
@@ -143,14 +144,17 @@ async function main() {
   const themeEchartsDest = path.join(assetsDir, 'theme-echarts.js');
   await cp(themeEchartsSource, themeEchartsDest);
 
-  // theme01 画廊使用一套连贯的真实演示数据（output/theme01-data-goal.json），而非占位 sampleProps
-  let t01DataMap = new Map();
-  try {
-    const t01Goal = JSON.parse(await readFile(path.join(rootDir, 'output', 'theme01-data-goal.json'), 'utf-8'));
-    t01DataMap = new Map(t01Goal.slides.map((s) => [s.layout, s.props]));
-    console.log(`ℹ️ theme01 画廊已载入真实数据：${t01DataMap.size} 个版式`);
-  } catch (e) {
-    console.warn('⚠️ 未找到 output/theme01-data-goal.json，theme01 画廊回退到 sampleProps：', e.message);
+  // 每个主题优先读取 output/<theme>-gallery-goal.json 中的真实数据
+  const goalDataMaps = new Map();
+  for (const theme of THEMES) {
+    try {
+      const goal = JSON.parse(await readFile(path.join(rootDir, 'output', `${theme}-gallery-goal.json`), 'utf-8'));
+      const map = new Map(goal.slides.map((s) => [s.layout, s.props]));
+      goalDataMaps.set(theme, map);
+      console.log(`ℹ️ ${theme} 画廊已载入真实数据：${map.size} 个版式`);
+    } catch (e) {
+      console.warn(`⚠️ 未找到 output/${theme}-gallery-goal.json，${theme} 画廊将回退到 sampleProps：`, e.message);
+    }
   }
 
   for (const theme of THEMES) {
@@ -183,21 +187,23 @@ async function main() {
                       ? generateTheme09CssVariablesWithSchemesAndAppearance()
                       : theme === 'theme10'
                         ? generateTheme10CssVariables()
-                        : '';
+                        : theme === 'theme11'
+                          ? generateTheme11CssVariables()
+                          : '';
 
     const layouts = listLayoutsByTheme(theme);
     layouts.sort((a, b) => a.id.localeCompare(b.id));
     totalLayouts = Math.max(totalLayouts, layouts.length);
 
-    const slides = layouts.map((meta) => ({
-      role: meta.role,
-      layout: meta.id,
-      props: theme === 'theme01'
-        ? (t01DataMap.get(meta.id) || sampleProps(meta))
-        : theme === 'theme08'
+    const dataMap = goalDataMaps.get(theme);
+    const slides = layouts.map((meta) => {
+      const props = dataMap?.get(meta.id) ?? (
+        theme === 'theme08' || theme === 'theme11'
           ? schemaDefaultsToProps(getLayoutSchema(meta.id))
-          : sampleProps(meta),
-    }));
+          : sampleProps(meta)
+      );
+      return { role: meta.role, layout: meta.id, props };
+    });
 
     const html = buildGalleryHtml(theme, slides, themeCssVars, colorScheme, appearance);
     await writeFile(path.join(themeDir, 'index.html'), html, 'utf-8');
