@@ -79,6 +79,16 @@ describe('editor e2e', () => {
     await page.reload({ waitUntil: 'load' });
     await page.waitForSelector(titleSelector, { state: 'visible' });
 
+    // 等待 editor-script 从 localStorage 恢复并重新渲染标题
+    await page.waitForFunction(
+      ({ sel, expected }: { sel: string; expected: string }) => {
+        const el = document.querySelector(sel);
+        return el !== null && el.textContent === expected;
+      },
+      { sel: titleSelector, expected: newTitle },
+      { timeout: 5000 }
+    );
+
     const persistedTitle = await page.$eval(titleSelector, (el) => el.textContent);
     expect(persistedTitle).toBe(newTitle);
   }, 60000);
