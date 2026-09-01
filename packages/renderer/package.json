@@ -36,7 +36,7 @@
     "@lemonppt/core": "workspace:*",
     "@lemonppt/templates": "workspace:*",
     "@lemonppt/themes": "workspace:*",
-    "playwright": "^1.61.1",
+    "playwright": "^1.62.1",
     "pptxgenjs": "3.12.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
