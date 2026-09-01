@@ -8,7 +8,6 @@
 // 避免导出时落到 "Unknown layout" 占位。
 
 import { type Slide as PptxSlide } from 'pptxgenjs';
-import { listLayoutsByTheme } from '@lemonppt/templates';
 
 type T11Mood = 'aurora' | 'daylight' | 'sunset';
 
@@ -837,11 +836,128 @@ export function renderTheme11Slide(slide: PptxSlide, props: unknown, layoutId: s
 // ────────────────────────────────────────────────────────────────
 // 注册全部 theme11 版式
 // ────────────────────────────────────────────────────────────────
+const THEME11_LAYOUTS = [
+  'theme11_back_cover_v1',
+  'theme11_bento_v1',
+  'theme11_big_number_v1',
+  'theme11_calendar_v1',
+  'theme11_case_study_v1',
+  'theme11_case_v1',
+  'theme11_chapter_cards_v1',
+  'theme11_chapter_hero_v1',
+  'theme11_chapter_numbered_v1',
+  'theme11_chapter_split_v1',
+  'theme11_chapter_timeline_v1',
+  'theme11_chapter_v1',
+  'theme11_chart_area_v1',
+  'theme11_chart_bar_v1',
+  'theme11_chart_bubble_v1',
+  'theme11_chart_bump_v1',
+  'theme11_chart_candlestick_v1',
+  'theme11_chart_donut_v1',
+  'theme11_chart_funnel_v1',
+  'theme11_chart_gauge_v1',
+  'theme11_chart_graph_v1',
+  'theme11_chart_grouped_v1',
+  'theme11_chart_hbar_v1',
+  'theme11_chart_heatmap_v1',
+  'theme11_chart_line_v1',
+  'theme11_chart_parallel_v1',
+  'theme11_chart_pie_v1',
+  'theme11_chart_radar_v1',
+  'theme11_chart_radian_v1',
+  'theme11_chart_sankey_v1',
+  'theme11_chart_scatter_v1',
+  'theme11_chart_stack_v1',
+  'theme11_chart_sunburst_v1',
+  'theme11_chart_treemap_v1',
+  'theme11_chart_waterfall_v1',
+  'theme11_checklist_v1',
+  'theme11_closing_contact_v1',
+  'theme11_closing_cta_v1',
+  'theme11_closing_minimal_v1',
+  'theme11_closing_quote_v1',
+  'theme11_closing_social_v1',
+  'theme11_closing_split_v1',
+  'theme11_closing_v1',
+  'theme11_comparison_cards_v1',
+  'theme11_comparison_v1',
+  'theme11_components_showcase_v1',
+  'theme11_contents_v1',
+  'theme11_cover_aurora_v1',
+  'theme11_cover_daylight_v1',
+  'theme11_cover_product_v1',
+  'theme11_cover_split_v1',
+  'theme11_cover_sunset_v1',
+  'theme11_cycle_v1',
+  'theme11_divider_v1',
+  'theme11_editorial_v1',
+  'theme11_faq_v1',
+  'theme11_feature_cards_v1',
+  'theme11_feature_grid_v1',
+  'theme11_feature_v1',
+  'theme11_gallery_v1',
+  'theme11_gallery_wall_v1',
+  'theme11_gantt_v1',
+  'theme11_glossary_v1',
+  'theme11_hero_number_v1',
+  'theme11_index_board_v1',
+  'theme11_kpi_strip_v1',
+  'theme11_matrix_v1',
+  'theme11_metric_big_v1',
+  'theme11_metrics_v1',
+  'theme11_network_v1',
+  'theme11_orgchart_v1',
+  'theme11_partners_v1',
+  'theme11_pest_v1',
+  'theme11_photo_feature_v1',
+  'theme11_photo_split_v1',
+  'theme11_plans_v1',
+  'theme11_pricing_v1',
+  'theme11_principles_v1',
+  'theme11_process_v1',
+  'theme11_progress_v1',
+  'theme11_pyramid_v1',
+  'theme11_quadrant_v1',
+  'theme11_quote_portrait_v1',
+  'theme11_quote_v1',
+  'theme11_ranking_v1',
+  'theme11_risk_v1',
+  'theme11_roadmap_v1',
+  'theme11_scorecard_v1',
+  'theme11_showcase_v1',
+  'theme11_small_multiples_v1',
+  'theme11_stat_strip_v1',
+  'theme11_statement_v1',
+  'theme11_steps_v1',
+  'theme11_summary_v1',
+  'theme11_swimlane_v1',
+  'theme11_swot_v1',
+  'theme11_table_data_v1',
+  'theme11_table_of_contents_v1',
+  'theme11_table_v1',
+  'theme11_team_v1',
+  'theme11_testimonial_v1',
+  'theme11_timeline_v1',
+  'theme11_transition_image_v1',
+  'theme11_transition_minimal_v1',
+  'theme11_trend_v1',
+  'theme11_venn_v1',
+];
+
+const THEME11_RENDERERS: Record<string, (slide: PptxSlide, props: unknown) => void> =
+  Object.fromEntries(
+    THEME11_LAYOUTS.map((id) => [id, (slide: PptxSlide, props: unknown) => renderTheme11Slide(slide, props, id)]),
+  );
+
+const RENDERERS = {
+  ...THEME11_RENDERERS,
+};
+
 export function registerTheme11Renderers(
   register: (layoutId: string, fn: (slide: PptxSlide, props: unknown) => void) => void,
 ): void {
-  const layouts = listLayoutsByTheme('theme11');
-  for (const meta of layouts) {
-    register(meta.id, (slide, props) => renderTheme11Slide(slide, props, meta.id));
+  for (const [id, fn] of Object.entries(RENDERERS)) {
+    register(id, fn);
   }
 }
