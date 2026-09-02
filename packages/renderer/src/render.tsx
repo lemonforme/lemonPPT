@@ -1121,10 +1121,17 @@ ${themeCssVars}
       outline-offset: 2px;
       border-radius: 2px;
     }
+    @page {
+      size: ${width}px ${height}px;
+      margin: 0;
+    }
     @media print {
       html, body {
         display: block;
         background: #fff;
+        width: auto !important;
+        height: auto !important;
+        overflow: visible !important;
       }
       .lp-editor-bar,
       .lp-nav,
@@ -1148,6 +1155,7 @@ ${themeCssVars}
         transform: none !important;
       }
       .lp-deck {
+        display: block !important;
         box-shadow: none;
         border-radius: 0;
         width: 100% !important;
@@ -1155,7 +1163,7 @@ ${themeCssVars}
         overflow: visible;
       }
       .lp-slide-wrapper {
-        position: relative;
+        position: relative !important;
         transform: none !important;
         opacity: 1 !important;
         width: 100% !important;
@@ -1163,6 +1171,8 @@ ${themeCssVars}
         page-break-after: always;
         break-after: page;
         z-index: auto !important;
+        float: none !important;
+        clear: both !important;
       }
       .lp-slide-wrapper:last-child {
         page-break-after: auto;

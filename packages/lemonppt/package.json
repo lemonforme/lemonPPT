@@ -1,6 +1,6 @@
 {
   "name": "lemonppt",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "lemonPPT CLI — AI-powered presentation generation (alias for @lemonppt/cli)",
   "license": "AGPL-3.0-or-later",
   "type": "module",

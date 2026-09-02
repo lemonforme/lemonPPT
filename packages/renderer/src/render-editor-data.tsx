@@ -187,6 +187,7 @@ function buildEditorBarMarkup(goal: DeckGoal): string {
   </select>
   <button id="lp-add-slide" class="lp-editor-btn" type="button"><span>+</span> 添加页面</button>
   <button id="lp-save-deck" class="lp-editor-btn lp-editor-btn-primary" type="button">保存</button>
+  <button id="lp-play" class="lp-editor-btn lp-editor-btn-primary" type="button" title="播放演示"><span>▶</span> 播放</button>
   <div class="lp-editor-export">
     <button id="lp-export-toggle" class="lp-editor-btn lp-editor-export-toggle" type="button"><span>⬇</span> 导出 <span class="lp-editor-caret">▼</span></button>
     <div id="lp-export-menu" class="lp-editor-export-menu" hidden>
@@ -579,6 +580,32 @@ ${themeCssVars}
       transform-origin: center center;
       transition: transform 0.2s ease;
       position: relative;
+    }
+    .lp-editor-root.lp-editor-presentation-mode {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      background: #000;
+    }
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-bar,
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-left-panel,
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-right-panel,
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-zoom-bar,
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-page-counter,
+    .lp-editor-root.lp-editor-presentation-mode .lp-add-slide-modal-overlay {
+      display: none !important;
+    }
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-workspace {
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+    }
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-stage {
+      width: 100vw;
+      height: 100vh;
+      background: #000;
     }
     .lp-editor-page-counter {
       position: absolute;

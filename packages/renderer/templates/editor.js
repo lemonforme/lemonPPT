@@ -56,6 +56,7 @@
       </div>
       <button id="lp-add-slide" class="lp-editor-btn" type="button"><span>+</span> 添加页面</button>
       <button id="lp-save-deck" class="lp-editor-btn lp-editor-btn-primary" type="button">保存</button>
+      <button id="lp-play" class="lp-editor-btn lp-editor-btn-primary" type="button" title="播放演示"><span>▶</span> 播放</button>
       <div id="lp-editor-export" class="lp-editor-export">
         <button id="lp-export-toggle" class="lp-editor-btn lp-editor-export-toggle" type="button" aria-expanded="false"><span>⬇</span> 导出 <span class="lp-editor-caret">▼</span></button>
         <div id="lp-export-menu" class="lp-editor-export-menu" hidden>

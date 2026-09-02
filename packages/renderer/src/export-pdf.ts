@@ -86,7 +86,7 @@ export async function exportDeckToPdf(goal: DeckGoal, options: ExportPdfOptions)
       width: `${width}px`,
       height: `${height}px`,
       printBackground: true,
-      preferCSSPageSize: false,
+      preferCSSPageSize: true,
     });
   } finally {
     await browser.close();

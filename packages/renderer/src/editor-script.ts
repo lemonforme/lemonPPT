@@ -2112,8 +2112,7 @@ export const editorScript = `
     if (!stage || !scaler) return;
     if (editorRoot && editorRoot.classList.contains('lp-editor-presentation-mode')) {
       const scale = Math.min(window.innerWidth / SLIDE_WIDTH, window.innerHeight / SLIDE_HEIGHT);
-      scaler.style.setProperty('--lp-presentation-scale', String(Math.max(scale, 0.35)));
-      scaler.style.transform = '';
+      scaler.style.transform = 'scale(' + Math.max(scale, 0.35) + ')';
       return;
     }
     const scale = userZoom == null ? fitScale() : userZoom;

@@ -256,6 +256,32 @@
       transition: transform 0.2s ease;
       position: relative;
     }
+    .lp-editor-root.lp-editor-presentation-mode {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      background: #000;
+    }
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-bar,
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-left-panel,
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-right-panel,
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-zoom-bar,
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-page-counter,
+    .lp-editor-root.lp-editor-presentation-mode .lp-add-slide-modal-overlay {
+      display: none !important;
+    }
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-workspace {
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+    }
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-stage {
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+    }
     .lp-editor-page-counter {
       position: absolute;
       bottom: -32px;
