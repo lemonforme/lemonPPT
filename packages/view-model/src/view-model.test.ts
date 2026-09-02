@@ -80,3 +80,68 @@ describe('normalizeDeck', () => {
     expect(normalized.slides[1]?.props._slideIdx).toBe(2);
   });
 });
+
+describe('adaptTheme02ChartProps', () => {
+  it('converts top-level data to series for theme02_chart_bar_v1', () => {
+    const slide = normalizeSlide(
+      {
+        role: 'chart',
+        layout: 'theme02_chart_bar_v1',
+        props: { title: '使用频率', labels: ['每天', '每周', '每月'], data: [25.3, 48, 12] },
+      },
+      0,
+      1
+    );
+    expect(slide.props.series).toEqual([{ name: '使用频率', values: [25.3, 48, 12] }]);
+  });
+
+  it('converts datasets to series for theme02_chart_line_v1', () => {
+    const slide = normalizeSlide(
+      {
+        role: 'chart',
+        layout: 'theme02_chart_line_v1',
+        props: {
+          title: '趋势',
+          labels: ['Q1', 'Q2'],
+          datasets: [{ label: 'A', data: [10, 20] }, { label: 'B', data: [15, 25] }],
+        },
+      },
+      0,
+      1
+    );
+    expect(slide.props.series).toEqual([
+      { name: 'A', values: [10, 20] },
+      { name: 'B', values: [15, 25] },
+    ]);
+  });
+
+  it('normalizes object-array values for theme02_chart_area_v1', () => {
+    const slide = normalizeSlide(
+      {
+        role: 'chart',
+        layout: 'theme02_chart_area_v1',
+        props: {
+          title: '面积',
+          labels: ['a', 'b'],
+          series: [{ name: 'S', values: [{ item: 1 }, { item: 2 }] }],
+        },
+      },
+      0,
+      1
+    );
+    expect(slide.props.series).toEqual([{ name: 'S', values: [1, 2] }]);
+  });
+
+  it('converts datasets to data for theme02_chart_v1', () => {
+    const slide = normalizeSlide(
+      {
+        role: 'chart',
+        layout: 'theme02_chart_v1',
+        props: { labels: ['a', 'b'], datasets: [{ data: [3, 4] }] },
+      },
+      0,
+      1
+    );
+    expect(slide.props.data).toEqual([3, 4]);
+  });
+});

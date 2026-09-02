@@ -22,6 +22,83 @@ const DEFAULT_OPTIONS: Required<NormalizeOptions> = {
   maxDescriptionLength: 200,
 };
 
+interface GenericDataset {
+  label?: string;
+  name?: string;
+  data?: unknown[];
+  values?: unknown[];
+}
+
+function normalizeNumberArray(value: unknown): number[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((v) => {
+      if (typeof v === 'number') return v;
+      if (typeof v === 'string') return Number(v);
+      if (v && typeof v === 'object') return Number((v as { item?: number | string }).item ?? 0);
+      return Number(v ?? 0);
+    })
+    .filter((v) => !Number.isNaN(v));
+}
+
+function buildSeriesFromGenericChart(
+  title: string,
+  props: Record<string, unknown>
+): GenericDataset[] | undefined {
+  if (Array.isArray(props.datasets)) {
+    return (props.datasets as GenericDataset[]).map((ds, i) => ({
+      name: ds.label ?? ds.name ?? (i === 0 ? title : `系列${i + 1}`),
+      values: normalizeNumberArray(ds.data ?? ds.values),
+    }));
+  }
+  if (props.data !== undefined) {
+    return [{ name: title, values: normalizeNumberArray(props.data) }];
+  }
+  return undefined;
+}
+
+/**
+ * 将 Agent 生成的通用 chart 数据（labels + data / datasets）
+ * 适配为 theme02 专用图表版式所需的 series 结构。
+ */
+function adaptTheme02ChartProps(layout: string, props: Record<string, unknown>): void {
+  // theme02 的 bar/line/area/stack 图表需要 series
+  const seriesLayouts = new Set([
+    'theme02_chart_bar_v1',
+    'theme02_chart_line_v1',
+    'theme02_chart_area_v1',
+    'theme02_chart_stack_v1',
+  ]);
+
+  if (seriesLayouts.has(layout)) {
+    const existingSeries = props.series;
+    if (Array.isArray(existingSeries) && existingSeries.length > 0) {
+      props.series = existingSeries
+        .filter((s): s is Record<string, unknown> => !!s && typeof s === 'object')
+        .map((s) => ({
+          ...s,
+          values: normalizeNumberArray(s.values),
+        }));
+      return;
+    }
+
+    const title = typeof props.title === 'string' && props.title ? props.title : '数值';
+    const series = buildSeriesFromGenericChart(title, props);
+    if (series) {
+      props.series = series;
+    }
+    return;
+  }
+
+  // theme02_chart_v1 使用顶层 data；如果只有 datasets 则取第一个 dataset 的 data
+  if (layout === 'theme02_chart_v1' && props.data === undefined && Array.isArray(props.datasets)) {
+    const first = (props.datasets as GenericDataset[])[0];
+    if (first) {
+      props.data = normalizeNumberArray(first.data ?? first.values);
+    }
+  }
+}
+
 /**
  * 截断文本，超出部分显示省略号。
  */
@@ -110,6 +187,9 @@ export function normalizeSlide(
   for (const key of fieldsToNormalize) {
     normalizeArrayField(props, key, opts.maxPoints, opts.maxPointLength);
   }
+
+  // 适配 theme02 专用 chart 版式的数据格式
+  adaptTheme02ChartProps(slide.layout, props);
 
   return { ...slide, props };
 }
