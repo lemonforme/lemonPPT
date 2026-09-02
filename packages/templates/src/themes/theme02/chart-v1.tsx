@@ -369,8 +369,12 @@ export function Theme02ChartV1(props: Theme02ChartV1Props): ReactNode {
     _editable,
   } = props;
 
-  const safeLabels = labels.filter((l): l is string => typeof l === 'string');
-  const safeData = data.filter((d): d is number => typeof d === 'number');
+  const safeLabels = labels
+    .map((l) => (typeof l === 'string' ? l : (l as { item?: string }).item ?? ''))
+    .filter((l): l is string => typeof l === 'string' && l.length > 0);
+  const safeData = (data ?? [])
+    .map((d) => (typeof d === 'number' ? d : Number((d as { item?: number }).item ?? 0)))
+    .filter((d) => !Number.isNaN(d));
   const hasData = safeData.length > 0;
   const chartPrefix = `theme02-chart-${_slideIdx ?? 0}`;
 

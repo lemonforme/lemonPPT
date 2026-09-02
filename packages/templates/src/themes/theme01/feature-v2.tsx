@@ -5,7 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
-import { LpEditableImage } from '../../editable-image.js';
+import { Blob, DottedPattern, Folio, Headline, NumberSticker, Pill, Plus, Ring, Sheet, Slash, LpPhoto } from './shared.js';
 
 export interface Theme01FeatureV2Props {
   kicker?: string;
@@ -25,7 +25,7 @@ export const theme01FeatureV2Meta: LayoutMeta = {
   theme: 'theme01',
   role: 'feature',
   displayName: 'Theme 01 案例与竞争力',
-  description: '左侧固定图片区 + 右侧编号要点卡片',
+  description: '左侧影像区 + 右侧编号要点卡片',
   needsMedia: true,
 };
 
@@ -90,77 +90,124 @@ export const theme01FeatureV2Schema: PropsSchema = {
   ],
 };
 
+const numberColors = ['violet', 'green', 'amber', 'cyan', 'pink'] as const;
+
 export function Theme01FeatureV2(props: Theme01FeatureV2Props): ReactNode {
-  const { kicker, title, subtitle, imageUrl, imageAlt, items = [], footer, _slideIdx, _editable } = props;
+  const { kicker, title, subtitle, imageUrl, items = [], footer, _slideIdx, _editable } = props;
   const safeItems = items.slice(0, 5);
 
   return (
-    <div className="lp-slide lp-feature-v2">
-      <div className="lp-feature-v2-header lp-rise">
-        {kicker && (
-          <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill">
-            {kicker}
-          </EditableField>
-        )}
-        <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-head lp-feature-v2-title">
-          {title}
-        </EditableField>
-        {subtitle && (
-          <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-feature-v2-subtitle">
-            {subtitle}
-          </EditableField>
-        )}
-      </div>
-      <div className="lp-feature-v2-body">
-        <div className="lp-feature-v2-image-wrap lp-rise">
-          <LpEditableImage
-            className="lp-feature-v2-image"
+    <Sheet substrate="tint" tint="blue" frame="split" className="lp-feature-v2">
+      <Blob
+        className="lp-feature-v2-blob"
+        style={{ width: 400, height: 400, top: -160, right: -140, background: 'var(--lp-blue)', opacity: 0.14 }}
+      />
+      <DottedPattern
+        className="lp-feature-v2-dots"
+        style={{ bottom: 70, left: 70, width: 220, height: 220, opacity: 0.18 }}
+      />
+      <Slash
+        className="lp-feature-v2-slash"
+        style={{ top: 120, right: 120, height: 80, background: 'var(--lp-amber)', opacity: 0.5 }}
+      />
+      <Ring
+        className="lp-feature-v2-ring"
+        style={{ width: 130, height: 130, bottom: 90, right: 90, borderColor: 'var(--lp-green)' }}
+      />
+      <Plus
+        className="lp-feature-v2-plus"
+        style={{ top: 160, left: 130, width: 34, height: 34, color: 'var(--lp-red)' }}
+      />
+
+      <div className="lp-feature-v2-content">
+        <div className="lp-feature-v2-header lp-rise">
+          {kicker && (
+            <div className="lp-feature-v2-kicker">
+              <Pill variant="outline" color="blue">
+                {kicker}
+              </Pill>
+            </div>
+          )}
+          <Headline cn={title} size="large" slideIdx={_slideIdx} editable={_editable} propCn="title" />
+          {subtitle && (
+            <EditableField
+              prop="subtitle"
+              slideIdx={_slideIdx}
+              editable={_editable}
+              as="p"
+              className="lp-feature-v2-subtitle"
+            >
+              {subtitle}
+            </EditableField>
+          )}
+        </div>
+
+        <div className="lp-feature-v2-body">
+          <LpPhoto
+            prop="imageUrl"
             src={imageUrl}
-            alt={imageAlt || ''}
             slideIdx={_slideIdx}
             editable={_editable}
-            prop="imageUrl"
-            placeholderClassName="lp-feature-v2-image-placeholder"
-            placeholderText="点击上传"
+            ratio="fill"
+            className="lp-feature-v2-image lp-rise"
+            hint="点击上传"
           />
-        </div>
-        <div className="lp-feature-v2-cards">
-          {safeItems.map((item, index) => (
-            <div key={index} className="lp-card lp-feature-v2-card lp-rise">
-              <div className="lp-feature-v2-number">{String(index + 1).padStart(2, '0')}</div>
-              <div className="lp-feature-v2-card-body">
-                <EditableField
-                  prop={`items.${index}.title`}
-                  slideIdx={_slideIdx}
-                  editable={_editable}
-                  as="h3"
-                  className="lp-feature-v2-card-title"
-                >
-                  {item.title}
-                </EditableField>
-                {item.description && (
+
+          <div className="lp-feature-v2-cards">
+            {safeItems.map((item, index) => (
+              <div
+                key={index}
+                className={`lp-feature-v2-card lp-feature-v2-card--${numberColors[index % numberColors.length]} lp-rise`}
+                style={{ animationDelay: `${index * 60}ms` }}
+              >
+                <NumberSticker value={String(index + 1).padStart(2, '0')} />
+                <div className="lp-feature-v2-card-body">
                   <EditableField
-                    prop={`items.${index}.description`}
+                    prop={`items.${index}.title`}
                     slideIdx={_slideIdx}
                     editable={_editable}
-                    as="p"
-                    className="lp-feature-v2-card-description"
+                    as="h3"
+                    className="lp-feature-v2-card-title"
                   >
-                    {item.description}
+                    {item.title}
                   </EditableField>
-                )}
+                  {item.description && (
+                    <EditableField
+                      prop={`items.${index}.description`}
+                      slideIdx={_slideIdx}
+                      editable={_editable}
+                      as="p"
+                      className="lp-feature-v2-card-description"
+                    >
+                      {item.description}
+                    </EditableField>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-      {footer && (
-        <div className="lp-feature-v2-footer lp-rise">
-          <EditableField prop="footer" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-feature-v2-footer-text">
+
+        {footer && (
+          <EditableField
+            prop="footer"
+            slideIdx={_slideIdx}
+            editable={_editable}
+            as="div"
+            className="lp-feature-v2-footer lp-rise"
+          >
             {footer}
           </EditableField>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+
+      <Folio
+        left="CASE"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
   );
 }

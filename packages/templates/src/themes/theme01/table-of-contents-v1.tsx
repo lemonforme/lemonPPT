@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Folio, Ring, SectionTitle, Sheet, normalizeStrings } from './shared.js';
 
 export interface Theme01TableOfContentsV1Props {
   title?: string;
@@ -19,61 +20,69 @@ export const theme01TableOfContentsV1Meta: LayoutMeta = {
   theme: 'theme01',
   role: 'tableOfContents',
   displayName: 'Theme 01 目录',
-  description: '玻璃卡片目录，带编号与弥散背景',
+  description: '细边框目录项 + 彩色编号 + 分节标题',
   needsMedia: false,
 };
 
 export const theme01TableOfContentsV1Schema: PropsSchema = {
   fields: [
-  {
-      key: 'title',
-      label: '标题',
-      type: 'text',
-      inlineEditable: true
-  },
-  {
+    { key: 'title', label: '标题', type: 'text', inlineEditable: true },
+    {
       key: 'items',
       label: '目录项',
       type: 'array',
       minItems: 2,
       maxItems: 8,
-      itemSchema: [
-    {
-          key: 'item',
-          label: '项',
-          type: 'text',
-          inlineEditable: true
-    }
-      ]
-  }
-  ]
+      itemSchema: [{ key: 'item', label: '项', type: 'text', inlineEditable: true }],
+    },
+  ],
 };
 
+const ACCENT_COLORS = ['red', 'amber', 'green', 'blue', 'violet', 'cyan', 'pink', 'orange'] as const;
 
 export function Theme01TableOfContentsV1(props: Theme01TableOfContentsV1Props): ReactNode {
   const { title = '目录', items = [], _slideIdx, _editable } = props;
+  const list = normalizeStrings(items);
 
   return (
-  <div className="lp-slide lp-toc-v1">
-      <div className="lp-card lp-toc-card">
-    <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-head lp-toc-title lp-rise">
-          {title}
-    </EditableField>
-    <ol className="lp-toc-list lp-rise">
-          {items.map((item, index) => (
-      <li key={index}>
-              <EditableField
-        prop={`items.${index}`}
+    <Sheet substrate="tint" tint="amber" frame="stage" className="lp-toc-v1">
+      <Ring className="lp-toc-decor" style={{ borderColor: 'var(--lp-amber)' }} />
+      <SectionTitle
+        title={title}
         slideIdx={_slideIdx}
         editable={_editable}
-        as="span"
+        propTitle="title"
+        className="lp-toc-header lp-rise"
+      />
+      <ol className="lp-toc-list lp-rise">
+        {list.map((item, index) => {
+          const color = ACCENT_COLORS[index % ACCENT_COLORS.length];
+          const page = (_slideIdx ?? 1) + index + 1;
+          return (
+            <li key={index} className={`lp-toc-item lp-toc-item-${color}`}>
+              <span className="lp-toc-number">{String(index + 1).padStart(2, '0')}</span>
+              <EditableField
+                prop={`items.${index}`}
+                slideIdx={_slideIdx}
+                editable={_editable}
+                as="span"
+                className="lp-toc-text"
               >
-        {item}
+                {item}
               </EditableField>
-      </li>
-          ))}
-    </ol>
-      </div>
-  </div>
+              <span className="lp-toc-line" aria-hidden="true" />
+              <span className="lp-toc-page">{String(page).padStart(2, '0')}</span>
+            </li>
+          );
+        })}
+      </ol>
+      <Folio
+        left="CONTENTS"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
   );
 }

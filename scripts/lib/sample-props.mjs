@@ -19,6 +19,44 @@ function schemaDefaultsToPropsLocal(schema) {
   return props;
 }
 
+// theme02 未显式覆盖版式的兜底：以 schema 默认值为底，补标题与占位图
+function theme02FallbackProps(meta) {
+  const schema = getLayoutSchema(meta.id);
+  const base = schemaDefaultsToPropsLocal(schema);
+  const merged = { ...base };
+  if (merged.title === undefined) merged.title = `${meta.role} 示例`;
+  if (merged.kicker === undefined) merged.kicker = '示例标签';
+
+  let ci = 0;
+  const pool = Object.values(PLACEHOLDER_IMAGES);
+  const next = () => pool[ci++ % pool.length];
+  const walk = (node) => {
+    if (Array.isArray(node)) {
+      node.forEach((item) => {
+        if (item && typeof item === 'object') {
+          if ('url' in item && !item.url) item.url = next();
+          if ('src' in item && !item.src) item.src = next();
+          walk(item);
+        }
+      });
+    } else if (node && typeof node === 'object') {
+      for (const k of Object.keys(node)) {
+        const v = node[k];
+        if (typeof v === 'string' && !v && /image|photo|cover|src|img|logoUrl|avatarUrl|heroImage/i.test(k)) {
+          node[k] = next();
+        }
+        walk(v);
+      }
+    }
+  };
+  walk(merged);
+
+  if (Array.isArray(merged.images) && merged.images.length === 0) {
+    merged.images.push({ url: next(), caption: '示例图片' });
+  }
+  return merged;
+}
+
 const T9_PLACEHOLDERS = [
   PLACEHOLDER_IMAGES.landscape,
   PLACEHOLDER_IMAGES.portrait,
@@ -194,6 +232,60 @@ function sampleProps(meta) {
         ],
         badge: { text: 'Q4 增长最快', tone: 'accent' }
       }
+    };
+  }
+  if (layoutId === 'theme02_chart_line_v1') {
+    return {
+      title: '季度增长',
+      kicker: '霓虹折线',
+      subtitle: '全年营收持续上扬',
+      unit: '万元',
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      series: [
+        { name: '2025', values: [1800, 2450, 3200, 4150] },
+        { name: '2024', values: [1200, 1600, 2100, 2800] },
+      ],
+    };
+  }
+  if (layoutId === 'theme02_chart_bar_v1') {
+    return {
+      title: '季度增长',
+      kicker: '霓虹柱状',
+      subtitle: '各季度营收对比',
+      unit: '万元',
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      series: [
+        { name: '线上', values: [1200, 1800, 2400, 3100] },
+        { name: '线下', values: [600, 650, 800, 1050] },
+      ],
+    };
+  }
+  if (layoutId === 'theme02_chart_area_v1') {
+    return {
+      title: '季度构成',
+      kicker: '霓虹面积',
+      subtitle: '各业务线累计贡献',
+      unit: '万元',
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      series: [
+        { name: 'SaaS', values: [800, 1200, 1700, 2300] },
+        { name: '服务', values: [400, 600, 800, 1100] },
+        { name: '其他', values: [200, 250, 300, 350] },
+      ],
+    };
+  }
+  if (layoutId === 'theme02_chart_stack_v1') {
+    return {
+      title: '季度占比',
+      kicker: '霓虹堆叠',
+      subtitle: '各业务线占比变化',
+      unit: '%',
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      series: [
+        { name: 'SaaS', values: [40, 45, 50, 55] },
+        { name: '服务', values: [35, 32, 28, 26] },
+        { name: '其他', values: [25, 23, 22, 19] },
+      ],
     };
   }
   if (layoutId === 'theme02_chart_funnel') {
@@ -574,6 +666,11 @@ function sampleProps(meta) {
         { label: 'NPS 评分', value: '72', unit: '' }
       ]
     };
+  }
+
+  // theme02 未显式覆盖的版式：以 schema 默认值为底，补标题与占位图，避免画廊空白
+  if (layoutId.startsWith('theme02_')) {
+    return theme02FallbackProps(meta);
   }
 
   // theme07 冷白调研风版式示例数据

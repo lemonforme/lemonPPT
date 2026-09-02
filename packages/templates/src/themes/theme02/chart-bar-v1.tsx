@@ -154,9 +154,18 @@ function renderBars(
 export function Theme02ChartBarV1(props: Theme02ChartBarV1Props): ReactNode {
   const { kicker, title, subtitle, unit, labels = [], series = [], _slideIdx, _editable } = props;
 
-  const safeLabels = labels.filter((l): l is string => typeof l === 'string');
-  const safeSeries = series.filter((s) => s && typeof s === 'object');
-  const hasData = safeSeries.some((s) => (s.values ?? []).length > 0);
+  const safeLabels = labels
+    .map((l) => (typeof l === 'string' ? l : (l as { item?: string }).item ?? ''))
+    .filter((l): l is string => typeof l === 'string' && l.length > 0);
+  const safeSeries = series
+    .filter((s) => s && typeof s === 'object')
+    .map((s) => ({
+      ...s,
+      values: (s.values ?? [])
+        .map((v) => (typeof v === 'number' ? v : Number((v as { item?: number }).item ?? 0)))
+        .filter((v) => !Number.isNaN(v)),
+    }));
+  const hasData = safeSeries.some((s) => s.values.length > 0);
   const prefix = `theme02-bar-${_slideIdx ?? 0}`;
 
   return (

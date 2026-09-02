@@ -5,6 +5,17 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactElement, ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import {
+  Blob,
+  DottedPattern,
+  Folio,
+  Headline,
+  Pill,
+  Plus,
+  Ring,
+  Sheet,
+  Slash,
+} from './shared.js';
 
 export interface Theme01ChartDonutSegment {
   label?: string;
@@ -184,75 +195,102 @@ export function Theme01ChartDonut(props: Theme01ChartDonutProps): ReactNode {
   });
 
   return (
-    <div className="lp-slide lp-chart-donut">
-      <div className="lp-card lp-chart-donut-card lp-rise">
-        <div className="lp-chart-donut-header">
-          {kicker && (
-            <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill">
-              {kicker}
-            </EditableField>
-          )}
-          <div className="lp-chart-donut-titles">
-            <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-chart-donut-title">
-              {title}
-            </EditableField>
-            {subtitle && (
-              <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-chart-donut-subtitle">
-                {subtitle}
-              </EditableField>
-            )}
-          </div>
-        </div>
+    <Sheet substrate="tint" tint="pink" frame="chart-canvas" className="lp-chart-donut">
+      <Blob
+        className="lp-chart-donut-blob"
+        style={{ width: 400, height: 400, top: -150, right: -120, background: 'var(--lp-pink)', opacity: 0.12 }}
+      />
+      <DottedPattern
+        className="lp-chart-donut-dots"
+        style={{ bottom: 100, left: 80, width: 220, height: 220, opacity: 0.18 }}
+      />
+      <Slash
+        className="lp-chart-donut-slash"
+        style={{ top: 130, right: 100, height: 70, background: 'var(--lp-amber)', opacity: 0.45 }}
+      />
+      <Ring
+        className="lp-chart-donut-ring-deco"
+        style={{ bottom: 130, left: 100, width: 64, height: 64, borderColor: 'var(--lp-blue)' }}
+      />
+      <Plus
+        className="lp-chart-donut-plus"
+        style={{ top: 140, right: 120, width: 28, height: 28, color: 'var(--lp-red)' }}
+      />
 
-        <div className="lp-chart-donut-body">
-          <div className="lp-chart-donut-chart">
-            {donutChart(validSegments)}
-            <div className="lp-chart-donut-center">
-              <EditableField prop="total.value" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-total-value">
-                {total.value}
-              </EditableField>
-              <EditableField prop="total.label" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-total-label">
-                {total.label}
-              </EditableField>
-            </div>
+      <div className="lp-chart-donut-header lp-rise">
+        {kicker && (
+          <div className="lp-chart-kicker">
+            <Pill variant="fill" color="pink">{kicker}</Pill>
           </div>
-
-          <div className="lp-chart-donut-legend">
-            {validSegments.map((segment, index) => (
-              <div key={index} className="lp-chart-donut-legend-item lp-rise" style={{ animationDelay: `${index * 60}ms` }}>
-                <span
-                  className="lp-chart-donut-legend-dot"
-                  style={{ backgroundColor: segment.color || DEFAULT_COLORS[index % DEFAULT_COLORS.length] }}
-                />
-                <div className="lp-chart-donut-legend-text">
-                  <EditableField prop={`segments.${index}.label`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-legend-label">
-                    {segment.label}
-                  </EditableField>
-                  {segment.labelEn && (
-                    <EditableField prop={`segments.${index}.labelEn`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-legend-en">
-                      {segment.labelEn}
-                    </EditableField>
-                  )}
-                </div>
-                <div className="lp-chart-donut-legend-numbers">
-                  <EditableField prop={`segments.${index}.percent`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-legend-percent">
-                    {segment.percent}
-                  </EditableField>
-                  <EditableField prop={`segments.${index}.value`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-legend-value">
-                    {segment.value}
-                  </EditableField>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {footnote && (
-          <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-footnote">
-            {footnote}
-          </EditableField>
         )}
+        <Headline
+          cn={title || '构成分析'}
+          en={subtitle}
+          size="large"
+          slideIdx={_slideIdx}
+          editable={_editable}
+          propCn="title"
+          propEn="subtitle"
+          className="lp-chart-headline"
+        />
       </div>
-    </div>
+
+      <div className="lp-chart-donut-body lp-rise">
+        <div className="lp-chart-donut-chart">
+          {donutChart(validSegments)}
+          <div className="lp-chart-donut-center">
+            <EditableField prop="total.value" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-total-value">
+              {total.value}
+            </EditableField>
+            <EditableField prop="total.label" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-total-label">
+              {total.label}
+            </EditableField>
+          </div>
+        </div>
+
+        <div className="lp-chart-donut-legend">
+          {validSegments.map((segment, index) => (
+            <div key={index} className="lp-chart-donut-legend-item lp-rise" style={{ animationDelay: `${index * 60}ms` }}>
+              <span
+                className="lp-chart-donut-legend-dot"
+                style={{ backgroundColor: segment.color || DEFAULT_COLORS[index % DEFAULT_COLORS.length] }}
+              />
+              <div className="lp-chart-donut-legend-text">
+                <EditableField prop={`segments.${index}.label`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-legend-label">
+                  {segment.label}
+                </EditableField>
+                {segment.labelEn && (
+                  <EditableField prop={`segments.${index}.labelEn`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-legend-en">
+                    {segment.labelEn}
+                  </EditableField>
+                )}
+              </div>
+              <div className="lp-chart-donut-legend-numbers">
+                <EditableField prop={`segments.${index}.percent`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-legend-percent">
+                  {segment.percent}
+                </EditableField>
+                <EditableField prop={`segments.${index}.value`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-legend-value">
+                  {segment.value}
+                </EditableField>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {footnote && (
+        <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-footnote lp-rise">
+          {footnote}
+        </EditableField>
+      )}
+
+      <Folio
+        left="CHART"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
   );
 }

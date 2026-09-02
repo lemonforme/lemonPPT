@@ -1901,7 +1901,10 @@ function renderTheme01ConclusionV1(slide: PptxSlide, props: any): void {
     });
   }
   addTitle(slide, props.title ?? '结论', 0.8, 1.25);
-  const points = (props.points || []).slice(0, 4);
+  const points = (props.points || [])
+    .map((p: any) => (typeof p === 'string' ? p : String(p?.item ?? p ?? '')))
+    .filter((p: string) => p.length > 0)
+    .slice(0, 4);
   if (points.length === 0) return;
 
   const count = points.length;
@@ -1924,7 +1927,7 @@ function renderTheme01ConclusionV1(slide: PptxSlide, props: any): void {
       fontSize: 28, color: COLORS.accent, bold: true, align: 'left', valign: 'top',
       fontFace: FONTS.heading,
     });
-    slide.addText(point, {
+    slide.addText(String(point), {
       x: x + 0.16, y: y + 0.85, w: cardW - 0.32, h: 1.55,
       fontSize: 16, color: COLORS.primary, align: 'left', valign: 'top',
       fontFace: FONTS.body,

@@ -5,6 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import { Blob, DottedPattern, Folio, Headline, NumberSticker, Pill, Plus, Ring, Sheet } from './shared.js';
 
 export interface Theme01ConclusionV1Props {
   title?: string;
@@ -20,89 +21,110 @@ export const theme01ConclusionV1Meta: LayoutMeta = {
   theme: 'theme01',
   role: 'closing',
   displayName: 'Theme 01 结论页',
-  description: '标题 + 核心结论卡片',
+  description: '标题 + 彩色序号核心结论卡片',
   needsMedia: false,
 };
 
 export const theme01ConclusionV1Schema: PropsSchema = {
   fields: [
-  {
+    {
       key: 'title',
       label: '标题',
       type: 'text',
-      inlineEditable: true
-  },
-  {
+      inlineEditable: true,
+    },
+    {
       key: 'subtitle',
       label: '副标题',
       type: 'textarea',
-      inlineEditable: true
-  },
-  {
+      inlineEditable: true,
+    },
+    {
       key: 'points',
       label: '要点',
       type: 'array',
       maxItems: 4,
       minItems: 2,
       itemSchema: [
-    {
+        {
           key: 'item',
           label: '项',
           type: 'text',
-          inlineEditable: true
-    }
-      ]
-  }
-  ]
+          inlineEditable: true,
+        },
+      ],
+    },
+  ],
 };
 
+const cardColors = ['blue', 'green', 'amber', 'violet'] as const;
 
 export function Theme01ConclusionV1(props: Theme01ConclusionV1Props): ReactNode {
   const { title = '结论', subtitle, points = [], _slideIdx, _editable } = props;
   const safePoints = points.slice(0, 4);
 
   return (
-  <div className="lp-slide lp-conclusion-v1">
-      <div className="lp-conclusion-v1-inner">
-    {subtitle && (
-          <EditableField
-      prop="subtitle"
-      slideIdx={_slideIdx}
-      editable={_editable}
-      as="div"
-      className="lp-pill lp-rise"
-          >
-      {subtitle}
-          </EditableField>
-    )}
-    <EditableField
-          prop="title"
-          slideIdx={_slideIdx}
-          editable={_editable}
-          as="h1"
-          className="lp-head lp-conclusion-v1-title lp-rise"
-    >
-          {title}
-    </EditableField>
-    {safePoints.length > 0 && (
+    <Sheet substrate="tint" tint="green" frame="grid" className="lp-conclusion-v1">
+      <Blob
+        className="lp-conclusion-v1-blob"
+        style={{ width: 420, height: 420, bottom: -160, right: -120, background: 'var(--lp-green)', opacity: 0.14 }}
+      />
+      <DottedPattern
+        className="lp-conclusion-v1-dots"
+        style={{ top: 90, left: 80, width: 220, height: 220, opacity: 0.18 }}
+      />
+      <Ring
+        className="lp-conclusion-v1-ring"
+        style={{ width: 130, height: 130, top: 100, right: 100, borderColor: 'var(--lp-blue)' }}
+      />
+      <Plus
+        className="lp-conclusion-v1-plus"
+        style={{ bottom: 120, left: 120, width: 34, height: 34, color: 'var(--lp-red)' }}
+      />
+
+      <div className="lp-conclusion-v1-content">
+        <div className="lp-conclusion-v1-header lp-rise">
+          {subtitle && (
+            <div className="lp-conclusion-v1-kicker">
+              <Pill variant="outline" color="green">
+                {subtitle}
+              </Pill>
+            </div>
+          )}
+          <Headline cn={title} size="large" slideIdx={_slideIdx} editable={_editable} propCn="title" />
+        </div>
+
+        {safePoints.length > 0 && (
           <div className="lp-conclusion-v1-grid">
-      {safePoints.map((point, index) => (
-              <div key={index} className="lp-card lp-conclusion-v1-card lp-rise">
-        <div className="lp-conclusion-v1-number">{index + 1}</div>
-        <EditableField
+            {safePoints.map((point, index) => (
+              <div
+                key={index}
+                className={`lp-conclusion-v1-card lp-conclusion-v1-card--${cardColors[index % cardColors.length]} lp-rise`}
+                style={{ animationDelay: `${index * 70}ms` }}
+              >
+                <NumberSticker value={String(index + 1).padStart(2, '0')} />
+                <EditableField
                   prop={`points.${index}.item`}
                   slideIdx={_slideIdx}
                   editable={_editable}
                   as="p"
                   className="lp-conclusion-v1-text"
-        >
+                >
                   {point?.item ?? ''}
-        </EditableField>
+                </EditableField>
               </div>
-      ))}
+            ))}
           </div>
-    )}
+        )}
       </div>
-  </div>
+
+      <Folio
+        left="CONCLUSION"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
   );
 }

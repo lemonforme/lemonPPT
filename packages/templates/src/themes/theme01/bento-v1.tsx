@@ -6,10 +6,21 @@ import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
 import { LpEditableImage } from '../../editable-image.js';
+import {
+  Blob,
+  DottedPattern,
+  Folio,
+  Headline,
+  Masthead,
+  Pill,
+  Ring,
+  Sheet,
+} from './shared.js';
 
 export interface Theme01BentoV1Props {
   kicker?: string;
   title?: string;
+  titleEn?: string;
   items?: Array<{
     title: string;
     description?: string;
@@ -26,7 +37,7 @@ export const theme01BentoV1Meta: LayoutMeta = {
   theme: 'theme01',
   role: 'content',
   displayName: 'Theme 01 Bento 网格',
-  description: '大小不一的玻璃卡片 Bento 布局',
+  description: '色块拼贴风格的 Bento 布局，零卡片、轻量标签',
   needsMedia: true,
 };
 
@@ -41,6 +52,12 @@ export const theme01BentoV1Schema: PropsSchema = {
     {
       key: 'title',
       label: '标题',
+      type: 'text',
+      inlineEditable: true,
+    },
+    {
+      key: 'titleEn',
+      label: '英文标题',
       type: 'text',
       inlineEditable: true,
     },
@@ -85,64 +102,94 @@ export const theme01BentoV1Schema: PropsSchema = {
   ],
 };
 
+const ACCENT_COLORS = ['red', 'blue', 'amber', 'green'] as const;
+
 export function Theme01BentoV1(props: Theme01BentoV1Props): ReactNode {
-  const { kicker, title, items = [], _slideIdx, _editable } = props;
+  const { kicker, title, titleEn, items = [], _slideIdx, _editable } = props;
   const safeItems = items.slice(0, 4);
 
   return (
-    <div className="lp-slide lp-bento-v1">
-      <div className="lp-bento-v1-header">
-        {kicker && (
-          <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill lp-rise">
-            {kicker}
-          </EditableField>
-        )}
-        {title && (
-          <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-head lp-bento-v1-title lp-rise">
-            {title}
-          </EditableField>
-        )}
-      </div>
-      <div className="lp-bento-v1-grid">
-        {safeItems.map((item, index) => (
-          <div
-            key={index}
-            className={`lp-card lp-bento-v1-card lp-bento-v1-card--${item.span ?? 'medium'} lp-rise`}
-          >
-            <LpEditableImage
-              className="lp-bento-v1-image"
-              src={item.imageUrl}
-              alt={item.title || ''}
-              slideIdx={_slideIdx}
-              editable={_editable}
-              prop={`items.${index}.imageUrl`}
-              placeholderClassName="lp-bento-v1-image-placeholder"
-            />
-            <div className="lp-bento-v1-card-body">
-              <EditableField
-                prop={`items.${index}.title`}
-                slideIdx={_slideIdx}
-                editable={_editable}
-                as="h3"
-                className="lp-bento-v1-card-title"
-              >
-                {item.title}
-              </EditableField>
-              {item.description && (
-                <EditableField
-                  prop={`items.${index}.description`}
+    <Sheet substrate="tint" tint="green" frame="grid" className="lp-bento-v1">
+      <Masthead section={kicker} slideIdx={_slideIdx} editable={_editable} />
+
+      <Headline
+        cn={title ?? ''}
+        en={titleEn}
+        slideIdx={_slideIdx}
+        editable={_editable}
+        propCn="title"
+        propEn="titleEn"
+        size="large"
+        className="lp-bento-v1-headline lp-rise"
+      />
+
+      <div className="lp-bento-v1-grid lp-rise">
+        {safeItems.map((item, index) => {
+          const color = ACCENT_COLORS[index % ACCENT_COLORS.length];
+          return (
+            <div
+              key={index}
+              className={`lp-bento-v1-cell lp-bento-v1-cell--${item.span ?? 'medium'} color-${color}`}
+            >
+              <div className="lp-bento-v1-image-wrap">
+                <LpEditableImage
+                  className="lp-bento-v1-image"
+                  src={item.imageUrl}
+                  alt={item.title || ''}
                   slideIdx={_slideIdx}
                   editable={_editable}
-                  as="p"
-                  className="lp-bento-v1-card-description"
+                  prop={`items.${index}.imageUrl`}
+                  placeholderClassName="lp-bento-v1-image-placeholder"
+                />
+              </div>
+              <div className="lp-bento-v1-body">
+                <Pill variant="outline" color={color as 'red' | 'blue' | 'amber' | 'green'}>
+                  {String(index + 1).padStart(2, '0')}
+                </Pill>
+                <EditableField
+                  prop={`items.${index}.title`}
+                  slideIdx={_slideIdx}
+                  editable={_editable}
+                  as="h3"
+                  className="lp-bento-v1-title"
                 >
-                  {item.description}
+                  {item.title}
                 </EditableField>
-              )}
+                {item.description && (
+                  <EditableField
+                    prop={`items.${index}.description`}
+                    slideIdx={_slideIdx}
+                    editable={_editable}
+                    as="p"
+                    className="lp-bento-v1-description"
+                  >
+                    {item.description}
+                  </EditableField>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
-    </div>
+
+      <Folio page={String(_slideIdx ?? 1).padStart(2, '0')} />
+
+      <Blob
+        className="lp-bento-v1-blob lp-bento-v1-blob-a"
+        style={{ width: 360, height: 360, top: -80, right: -80, background: 'var(--lp-amber)', opacity: 0.2 }}
+      />
+      <Blob
+        className="lp-bento-v1-blob lp-bento-v1-blob-b"
+        style={{ width: 240, height: 240, bottom: -40, left: -40, background: 'var(--lp-blue)', opacity: 0.16 }}
+      />
+      <DottedPattern
+        className="lp-bento-v1-dots"
+        style={{ bottom: 120, right: 120, width: 180, height: 180, opacity: 0.25 }}
+      />
+      <Ring
+        className="lp-bento-v1-ring"
+        style={{ width: 100, height: 100, top: 140, left: 90, borderColor: 'var(--lp-red)' }}
+      />
+    </Sheet>
   );
 }

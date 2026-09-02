@@ -6,6 +6,7 @@ import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
 import { LpEditableImage } from '../../editable-image.js';
+import { Blob, Pill, Ring, Sheet } from './shared.js';
 
 export interface Theme01ChapterV3Props {
   kicker?: string;
@@ -23,49 +24,25 @@ export const theme01ChapterV3Meta: LayoutMeta = {
   theme: 'theme01',
   role: 'content',
   displayName: 'Theme 01 章节页 V3',
-  description: '全宽背景图 + 玻璃卡片标题',
+  description: '全宽背景图 + 半透明色块标题的波普章节页',
   needsMedia: true,
 };
 
 export const theme01ChapterV3Schema: PropsSchema = {
   fields: [
-  {
-      key: 'kicker',
-      label: '标签',
-      type: 'text',
-      inlineEditable: true
-  },
-  {
-      key: 'title',
-      label: '标题',
-      type: 'text',
-      inlineEditable: true
-  },
-  {
-      key: 'subtitle',
-      label: '副标题',
-      type: 'textarea',
-      inlineEditable: true
-  },
-  {
-      key: 'imageUrl',
-      label: '图片',
-      type: 'image'
-  },
-  {
-      key: 'imageAlt',
-      label: 'imageAlt',
-      type: 'image'
-  }
-  ]
+    { key: 'kicker', label: '标签', type: 'text', inlineEditable: true },
+    { key: 'title', label: '标题', type: 'text', inlineEditable: true },
+    { key: 'subtitle', label: '副标题', type: 'textarea', inlineEditable: true },
+    { key: 'imageUrl', label: '图片', type: 'image' },
+    { key: 'imageAlt', label: 'imageAlt', type: 'image' },
+  ],
 };
-
 
 export function Theme01ChapterV3(props: Theme01ChapterV3Props): ReactNode {
   const { kicker, title, subtitle, imageUrl, imageAlt, _slideIdx, _editable } = props;
 
   return (
-  <div className="lp-slide lp-chapter-v3">
+    <Sheet substrate="light" frame="full-bleed" className="lp-chapter-v3">
       <LpEditableImage
         className="lp-chapter-v3-bg"
         src={imageUrl}
@@ -76,39 +53,48 @@ export function Theme01ChapterV3(props: Theme01ChapterV3Props): ReactNode {
         placeholderClassName="lp-chapter-v3-bg-placeholder"
       />
       <div className="lp-chapter-v3-overlay" />
+      <Blob
+        className="lp-chapter-blob"
+        style={{ width: 320, height: 320, bottom: -60, right: 80, background: 'var(--lp-amber)' }}
+      />
+      <Ring
+        className="lp-chapter-ring"
+        style={{ width: 140, height: 140, top: 120, right: 160, borderColor: 'var(--lp-green)' }}
+      />
       <div className="lp-chapter-v3-card lp-rise">
-    {kicker && (
+        <span className="lp-chapter-en" aria-hidden="true">Chapter</span>
+        {kicker && (
           <EditableField
-      prop="kicker"
-      slideIdx={_slideIdx}
-      editable={_editable}
-      as="div"
-      className="lp-pill lp-chapter-v3-kicker"
+            prop="kicker"
+            slideIdx={_slideIdx}
+            editable={_editable}
+            as="div"
+            className="lp-chapter-v3-kicker"
           >
-      {kicker}
+            <Pill variant="fill" color="red">{kicker}</Pill>
           </EditableField>
-    )}
-    <EditableField
+        )}
+        <EditableField
           prop="title"
           slideIdx={_slideIdx}
           editable={_editable}
           as="h1"
           className="lp-chapter-v3-title"
-    >
+        >
           {title}
-    </EditableField>
-    {subtitle && (
+        </EditableField>
+        {subtitle && (
           <EditableField
-      prop="subtitle"
-      slideIdx={_slideIdx}
-      editable={_editable}
-      as="p"
-      className="lp-chapter-v3-subtitle"
+            prop="subtitle"
+            slideIdx={_slideIdx}
+            editable={_editable}
+            as="p"
+            className="lp-chapter-v3-subtitle"
           >
-      {subtitle}
+            {subtitle}
           </EditableField>
-    )}
+        )}
       </div>
-  </div>
+    </Sheet>
   );
 }

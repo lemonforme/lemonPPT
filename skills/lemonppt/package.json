@@ -1,6 +1,6 @@
 {
   "name": "@lemonppt/skill",
-  "version": "0.2.0",
+  "version": "1.0.4",
   "description": "lemonPPT AI Agent Skill — 结构化 goal.json → 可编辑 PPT（HTML/PPTX/PDF）",
   "license": "AGPL-3.0-or-later",
   "type": "module",

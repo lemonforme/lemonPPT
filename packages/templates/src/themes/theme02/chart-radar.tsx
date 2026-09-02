@@ -143,10 +143,16 @@ export function Theme02ChartRadar(props: Theme02ChartRadarProps): ReactNode {
     { name: '扩展性', max: 100 },
     { name: '安全性', max: 100 },
   ];
-  const data = props.data ?? [
+  const rawData = props.data ?? [
     { name: '当前', value: [85, 90, 78, 88, 82] },
     { name: '目标', value: [95, 95, 90, 92, 95] },
   ];
+  const data = rawData.map((d) => ({
+    ...d,
+    value: (d.value ?? [])
+      .map((v) => (typeof v === 'number' ? v : Number((v as { item?: number }).item ?? 0)))
+      .filter((v) => !Number.isNaN(v)),
+  }));
 
   const hasInsight = showInsight !== false && !!insight && (!!insight.value || !!insight.label || !!insight.description);
 

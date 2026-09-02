@@ -3,7 +3,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
-import { EditableField } from '../../editable-field.js';
+import {
+  Blob,
+  DottedPattern,
+  Folio,
+  Headline,
+  Pill,
+  Plus,
+  Ring,
+  Sheet,
+  Slash,
+} from './shared.js';
 export interface Theme01ChartWordcloudProps {
   title?: string;
   kicker?: string;
@@ -111,25 +121,76 @@ export function Theme01ChartWordcloud(props: Theme01ChartWordcloudProps): ReactN
   const width = 720;
   const height = 360;
   const placed = layoutWords(words, width, height, shape);
-  return (<div className="lp-slide lp-chart-v2 lp-echart-slide">
-      <div className="lp-card lp-chart-card lp-rise">
-    <div className="lp-chart-header">
-          {kicker && (<EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill">
-              {kicker}
-      </EditableField>)}
-          <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-chart-title">
-      {title}
-          </EditableField>
-    </div>
-    <div className="lp-chart-wrapper lp-wordcloud-wrapper">
-          <svg viewBox={`0 0 ${width} ${height}`} className="lp-wordcloud-svg" style={{ width: '100%', height: '100%' }}>
-      {placed.map((item, i) => (<text key={i} x={item.x + item.w / 2} y={item.y + item.h * 0.75} textAnchor="middle" dominantBaseline="middle" fontSize={item.size} fontWeight={item.value > 70 ? 700 : item.value > 45 ? 600 : 500} fill={colors[i % colors.length]} style={{ userSelect: 'none' }}>
-        {item.text}
-              </text>))}
-          </svg>
-    </div>
+  return (
+    <Sheet substrate="tint" tint="pink" frame="chart-canvas" className="lp-chart-v2">
+      <Blob
+        className="lp-chart-v2-blob"
+        style={{ width: 400, height: 400, bottom: -160, left: -120, background: 'var(--lp-violet)', opacity: 0.12 }}
+      />
+      <DottedPattern
+        className="lp-chart-v2-dots"
+        style={{ top: 110, right: 90, width: 220, height: 220, opacity: 0.18 }}
+      />
+      <Slash
+        className="lp-chart-v2-slash"
+        style={{ top: 130, left: 110, height: 70, background: 'var(--lp-pink)', opacity: 0.45 }}
+      />
+      <Ring
+        className="lp-chart-v2-ring"
+        style={{ bottom: 130, right: 110, width: 64, height: 64, borderColor: 'var(--lp-blue)' }}
+      />
+      <Plus
+        className="lp-chart-v2-plus"
+        style={{ bottom: 140, right: 120, width: 28, height: 28, color: 'var(--lp-red)' }}
+      />
+
+      <div className="lp-chart-header lp-rise">
+        {kicker && (
+          <div className="lp-chart-kicker">
+            <Pill variant="fill" color="violet">{kicker}</Pill>
+          </div>
+        )}
+        <Headline
+          cn={title || '关键词云'}
+          size="large"
+          slideIdx={_slideIdx}
+          editable={_editable}
+          propCn="title"
+          className="lp-chart-headline"
+        />
       </div>
-  </div>);
+
+      <div className="lp-chart-body lp-rise">
+        <div className="lp-chart-wrapper lp-wordcloud-wrapper">
+          <svg viewBox={`0 0 ${width} ${height}`} className="lp-wordcloud-svg" style={{ width: '100%', height: '100%' }}>
+            {placed.map((item, i) => (
+              <text
+                key={i}
+                x={item.x + item.w / 2}
+                y={item.y + item.h * 0.75}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize={item.size}
+                fontWeight={item.value > 70 ? 700 : item.value > 45 ? 600 : 500}
+                fill={colors[i % colors.length]}
+                style={{ userSelect: 'none' }}
+              >
+                {item.text}
+              </text>
+            ))}
+          </svg>
+        </div>
+      </div>
+
+      <Folio
+        left="CHART"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
+  );
 }
 interface PlacedWord {
   text: string;

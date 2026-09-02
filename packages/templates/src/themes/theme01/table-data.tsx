@@ -5,6 +5,16 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import {
+  Blob,
+  DottedPattern,
+  Folio,
+  Headline,
+  Pill,
+  Ring,
+  Sheet,
+  Slash,
+} from './shared.js';
 
 export interface Theme01TableDataColumn {
   key?: string;
@@ -128,31 +138,50 @@ export function Theme01TableData(props: Theme01TableDataProps): ReactNode {
     .filter(({ row }) => row != null)
     .slice(0, 12);
   // 兼容旧版 highlightRows 数组：未设置 highlightRow 时取数组第一项
-  const effectiveHighlightRow = highlightRow ?? (Array.isArray(highlightRows) && highlightRows.length ? highlightRows[0] : undefined);
+  const effectiveHighlightRow =
+    highlightRow ?? (Array.isArray(highlightRows) && highlightRows.length ? highlightRows[0] : undefined);
   const highlighted = new Set(effectiveHighlightRow !== undefined ? [effectiveHighlightRow] : []);
 
   return (
-    <div className="lp-slide lp-table-data">
-      <div className="lp-card lp-table-data-card lp-rise">
-        <div className="lp-table-data-header">
+    <Sheet substrate="light" frame="grid" className="lp-table-data">
+      <Blob
+        className="lp-table-data-blob"
+        style={{ width: 360, height: 360, top: -120, right: -100, background: 'var(--lp-blue)', opacity: 0.12 }}
+      />
+      <DottedPattern
+        className="lp-table-data-dots"
+        style={{ bottom: 90, left: 80, width: 220, height: 220, opacity: 0.18 }}
+      />
+      <Slash
+        className="lp-table-data-slash"
+        style={{ top: 110, left: 100, height: 70, background: 'var(--lp-amber)', opacity: 0.45 }}
+      />
+      <Ring
+        className="lp-table-data-ring"
+        style={{ width: 120, height: 120, bottom: 110, right: 100, borderColor: 'var(--lp-green)' }}
+      />
+
+      <div className="lp-table-data-content">
+        <div className="lp-table-data-header lp-rise">
           {kicker && (
-            <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill">
-              {kicker}
-            </EditableField>
+            <div className="lp-table-data-kicker">
+              <Pill variant="outline" color="blue">
+                {kicker}
+              </Pill>
+            </div>
           )}
-          <div className="lp-table-data-titles">
-            <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-table-data-title">
-              {title}
-            </EditableField>
-            {subtitle && (
-              <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-table-data-subtitle">
-                {subtitle}
-              </EditableField>
-            )}
-          </div>
+          <Headline
+            cn={title || ''}
+            en={subtitle}
+            size="large"
+            slideIdx={_slideIdx}
+            editable={_editable}
+            propCn="title"
+            propEn="subtitle"
+          />
         </div>
 
-        <div className="lp-table-data-wrap">
+        <div className="lp-table-data-wrap lp-rise">
           <table className="lp-table-data-table">
             <thead>
               <tr>
@@ -204,11 +233,25 @@ export function Theme01TableData(props: Theme01TableDataProps): ReactNode {
         </div>
 
         {footnote && (
-          <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-table-data-footnote">
+          <EditableField
+            prop="footnote"
+            slideIdx={_slideIdx}
+            editable={_editable}
+            as="div"
+            className="lp-table-data-footnote lp-rise"
+          >
             {footnote}
           </EditableField>
         )}
       </div>
-    </div>
+
+      <Folio
+        left="TABLE"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
   );
 }

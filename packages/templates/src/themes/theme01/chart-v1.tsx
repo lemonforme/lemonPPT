@@ -4,7 +4,17 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactElement, ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
-import { Sheet, GlassCard } from './shared.js';
+import {
+  Blob,
+  DottedPattern,
+  Folio,
+  Headline,
+  Pill,
+  Plus,
+  Ring,
+  Sheet,
+  Slash,
+} from './shared.js';
 export interface Theme01ChartV1InsightItem {
   label?: string;
   value?: string;
@@ -497,58 +507,92 @@ export function Theme01ChartV1(props: Theme01ChartV1Props): ReactNode {
     !!insight.badge?.text
   );
 
+  const safeLabels = labels
+    .map((l) => (typeof l === 'string' ? l : (l as { item?: string }).item ?? ''))
+    .filter((l): l is string => typeof l === 'string' && l.length > 0);
+  const safeData = (data ?? [])
+    .map((d) => (typeof d === 'number' ? d : Number((d as { item?: number }).item ?? 0)))
+    .filter((d) => !Number.isNaN(d));
+
   const chartElement = type === 'line' || type === 'area'
-    ? lineChart(labels, data, type === 'area')
+    ? lineChart(safeLabels, safeData, type === 'area')
     : type === 'pie'
-      ? pieChart(labels, data)
-      : barChart(labels, data);
+      ? pieChart(safeLabels, safeData)
+      : barChart(safeLabels, safeData);
 
   return (
-    <Sheet substrate="light" frame="chart-canvas" className={`lp-chart-v1 ${hasInsight ? 'lp-chart-v1--with-insight' : ''}`}>
-      <GlassCard className="lp-chart-card lp-rise">
-        <div className="lp-chart-header">
-          {kicker && (
-            <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill">
-              {kicker}
-            </EditableField>
-          )}
-          <div className="lp-chart-titles">
-            <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-chart-title">
-              {title}
-            </EditableField>
-            {subtitle && (
-              <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-chart-subtitle">
-                {subtitle}
-              </EditableField>
-            )}
-          </div>
-        </div>
+    <Sheet substrate="tint" tint="blue" frame="chart-canvas" className={`lp-chart-v1 ${hasInsight ? 'lp-chart-v1--with-insight' : ''}`}>
+      <Blob
+        className="lp-chart-v1-blob"
+        style={{ width: 420, height: 420, top: -160, right: -120, background: 'var(--lp-blue)', opacity: 0.11 }}
+      />
+      <DottedPattern
+        className="lp-chart-v1-dots"
+        style={{ bottom: 110, left: 80, width: 220, height: 220, opacity: 0.18 }}
+      />
+      <Slash
+        className="lp-chart-v1-slash"
+        style={{ top: 130, left: 100, height: 70, background: 'var(--lp-amber)', opacity: 0.45 }}
+      />
+      <Ring
+        className="lp-chart-v1-ring"
+        style={{ bottom: 130, right: 110, width: 64, height: 64, borderColor: 'var(--lp-green)' }}
+      />
+      <Plus
+        className="lp-chart-v1-plus"
+        style={{ top: 140, left: 120, width: 28, height: 28, color: 'var(--lp-red)' }}
+      />
 
-        <div className={`lp-chart-body ${hasInsight ? 'lp-chart-body--with-insight' : ''}`}>
-          <div className="lp-chart-wrapper">
-            {chartElement}
-          </div>
-          {hasInsight && insightPanel(insight, _slideIdx, _editable)}
-        </div>
-
-        {(unit || footnote) && (
-          <div className="lp-chart-footer">
-            {unit && (
-              <div className="lp-chart-unit">
-                单位：
-                <EditableField prop="unit" slideIdx={_slideIdx} editable={_editable} as="span">
-                  {unit}
-                </EditableField>
-              </div>
-            )}
-            {footnote && (
-              <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-footnote">
-                {footnote}
-              </EditableField>
-            )}
+      <div className="lp-chart-header lp-rise">
+        {kicker && (
+          <div className="lp-chart-kicker">
+            <Pill variant="fill" color="blue">{kicker}</Pill>
           </div>
         )}
-      </GlassCard>
+        <Headline
+          cn={title || '数据趋势'}
+          en={subtitle}
+          size="large"
+          slideIdx={_slideIdx}
+          editable={_editable}
+          propCn="title"
+          propEn="subtitle"
+          className="lp-chart-headline"
+        />
+      </div>
+
+      <div className={`lp-chart-body ${hasInsight ? 'lp-chart-body--with-insight' : ''} lp-rise`}>
+        <div className="lp-chart-wrapper">
+          {chartElement}
+        </div>
+        {hasInsight && insightPanel(insight, _slideIdx, _editable)}
+      </div>
+
+      {(unit || footnote) && (
+        <div className="lp-chart-footer lp-rise">
+          {unit && (
+            <div className="lp-chart-unit">
+              单位：
+              <EditableField prop="unit" slideIdx={_slideIdx} editable={_editable} as="span">
+                {unit}
+              </EditableField>
+            </div>
+          )}
+          {footnote && (
+            <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-footnote">
+              {footnote}
+            </EditableField>
+          )}
+        </div>
+      )}
+
+      <Folio
+        left="CHART"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
     </Sheet>
   );
 }

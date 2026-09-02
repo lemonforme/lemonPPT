@@ -5,6 +5,15 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import {
+  Folio,
+  Headline,
+  LpPhoto,
+  Pill,
+  Ring,
+  Sheet,
+  Slash,
+} from './shared.js';
 
 export interface Theme01DiptychContrastSide {
   label?: string;
@@ -42,7 +51,7 @@ export const theme01DiptychContrastMeta: LayoutMeta = {
   theme: 'theme01',
   role: 'comparison',
   displayName: 'Theme 01 双联对比',
-  description: '左右双区对比 + 中央结论卡',
+  description: '左右双区影像对比 + 中央结论面板',
   needsMedia: true,
 };
 
@@ -110,7 +119,7 @@ export const theme01DiptychContrastSchema: PropsSchema = {
     },
     {
       key: 'centerCard',
-      label: '中央结论卡',
+      label: '中央结论面板',
       type: 'object',
       itemSchema: [
         {
@@ -169,53 +178,97 @@ export function Theme01DiptychContrast(props: Theme01DiptychContrastProps): Reac
   const safeComparisons = (centerCard.comparisons || []).slice(0, 3);
 
   return (
-    <div className="lp-slide lp-diptych-contrast">
+    <Sheet substrate="light" frame="grid" className="lp-diptych-contrast">
       <div className="lp-diptych-contrast-bg">
-        <div className="lp-diptych-contrast-side lp-diptych-contrast-side--left">
-          {left.imageUrl ? (
-            <img className="lp-diptych-contrast-image" src={left.imageUrl} alt={left.label || ''} />
-          ) : (
-            <div className="lp-diptych-contrast-image-placeholder" />
-          )}
+        <div className="lp-diptych-contrast-side lp-diptych-contrast-side--left lp-rise">
+          <LpPhoto
+            prop="left.imageUrl"
+            src={left.imageUrl}
+            slideIdx={_slideIdx}
+            editable={_editable}
+            ratio="fill"
+            className="lp-diptych-contrast-image"
+            hint="点击上传左侧图片"
+          />
           <div className="lp-diptych-contrast-side-label">
             {left.labelEn && <div className="lp-diptych-contrast-label-en">{left.labelEn}</div>}
             {left.label && (
-              <EditableField prop="left.label" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-diptych-contrast-label">
+              <EditableField
+                prop="left.label"
+                slideIdx={_slideIdx}
+                editable={_editable}
+                as="div"
+                className="lp-diptych-contrast-label"
+              >
                 {left.label}
               </EditableField>
             )}
           </div>
         </div>
-        <div className="lp-diptych-contrast-side lp-diptych-contrast-side--right">
-          {right.imageUrl ? (
-            <img className="lp-diptych-contrast-image" src={right.imageUrl} alt={right.label || ''} />
-          ) : (
-            <div className="lp-diptych-contrast-image-placeholder" />
-          )}
+        <div className="lp-diptych-contrast-side lp-diptych-contrast-side--right lp-rise">
+          <LpPhoto
+            prop="right.imageUrl"
+            src={right.imageUrl}
+            slideIdx={_slideIdx}
+            editable={_editable}
+            ratio="fill"
+            className="lp-diptych-contrast-image"
+            hint="点击上传右侧图片"
+          />
           <div className="lp-diptych-contrast-side-label">
             {right.labelEn && <div className="lp-diptych-contrast-label-en">{right.labelEn}</div>}
             {right.label && (
-              <EditableField prop="right.label" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-diptych-contrast-label">
+              <EditableField
+                prop="right.label"
+                slideIdx={_slideIdx}
+                editable={_editable}
+                as="div"
+                className="lp-diptych-contrast-label"
+              >
                 {right.label}
               </EditableField>
             )}
           </div>
         </div>
       </div>
+
+      <Slash
+        className="lp-diptych-contrast-slash"
+        style={{ top: 100, left: 100, height: 70, background: 'var(--lp-amber)', opacity: 0.5 }}
+      />
+      <Ring
+        className="lp-diptych-contrast-ring"
+        style={{ width: 120, height: 120, bottom: 100, right: 100, borderColor: 'var(--lp-blue)' }}
+      />
+
       <div className="lp-diptych-contrast-content">
         {kicker && (
-          <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill lp-diptych-contrast-kicker lp-rise">
-            {kicker}
-          </EditableField>
+          <div className="lp-diptych-contrast-kicker lp-rise">
+            <Pill variant="outline" color="violet">
+              {kicker}
+            </Pill>
+          </div>
         )}
         {title && (
-          <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-head lp-diptych-contrast-title lp-rise">
-            {title}
-          </EditableField>
+          <Headline
+            cn={title}
+            size="large"
+            slideIdx={_slideIdx}
+            editable={_editable}
+            propCn="title"
+            className="lp-diptych-contrast-title lp-rise"
+          />
         )}
-        <div className="lp-card lp-diptych-contrast-center-card lp-rise">
+
+        <div className="lp-diptych-contrast-center lp-rise">
           {centerCard.title && (
-            <EditableField prop="centerCard.title" slideIdx={_slideIdx} editable={_editable} as="h3" className="lp-diptych-contrast-center-title">
+            <EditableField
+              prop="centerCard.title"
+              slideIdx={_slideIdx}
+              editable={_editable}
+              as="h3"
+              className="lp-diptych-contrast-center-title"
+            >
               {centerCard.title}
             </EditableField>
           )}
@@ -224,19 +277,43 @@ export function Theme01DiptychContrast(props: Theme01DiptychContrastProps): Reac
               {safeComparisons.map((item, index) => (
                 <div key={index} className="lp-diptych-contrast-row">
                   <div className="lp-diptych-contrast-cell lp-diptych-contrast-cell--left">
-                    <EditableField prop={`centerCard.comparisons.${index}.leftValue`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-diptych-contrast-value">
+                    <EditableField
+                      prop={`centerCard.comparisons.${index}.leftValue`}
+                      slideIdx={_slideIdx}
+                      editable={_editable}
+                      as="div"
+                      className="lp-diptych-contrast-value"
+                    >
                       {item.leftValue}
                     </EditableField>
-                    <EditableField prop={`centerCard.comparisons.${index}.leftLabel`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-diptych-contrast-value-label">
+                    <EditableField
+                      prop={`centerCard.comparisons.${index}.leftLabel`}
+                      slideIdx={_slideIdx}
+                      editable={_editable}
+                      as="div"
+                      className="lp-diptych-contrast-value-label"
+                    >
                       {item.leftLabel}
                     </EditableField>
                   </div>
                   <div className="lp-diptych-contrast-vs">VS</div>
                   <div className="lp-diptych-contrast-cell lp-diptych-contrast-cell--right">
-                    <EditableField prop={`centerCard.comparisons.${index}.rightValue`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-diptych-contrast-value">
+                    <EditableField
+                      prop={`centerCard.comparisons.${index}.rightValue`}
+                      slideIdx={_slideIdx}
+                      editable={_editable}
+                      as="div"
+                      className="lp-diptych-contrast-value"
+                    >
                       {item.rightValue}
                     </EditableField>
-                    <EditableField prop={`centerCard.comparisons.${index}.rightLabel`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-diptych-contrast-value-label">
+                    <EditableField
+                      prop={`centerCard.comparisons.${index}.rightLabel`}
+                      slideIdx={_slideIdx}
+                      editable={_editable}
+                      as="div"
+                      className="lp-diptych-contrast-value-label"
+                    >
                       {item.rightLabel}
                     </EditableField>
                   </div>
@@ -245,17 +322,38 @@ export function Theme01DiptychContrast(props: Theme01DiptychContrastProps): Reac
             </div>
           )}
           {centerCard.conclusion && (
-            <EditableField prop="centerCard.conclusion" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-diptych-contrast-conclusion">
+            <EditableField
+              prop="centerCard.conclusion"
+              slideIdx={_slideIdx}
+              editable={_editable}
+              as="p"
+              className="lp-diptych-contrast-conclusion"
+            >
               {centerCard.conclusion}
             </EditableField>
           )}
         </div>
+
         {footnote && (
-          <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-diptych-contrast-footnote lp-rise">
+          <EditableField
+            prop="footnote"
+            slideIdx={_slideIdx}
+            editable={_editable}
+            as="div"
+            className="lp-diptych-contrast-footnote lp-rise"
+          >
             {footnote}
           </EditableField>
         )}
       </div>
-    </div>
+
+      <Folio
+        left="COMPARE"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
   );
 }

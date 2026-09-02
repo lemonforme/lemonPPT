@@ -3,8 +3,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
-import { EditableField } from '../../editable-field.js';
 import { LpEChart } from './echart.js';
+import {
+  Blob,
+  DottedPattern,
+  Folio,
+  Headline,
+  Pill,
+  Plus,
+  Ring,
+  Sheet,
+  Slash,
+} from './shared.js';
 export interface Theme01ChartRadarProps {
   title?: string;
   kicker?: string;
@@ -126,19 +136,58 @@ export function Theme01ChartRadar(props: Theme01ChartRadarProps): ReactNode {
       },
     ],
   };
-  return (<div className="lp-slide lp-chart-v2 lp-echart-slide">
-      <div className="lp-card lp-chart-card lp-rise">
-    <div className="lp-chart-header">
-          {kicker && (<EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill">
-              {kicker}
-      </EditableField>)}
-          <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-chart-title">
-      {title}
-          </EditableField>
-    </div>
-    <div className="lp-chart-wrapper lp-echart-wrapper">
-          <LpEChart type="radar" option={option}/>
-    </div>
+  return (
+    <Sheet substrate="tint" tint="green" frame="chart-canvas" className="lp-chart-v2">
+      <Blob
+        className="lp-chart-v2-blob"
+        style={{ width: 400, height: 400, bottom: -160, left: -120, background: 'var(--lp-green)', opacity: 0.12 }}
+      />
+      <DottedPattern
+        className="lp-chart-v2-dots"
+        style={{ top: 110, right: 90, width: 220, height: 220, opacity: 0.18 }}
+      />
+      <Slash
+        className="lp-chart-v2-slash"
+        style={{ top: 130, left: 110, height: 70, background: 'var(--lp-amber)', opacity: 0.45 }}
+      />
+      <Ring
+        className="lp-chart-v2-ring"
+        style={{ bottom: 130, right: 110, width: 64, height: 64, borderColor: 'var(--lp-blue)' }}
+      />
+      <Plus
+        className="lp-chart-v2-plus"
+        style={{ top: 140, right: 120, width: 28, height: 28, color: 'var(--lp-red)' }}
+      />
+
+      <div className="lp-chart-header lp-rise">
+        {kicker && (
+          <div className="lp-chart-kicker">
+            <Pill variant="fill" color="green">{kicker}</Pill>
+          </div>
+        )}
+        <Headline
+          cn={title || '多维雷达'}
+          size="large"
+          slideIdx={_slideIdx}
+          editable={_editable}
+          propCn="title"
+          className="lp-chart-headline"
+        />
       </div>
-  </div>);
+
+      <div className="lp-chart-body lp-rise">
+        <div className="lp-chart-wrapper lp-echart-wrapper">
+          <LpEChart type="radar" option={option} />
+        </div>
+      </div>
+
+      <Folio
+        left="CHART"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
+  );
 }

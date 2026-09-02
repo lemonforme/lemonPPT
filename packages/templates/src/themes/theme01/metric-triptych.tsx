@@ -5,6 +5,17 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
+import {
+  Blob,
+  DottedPattern,
+  Folio,
+  Headline,
+  Pill,
+  Plus,
+  Ring,
+  Sheet,
+  Slash,
+} from './shared.js';
 
 export interface Theme01MetricTriptychPanel {
   index?: string;
@@ -37,24 +48,9 @@ export const theme01MetricTriptychMeta: LayoutMeta = {
 
 export const theme01MetricTriptychSchema: PropsSchema = {
   fields: [
-    {
-      key: 'kicker',
-      label: '标签',
-      type: 'text',
-      inlineEditable: true,
-    },
-    {
-      key: 'title',
-      label: '标题',
-      type: 'text',
-      inlineEditable: true,
-    },
-    {
-      key: 'subtitle',
-      label: '副标题',
-      type: 'text',
-      inlineEditable: true,
-    },
+    { key: 'kicker', label: '标签', type: 'text', inlineEditable: true },
+    { key: 'title', label: '标题', type: 'text', inlineEditable: true },
+    { key: 'subtitle', label: '副标题', type: 'text', inlineEditable: true },
     {
       key: 'panels',
       label: '指标面板',
@@ -62,30 +58,10 @@ export const theme01MetricTriptychSchema: PropsSchema = {
       minItems: 2,
       maxItems: 3,
       itemSchema: [
-        {
-          key: 'index',
-          label: '序号',
-          type: 'text',
-          inlineEditable: true,
-        },
-        {
-          key: 'title',
-          label: '标题',
-          type: 'text',
-          inlineEditable: true,
-        },
-        {
-          key: 'value',
-          label: '数值',
-          type: 'text',
-          inlineEditable: true,
-        },
-        {
-          key: 'subtitle',
-          label: '说明',
-          type: 'text',
-          inlineEditable: true,
-        },
+        { key: 'index', label: '序号', type: 'text', inlineEditable: true },
+        { key: 'title', label: '标题', type: 'text', inlineEditable: true },
+        { key: 'value', label: '数值', type: 'text', inlineEditable: true },
+        { key: 'subtitle', label: '说明', type: 'text', inlineEditable: true },
         {
           key: 'chartType',
           label: '图表类型',
@@ -101,24 +77,15 @@ export const theme01MetricTriptychSchema: PropsSchema = {
           label: '图表数据',
           type: 'array',
           maxItems: 8,
-          itemSchema: [
-            {
-              key: 'value',
-              label: '值',
-              type: 'number',
-            },
-          ],
+          itemSchema: [{ key: 'value', label: '值', type: 'number' }],
         },
       ],
     },
-    {
-      key: 'footnote',
-      label: '脚注',
-      type: 'text',
-      inlineEditable: true,
-    },
+    { key: 'footnote', label: '脚注', type: 'text', inlineEditable: true },
   ],
 };
+
+const PANEL_COLORS = ['blue', 'green', 'amber', 'red', 'violet', 'cyan'] as const;
 
 function MiniChart({ type, data, color }: { type?: string; data?: number[]; color: string }): ReactNode {
   const values = (data || []).filter((v): v is number => typeof v === 'number');
@@ -138,7 +105,7 @@ function MiniChart({ type, data, color }: { type?: string; data?: number[]; colo
   });
 
   if (type === 'bar') {
-    const barWidth = (width - padding * 2) / values.length * 0.6;
+    const barWidth = ((width - padding * 2) / values.length) * 0.6;
     return (
       <svg viewBox={`0 0 ${width} ${height}`} className="lp-metric-triptych-chart-svg">
         {values.map((v, i) => {
@@ -168,71 +135,111 @@ function MiniChart({ type, data, color }: { type?: string; data?: number[]; colo
 export function Theme01MetricTriptych(props: Theme01MetricTriptychProps): ReactNode {
   const { kicker, title, subtitle, panels = [], footnote, _slideIdx, _editable } = props;
   const safePanels = panels.slice(0, 3);
-  const colors = ['var(--lp-blue)', 'var(--lp-green)', 'var(--lp-amber)'];
 
   return (
-    <div className="lp-slide lp-metric-triptych">
-      <div className="lp-metric-triptych-header">
+    <Sheet substrate="tint" tint="blue" frame="stage" className="lp-metric-triptych">
+      <Blob
+        className="lp-metric-triptych-blob"
+        style={{ width: 400, height: 400, bottom: -160, right: -120, background: 'var(--lp-blue)', opacity: 0.11 }}
+      />
+      <DottedPattern
+        className="lp-metric-triptych-dots"
+        style={{ top: 110, left: 90, width: 220, height: 220, opacity: 0.2 }}
+      />
+      <Slash
+        className="lp-metric-triptych-slash"
+        style={{ bottom: 140, left: 110, height: 80, background: 'var(--lp-amber)', opacity: 0.45 }}
+      />
+      <Ring
+        className="lp-metric-triptych-ring"
+        style={{ top: 120, right: 120, width: 64, height: 64, borderColor: 'var(--lp-green)' }}
+      />
+      <Plus
+        className="lp-metric-triptych-plus"
+        style={{ bottom: 120, left: 120, width: 28, height: 28, color: 'var(--lp-red)' }}
+      />
+
+      <div className="lp-metric-triptych-header lp-rise">
         {kicker && (
-          <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill lp-rise">
-            {kicker}
-          </EditableField>
+          <div className="lp-metric-triptych-kicker">
+            <Pill variant="fill" color="blue">{kicker}</Pill>
+          </div>
         )}
-        {title && (
-          <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-head lp-metric-triptych-title lp-rise">
-            {title}
-          </EditableField>
-        )}
-        {subtitle && (
-          <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-metric-triptych-subtitle lp-rise">
-            {subtitle}
-          </EditableField>
-        )}
+        <Headline
+          cn={title || '指标总览'}
+          en={subtitle}
+          size="large"
+          slideIdx={_slideIdx}
+          editable={_editable}
+          propCn="title"
+          propEn="subtitle"
+          className="lp-metric-triptych-headline"
+        />
       </div>
-      <div className={`lp-metric-triptych-body lp-metric-triptych-body--${safePanels.length}`}>
-        {safePanels.map((panel, index) => (
-          <div key={index} className="lp-card lp-metric-triptych-panel lp-rise">
-            <div className="lp-metric-triptych-panel-head">
-              <span className="lp-metric-triptych-panel-index">{panel.index || String(index + 1).padStart(2, '0')}</span>
+
+      <div className={`lp-metric-triptych-body lp-metric-triptych-body--${safePanels.length} lp-rise`}>
+        {safePanels.map((panel, index) => {
+          const color = PANEL_COLORS[index % PANEL_COLORS.length];
+          const cssVar = `var(--lp-${color})`;
+          return (
+            <div key={index} className={`lp-metric-triptych-panel color-${color}`}>
+              <div className="lp-metric-triptych-panel-head">
+                <span className="lp-metric-triptych-panel-index">{panel.index || String(index + 1).padStart(2, '0')}</span>
+                <EditableField
+                  prop={`panels.${index}.title`}
+                  slideIdx={_slideIdx}
+                  editable={_editable}
+                  as="h3"
+                  className="lp-metric-triptych-panel-title"
+                >
+                  {panel.title}
+                </EditableField>
+              </div>
               <EditableField
-                prop={`panels.${index}.title`}
+                prop={`panels.${index}.value`}
                 slideIdx={_slideIdx}
                 editable={_editable}
-                as="h3"
-                className="lp-metric-triptych-panel-title"
+                as="div"
+                className="lp-metric-triptych-panel-value"
               >
-                {panel.title}
+                {panel.value}
+              </EditableField>
+              <div className="lp-metric-triptych-panel-chart">
+                <MiniChart type={panel.chartType} data={panel.chartData} color={cssVar} />
+              </div>
+              <EditableField
+                prop={`panels.${index}.subtitle`}
+                slideIdx={_slideIdx}
+                editable={_editable}
+                as="p"
+                className="lp-metric-triptych-panel-subtitle"
+              >
+                {panel.subtitle}
               </EditableField>
             </div>
-            <EditableField
-              prop={`panels.${index}.value`}
-              slideIdx={_slideIdx}
-              editable={_editable}
-              as="div"
-              className="lp-metric-triptych-panel-value"
-            >
-              {panel.value}
-            </EditableField>
-            <div className="lp-metric-triptych-panel-chart">
-              <MiniChart type={panel.chartType} data={panel.chartData} color={colors[index % colors.length]} />
-            </div>
-            <EditableField
-              prop={`panels.${index}.subtitle`}
-              slideIdx={_slideIdx}
-              editable={_editable}
-              as="p"
-              className="lp-metric-triptych-panel-subtitle"
-            >
-              {panel.subtitle}
-            </EditableField>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
       {footnote && (
-        <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-metric-triptych-footnote lp-rise">
+        <EditableField
+          prop="footnote"
+          slideIdx={_slideIdx}
+          editable={_editable}
+          as="div"
+          className="lp-metric-triptych-footnote lp-rise"
+        >
           {footnote}
         </EditableField>
       )}
-    </div>
+
+      <Folio
+        left="METRIC"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
   );
 }

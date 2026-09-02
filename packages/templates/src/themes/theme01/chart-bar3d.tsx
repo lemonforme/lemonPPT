@@ -3,8 +3,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
-import { EditableField } from '../../editable-field.js';
 import { LpEChart } from './echart.js';
+import {
+  Blob,
+  DottedPattern,
+  Folio,
+  Headline,
+  Pill,
+  Plus,
+  Ring,
+  Sheet,
+  Slash,
+} from './shared.js';
 export interface Theme01ChartBar3dProps {
   title?: string;
   kicker?: string;
@@ -69,7 +79,7 @@ export const theme01ChartBar3dSchema: PropsSchema = {
 };
 // 注意：adjustColor 做十六进制运算，必须喂入 hex，不能喂 var(--lp-*) 字符串
 // （否则会产生 rgb(NaN)，柱子不渲染）。这里直接用 token 的 hex 值，与 ECharts 运行时调色板一致。
-const THEME_COLORS = ['#6E9BC4', '#8FAE84', '#D9A441', '#C76B5A', '#A07CAE', '#C98BA0'];
+const THEME_COLORS = ['#EF4444', '#FBBF24', '#14B8A6', '#3B82F6', '#8B5CF6', '#06B6D4', '#F472B6', '#FB923C'];
 export function Theme01ChartBar3d(props: Theme01ChartBar3dProps): ReactNode {
   const { title, kicker, _slideIdx, _editable } = props;
   const labels = props.labels ?? ['Q1', 'Q2', 'Q3', 'Q4'];
@@ -164,21 +174,60 @@ export function Theme01ChartBar3d(props: Theme01ChartBar3dProps): ReactNode {
       },
     ],
   };
-  return (<div className="lp-slide lp-chart-v2 lp-echart-slide">
-      <div className="lp-card lp-chart-card lp-rise">
-    <div className="lp-chart-header">
-          {kicker && (<EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill">
-              {kicker}
-      </EditableField>)}
-          <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-chart-title">
-      {title}
-          </EditableField>
-    </div>
-    <div className="lp-chart-wrapper lp-echart-wrapper">
-          <LpEChart type="bar3d" option={option}/>
-    </div>
+  return (
+    <Sheet substrate="tint" tint="pink" frame="chart-canvas" className="lp-chart-v2">
+      <Blob
+        className="lp-chart-v2-blob"
+        style={{ width: 400, height: 400, bottom: -160, left: -120, background: 'var(--lp-violet)', opacity: 0.12 }}
+      />
+      <DottedPattern
+        className="lp-chart-v2-dots"
+        style={{ top: 110, right: 90, width: 220, height: 220, opacity: 0.18 }}
+      />
+      <Slash
+        className="lp-chart-v2-slash"
+        style={{ bottom: 130, right: 110, height: 70, background: 'var(--lp-amber)', opacity: 0.45 }}
+      />
+      <Ring
+        className="lp-chart-v2-ring"
+        style={{ top: 120, left: 110, width: 64, height: 64, borderColor: 'var(--lp-blue)' }}
+      />
+      <Plus
+        className="lp-chart-v2-plus"
+        style={{ bottom: 120, right: 120, width: 28, height: 28, color: 'var(--lp-red)' }}
+      />
+
+      <div className="lp-chart-header lp-rise">
+        {kicker && (
+          <div className="lp-chart-kicker">
+            <Pill variant="fill" color="violet">{kicker}</Pill>
+          </div>
+        )}
+        <Headline
+          cn={title || '季度销量对比'}
+          size="large"
+          slideIdx={_slideIdx}
+          editable={_editable}
+          propCn="title"
+          className="lp-chart-headline"
+        />
       </div>
-  </div>);
+
+      <div className="lp-chart-body lp-rise">
+        <div className="lp-chart-wrapper lp-echart-wrapper">
+          <LpEChart type="bar3d" option={option} />
+        </div>
+      </div>
+
+      <Folio
+        left="CHART"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
+  );
 }
 function lighten(hex: string, percent: number): string {
   return adjustColor(hex, percent);

@@ -3,13 +3,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /**
- * theme01 视觉 Token 定义（espresso 暗色编辑风）。
+ * theme01 视觉 Token 定义（Vivid Pop · 活力波普）。
  *
  * 作为单一事实来源，既用于生成 CSS 变量，也可供组件在 SSR 等无法读取 CSS 变量的场景兜底使用。
- * 设计语言：暖炭 / espresso 基底 + 陶土 terracotta 签名强调 + 奶油 cream 文字 + 大地色数据序列。
- * 与 theme08(黑+金) / theme09(深蓝) / theme10(黑曜+香槟铜) / theme02·06(绿·紫) 形成明确区分。
+ * 设计语言：浅白浅灰底 + 明亮红/黄/青/蓝等高饱和强调 + 图标+彩色标题组 + 细边框胶囊 + 维恩圆 + 零大卡片。
+ * 与 theme09(墨韵专色) / theme10(金色金融) / theme11(流光科技) 形成明确区分。
  *
- * 全部使用 --lp- 前缀，零 --acl-；不复制 theme09 的 #46e3c6 / #4a86ff / bg-deep / bg-blue 等红线色值或类名。
+ * 全部使用 --lp- 前缀；不复制其它主题的签名色值或类名。
  */
 
 export interface Theme01Tokens {
@@ -71,105 +71,109 @@ export interface Theme01Tokens {
   radiusSmall: string;
   radiusMedium: string;
   radiusLarge: string;
-  /** 陶土强调的柔和版本（编辑语汇：标签底 / 聚光晕） */
+  /** 强调色的柔和版本（标签底 / 聚光晕） */
   t1AccentSoft: string;
-  /** 奶油色发丝线（编辑语汇：规线 / 中缝 / 分隔） */
+  /** 深色发丝线（规线 / 中缝 / 分隔） */
   t1Hairline: string;
 }
 
 export const theme01Tokens = {
-  ink: '#F2E9DC',
-  ink2: '#C9BCA8',
-  ink3: '#948875',
-  white: '#F2E9DC',
-  accent: '#C56A43',
-  blue100: 'rgba(110, 155, 196, 0.18)',
-  gray700: '#C9BCA8',
-  red: '#C76B5A',
-  blue: '#6E9BC4',
-  green: '#8FAE84',
-  amber: '#D9A441',
-  violet: '#A07CAE',
-  cyan: '#5FA8A0',
-  pink: '#C98BA0',
-  orange: '#C97E4E',
-  lime: '#A7A85F',
-  gray600: '#A89A85',
-  gray500: '#948875',
-  gray400: '#736B5C',
-  gray200: 'rgba(242, 233, 220, 0.14)',
-  gray100: 'rgba(242, 233, 220, 0.08)',
-  bg: '#1E1B16',
-  bgGradientStart: '#221E18',
-  bgGradientEnd: '#15120E',
-  surface: 'rgba(40, 35, 28, 0.62)',
-  surfaceStrong: 'rgba(50, 44, 35, 0.80)',
-  border: 'rgba(242, 233, 220, 0.14)',
-  shadow: '0 24px 60px rgba(0, 0, 0, 0.45)',
-  shadowSm: '0 8px 24px rgba(0, 0, 0, 0.38)',
-  glowBlue: 'rgba(201, 106, 67, 0.18)',
-  glowBlueStrong: 'rgba(201, 106, 67, 0.22)',
-  glowBlueSubtle: 'rgba(201, 106, 67, 0.09)',
-  glowBlueExtraStrong: 'rgba(201, 106, 67, 0.34)',
-  glowAmber: 'rgba(217, 164, 65, 0.14)',
-  glowViolet: 'rgba(160, 124, 174, 0.14)',
-  glowVioletStrong: 'rgba(160, 124, 174, 0.20)',
-  glowVioletSubtle: 'rgba(160, 124, 174, 0.08)',
-  glowVioletExtraStrong: 'rgba(160, 124, 174, 0.32)',
-  glowCyanSubtle: 'rgba(95, 168, 160, 0.10)',
-  glowPinkSubtle: 'rgba(201, 139, 160, 0.10)',
-  glowGreenSubtle: 'rgba(143, 174, 132, 0.12)',
-  glowRedSubtle: 'rgba(199, 107, 90, 0.12)',
-  shadowInset: '0 1px 0 rgba(242, 233, 220, 0.06) inset',
-  overlay: 'rgba(242, 233, 220, 0.06)',
-  overlayStrong: 'rgba(242, 233, 220, 0.10)',
-  divider: 'rgba(242, 233, 220, 0.08)',
-  scrim: 'rgba(0, 0, 0, 0.60)',
-  imageOverlay: 'linear-gradient(180deg, rgba(30, 27, 22, 0.72) 0%, rgba(30, 27, 22, 0.92) 100%)',
-  shadowRgb: '0, 0, 0',
-  stroke: 'rgba(242, 233, 220, 0.12)',
-  whiteAlpha80: 'rgba(242, 233, 220, 0.80)',
-  whiteAlpha85: 'rgba(242, 233, 220, 0.85)',
-  whiteAlpha90: 'rgba(242, 233, 220, 0.90)',
-  font: '"Noto Sans SC", "PingFang SC", system-ui, sans-serif',
+  ink: '#1F2937',
+  ink2: '#6B7280',
+  ink3: '#9CA3AF',
+  white: '#FFFFFF',
+  accent: '#EF4444',
+  blue100: 'rgba(59, 130, 246, 0.12)',
+  gray700: '#6B7280',
+  red: '#EF4444',
+  blue: '#3B82F6',
+  green: '#14B8A6',
+  amber: '#FBBF24',
+  violet: '#8B5CF6',
+  cyan: '#06B6D4',
+  pink: '#F472B6',
+  orange: '#FB923C',
+  lime: '#A3E635',
+  gray600: '#9CA3AF',
+  gray500: '#B0B7C3',
+  gray400: '#D1D5DB',
+  gray200: 'rgba(31, 41, 55, 0.08)',
+  gray100: 'rgba(31, 41, 55, 0.04)',
+  bg: '#FFFFFF',
+  bgGradientStart: '#FFFFFF',
+  bgGradientEnd: '#FEF3C7',
+  surface: '#FFFFFF',
+  surfaceStrong: '#F3F4F6',
+  border: 'rgba(31, 41, 55, 0.12)',
+  shadow: '0 12px 32px rgba(31, 41, 55, 0.08)',
+  shadowSm: '0 4px 12px rgba(31, 41, 55, 0.06)',
+  glowBlue: 'rgba(59, 130, 246, 0.12)',
+  glowBlueStrong: 'rgba(59, 130, 246, 0.18)',
+  glowBlueSubtle: 'rgba(59, 130, 246, 0.08)',
+  glowBlueExtraStrong: 'rgba(59, 130, 246, 0.24)',
+  glowAmber: 'rgba(251, 191, 36, 0.12)',
+  glowViolet: 'rgba(139, 92, 246, 0.12)',
+  glowVioletStrong: 'rgba(139, 92, 246, 0.18)',
+  glowVioletSubtle: 'rgba(139, 92, 246, 0.08)',
+  glowVioletExtraStrong: 'rgba(139, 92, 246, 0.24)',
+  glowCyanSubtle: 'rgba(20, 184, 166, 0.08)',
+  glowPinkSubtle: 'rgba(244, 114, 182, 0.08)',
+  glowGreenSubtle: 'rgba(20, 184, 166, 0.08)',
+  glowRedSubtle: 'rgba(239, 68, 68, 0.08)',
+  shadowInset: '0 1px 0 rgba(255, 255, 255, 0.60) inset',
+  overlay: 'rgba(31, 41, 55, 0.04)',
+  overlayStrong: 'rgba(31, 41, 55, 0.08)',
+  divider: 'rgba(31, 41, 55, 0.08)',
+  scrim: 'rgba(31, 41, 55, 0.55)',
+  imageOverlay: 'linear-gradient(180deg, rgba(31, 41, 55, 0.55) 0%, rgba(31, 41, 55, 0.85) 100%)',
+  shadowRgb: '31, 41, 55',
+  stroke: 'rgba(31, 41, 55, 0.12)',
+  whiteAlpha80: 'rgba(255, 255, 255, 0.80)',
+  whiteAlpha85: 'rgba(255, 255, 255, 0.85)',
+  whiteAlpha90: 'rgba(255, 255, 255, 0.90)',
+  font: '"Nunito", "Noto Sans SC", "PingFang SC", system-ui, sans-serif',
   fontMono: '"Space Mono", "JetBrains Mono", ui-monospace, monospace',
-  radiusSmall: '9px',
-  radiusMedium: '18px',
-  radiusLarge: '24px',
-  t1AccentSoft: 'rgba(201, 106, 67, 0.16)',
-  t1Hairline: 'rgba(242, 233, 220, 0.16)',
+  radiusSmall: '8px',
+  radiusMedium: '16px',
+  radiusLarge: '28px',
+  t1AccentSoft: 'rgba(239, 68, 68, 0.12)',
+  t1Hairline: 'rgba(31, 41, 55, 0.12)',
 } as const satisfies Theme01Tokens;
 
 /**
- * 组件默认使用的主色调序列（大地色），与 ECharts 等图表库配色保持一致。
+ * 组件默认使用的主色调序列，与 ECharts 等图表库配色保持一致。
  */
 export const theme01ColorSequence = [
-  theme01Tokens.blue,
-  theme01Tokens.green,
+  theme01Tokens.accent,
   theme01Tokens.amber,
-  theme01Tokens.red,
+  theme01Tokens.green,
+  theme01Tokens.blue,
   theme01Tokens.violet,
   theme01Tokens.pink,
-  theme01Tokens.cyan,
   theme01Tokens.orange,
   theme01Tokens.lime,
 ];
 
 /**
- * 更深的 ink 变体（[data-theme="dark"]）—— espresso 暗色编辑风的“双基底”之一。
- * 与默认 :root（char 暖炭）形成翻页节奏；两者均为暗色，差异在基底深浅与表面强度。
+ * 深色变体（Vivid Pop 暗夜版）—— 深紫 Slate 底 + 同等强调色提亮。
  */
 export const theme01DarkTokens = {
   ...theme01Tokens,
-  bg: '#16130F',
-  bgGradientStart: '#1A1611',
-  bgGradientEnd: '#100D0A',
-  surface: 'rgba(34, 30, 24, 0.66)',
-  surfaceStrong: 'rgba(44, 39, 31, 0.84)',
-  border: 'rgba(242, 233, 220, 0.12)',
-  shadow: '0 24px 60px rgba(0, 0, 0, 0.52)',
-  shadowSm: '0 8px 24px rgba(0, 0, 0, 0.44)',
-  t1Hairline: 'rgba(242, 233, 220, 0.13)',
+  bg: '#1E1B2E',
+  bgGradientStart: '#252139',
+  bgGradientEnd: '#18152A',
+  surface: '#2A2640',
+  surfaceStrong: '#36324D',
+  border: 'rgba(255, 255, 255, 0.10)',
+  shadow: '0 18px 40px rgba(0, 0, 0, 0.30)',
+  shadowSm: '0 6px 16px rgba(0, 0, 0, 0.22)',
+  divider: 'rgba(255, 255, 255, 0.08)',
+  scrim: 'rgba(0, 0, 0, 0.55)',
+  imageOverlay: 'linear-gradient(180deg, rgba(30, 27, 46, 0.60) 0%, rgba(30, 27, 46, 0.88) 100%)',
+  shadowRgb: '0, 0, 0',
+  stroke: 'rgba(255, 255, 255, 0.10)',
+  t1AccentSoft: 'rgba(239, 68, 68, 0.20)',
+  t1Hairline: 'rgba(255, 255, 255, 0.12)',
 } as const satisfies Theme01Tokens;
 
 export type Theme01ColorScheme = 'light' | 'dark';
@@ -241,8 +245,7 @@ function buildCssVarsFromTokens(tokens: Theme01Tokens): string {
 
 /**
  * 生成可在 <style> 标签中使用的 CSS 变量字符串。
- * 变量名与 theme01.css 中已有的变量保持一致。
- * 支持 light / dark 两种配色方案（theme01 暗色编辑风：light=暖炭 char，dark=深墨 ink）。
+ * 支持 light / dark 两种配色方案。
  */
 export function generateThemeCssVariables(scheme: Theme01ColorScheme = 'light'): string {
   return buildCssVarsFromTokens(scheme === 'dark' ? theme01DarkTokens : theme01Tokens);

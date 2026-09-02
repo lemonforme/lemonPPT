@@ -5,7 +5,7 @@
 import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
-import { LpEditableImage } from '../../editable-image.js';
+import { Blob, DottedPattern, Folio, Headline, Pill, Plus, Ring, Sheet, Slash, LpPhoto } from './shared.js';
 
 export interface Theme01SpotlightGridColumn {
   tag?: string;
@@ -96,82 +96,134 @@ export const theme01SpotlightGridSchema: PropsSchema = {
   ],
 };
 
+const tagColors = ['blue', 'green', 'amber', 'violet'] as const;
+
 export function Theme01SpotlightGrid(props: Theme01SpotlightGridProps): ReactNode {
   const { kicker, title, subtitle, columns = [], footnote, _slideIdx, _editable } = props;
   const safeColumns = columns.slice(0, 4);
 
   return (
-    <div className="lp-slide lp-spotlight-grid">
-      <div className="lp-spotlight-grid-header">
-        {kicker && (
-          <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill lp-rise">
-            {kicker}
-          </EditableField>
-        )}
-        {title && (
-          <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-head lp-spotlight-grid-title lp-rise">
-            {title}
-          </EditableField>
-        )}
-        {subtitle && (
-          <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-spotlight-grid-subtitle lp-rise">
-            {subtitle}
-          </EditableField>
-        )}
-      </div>
-      <div className={`lp-spotlight-grid-body lp-spotlight-grid-body--${safeColumns.length}`}>
-        {safeColumns.map((column, index) => (
-          <div key={index} className="lp-card lp-spotlight-grid-card lp-rise">
-            {column.tag && (
-              <EditableField
-                prop={`columns.${index}.tag`}
-                slideIdx={_slideIdx}
-                editable={_editable}
-                as="div"
-                className="lp-spotlight-grid-tag"
-              >
-                {column.tag}
-              </EditableField>
-            )}
-            <LpEditableImage
-              className="lp-spotlight-grid-image"
-              src={column.imageUrl}
-              alt={column.title || ''}
+    <Sheet substrate="light" frame="grid" className="lp-spotlight-grid">
+      <Blob
+        className="lp-spotlight-grid-blob"
+        style={{ width: 360, height: 360, top: -130, left: -90, background: 'var(--lp-pink)', opacity: 0.12 }}
+      />
+      <DottedPattern
+        className="lp-spotlight-grid-dots"
+        style={{ bottom: 90, right: 80, width: 220, height: 220, opacity: 0.18 }}
+      />
+      <Slash
+        className="lp-spotlight-grid-slash"
+        style={{ top: 110, right: 100, height: 70, background: 'var(--lp-amber)', opacity: 0.45 }}
+      />
+      <Ring
+        className="lp-spotlight-grid-ring"
+        style={{ width: 120, height: 120, bottom: 100, left: 80, borderColor: 'var(--lp-blue)' }}
+      />
+      <Plus
+        className="lp-spotlight-grid-plus"
+        style={{ top: 140, right: 100, width: 30, height: 30, color: 'var(--lp-red)' }}
+      />
+
+      <div className="lp-spotlight-grid-content">
+        <div className="lp-spotlight-grid-header lp-rise">
+          {kicker && (
+            <div className="lp-spotlight-grid-kicker">
+              <Pill variant="outline" color="pink">
+                {kicker}
+              </Pill>
+            </div>
+          )}
+          {title && (
+            <Headline cn={title} size="large" slideIdx={_slideIdx} editable={_editable} propCn="title" />
+          )}
+          {subtitle && (
+            <EditableField
+              prop="subtitle"
               slideIdx={_slideIdx}
               editable={_editable}
-              prop={`columns.${index}.imageUrl`}
-              placeholderClassName="lp-spotlight-grid-image-placeholder"
-            />
-            <div className="lp-spotlight-grid-card-body">
-              <EditableField
-                prop={`columns.${index}.title`}
+              as="p"
+              className="lp-spotlight-grid-subtitle"
+            >
+              {subtitle}
+            </EditableField>
+          )}
+        </div>
+
+        <div className={`lp-spotlight-grid-body lp-spotlight-grid-body--${safeColumns.length}`}>
+          {safeColumns.map((column, index) => (
+            <div
+              key={index}
+              className={`lp-spotlight-grid-card lp-spotlight-grid-card--${tagColors[index % tagColors.length]} lp-rise`}
+              style={{ animationDelay: `${index * 70}ms` }}
+            >
+              {column.tag && (
+                <Pill variant="outline" color={tagColors[index % tagColors.length]} className="lp-spotlight-grid-tag">
+                  <EditableField
+                    prop={`columns.${index}.tag`}
+                    slideIdx={_slideIdx}
+                    editable={_editable}
+                    as="span"
+                  >
+                    {column.tag}
+                  </EditableField>
+                </Pill>
+              )}
+              <LpPhoto
+                prop={`columns.${index}.imageUrl`}
+                src={column.imageUrl}
                 slideIdx={_slideIdx}
                 editable={_editable}
-                as="h3"
-                className="lp-spotlight-grid-card-title"
-              >
-                {column.title}
-              </EditableField>
-              {column.description && (
+                ratio="16:9"
+                className="lp-spotlight-grid-image"
+                hint="点击上传"
+              />
+              <div className="lp-spotlight-grid-card-body">
                 <EditableField
-                  prop={`columns.${index}.description`}
+                  prop={`columns.${index}.title`}
                   slideIdx={_slideIdx}
                   editable={_editable}
-                  as="p"
-                  className="lp-spotlight-grid-card-description"
+                  as="h3"
+                  className="lp-spotlight-grid-card-title"
                 >
-                  {column.description}
+                  {column.title}
                 </EditableField>
-              )}
+                {column.description && (
+                  <EditableField
+                    prop={`columns.${index}.description`}
+                    slideIdx={_slideIdx}
+                    editable={_editable}
+                    as="p"
+                    className="lp-spotlight-grid-card-description"
+                  >
+                    {column.description}
+                  </EditableField>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {footnote && (
+          <EditableField
+            prop="footnote"
+            slideIdx={_slideIdx}
+            editable={_editable}
+            as="div"
+            className="lp-spotlight-grid-footnote lp-rise"
+          >
+            {footnote}
+          </EditableField>
+        )}
       </div>
-      {footnote && (
-        <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-spotlight-grid-footnote lp-rise">
-          {footnote}
-        </EditableField>
-      )}
-    </div>
+
+      <Folio
+        left="SPOTLIGHT"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
   );
 }

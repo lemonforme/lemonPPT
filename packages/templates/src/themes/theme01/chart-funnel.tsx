@@ -6,6 +6,17 @@ import type { LayoutMeta, PropsSchema } from '@lemonppt/core';
 import type { ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
 import { LpEChart } from './echart.js';
+import {
+  Blob,
+  DottedPattern,
+  Folio,
+  Headline,
+  Pill,
+  Plus,
+  Ring,
+  Sheet,
+  Slash,
+} from './shared.js';
 
 export interface Theme01ChartFunnelInsight {
   value?: string;
@@ -194,79 +205,108 @@ export function Theme01ChartFunnel(props: Theme01ChartFunnelProps): ReactNode {
   };
 
   return (
-  <div className={`lp-slide lp-chart-v2 lp-echart-slide ${hasInsight ? 'lp-chart-v2--with-insight' : ''}`}>
-      <div className="lp-card lp-chart-card lp-rise">
-    <div className="lp-chart-header">
-          {kicker && (
-      <EditableField prop="kicker" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-pill">
-              {kicker}
-      </EditableField>
-          )}
-          <div className="lp-chart-titles">
-            <EditableField prop="title" slideIdx={_slideIdx} editable={_editable} as="h2" className="lp-chart-title">
-      {title}
-            </EditableField>
-            {subtitle && (
-              <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-chart-subtitle">
-                {subtitle}
+    <Sheet substrate="tint" tint="amber" frame="chart-canvas" className={`lp-chart-v2 ${hasInsight ? 'lp-chart-v2--with-insight' : ''}`}>
+      <Blob
+        className="lp-chart-v2-blob"
+        style={{ width: 400, height: 400, bottom: -160, right: -120, background: 'var(--lp-amber)', opacity: 0.12 }}
+      />
+      <DottedPattern
+        className="lp-chart-v2-dots"
+        style={{ top: 110, left: 90, width: 220, height: 220, opacity: 0.18 }}
+      />
+      <Slash
+        className="lp-chart-v2-slash"
+        style={{ top: 130, right: 110, height: 70, background: 'var(--lp-red)', opacity: 0.45 }}
+      />
+      <Ring
+        className="lp-chart-v2-ring"
+        style={{ bottom: 130, left: 110, width: 64, height: 64, borderColor: 'var(--lp-blue)' }}
+      />
+      <Plus
+        className="lp-chart-v2-plus"
+        style={{ top: 140, right: 120, width: 28, height: 28, color: 'var(--lp-green)' }}
+      />
+
+      <div className="lp-chart-header lp-rise">
+        {kicker && (
+          <div className="lp-chart-kicker">
+            <Pill variant="fill" color="amber">{kicker}</Pill>
+          </div>
+        )}
+        <Headline
+          cn={title || '转化漏斗'}
+          en={subtitle}
+          size="large"
+          slideIdx={_slideIdx}
+          editable={_editable}
+          propCn="title"
+          propEn="subtitle"
+          className="lp-chart-headline"
+        />
+      </div>
+
+      <div className={`lp-chart-body ${hasInsight ? 'lp-chart-body--with-insight' : ''} lp-rise`}>
+        <div className="lp-chart-wrapper lp-echart-wrapper">
+          <LpEChart type="funnel" option={option} />
+        </div>
+        {hasInsight && (
+          <div className="lp-chart-insight lp-chart-insight--funnel">
+            {(insight.value || insight.label) && (
+              <div className="lp-chart-insight-head">
+                {insight.value && (
+                  <EditableField
+                    prop="insight.value"
+                    slideIdx={_slideIdx}
+                    editable={_editable}
+                    as="div"
+                    className="lp-chart-insight-headline"
+                  >
+                    {insight.value}
+                  </EditableField>
+                )}
+                {insight.label && (
+                  <EditableField
+                    prop="insight.label"
+                    slideIdx={_slideIdx}
+                    editable={_editable}
+                    as="div"
+                    className="lp-chart-insight-subheadline"
+                  >
+                    {insight.label}
+                  </EditableField>
+                )}
+              </div>
+            )}
+            {insight.description && (
+              <EditableField
+                prop="insight.description"
+                slideIdx={_slideIdx}
+                editable={_editable}
+                as="p"
+                className="lp-chart-insight-description"
+              >
+                {insight.description}
               </EditableField>
             )}
           </div>
-    </div>
-    <div className={`lp-chart-body ${hasInsight ? 'lp-chart-body--with-insight' : ''}`}>
-      <div className="lp-chart-wrapper lp-echart-wrapper">
-            <LpEChart type="funnel" option={option} />
+        )}
       </div>
-      {hasInsight && (
-        <div className="lp-chart-insight lp-chart-insight--funnel">
-          {(insight.value || insight.label) && (
-            <div className="lp-chart-insight-head">
-              {insight.value && (
-                <EditableField
-                  prop="insight.value"
-                  slideIdx={_slideIdx}
-                  editable={_editable}
-                  as="div"
-                  className="lp-chart-insight-headline"
-                >
-                  {insight.value}
-                </EditableField>
-              )}
-              {insight.label && (
-                <EditableField
-                  prop="insight.label"
-                  slideIdx={_slideIdx}
-                  editable={_editable}
-                  as="div"
-                  className="lp-chart-insight-subheadline"
-                >
-                  {insight.label}
-                </EditableField>
-              )}
-            </div>
-          )}
-          {insight.description && (
-            <EditableField
-              prop="insight.description"
-              slideIdx={_slideIdx}
-              editable={_editable}
-              as="p"
-              className="lp-chart-insight-description"
-            >
-              {insight.description}
-            </EditableField>
-          )}
+
+      {footnote && (
+        <div className="lp-chart-footer lp-rise">
+          <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-footnote">
+            {footnote}
+          </EditableField>
         </div>
       )}
-    </div>
-    {footnote && (
-      <div className="lp-chart-footer">
-        <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-footnote">
-          {footnote}
-        </EditableField>
-      </div>
-    )}
-      </div>
-  </div>
+
+      <Folio
+        left="CHART"
+        page={String(_slideIdx ?? 1).padStart(2, '0')}
+        right="THEME 01"
+        slideIdx={_slideIdx}
+        editable={_editable}
+      />
+    </Sheet>
   );
 }

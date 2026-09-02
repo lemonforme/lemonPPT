@@ -3,38 +3,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /**
- * theme01 共享版面原语（Editorial Primitives）。
+ * theme01 共享版面原语（Vivid Pop · 活力波普）。
  *
- * 按 theme09 的「工程方法论」平移到 theme01，但**翻成 theme01 的暖炭暗色编辑风**
- * （espresso 基底 + 陶土 terracotta 签名强调 + 奶油 cream 文字），
- * 不复制 theme09 的纸/墨印刷语汇或红线色值（#46e3c6 / #4a86ff / bg-deep / bg-blue）。
- *
- *   <Sheet>     版面容器 —— 承载基底（light / tint）与骨架（frame）声明，
- *               并把 substrate / frame 落到 DOM 的 data-t1-* 属性，供
- *               scripts/audit-similarity.mjs 校验骨架配额与跨主题骨架签名。
- *   <Masthead>  刊头 —— 栏目名 + 强调短杠 + 可选期号（编辑胶囊式）
- *   <Folio>     骑缝 —— 页脚三段式（栏目 / 页码 / 出处）
- *   <GlassCard> 卡片 —— 统一 surface + border + shadow（暗面）
- *   <LpPhoto>   影像位 —— 可上传图位，空态为占位符（非死灰块）
- *   <Headline>  双语标题
- *   <Rule>/<Gutter> 装饰规线 / 中缝
- *   <Label>     编辑语汇标签（number / symbol / keyword 三型，对齐 theme09 标签三选一）
- *   <Focus>     聚光切换（left / right，对齐 theme09 Focus 左右切换）
- *
- * 复用 theme09 的 7 种 frame 枚举以兼容 audit-similarity 的骨架配额。
+ * 设计关键词：轻盈、活泼、信息图、色块拼贴、零玻璃、零大卡片。
+ * 复用 theme09 的工程方法论（基底 / 骨架 / 可编辑字段 / 图位），但视觉语汇切换为
+ * 轻盈信息图风格：IconHeading + 细边框 Pill、VennCircle、HighlightBlock、SwotBadge、
+ * DashedLine、Arrow、NumberSticker 等。
  */
 
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { EditableField } from '../../editable-field.js';
 import { LpEditableImage } from '../../editable-image.js';
 
-/** 基底：浅玻璃 / 浅着色。每个版式预分配，形成翻页节奏（非 light/dark 切换）。 */
+/** 基底：light（浅白）/ tint（淡彩晕染）。每个版式预分配，形成翻页节奏。 */
 export type Substrate = 'light' | 'tint';
 
-/** 版面骨架类型（配额受 audit-similarity 约束，与 theme09 同源枚举）。 */
+/** 淡彩晕染色调，用于交替翻页节奏。 */
+export type TintColor = 'amber' | 'blue' | 'pink' | 'green';
+
+/** 版面骨架类型（与 theme09 同源枚举，兼容 audit-similarity）。 */
 export type Frame =
   | 'full-bleed'
-  | 'spread'
+  | 'split'
   | 'column-3'
   | 'sidebar'
   | 'grid'
@@ -42,19 +32,19 @@ export type Frame =
   | 'chart-canvas';
 
 /* ═══════════════════════════════════════════════════════════════
- * Sheet —— 版面容器（承载基底与骨架声明）
+ * Sheet —— 版面容器
  * ═══════════════════════════════════════════════════════════════ */
 
 export interface SheetProps {
   substrate?: Substrate;
+  tint?: TintColor;
   frame: Frame;
-  /** 额外类名，通常是版式自身的 lp-xxx-v1 */
   className?: string;
   children: ReactNode;
 }
 
 export function Sheet(props: SheetProps): ReactElement {
-  const { substrate = 'light', frame, className = '', children } = props;
+  const { substrate = 'light', tint, frame, className = '', children } = props;
 
   const cls = [
     'lp-slide',
@@ -67,15 +57,34 @@ export function Sheet(props: SheetProps): ReactElement {
     .join(' ');
 
   return (
-    <div className={cls} data-t1-frame={frame} data-t1-substrate={substrate}>
+    <div
+      className={cls}
+      data-t1-frame={frame}
+      data-t1-substrate={substrate}
+      data-t1-tint={tint}
+    >
       {children}
     </div>
   );
 }
 
+/**
+ * GlassCard —— 旧版卡片兼容容器（零玻璃 / 零大卡片）。
+ * 重构期间保留同名导出，避免未覆盖版式编译失败；内部退化为普通块级容器，
+ * 由外层版式自行决定背景与边框。
+ */
+export interface GlassCardProps {
+  className?: string;
+  children: ReactNode;
+}
+
+export function GlassCard(props: GlassCardProps): ReactElement {
+  const { className = '', children } = props;
+  return <div className={className}>{children}</div>;
+}
+
 /* ═══════════════════════════════════════════════════════════════
- * Masthead —— 刊头（页眉）
- * 结构：强调短杠 ▍ + 栏目名 + 可选英文副名，右侧可挂期号
+ * Masthead —— 顶部通栏（logo / 页码 / 标签）
  * ═══════════════════════════════════════════════════════════════ */
 
 export interface MastheadProps {
@@ -135,8 +144,7 @@ export function Masthead(props: MastheadProps): ReactElement | null {
 }
 
 /* ═══════════════════════════════════════════════════════════════
- * Folio —— 骑缝（页脚三段式）
- * 结构：栏目名 ── 页码 ── 出处
+ * Folio —— 骑缝（页脚）
  * ═══════════════════════════════════════════════════════════════ */
 
 export interface FolioProps {
@@ -184,30 +192,7 @@ export function Folio(props: FolioProps): ReactElement | null {
 }
 
 /* ═══════════════════════════════════════════════════════════════
- * GlassCard —— 玻璃卡片
- * ═══════════════════════════════════════════════════════════════ */
-
-export interface GlassCardProps {
-  className?: string;
-  children: ReactNode;
-  style?: CSSProperties;
-}
-
-export function GlassCard(props: GlassCardProps): ReactElement {
-  const { className = '', children, style } = props;
-  return (
-    <div className={`lp-card lp-theme01-card ${className}`.trim()} style={style}>
-      {children}
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════
- * LpPhoto —— 影像位（theme01 玻璃风可上传图位）
- *
- * 渲染出的元素始终带 data-lp-editable-image，点击即可上传。
- * 支持数组下标 prop（images.0），驱动多图版式。
- * 空态不是灰块，而是玻璃占位符（虚线胶囊 + 提示文案 + 比例标注）。
+ * LpPhoto —— 影像位（可上传图位）
  * ═══════════════════════════════════════════════════════════════ */
 
 export type PhotoRatio = '1:1' | '3:2' | '4:3' | '16:9' | '2:3' | '3:4' | 'fill';
@@ -353,6 +338,26 @@ export function Gutter(props: { className?: string }): ReactElement {
   );
 }
 
+/** 细虚线分隔（参考图 2 SWOT 矩阵） */
+export function DashedLine(props: { vertical?: boolean; className?: string }): ReactElement {
+  return (
+    <span
+      className={`lp-dashed-line ${props.vertical ? 'vertical' : ''} ${props.className ?? ''}`.trim()}
+      aria-hidden="true"
+    />
+  );
+}
+
+/** 箭头/时间线连接（参考图 3） */
+export function Arrow(props: { direction?: 'right' | 'down'; className?: string }): ReactElement {
+  return (
+    <span
+      className={`lp-arrow direction-${props.direction ?? 'right'} ${props.className ?? ''}`.trim()}
+      aria-hidden="true"
+    />
+  );
+}
+
 /** 归一化 array 类型字段（编辑器可能把字符串数组存成 {item} 对象数组） */
 export function normalizeStrings(input: unknown): string[] {
   if (!Array.isArray(input)) return [];
@@ -368,39 +373,245 @@ export function photoSlots(count: number, max = 9): number[] {
 }
 
 /* ═══════════════════════════════════════════════════════════════
- * Label —— 编辑语汇标签（number / symbol / keyword 三型）
- * 对齐 theme09 的「标签类型三选一」方法论，但用 theme01 的陶土/奶油编辑语汇。
+ * Vivid Pop 装饰组件
  * ═══════════════════════════════════════════════════════════════ */
 
-export type LabelKind = 'number' | 'symbol' | 'keyword';
+export interface PillProps {
+  children: ReactNode;
+  className?: string;
+  variant?: 'outline' | 'fill';
+  color?: 'accent' | 'red' | 'blue' | 'green' | 'amber' | 'violet' | 'cyan' | 'pink';
+}
 
+/** 细边框胶囊标签（参考图 1），默认 outline */
+export function Pill(props: PillProps): ReactElement {
+  const { children, className = '', variant = 'outline', color = 'accent' } = props;
+  const cls = ['lp-pill', `variant-${variant}`, color, className].filter(Boolean).join(' ');
+  return <span className={cls}>{children}</span>;
+}
+
+export interface IconChipProps {
+  children: ReactNode;
+  className?: string;
+  color?: 'accent' | 'blue' | 'green' | 'amber' | 'violet' | 'cyan' | 'pink';
+}
+
+export function IconChip(props: IconChipProps): ReactElement {
+  const { children, className = '', color = 'accent' } = props;
+  const cls = ['lp-icon-chip', color, className].filter(Boolean).join(' ');
+  return <span className={cls}>{children}</span>;
+}
+
+export interface NumberStickerProps {
+  value: ReactNode;
+  className?: string;
+  outline?: boolean;
+}
+
+export function NumberSticker(props: NumberStickerProps): ReactElement {
+  const { value, className = '', outline } = props;
+  const cls = ['lp-number-sticker', outline && 'outline', className].filter(Boolean).join(' ');
+  return <span className={cls}>{value}</span>;
+}
+
+/** 图标 + 彩色标题组（替代卡片，参考图 1 / 参考图 2） */
+export interface IconHeadingProps {
+  icon?: ReactNode;
+  title: ReactNode;
+  subtitle?: ReactNode;
+  color?: 'accent' | 'red' | 'blue' | 'green' | 'amber' | 'violet' | 'cyan' | 'pink';
+  className?: string;
+}
+
+export function IconHeading(props: IconHeadingProps): ReactElement {
+  const { icon, title, subtitle, color = 'accent', className = '' } = props;
+  return (
+    <div className={`lp-icon-heading color-${color} ${className}`.trim()}>
+      {icon && <span className="lp-icon-heading-icon">{icon}</span>}
+      <div className="lp-icon-heading-body">
+        <div className="lp-icon-heading-title">{title}</div>
+        {subtitle && <div className="lp-icon-heading-subtitle">{subtitle}</div>}
+      </div>
+    </div>
+  );
+}
+
+/** SWOT 彩色徽章（参考图 2） */
+export interface SwotBadgeProps {
+  letter: string;
+  color?: 'blue' | 'red' | 'green' | 'amber' | 'violet';
+  className?: string;
+}
+
+export function SwotBadge(props: SwotBadgeProps): ReactElement {
+  const { letter, color = 'blue', className = '' } = props;
+  return (
+    <span className={`lp-swot-badge color-${color} ${className}`.trim()} aria-hidden="true">
+      {letter}
+    </span>
+  );
+}
+
+/** 彩色大色块强调区（参考图 3），可带卷角 */
+export interface HighlightBlockProps {
+  children: ReactNode;
+  color?: 'accent' | 'red' | 'blue' | 'green' | 'amber' | 'violet';
+  curled?: boolean;
+  className?: string;
+  style?: CSSProperties;
+}
+
+export function HighlightBlock(props: HighlightBlockProps): ReactElement {
+  const { children, color = 'accent', curled, className = '', style } = props;
+  const cls = ['lp-highlight-block', `color-${color}`, curled && 'lp-curled-corner', className]
+    .filter(Boolean)
+    .join(' ');
+  return (
+    <div className={cls} style={style}>
+      {children}
+    </div>
+  );
+}
+
+/** 淡彩半透明维恩圆（参考图 5） */
+export interface VennCircleProps {
+  label: ReactNode;
+  sub?: ReactNode;
+  color?: 'red' | 'amber' | 'green' | 'blue' | 'violet' | 'cyan' | 'pink';
+  className?: string;
+  style?: CSSProperties;
+}
+
+export function VennCircle(props: VennCircleProps): ReactElement {
+  const { label, sub, color = 'blue', className = '', style } = props;
+  return (
+    <div className={`lp-venn-circle color-${color} ${className}`.trim()} style={style}>
+      <div className="lp-venn-circle-label">{label}</div>
+      {sub && <div className="lp-venn-circle-sub">{sub}</div>}
+    </div>
+  );
+}
+
+export interface SectionTitleProps {
+  sub?: string;
+  title: string;
+  slideIdx?: number;
+  editable?: boolean;
+  propSub?: string;
+  propTitle?: string;
+  className?: string;
+}
+
+export function SectionTitle(props: SectionTitleProps): ReactElement {
+  const {
+    sub,
+    title,
+    slideIdx,
+    editable,
+    propSub = 'sectionSub',
+    propTitle = 'sectionTitle',
+    className = '',
+  } = props;
+  return (
+    <div className={`lp-section-title ${className}`.trim()}>
+      <div>
+        {sub && (
+          <EditableField
+            prop={propSub}
+            slideIdx={slideIdx}
+            editable={editable}
+            as="span"
+            className="lp-section-sub"
+          >
+            {sub}
+          </EditableField>
+        )}
+        <EditableField prop={propTitle} slideIdx={slideIdx} editable={editable} as="h2">
+          {title}
+        </EditableField>
+      </div>
+    </div>
+  );
+}
+
+export interface HighlightProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function Highlight(props: HighlightProps): ReactElement {
+  return (
+    <span className={`lp-highlight-marker ${props.className ?? ''}`.trim()}>
+      {props.children}
+    </span>
+  );
+}
+
+export function DottedPattern(props: {
+  className?: string;
+  style?: CSSProperties;
+}): ReactElement {
+  return <span className={`lp-dotted-pattern ${props.className ?? ''}`.trim()} style={props.style} />;
+}
+
+export function Blob(props: {
+  className?: string;
+  style?: CSSProperties;
+}): ReactElement {
+  return <span className={`lp-blob ${props.className ?? ''}`.trim()} style={props.style} />;
+}
+
+/** 圆环装饰 */
+export function Ring(props: {
+  className?: string;
+  style?: CSSProperties;
+}): ReactElement {
+  return <span className={`lp-ring ${props.className ?? ''}`.trim()} style={props.style} />;
+}
+
+/** 斜线装饰 */
+export function Slash(props: {
+  className?: string;
+  style?: CSSProperties;
+}): ReactElement {
+  return <span className={`lp-slash ${props.className ?? ''}`.trim()} style={props.style} />;
+}
+
+/** 加号装饰 */
+export function Plus(props: {
+  className?: string;
+  style?: CSSProperties;
+}): ReactElement {
+  return <span className={`lp-plus ${props.className ?? ''}`.trim()} style={props.style} />;
+}
+
+/** 方格图案装饰 */
+export function GridPattern(props: {
+  className?: string;
+  style?: CSSProperties;
+}): ReactElement {
+  return <span className={`lp-grid-pattern ${props.className ?? ''}`.trim()} style={props.style} />;
+}
+
+/* 兼容旧 Label / Focus（保留导出，避免破坏引用） */
+export type LabelKind = 'number' | 'symbol' | 'keyword';
 export interface LabelProps {
   kind?: LabelKind;
   children: ReactNode;
   className?: string;
 }
-
 export function Label(props: LabelProps): ReactElement {
   const { kind = 'keyword', children, className = '' } = props;
-  return (
-    <span className={`lp-theme01-label kind-${kind} ${className}`.trim()}>{children}</span>
-  );
+  return <span className={`lp-theme01-label kind-${kind} ${className}`.trim()}>{children}</span>;
 }
 
-/* ═══════════════════════════════════════════════════════════════
- * Focus —— 聚光切换（left / right）
- * 对齐 theme09 的「Focus 左右切换」方法论：在暗色编辑风里制造聚光晕偏移。
- * ═══════════════════════════════════════════════════════════════ */
-
 export type FocusSide = 'left' | 'right';
-
 export interface FocusProps {
   side?: FocusSide;
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
 }
-
 export function Focus(props: FocusProps): ReactElement {
   const { side = 'left', children, className = '', style } = props;
   return (
