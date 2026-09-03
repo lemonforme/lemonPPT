@@ -1,6 +1,6 @@
 {
   "name": "lemonppt",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": true,
   "description": "Self-developed AI PPT generation agent.",
   "type": "module",

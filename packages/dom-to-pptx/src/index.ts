@@ -4,6 +4,7 @@
 
 import { cp, mkdir, mkdtemp, writeFile, rm, readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -64,6 +65,8 @@ export interface ExportDomToPptxOptions {
   vectorizeShapes?: boolean;
   /** 是否将 <img> 元素提取为 PPTX 图片，默认 true */
   extractImages?: boolean;
+  /** 是否自动下载远程图片（http/https）到本地临时文件，默认 true */
+  downloadRemoteImages?: boolean;
   /** 复杂区域选择器（预留），默认 '.lp-slide-wrapper' */
   fallbackSelector?: string;
   /** 是否启用区域级 alpha-matte 截图，对无法矢量化的复杂区域单独截图并叠加，默认 false */
@@ -171,6 +174,7 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
     editableText = true,
     vectorizeShapes = true,
     extractImages: extractImagesEnabled = true,
+    downloadRemoteImages = true,
     regionFallback = false,
     fontDir,
     initECharts = true,
@@ -193,6 +197,9 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'lemonppt-dom-to-pptx-'));
   const tempHtml = path.join(tempDir, 'index.html');
   const assetsDest = path.join(tempDir, 'assets');
+  const remoteImageCacheDir = path.join(tempDir, 'remote-images');
+  await mkdir(remoteImageCacheDir, { recursive: true });
+  const remoteImageCache = new Map<string, string>();
 
   if (previewUrl) {
     log.info(`使用外部预览服务器: ${previewUrl}`);
@@ -204,6 +211,61 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
       log.info(`复制静态资源: ${assetsDir} -> ${assetsDest}`);
       await cp(assetsDir, assetsDest, { recursive: true, force: true });
     }
+  }
+
+  const resolveImagePath = async (src: string, slideNo: number): Promise<string | undefined> => {
+    if (src.startsWith('file:')) {
+      return fileURLToPath(src);
+    }
+
+    if (/^https?:/.test(src)) {
+      if (!downloadRemoteImages) {
+        log.warn(`第 ${slideNo} 页跳过远程图片: ${src}`);
+        return undefined;
+      }
+      const cached = remoteImageCache.get(src);
+      if (cached) return cached;
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 15000);
+        const res = await fetch(src, { signal: controller.signal });
+        clearTimeout(timeout);
+        if (!res.ok) {
+          log.warn(`第 ${slideNo} 页远程图片下载失败 (${res.status}): ${src}`);
+          return undefined;
+        }
+        const buf = Buffer.from(await res.arrayBuffer());
+        const ext = inferImageExt(res.headers.get('content-type') || '', src);
+        const name = `${createHash('sha256').update(src).digest('hex').slice(0, 16)}.${ext}`;
+        const dest = path.join(remoteImageCacheDir, name);
+        await writeFile(dest, buf);
+        remoteImageCache.set(src, dest);
+        log.debug(`第 ${slideNo} 页下载远程图片: ${src} -> ${dest}`);
+        return dest;
+      } catch (err) {
+        log.warn(`第 ${slideNo} 页远程图片下载异常: ${src}`, err);
+        return undefined;
+      }
+    }
+
+    if (src.startsWith('data:')) {
+      log.warn(`第 ${slideNo} 页跳过 data URI 图片`);
+      return undefined;
+    }
+
+    return src;
+  };
+
+  function inferImageExt(contentType: string, url: string): string {
+    const mime = contentType.split(';')[0].trim().toLowerCase();
+    if (mime === 'image/png') return 'png';
+    if (mime === 'image/jpeg' || mime === 'image/jpg') return 'jpg';
+    if (mime === 'image/webp') return 'webp';
+    if (mime === 'image/gif') return 'gif';
+    if (mime === 'image/svg+xml') return 'svg';
+    const ext = path.extname(new URL(url, 'http://localhost').pathname).slice(1).toLowerCase();
+    if (ext) return ext;
+    return 'png';
   }
 
   let browser;
@@ -444,6 +506,7 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
       fontDir,
       log,
       progress,
+      imageResolver: resolveImagePath,
     });
 
     progress({ phase: 'done', message: 'PPTX 生成完成' });
@@ -466,10 +529,11 @@ interface BuildPPTXOptions {
   fontDir?: string;
   log: Logger;
   progress: (p: ExportProgress) => void;
+  imageResolver?: (src: string, slideNo: number) => Promise<string | undefined>;
 }
 
 async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
-  const { slides, width, height, title, subject, author, fontDir, log, progress } = options;
+  const { slides, width, height, title, subject, author, fontDir, log, progress, imageResolver } = options;
 
   const EnhancedPptxGenJS = withPPTXEmbedFonts(PptxGenJS);
   const pptx = new EnhancedPptxGenJS();
@@ -566,13 +630,8 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
 
     // 添加图片覆盖层
     for (const img of images) {
-      let imagePath = img.src;
-      if (imagePath.startsWith('file:')) {
-        imagePath = fileURLToPath(imagePath);
-      } else if (/^https?:/.test(imagePath)) {
-        log.warn(`第 ${i + 1} 页跳过远程图片（当前不支持自动下载）: ${imagePath}`);
-        continue;
-      }
+      const imagePath = imageResolver ? await imageResolver(img.src, i + 1) : img.src;
+      if (!imagePath) continue;
 
       try {
         slide.addImage({
@@ -583,7 +642,7 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
           h: pxToIn(img.h),
         });
       } catch (err) {
-        log.warn(`第 ${i + 1} 页图片添加失败: ${imagePath}`, err);
+        log.warn(`第 ${i + 1} 页图片添加失败: ${img.src}`, err);
       }
     }
 

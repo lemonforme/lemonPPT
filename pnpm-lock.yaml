@@ -142,9 +142,6 @@ importers:
       '@types/node':
         specifier: ^20.0.0
         version: 20.19.43
-      '@types/selfsigned':
-        specifier: ^2.1.0
-        version: 2.1.0
       typescript:
         specifier: ^5.5.0
         version: 5.9.3
@@ -649,10 +646,6 @@ packages:
 
   '@types/react@18.3.31':
     resolution: {integrity: sha512-vfEqpXTvwT91yhmwdfouStN2hSKwTvyRs8qpLfADyrq/kxDw0hZM7Wk9Ug1FELj8hIby+S/+kQCSRFF32nv2Qw==}
-
-  '@types/selfsigned@2.1.0':
-    resolution: {integrity: sha512-9IpB+OBu3QaMojPbLMg0PxMA85lOt7o53ycx2ds82CSFMyxlj0iZtAPVJ1m1qnzKTlznYqa6zNVaEWC7hk/E/w==}
-    deprecated: This is a stub types definition. selfsigned provides its own type definitions, so you do not need this installed.
 
   '@types/send@0.17.6':
     resolution: {integrity: sha512-Uqt8rPBE8SY0RK8JB1EzVOIZ32uqy8HwdxCnoCOsYrvnswqmFZ/k+9Ikidlk/ImhsdvBsloHbAlewb2IEBV/Og==}
@@ -1741,10 +1734,6 @@ snapshots:
     dependencies:
       '@types/prop-types': 15.7.15
       csstype: 3.2.3
-
-  '@types/selfsigned@2.1.0':
-    dependencies:
-      selfsigned: 2.4.1
 
   '@types/send@0.17.6':
     dependencies:

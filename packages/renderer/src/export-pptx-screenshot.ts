@@ -31,6 +31,8 @@ export interface ExportPptxScreenshotOptions {
   vectorizeShapes?: boolean;
   /** 是否将 <img> 元素提取为 PPTX 图片，默认 true */
   extractImages?: boolean;
+  /** 是否自动下载远程图片（http/https），默认 true */
+  downloadRemoteImages?: boolean;
   /** 结构化日志器 */
   logger?: Logger;
   /** 进度回调 */
@@ -58,6 +60,7 @@ export async function exportDeckToPptxScreenshot(
     overlayText = true,
     vectorizeShapes = true,
     extractImages = true,
+    downloadRemoteImages = true,
     logger,
     onProgress,
   } = options;
@@ -113,6 +116,7 @@ export async function exportDeckToPptxScreenshot(
         editableText: overlayText,
         vectorizeShapes,
         extractImages,
+        downloadRemoteImages,
         fontDir: fontsDest,
         initECharts: true,
         logger,
