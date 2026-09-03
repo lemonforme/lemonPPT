@@ -1,0 +1,132 @@
+{
+  "generatedAt": "2026-09-03T09:45:00.223Z",
+  "totalThemes": 11,
+  "totalSlides": 908,
+  "totalFileSize": 410645678,
+  "totalMedia": 919,
+  "totalShapes": 22388,
+  "totalTextBoxes": 15709,
+  "themes": [
+    {
+      "theme": "theme01",
+      "status": "ok",
+      "slideCount": 72,
+      "fileSize": 46162913,
+      "sha256": "f5f41ea59d9ea0a4c6a8d14d1cde9cae51ba847f9b6d9b0be27489148957cd35",
+      "mediaCount": 73,
+      "shapeCount": 1350,
+      "textBoxCount": 909,
+      "duration": 60382
+    },
+    {
+      "theme": "theme02",
+      "status": "ok",
+      "slideCount": 67,
+      "fileSize": 22714454,
+      "sha256": "77420a69721e318117647dc6def0bbd1bf1633425839458db363ac08198b860f",
+      "mediaCount": 68,
+      "shapeCount": 1022,
+      "textBoxCount": 724,
+      "duration": 38239
+    },
+    {
+      "theme": "theme03",
+      "status": "ok",
+      "slideCount": 77,
+      "fileSize": 24672756,
+      "sha256": "f2370adaef4e1a0dd74dc247f71a48844aed92cdfac77a7256ce7d404256d13d",
+      "mediaCount": 78,
+      "shapeCount": 1978,
+      "textBoxCount": 1665,
+      "duration": 42034
+    },
+    {
+      "theme": "theme04",
+      "status": "ok",
+      "slideCount": 75,
+      "fileSize": 80189454,
+      "sha256": "8000baba769b629b11329139e1dc534fea954b27de34a6e7a4f40f36ae057241",
+      "mediaCount": 76,
+      "shapeCount": 1803,
+      "textBoxCount": 1473,
+      "duration": 72832
+    },
+    {
+      "theme": "theme05",
+      "status": "ok",
+      "slideCount": 52,
+      "fileSize": 12528416,
+      "sha256": "f5790194a3caeb1431d15ed698a27a5de53e1c80ceb1e032bcaca71fb039df08",
+      "mediaCount": 53,
+      "shapeCount": 1107,
+      "textBoxCount": 784,
+      "duration": 26347
+    },
+    {
+      "theme": "theme06",
+      "status": "ok",
+      "slideCount": 88,
+      "fileSize": 27383453,
+      "sha256": "f919090041bd48af0248b51636abbbc1a182c6a16760dfd4ae3a566ce1e257d4",
+      "mediaCount": 89,
+      "shapeCount": 2155,
+      "textBoxCount": 1678,
+      "duration": 47897
+    },
+    {
+      "theme": "theme07",
+      "status": "ok",
+      "slideCount": 78,
+      "fileSize": 39464351,
+      "sha256": "106735f59334991007dbf0e084c03d6df197fc9cdcf78f9d0089a74d6b414882",
+      "mediaCount": 79,
+      "shapeCount": 2425,
+      "textBoxCount": 1368,
+      "duration": 60847
+    },
+    {
+      "theme": "theme08",
+      "status": "ok",
+      "slideCount": 84,
+      "fileSize": 52912105,
+      "sha256": "35786b9b2313d7e2819abb367184c869bf10fc84b5e892189d70ea6ada292144",
+      "mediaCount": 85,
+      "shapeCount": 3421,
+      "textBoxCount": 1388,
+      "duration": 66578
+    },
+    {
+      "theme": "theme09",
+      "status": "ok",
+      "slideCount": 114,
+      "fileSize": 36056725,
+      "sha256": "6dbf504b433dc6f2c41860330f8c7b8bbc8e63f7114dc8f130248b254ce2e81d",
+      "mediaCount": 115,
+      "shapeCount": 3394,
+      "textBoxCount": 2634,
+      "duration": 78196
+    },
+    {
+      "theme": "theme10",
+      "status": "ok",
+      "slideCount": 95,
+      "fileSize": 37219854,
+      "sha256": "44a21cab7302e0f528a3651b2228cb7bf649cd98f2c555f84054ffbb8db66955",
+      "mediaCount": 96,
+      "shapeCount": 1723,
+      "textBoxCount": 1391,
+      "duration": 64668
+    },
+    {
+      "theme": "theme11",
+      "status": "ok",
+      "slideCount": 106,
+      "fileSize": 31341197,
+      "sha256": "c8b79c43a85fd71ca9247948071a1439cb9dbcc9797d702b513ebb9b8497506b",
+      "mediaCount": 107,
+      "shapeCount": 2010,
+      "textBoxCount": 1695,
+      "duration": 63166
+    }
+  ]
+}

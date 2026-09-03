@@ -1,0 +1,700 @@
+{
+  "theme": "theme09",
+  "status": "ok",
+  "duration": 78196,
+  "fileSize": 36056725,
+  "sha256": "6dbf504b433dc6f2c41860330f8c7b8bbc8e63f7114dc8f130248b254ce2e81d",
+  "slides": 114,
+  "slideCount": 114,
+  "mediaCount": 115,
+  "shapeCount": 3394,
+  "textBoxCount": 2634,
+  "slideDetails": [
+    {
+      "file": "ppt/slides/slide1.xml",
+      "shapeCount": 25,
+      "textBoxCount": 20
+    },
+    {
+      "file": "ppt/slides/slide10.xml",
+      "shapeCount": 23,
+      "textBoxCount": 19
+    },
+    {
+      "file": "ppt/slides/slide100.xml",
+      "shapeCount": 23,
+      "textBoxCount": 20
+    },
+    {
+      "file": "ppt/slides/slide101.xml",
+      "shapeCount": 13,
+      "textBoxCount": 10
+    },
+    {
+      "file": "ppt/slides/slide102.xml",
+      "shapeCount": 24,
+      "textBoxCount": 18
+    },
+    {
+      "file": "ppt/slides/slide103.xml",
+      "shapeCount": 27,
+      "textBoxCount": 20
+    },
+    {
+      "file": "ppt/slides/slide104.xml",
+      "shapeCount": 26,
+      "textBoxCount": 19
+    },
+    {
+      "file": "ppt/slides/slide105.xml",
+      "shapeCount": 30,
+      "textBoxCount": 28
+    },
+    {
+      "file": "ppt/slides/slide106.xml",
+      "shapeCount": 33,
+      "textBoxCount": 31
+    },
+    {
+      "file": "ppt/slides/slide107.xml",
+      "shapeCount": 49,
+      "textBoxCount": 47
+    },
+    {
+      "file": "ppt/slides/slide108.xml",
+      "shapeCount": 21,
+      "textBoxCount": 19
+    },
+    {
+      "file": "ppt/slides/slide109.xml",
+      "shapeCount": 45,
+      "textBoxCount": 31
+    },
+    {
+      "file": "ppt/slides/slide11.xml",
+      "shapeCount": 15,
+      "textBoxCount": 13
+    },
+    {
+      "file": "ppt/slides/slide110.xml",
+      "shapeCount": 31,
+      "textBoxCount": 18
+    },
+    {
+      "file": "ppt/slides/slide111.xml",
+      "shapeCount": 19,
+      "textBoxCount": 16
+    },
+    {
+      "file": "ppt/slides/slide112.xml",
+      "shapeCount": 30,
+      "textBoxCount": 25
+    },
+    {
+      "file": "ppt/slides/slide113.xml",
+      "shapeCount": 35,
+      "textBoxCount": 31
+    },
+    {
+      "file": "ppt/slides/slide114.xml",
+      "shapeCount": 19,
+      "textBoxCount": 15
+    },
+    {
+      "file": "ppt/slides/slide12.xml",
+      "shapeCount": 9,
+      "textBoxCount": 8
+    },
+    {
+      "file": "ppt/slides/slide13.xml",
+      "shapeCount": 40,
+      "textBoxCount": 34
+    },
+    {
+      "file": "ppt/slides/slide14.xml",
+      "shapeCount": 33,
+      "textBoxCount": 17
+    },
+    {
+      "file": "ppt/slides/slide15.xml",
+      "shapeCount": 51,
+      "textBoxCount": 40
+    },
+    {
+      "file": "ppt/slides/slide16.xml",
+      "shapeCount": 11,
+      "textBoxCount": 7
+    },
+    {
+      "file": "ppt/slides/slide17.xml",
+      "shapeCount": 13,
+      "textBoxCount": 12
+    },
+    {
+      "file": "ppt/slides/slide18.xml",
+      "shapeCount": 25,
+      "textBoxCount": 19
+    },
+    {
+      "file": "ppt/slides/slide19.xml",
+      "shapeCount": 32,
+      "textBoxCount": 22
+    },
+    {
+      "file": "ppt/slides/slide2.xml",
+      "shapeCount": 38,
+      "textBoxCount": 29
+    },
+    {
+      "file": "ppt/slides/slide20.xml",
+      "shapeCount": 25,
+      "textBoxCount": 21
+    },
+    {
+      "file": "ppt/slides/slide21.xml",
+      "shapeCount": 19,
+      "textBoxCount": 14
+    },
+    {
+      "file": "ppt/slides/slide22.xml",
+      "shapeCount": 10,
+      "textBoxCount": 8
+    },
+    {
+      "file": "ppt/slides/slide23.xml",
+      "shapeCount": 6,
+      "textBoxCount": 5
+    },
+    {
+      "file": "ppt/slides/slide24.xml",
+      "shapeCount": 62,
+      "textBoxCount": 44
+    },
+    {
+      "file": "ppt/slides/slide25.xml",
+      "shapeCount": 47,
+      "textBoxCount": 40
+    },
+    {
+      "file": "ppt/slides/slide26.xml",
+      "shapeCount": 15,
+      "textBoxCount": 11
+    },
+    {
+      "file": "ppt/slides/slide27.xml",
+      "shapeCount": 9,
+      "textBoxCount": 7
+    },
+    {
+      "file": "ppt/slides/slide28.xml",
+      "shapeCount": 112,
+      "textBoxCount": 10
+    },
+    {
+      "file": "ppt/slides/slide29.xml",
+      "shapeCount": 30,
+      "textBoxCount": 28
+    },
+    {
+      "file": "ppt/slides/slide3.xml",
+      "shapeCount": 14,
+      "textBoxCount": 11
+    },
+    {
+      "file": "ppt/slides/slide30.xml",
+      "shapeCount": 13,
+      "textBoxCount": 10
+    },
+    {
+      "file": "ppt/slides/slide31.xml",
+      "shapeCount": 46,
+      "textBoxCount": 37
+    },
+    {
+      "file": "ppt/slides/slide32.xml",
+      "shapeCount": 29,
+      "textBoxCount": 24
+    },
+    {
+      "file": "ppt/slides/slide33.xml",
+      "shapeCount": 45,
+      "textBoxCount": 31
+    },
+    {
+      "file": "ppt/slides/slide34.xml",
+      "shapeCount": 21,
+      "textBoxCount": 19
+    },
+    {
+      "file": "ppt/slides/slide35.xml",
+      "shapeCount": 21,
+      "textBoxCount": 19
+    },
+    {
+      "file": "ppt/slides/slide36.xml",
+      "shapeCount": 39,
+      "textBoxCount": 32
+    },
+    {
+      "file": "ppt/slides/slide37.xml",
+      "shapeCount": 17,
+      "textBoxCount": 15
+    },
+    {
+      "file": "ppt/slides/slide38.xml",
+      "shapeCount": 32,
+      "textBoxCount": 18
+    },
+    {
+      "file": "ppt/slides/slide39.xml",
+      "shapeCount": 29,
+      "textBoxCount": 24
+    },
+    {
+      "file": "ppt/slides/slide4.xml",
+      "shapeCount": 18,
+      "textBoxCount": 12
+    },
+    {
+      "file": "ppt/slides/slide40.xml",
+      "shapeCount": 83,
+      "textBoxCount": 48
+    },
+    {
+      "file": "ppt/slides/slide41.xml",
+      "shapeCount": 88,
+      "textBoxCount": 86
+    },
+    {
+      "file": "ppt/slides/slide42.xml",
+      "shapeCount": 16,
+      "textBoxCount": 13
+    },
+    {
+      "file": "ppt/slides/slide43.xml",
+      "shapeCount": 28,
+      "textBoxCount": 26
+    },
+    {
+      "file": "ppt/slides/slide44.xml",
+      "shapeCount": 17,
+      "textBoxCount": 10
+    },
+    {
+      "file": "ppt/slides/slide45.xml",
+      "shapeCount": 102,
+      "textBoxCount": 100
+    },
+    {
+      "file": "ppt/slides/slide46.xml",
+      "shapeCount": 39,
+      "textBoxCount": 28
+    },
+    {
+      "file": "ppt/slides/slide47.xml",
+      "shapeCount": 49,
+      "textBoxCount": 47
+    },
+    {
+      "file": "ppt/slides/slide48.xml",
+      "shapeCount": 20,
+      "textBoxCount": 13
+    },
+    {
+      "file": "ppt/slides/slide49.xml",
+      "shapeCount": 39,
+      "textBoxCount": 37
+    },
+    {
+      "file": "ppt/slides/slide5.xml",
+      "shapeCount": 47,
+      "textBoxCount": 42
+    },
+    {
+      "file": "ppt/slides/slide50.xml",
+      "shapeCount": 32,
+      "textBoxCount": 30
+    },
+    {
+      "file": "ppt/slides/slide51.xml",
+      "shapeCount": 41,
+      "textBoxCount": 36
+    },
+    {
+      "file": "ppt/slides/slide52.xml",
+      "shapeCount": 30,
+      "textBoxCount": 28
+    },
+    {
+      "file": "ppt/slides/slide53.xml",
+      "shapeCount": 11,
+      "textBoxCount": 8
+    },
+    {
+      "file": "ppt/slides/slide54.xml",
+      "shapeCount": 28,
+      "textBoxCount": 26
+    },
+    {
+      "file": "ppt/slides/slide55.xml",
+      "shapeCount": 23,
+      "textBoxCount": 17
+    },
+    {
+      "file": "ppt/slides/slide56.xml",
+      "shapeCount": 19,
+      "textBoxCount": 17
+    },
+    {
+      "file": "ppt/slides/slide57.xml",
+      "shapeCount": 61,
+      "textBoxCount": 31
+    },
+    {
+      "file": "ppt/slides/slide58.xml",
+      "shapeCount": 26,
+      "textBoxCount": 21
+    },
+    {
+      "file": "ppt/slides/slide59.xml",
+      "shapeCount": 10,
+      "textBoxCount": 8
+    },
+    {
+      "file": "ppt/slides/slide6.xml",
+      "shapeCount": 25,
+      "textBoxCount": 18
+    },
+    {
+      "file": "ppt/slides/slide60.xml",
+      "shapeCount": 60,
+      "textBoxCount": 33
+    },
+    {
+      "file": "ppt/slides/slide61.xml",
+      "shapeCount": 16,
+      "textBoxCount": 13
+    },
+    {
+      "file": "ppt/slides/slide62.xml",
+      "shapeCount": 26,
+      "textBoxCount": 21
+    },
+    {
+      "file": "ppt/slides/slide63.xml",
+      "shapeCount": 14,
+      "textBoxCount": 11
+    },
+    {
+      "file": "ppt/slides/slide64.xml",
+      "shapeCount": 12,
+      "textBoxCount": 10
+    },
+    {
+      "file": "ppt/slides/slide65.xml",
+      "shapeCount": 15,
+      "textBoxCount": 12
+    },
+    {
+      "file": "ppt/slides/slide66.xml",
+      "shapeCount": 9,
+      "textBoxCount": 7
+    },
+    {
+      "file": "ppt/slides/slide67.xml",
+      "shapeCount": 10,
+      "textBoxCount": 8
+    },
+    {
+      "file": "ppt/slides/slide68.xml",
+      "shapeCount": 11,
+      "textBoxCount": 9
+    },
+    {
+      "file": "ppt/slides/slide69.xml",
+      "shapeCount": 13,
+      "textBoxCount": 9
+    },
+    {
+      "file": "ppt/slides/slide7.xml",
+      "shapeCount": 21,
+      "textBoxCount": 19
+    },
+    {
+      "file": "ppt/slides/slide70.xml",
+      "shapeCount": 10,
+      "textBoxCount": 8
+    },
+    {
+      "file": "ppt/slides/slide71.xml",
+      "shapeCount": 38,
+      "textBoxCount": 32
+    },
+    {
+      "file": "ppt/slides/slide72.xml",
+      "shapeCount": 40,
+      "textBoxCount": 28
+    },
+    {
+      "file": "ppt/slides/slide73.xml",
+      "shapeCount": 38,
+      "textBoxCount": 30
+    },
+    {
+      "file": "ppt/slides/slide74.xml",
+      "shapeCount": 17,
+      "textBoxCount": 15
+    },
+    {
+      "file": "ppt/slides/slide75.xml",
+      "shapeCount": 6,
+      "textBoxCount": 5
+    },
+    {
+      "file": "ppt/slides/slide76.xml",
+      "shapeCount": 17,
+      "textBoxCount": 15
+    },
+    {
+      "file": "ppt/slides/slide77.xml",
+      "shapeCount": 23,
+      "textBoxCount": 22
+    },
+    {
+      "file": "ppt/slides/slide78.xml",
+      "shapeCount": 9,
+      "textBoxCount": 7
+    },
+    {
+      "file": "ppt/slides/slide79.xml",
+      "shapeCount": 15,
+      "textBoxCount": 13
+    },
+    {
+      "file": "ppt/slides/slide8.xml",
+      "shapeCount": 50,
+      "textBoxCount": 48
+    },
+    {
+      "file": "ppt/slides/slide80.xml",
+      "shapeCount": 39,
+      "textBoxCount": 30
+    },
+    {
+      "file": "ppt/slides/slide81.xml",
+      "shapeCount": 38,
+      "textBoxCount": 28
+    },
+    {
+      "file": "ppt/slides/slide82.xml",
+      "shapeCount": 28,
+      "textBoxCount": 26
+    },
+    {
+      "file": "ppt/slides/slide83.xml",
+      "shapeCount": 51,
+      "textBoxCount": 37
+    },
+    {
+      "file": "ppt/slides/slide84.xml",
+      "shapeCount": 57,
+      "textBoxCount": 55
+    },
+    {
+      "file": "ppt/slides/slide85.xml",
+      "shapeCount": 24,
+      "textBoxCount": 18
+    },
+    {
+      "file": "ppt/slides/slide86.xml",
+      "shapeCount": 11,
+      "textBoxCount": 10
+    },
+    {
+      "file": "ppt/slides/slide87.xml",
+      "shapeCount": 24,
+      "textBoxCount": 22
+    },
+    {
+      "file": "ppt/slides/slide88.xml",
+      "shapeCount": 15,
+      "textBoxCount": 10
+    },
+    {
+      "file": "ppt/slides/slide89.xml",
+      "shapeCount": 44,
+      "textBoxCount": 27
+    },
+    {
+      "file": "ppt/slides/slide9.xml",
+      "shapeCount": 115,
+      "textBoxCount": 65
+    },
+    {
+      "file": "ppt/slides/slide90.xml",
+      "shapeCount": 17,
+      "textBoxCount": 15
+    },
+    {
+      "file": "ppt/slides/slide91.xml",
+      "shapeCount": 7,
+      "textBoxCount": 5
+    },
+    {
+      "file": "ppt/slides/slide92.xml",
+      "shapeCount": 21,
+      "textBoxCount": 16
+    },
+    {
+      "file": "ppt/slides/slide93.xml",
+      "shapeCount": 48,
+      "textBoxCount": 46
+    },
+    {
+      "file": "ppt/slides/slide94.xml",
+      "shapeCount": 24,
+      "textBoxCount": 21
+    },
+    {
+      "file": "ppt/slides/slide95.xml",
+      "shapeCount": 28,
+      "textBoxCount": 23
+    },
+    {
+      "file": "ppt/slides/slide96.xml",
+      "shapeCount": 23,
+      "textBoxCount": 20
+    },
+    {
+      "file": "ppt/slides/slide97.xml",
+      "shapeCount": 22,
+      "textBoxCount": 20
+    },
+    {
+      "file": "ppt/slides/slide98.xml",
+      "shapeCount": 31,
+      "textBoxCount": 29
+    },
+    {
+      "file": "ppt/slides/slide99.xml",
+      "shapeCount": 24,
+      "textBoxCount": 18
+    }
+  ],
+  "screenshotHashes": {
+    "ppt/media/image-1-1.png": "b1eafaf67a3be0fab4601dfc35da1411513482cb97313dceda6eca8b23e14446",
+    "ppt/media/image-2-1.png": "b09a0f98b75e0cf7de9afaca817dce049b005ffd15a9ce133734cff791bbe36d",
+    "ppt/media/image-3-1.png": "9ffdea93ff491cb82d40eee447f23d646a6d8cf77d868955cdc606425f2447c1",
+    "ppt/media/image-4-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-5-1.png": "6cd0973064e3e0e12917407070772b6f716601a049e4edd0c1d8582b9d9af8ea",
+    "ppt/media/image-6-1.png": "0aa909a2668c32129ffdfd58770401c6a47bb7f003fa2aba849df3b962d92cfb",
+    "ppt/media/image-7-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-8-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-9-1.png": "1ee274da90260833715bab4ca77c1cef5a14deebbf0687759f0632178417d584",
+    "ppt/media/image-10-1.png": "0e65e0bdc385a31d8a56e7b324651d2d0b856abc63541a668cd5ff94ea9ab6d8",
+    "ppt/media/image-11-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-12-1.png": "edbbfd3886a7200af0f4dd4c597dd24b49f633d4d8cb267fad12edc9bd383144",
+    "ppt/media/image-13-1.png": "fcf937aa00da358688c82d6366e0e74027231fd45c8db4af25449161da6ec523",
+    "ppt/media/image-14-1.png": "0f69ea0d6cc31836617f95798675446dfa740daeda349ab001eb106ad52c5c05",
+    "ppt/media/image-15-1.png": "ce992960b7eb89f22fa8f7224f9142ef91fbe1775a5c04c99dd90b97a5e50a48",
+    "ppt/media/image-16-1.png": "14ad4ca706734bf752e4e7e14efd45aab5b13700836af267ce2d3cbe299ae029",
+    "ppt/media/image-17-1.png": "9e3c97e96d811e0881f4ab88d22bb0e8903b0c3ee92d5f3046d0185a349b79c9",
+    "ppt/media/image-18-1.png": "37e04f1b04bd627ce34bfa10627adb165c8248924ab3a86f79771aa036f88c8d",
+    "ppt/media/image-19-1.png": "bf8dc557fe0d3f0f35a05e5e8887ce61b4b16df7c2297a4820a4ed14bd29f651",
+    "ppt/media/image-20-1.png": "72902e90e875f1286938854526285b95a2ae2ee92c6825c4e37761e02b39023a",
+    "ppt/media/image-21-1.png": "90b2192e1fa0ea4022814fcc95b8e4ff5b6448ddb4cc0b676e94fcb76325fe2a",
+    "ppt/media/image-22-1.png": "cdb927666ca934f9bc6acb537ebbd0a1c7fbb465cab00359d8a20ea4c69992a5",
+    "ppt/media/image-23-1.png": "be956d6d5efe03302e8ab03d25a35d9dde6e2b46445c6c380324aabd6f498b95",
+    "ppt/media/image-24-1.png": "9401d50fa475ed2de24b6877a6e65c4806e128cfdc8165d92144d004d111ddd9",
+    "ppt/media/image-25-1.png": "fd1121b07bca388e5f46f93e9ff1384b41e5692eee1ab0b2171201c6f18ead4b",
+    "ppt/media/image-26-1.png": "0ce61cc2d793410928040c19f0a02bd531d49f85c5245cb115c5d4f7162f7cd0",
+    "ppt/media/image-27-1.png": "f8dabccba4430ef52f1b5d16ff3ee50611b255837cf40215970600cbb11a657c",
+    "ppt/media/image-28-1.png": "baeb476e24192f7e5a55fa561d440a2fd1a53dcc062442555b213251dc727f5d",
+    "ppt/media/image-29-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-30-1.png": "3823c2cd4bbfdbf2e45c3a1a96aae092e788a9d3a2e6606ab3ef3e2701972b45",
+    "ppt/media/image-31-1.png": "f69d4a903124dae4fa1468e6af7dc509812d14c1a94d6a1159debd9bf0200489",
+    "ppt/media/image-32-1.png": "1f400c3f7e6d048098cd15b70555631b8e1c53425eff0ebbd7a31c9bc3e9b656",
+    "ppt/media/image-33-1.png": "b4fd11ad482f4913401ade195a1664bf5e4ef50973f34a9646687e3711e09b6e",
+    "ppt/media/image-34-1.png": "0d77a87b99b0ca667dec9fd4521dc85b6771ba6271cb19bf818db6c45bd99c39",
+    "ppt/media/image-35-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-36-1.png": "1efcf180c4b04b088496012e40a1a5c71027fcc9c0799470b1b4d53fb4b9a8f2",
+    "ppt/media/image-37-1.png": "ea04bee53061cf79c46a7a491a3fc913c09e7b0b29d213f5ac733866143be32d",
+    "ppt/media/image-38-1.png": "10795f8d89dcc056607ed6668aa200cfd6cc813f2e99fe8ef3e4590e10a04bd9",
+    "ppt/media/image-39-1.png": "82dc62d62418379674c6a032dfe05618c5948b514b7b362c6c881f48ed0c6756",
+    "ppt/media/image-40-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-41-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-42-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-43-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-44-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-45-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-46-1.png": "c42d7a9e86082ea73420ae8de5629a3b106fe09d76b62d87622d58e24e652bd7",
+    "ppt/media/image-47-1.png": "d12c1e2cb54c873f86ca0155f2225b897ab7ccfb5673bca98b0b050b3d2ce55a",
+    "ppt/media/image-48-1.png": "088fe0a06230c3da74c0eebd997970c3dad987fa0bbf8ff63b055f8d375d1baf",
+    "ppt/media/image-49-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-50-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-51-1.png": "92753115d4337af237886b0ca03e18e01a3362f1945f6dd848a87d99d7106fa9",
+    "ppt/media/image-52-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-53-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-54-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-55-1.png": "658a68e8dcaf6db2c65563d85b5d3b283d0a5b285a86352b6796befa8d787f2c",
+    "ppt/media/image-56-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-57-1.png": "6b5f4e11a4de4780c1e4d9db71d73c3ce2a570b1a4179940af81d42b86d0512d",
+    "ppt/media/image-58-1.png": "2586d8c8ad1cb058a8240eb17e4bdc69ad278c3b88b769a2da3dda3eca6c0b35",
+    "ppt/media/image-59-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-60-1.png": "de673bc837c888d39b97f807483c4906896756838a1124603024bdfba9038c27",
+    "ppt/media/image-61-1.png": "97bfdd08ed2093851e300ff0263025f57a97d9bb7076da1d648c66468d5e7189",
+    "ppt/media/image-62-1.png": "0209646379f75b0223927925e201069d9530254a8fe68913ded36663fdb07c7c",
+    "ppt/media/image-63-1.png": "0ca0d534abe91717810e8060e9396a9c52c9f0c0cb6e2e75e2e348ab5236aa41",
+    "ppt/media/image-64-1.png": "3bcd4e24c6f39a11cdf71d83b7caf14cdd098d309f70ff31b1492d1ce035d3d1",
+    "ppt/media/image-65-1.png": "16016047929f86959158dbb24ccd39522c75cd113b1764351d26fe7980c8c718",
+    "ppt/media/image-66-1.png": "554dd333bcef47ef2c17e6519dbb3753f2b387362399dc1f9f1d8393dab7efe6",
+    "ppt/media/image-67-1.png": "dde33a6ce04d3980d9b8683cf661e6e62609b3256049a29e453fa1bf8e44cb08",
+    "ppt/media/image-68-1.png": "c7962e0890735947075dfc6576d0cd81497af6e5ca62a4ff848b27a7b7f1da50",
+    "ppt/media/image-69-1.png": "91963e718639643ecb4a7e78b1ec9e5ee92a374c9ad8f9b547d06bda97d0f48e",
+    "ppt/media/image-70-1.png": "38ee4c18872ea6e2d5b356310a6a8edc39a26d6b759811bba95c36b2bf28288f",
+    "ppt/media/image-71-1.png": "06c97aa4e12f7439d2cb518cd9d87fe3a0d1328bbc3ccaac5d62c51dfa0c356a",
+    "ppt/media/image-72-1.png": "925c9492dec11dc723984d8e4f67f901e693d351931b7d528dc04efa88be15ee",
+    "ppt/media/image-73-1.png": "fbd4f973833fbce2121a7a4d80c684f15f641e753cc71159a14950b49a784079",
+    "ppt/media/image-74-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-75-1.png": "7c22a4429ada36b90b62d25c17a8b217e47169e63c3ab77ac3ab2f8a30c7478b",
+    "ppt/media/image-76-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-77-1.png": "3b87573ea7a6c1a672d849ea81e26195815dcbf332565e1382b1dcc7e38840c6",
+    "ppt/media/image-78-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-79-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-80-1.png": "4540908792a07319b0aee6ebd0b7cea33f170ea581021cd894a6270c7bda3a8c",
+    "ppt/media/image-81-1.png": "8250b88bb9704a56ab757124755ff22ad0c41c42961b9a2776b33cab02b75026",
+    "ppt/media/image-82-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-83-1.png": "c58c2285051746160a35d13126f991775ff30451aeb4a6427b19769db21470b4",
+    "ppt/media/image-84-1.png": "14cb9ebeb2c277cb1f57db8cc190b341efa5192014cd330f871b027aca433335",
+    "ppt/media/image-85-1.png": "009c233b4e6820921cb46207ee8c6b76e1f0c0e50fa7da48a5c2affa4e6aec94",
+    "ppt/media/image-86-1.png": "46a3b4efef1cc58f07ca6a7cfab293fab544d0ab06fc986153f45ff4a17e0381",
+    "ppt/media/image-87-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-88-1.png": "aa864310bdaa597903e795e71103dbe6d3012cd7de63ec21c245881d354063ca",
+    "ppt/media/image-89-1.png": "2cd8b84594b24bf58549de0b80da249817d865071ac89c309cf0f094031b785a",
+    "ppt/media/image-90-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-91-1.png": "eb90bcd72104f162017703bf09800c89e0c597392e12c82150abc28569243231",
+    "ppt/media/image-92-1.png": "32b3bbfee3f134e2bb45d2353979b1fcf6df7eceffdb8b7daed79c249c956ca8",
+    "ppt/media/image-93-1.png": "fde53d6fd16bbb7f8b4386f18221705f6ed0e9074b64881714d37e9d5aa12bfc",
+    "ppt/media/image-94-1.png": "32dd40d3cbef6189c3d256550079b0cfbafa28de5579c4be34091b6e7cb274b2",
+    "ppt/media/image-95-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-96-1.png": "a742147cccccb804e633cb0156a7ccb519307637d2d0d36ccedbcce2ba1eb239",
+    "ppt/media/image-97-1.png": "1cb517d0dd7139fe19ea32fe1940ab9d428487251c32757474906ff621e01e70",
+    "ppt/media/image-98-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-99-1.png": "2a16ce27009cd9da78e431db5068eb5745f4440afe330a13958584d46e9d0e2a",
+    "ppt/media/image-100-1.png": "510a57045e263dac5b6cfef12599ea5aa0747b0595788ba87d14a23eb07891a4",
+    "ppt/media/image-101-1.png": "3a46a3a5c24fc71cabdb99bbc4ede61b839d18f1ca7fc80cfe4e06ab0e113d37",
+    "ppt/media/image-102-1.png": "df9119f682d64616f407a5c59019f8ae0f46ef0e10ec57156eacce1522c989fd",
+    "ppt/media/image-103-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-104-1.png": "1322bc089f7e31956136b6eca940f74f9ee4c27a5cb6c98004f6b0be5a42af90",
+    "ppt/media/image-105-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-106-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-107-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-108-1.png": "db9dd51b6f2e6a7bb8d0f8d84f0016c7fee41a0a182aabe64fd2f104dd12d240",
+    "ppt/media/image-109-1.png": "f265ea40f967545b0f0c6b0d950b8ea69835a7b6aa800272938e7f0a3af22b88",
+    "ppt/media/image-110-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-111-1.png": "c11052bf5a98a6778b8dbd00b750d0517ecd000d88bbe9eee32dab419362b432",
+    "ppt/media/image-112-1.png": "6d8a98e829f4fa3675b69181e87db63ab7ae5cb637985f03f4c91890f9c06282",
+    "ppt/media/image-113-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
+    "ppt/media/image-114-1.png": "53a139bc83b3caf2cb6f15b744093a29af73a6e48ea860e4efbdf2fd9ccd5e4c"
+  }
+}
