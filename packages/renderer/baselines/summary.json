@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-03T09:45:00.223Z",
+  "generatedAt": "2026-09-03T10:10:55.530Z",
   "totalThemes": 11,
   "totalSlides": 908,
-  "totalFileSize": 410645678,
+  "totalFileSize": 410645686,
   "totalMedia": 919,
   "totalShapes": 22388,
   "totalTextBoxes": 15709,
@@ -121,12 +121,12 @@
       "theme": "theme11",
       "status": "ok",
       "slideCount": 106,
-      "fileSize": 31341197,
-      "sha256": "c8b79c43a85fd71ca9247948071a1439cb9dbcc9797d702b513ebb9b8497506b",
+      "fileSize": 31341205,
+      "sha256": "ab1938a5e3e1b5d7e418e5d257fe6d50f0d442c254e6c12a815fd4a9dfa04af5",
       "mediaCount": 107,
       "shapeCount": 2010,
       "textBoxCount": 1695,
-      "duration": 63166
+      "duration": 63914
     }
   ]
 }

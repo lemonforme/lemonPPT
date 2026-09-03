@@ -3,21 +3,29 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { cp, mkdir, mkdtemp, writeFile, rm, readFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import PptxGenJS from 'pptxgenjs';
 import { withPPTXEmbedFonts } from 'pptx-embed-fonts/pptxgenjs';
+import { validatePptxOutput } from './validate.js';
 
 declare global {
   interface Window {
     __lemonPPT_initECharts?: (theme?: string, root?: Element | null) => Promise<void>;
+    echarts?: any;
+  }
+
+  interface HTMLElement {
+    __lpEChartInstance?: any;
   }
 
   function extractTextBoxes(slideIndex: number, markElements?: boolean): TextBox[];
   function extractVectorizableShapes(slideIndex: number, markElements?: boolean): ShapeOverlay[];
   function extractImages(slideIndex: number, markElements?: boolean): ImageOverlay[];
+  function extractFallbackRegions(slideIndex: number, markElements?: boolean): Array<{ x: number; y: number; w: number; h: number; selector?: string }>;
   function restoreOverlayStyles(): void;
 }
 
@@ -58,8 +66,12 @@ export interface ExportDomToPptxOptions {
   extractImages?: boolean;
   /** 复杂区域选择器（预留），默认 '.lp-slide-wrapper' */
   fallbackSelector?: string;
+  /** 是否启用区域级 alpha-matte 截图，对无法矢量化的复杂区域单独截图并叠加，默认 false */
+  regionFallback?: boolean;
   /** 需要嵌入的字体目录，可选。提供后会按 CSS font-family 自动匹配并嵌入 */
   fontDir?: string;
+  /** 外部预览服务器 URL，提供时优先于本地 file:// 加载 HTML */
+  previewUrl?: string;
   /** 在 Playwright 中初始化 ECharts，默认 true */
   initECharts?: boolean;
   /** ECharts 初始化后等待毫秒数，默认 600 */
@@ -90,7 +102,7 @@ interface TextBox {
 }
 
 interface ShapeOverlay {
-  type: 'roundRect' | 'ellipse' | 'line';
+  type: 'roundRect' | 'ellipse' | 'line' | 'customPath';
   x: number;
   y: number;
   w: number;
@@ -102,10 +114,26 @@ interface ShapeOverlay {
   lineWidth?: number;
   lineTransparency?: number;
   lineDirection?: 'horizontal' | 'vertical';
+  /** 自定义路径点（仅 customPath），坐标为相对于 shape 自身 bounding box 的百分比 [0,1] */
+  points?: Array<
+    | { x: number; y: number; moveTo?: boolean }
+    | { x: number; y: number; curve: { type: 'arc'; hR: number; wR: number; stAng: number; swAng: number } }
+    | { x: number; y: number; curve: { type: 'cubic'; x1: number; y1: number; x2: number; y2: number } }
+    | { x: number; y: number; curve: { type: 'quadratic'; x1: number; y1: number } }
+    | { close: true }
+  >;
 }
 
 interface ImageOverlay {
   src: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+interface FallbackRegion {
+  path?: string;
   x: number;
   y: number;
   w: number;
@@ -117,7 +145,11 @@ interface SlideData {
   textBoxes: TextBox[];
   shapes: ShapeOverlay[];
   images: ImageOverlay[];
+  fallbackRegions: FallbackRegion[];
 }
+
+export { validatePptxOutput };
+export type { PptxValidationOptions, PptxValidationResult } from './validate.js';
 
 /**
  * DOM-to-PPTX 导出引擎（阶段 5）。
@@ -130,6 +162,7 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
   const {
     html,
     assetsDir,
+    previewUrl,
     width = 1280,
     height = 720,
     title,
@@ -138,6 +171,7 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
     editableText = true,
     vectorizeShapes = true,
     extractImages: extractImagesEnabled = true,
+    regionFallback = false,
     fontDir,
     initECharts = true,
     echartsWaitMs = 600,
@@ -159,12 +193,17 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'lemonppt-dom-to-pptx-'));
   const tempHtml = path.join(tempDir, 'index.html');
   const assetsDest = path.join(tempDir, 'assets');
-  await mkdir(assetsDest, { recursive: true });
-  await writeFile(tempHtml, html, 'utf-8');
 
-  if (assetsDir) {
-    log.info(`复制静态资源: ${assetsDir} -> ${assetsDest}`);
-    await cp(assetsDir, assetsDest, { recursive: true, force: true });
+  if (previewUrl) {
+    log.info(`使用外部预览服务器: ${previewUrl}`);
+  } else {
+    await mkdir(assetsDest, { recursive: true });
+    await writeFile(tempHtml, html, 'utf-8');
+
+    if (assetsDir) {
+      log.info(`复制静态资源: ${assetsDir} -> ${assetsDest}`);
+      await cp(assetsDir, assetsDest, { recursive: true, force: true });
+    }
   }
 
   let browser;
@@ -180,10 +219,11 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
     page.setDefaultNavigationTimeout(navigationTimeout);
     page.setDefaultTimeout(screenshotTimeout);
 
-    log.info(`加载页面: file://${tempHtml}`);
-    progress({ phase: 'render', message: '加载 HTML 并等待字体就绪' });
-    await page.goto('file://' + tempHtml, { waitUntil: 'domcontentloaded' });
+    const targetUrl = previewUrl || 'file://' + tempHtml;
+    log.info(`加载页面: ${targetUrl}`);
+    progress({ phase: 'render', message: '加载 HTML 并等待资源就绪' });
     await page.setViewportSize({ width, height });
+    await page.goto(targetUrl, { waitUntil: 'domcontentloaded' });
 
     // 等待字体就绪，避免文字截断或 fallback 字体导致排版偏差。
     try {
@@ -191,6 +231,34 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
       log.debug('document.fonts.ready 已触发');
     } catch (err) {
       log.warn('等待字体就绪失败，继续使用当前字体渲染', err);
+    }
+
+    // 全局禁用 CSS 动画/过渡，并将 theme11 的 lp-rise 固定到最终状态，
+    // 避免入场动画、脉冲点等动效导致截图不稳定。
+    await page.addStyleTag({
+      content: `
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .lp-rise, [class*="lp-rise"] { opacity: 1 !important; transform: none !important; }
+      `,
+    });
+
+    // 等待所有 <img> 图片加载完成，避免占位图与真实图切换导致像素漂移。
+    try {
+      await page.evaluate(async () => {
+        const imgs = Array.from(document.images).filter((img) => !img.complete);
+        await Promise.all(
+          imgs.map(
+            (img) =>
+              new Promise<void>((resolve) => {
+                img.addEventListener('load', () => resolve(), { once: true });
+                img.addEventListener('error', () => resolve(), { once: true });
+              }),
+          ),
+        );
+      });
+      log.debug('图片资源已加载');
+    } catch (err) {
+      log.warn('等待图片加载失败，继续导出', err);
     }
 
     if (initECharts) {
@@ -201,6 +269,38 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
             await window.__lemonPPT_initECharts();
           }
         });
+        // 等待每个 ECharts 容器真正出现 SVG/Canvas，确保异步渲染完成。
+        try {
+          await page.waitForFunction(
+            () => {
+              const containers = document.querySelectorAll('[data-lp-echart-type]');
+              if (containers.length === 0) return true;
+              const rendered = document.querySelectorAll('[data-lp-echart-type] svg, [data-lp-echart-type] canvas');
+              return rendered.length >= containers.length;
+            },
+            { timeout: 10000, polling: 100 },
+          );
+        } catch {
+          log.warn('等待 ECharts 渲染完成超时');
+        }
+        // 关闭所有 ECharts 动画，并强制重绘到最终状态，避免入场动画导致像素漂移。
+        try {
+          await page.evaluate(() => {
+            document.querySelectorAll('[data-lp-echart-type]').forEach((el) => {
+              const inst = (el as HTMLElement).__lpEChartInstance;
+              if (!inst) return;
+              const opt = inst.getOption?.();
+              if (!opt) return;
+              opt.animation = false;
+              opt.animationDuration = 0;
+              inst.clear?.();
+              inst.setOption?.(opt, true);
+            });
+          });
+          log.debug('已禁用 ECharts 动画并重绘');
+        } catch (err) {
+          log.warn('禁用 ECharts 动画失败', err);
+        }
         if (echartsWaitMs > 0) {
           await page.waitForTimeout(echartsWaitMs);
         }
@@ -245,16 +345,24 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
               wrapper.style.zIndex = '0';
             }
           });
+          // 强制结束当前页所有 CSS 动画/过渡，避免入场动画导致元素仍不可见。
+          void document.body.offsetHeight;
+          document.getAnimations().forEach((animation) => {
+            try { animation.finish(); } catch {}
+          });
         },
         i,
       );
 
+      // 给浏览器一帧时间，让 finish() 与全局禁用样式生效后再继续提取/截图。
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
       const wrapper = page.locator(`.lp-slide-wrapper[data-slide-index="${i}"]`);
-      const screenshotPath = path.join(screenshotDir, `slide-${i}.png`);
 
       let textBoxes: TextBox[] = [];
       let shapes: ShapeOverlay[] = [];
       let images: ImageOverlay[] = [];
+      let fallbackRegions: FallbackRegion[] = [];
 
       if (editableText) {
         // 先提取文字并隐藏原始文字，再截图，避免底层截图文字与叠加文字重影。
@@ -268,22 +376,61 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
         // 提取 <img> 并在截图中隐藏，避免重复绘制。
         images = await page.evaluate((idx) => extractImages(idx, true), i);
       }
+      if (regionFallback) {
+        // 识别无法矢量化的复杂区域，在整页截图时隐藏，稍后单独截图并叠加。
+        fallbackRegions = await page.evaluate((idx) => extractFallbackRegions(idx, true), i);
+      }
+
+      // 启用区域级 fallback 且有复杂区域时，整页背景改用 JPEG 压缩，复杂区域单独用 PNG 保留质量，从而整体体积下降。
+      const useJpegBackground = regionFallback && fallbackRegions.length > 0;
+      const screenshotPath = path.join(screenshotDir, useJpegBackground ? `slide-${i}.jpg` : `slide-${i}.png`);
 
       progress({ phase: 'screenshot', current: i + 1, total: slideCount, message: `截取第 ${i + 1}/${slideCount} 页` });
       try {
-        await wrapper.screenshot({ path: screenshotPath, type: 'png', timeout: screenshotTimeout });
+        if (useJpegBackground) {
+          await wrapper.screenshot({ path: screenshotPath, type: 'jpeg', quality: 90, timeout: screenshotTimeout });
+        } else {
+          await wrapper.screenshot({ path: screenshotPath, type: 'png', timeout: screenshotTimeout });
+        }
       } catch (err) {
         log.error(`第 ${i + 1} 页截图失败`, err);
         throw new Error(`第 ${i + 1} 页截图失败: ${err instanceof Error ? err.message : String(err)}`);
       }
 
-      if (editableText || vectorizeShapes || extractImagesEnabled) {
-        // 恢复被隐藏的文字/图形/图片样式，避免影响下一页提取。
+      if (editableText || vectorizeShapes || extractImagesEnabled || regionFallback) {
+        // 恢复被隐藏的文字/图形/图片/区域样式，避免影响下一页提取。
         await page.evaluate(() => restoreOverlayStyles());
       }
 
-      log.debug(`第 ${i + 1} 页: ${textBoxes.length} 文本框, ${shapes.length} 形状, ${images.length} 图片`);
-      slides.push({ path: screenshotPath, textBoxes, shapes, images });
+      // 区域级 alpha-matte：对复杂区域单独截图并叠加。
+      if (regionFallback && fallbackRegions.length > 0) {
+        // 排除落在复杂区域内的文本框与形状，避免与区域截图重复绘制。
+        const isInsideRegion = (item: { x: number; y: number; w: number; h: number }) => {
+          const cx = item.x + item.w / 2;
+          const cy = item.y + item.h / 2;
+          return fallbackRegions.some((r) => cx >= r.x && cx <= r.x + r.w && cy >= r.y && cy <= r.y + r.h);
+        };
+        textBoxes = textBoxes.filter((t) => !isInsideRegion(t));
+        shapes = shapes.filter((s) => !isInsideRegion(s));
+        images = images.filter((img) => !isInsideRegion(img));
+
+        for (let r = 0; r < fallbackRegions.length; r++) {
+          const region = fallbackRegions[r];
+          const regionPath = path.join(screenshotDir, `slide-${i}-region-${r}.png`);
+          try {
+            // 通过 data-lp-region-fallback 属性定位到具体元素并截图。
+            const regionEl = page.locator(`.lp-slide-wrapper[data-slide-index="${i}"] [data-lp-region-fallback="true"]`).nth(r);
+            await regionEl.screenshot({ path: regionPath, type: 'png', timeout: screenshotTimeout });
+            region.path = regionPath;
+          } catch (err) {
+            log.warn(`第 ${i + 1} 页区域 ${r + 1} 截图失败，跳过`, err);
+            region.path = '';
+          }
+        }
+      }
+
+      log.debug(`第 ${i + 1} 页: ${textBoxes.length} 文本框, ${shapes.length} 形状, ${images.length} 图片, ${fallbackRegions.length} 区域`);
+      slides.push({ path: screenshotPath, textBoxes, shapes, images, fallbackRegions });
     }
 
     progress({ phase: 'build', message: '组装 PPTX' });
@@ -340,7 +487,7 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
   const missingFonts = new Set<string>();
 
   for (let i = 0; i < slides.length; i++) {
-    const { path: screenshotPath, textBoxes, shapes, images } = slides[i];
+    const { path: screenshotPath, textBoxes, shapes, images, fallbackRegions } = slides[i];
     const slide = pptx.addSlide();
 
     // 截图作为背景
@@ -377,14 +524,44 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
         opts.rectRadius = shape.rectRadius;
       }
 
-      const ShapeType = (pptx as any).ShapeType;
-      const shapeType =
-        shape.type === 'roundRect'
-          ? ShapeType.roundRect
-          : shape.type === 'ellipse'
-            ? ShapeType.ellipse
-            : ShapeType.line;
-      slide.addShape(shapeType, opts);
+      if (shape.type === 'customPath' && shape.points && shape.points.length >= 2) {
+        const EMU = 914400;
+        const pathW = pxToIn(shape.w) * EMU;
+        const pathH = pxToIn(shape.h) * EMU;
+        const points = shape.points.map((p) => {
+          if ('close' in p) return { close: true };
+          if ('curve' in p) return p;
+          return { x: p.x * pathW, y: p.y * pathH, moveTo: p.moveTo };
+        });
+        slide.addShape('custGeom' as any, { ...opts, points: points as any });
+      } else {
+        const ShapeType = (pptx as any).ShapeType;
+        const shapeType =
+          shape.type === 'roundRect'
+            ? ShapeType.roundRect
+            : shape.type === 'ellipse'
+              ? ShapeType.ellipse
+              : ShapeType.line;
+        slide.addShape(shapeType, opts);
+      }
+    }
+
+    // 添加复杂区域截图覆盖层（alpha-matte），填补整页截图中的“洞”。
+    if (fallbackRegions) {
+      for (const region of fallbackRegions) {
+        if (!region.path || !existsSync(region.path)) continue;
+        try {
+          slide.addImage({
+            path: region.path,
+            x: pxToIn(region.x),
+            y: pxToIn(region.y),
+            w: pxToIn(region.w),
+            h: pxToIn(region.h),
+          });
+        } catch (err) {
+          log.warn(`第 ${i + 1} 页区域截图添加失败: ${region.path}`, err);
+        }
+      }
     }
 
     // 添加图片覆盖层
@@ -546,7 +723,7 @@ function extractTextBoxes(slideIndex, markElements) {
     const rect = el.getBoundingClientRect();
     if (rect.width < 1 || rect.height < 1) continue;
 
-    const text = (el.innerText || '').trim();
+    const text = (el.innerText || el.textContent || '').trim();
     if (!text) continue;
 
     const isSvg = el.namespaceURI === 'http://www.w3.org/2000/svg';
@@ -638,6 +815,221 @@ function shouldKeepShape(el) {
   return true;
 }
 
+function parseSimpleSvgPath(d) {
+  if (!d) return null;
+  const parts = d.trim().replace(/([MmLlHhVvZz])/g, ' $1 ').trim().split(/\s+/);
+  const points = [];
+  let x = 0, y = 0, startX = 0, startY = 0;
+  let cmd = null;
+  for (let i = 0; i < parts.length; i++) {
+    const token = parts[i];
+    if (/^[MmLlHhVvZz]$/.test(token)) {
+      cmd = token;
+      if (cmd === 'Z' || cmd === 'z') {
+        points.push({ close: true });
+        cmd = null;
+      }
+      continue;
+    }
+    const val = parseFloat(token);
+    if (Number.isNaN(val)) continue;
+    if (cmd === 'M' || cmd === 'm') {
+      const isRel = cmd === 'm';
+      x = isRel ? x + val : val;
+      y = isRel ? y + parseFloat(parts[++i] || 0) : parseFloat(parts[++i] || 0);
+      startX = x; startY = y;
+      points.push({ x, y, moveTo: true });
+      cmd = cmd === 'M' ? 'L' : 'l';
+    } else if (cmd === 'L' || cmd === 'l') {
+      const isRel = cmd === 'l';
+      x = isRel ? x + val : val;
+      y = isRel ? y + parseFloat(parts[++i] || 0) : parseFloat(parts[++i] || 0);
+      points.push({ x, y });
+    } else if (cmd === 'H' || cmd === 'h') {
+      x = cmd === 'h' ? x + val : val;
+      points.push({ x, y });
+    } else if (cmd === 'V' || cmd === 'v') {
+      y = cmd === 'v' ? y + val : val;
+      points.push({ x, y });
+    }
+  }
+  // 仅接受简单路径：只含 M/L/H/V/Z
+  if (points.length < 2) return null;
+  return points;
+}
+
+function extractSvgShapes(slideIndex, markElements) {
+  const wrapper = getWrapper(slideIndex);
+  if (!wrapper) return [];
+  const wrapperRect = wrapper.getBoundingClientRect();
+  const shapes = [];
+
+  wrapper.querySelectorAll('svg').forEach((svg) => {
+    if (isIgnoredElement(svg)) return;
+    const svgRect = svg.getBoundingClientRect();
+    if (svgRect.width < 2 || svgRect.height < 2) return;
+
+    const svgStyle = window.getComputedStyle(svg);
+    if (svgStyle.display === 'none' || svgStyle.visibility === 'hidden' || parseFloat(svgStyle.opacity) === 0) return;
+
+    const svgShapes = [];
+    svg.querySelectorAll('path, rect, circle, ellipse, line, polygon, polyline').forEach((el) => {
+      const tag = el.tagName.toLowerCase();
+      let points = null;
+      let fill = rgbToHex(el.getAttribute('fill') || svgStyle.fill);
+      let stroke = rgbToHex(el.getAttribute('stroke') || svgStyle.stroke);
+      let strokeWidth = parseFloat(el.getAttribute('stroke-width')) || parseFloat(svgStyle.strokeWidth) || 0;
+
+      if (tag === 'rect') {
+        const x = parseFloat(el.getAttribute('x')) || 0;
+        const y = parseFloat(el.getAttribute('y')) || 0;
+        const w = parseFloat(el.getAttribute('width')) || svgRect.width;
+        const h = parseFloat(el.getAttribute('height')) || svgRect.height;
+        points = [
+          { x, y, moveTo: true },
+          { x: x + w, y },
+          { x: x + w, y: y + h },
+          { x, y: y + h },
+          { close: true },
+        ];
+      } else if (tag === 'circle') {
+        const cx = parseFloat(el.getAttribute('cx')) || svgRect.width / 2;
+        const cy = parseFloat(el.getAttribute('cy')) || svgRect.height / 2;
+        const r = parseFloat(el.getAttribute('r')) || Math.min(svgRect.width, svgRect.height) / 2;
+        // 用 8 段线段近似圆
+        const seg = 8;
+        for (let i = 0; i < seg; i++) {
+          const a = (i * 2 * Math.PI) / seg;
+          points = points || [];
+          points.push({ x: cx + r * Math.cos(a), y: cy + r * Math.sin(a), moveTo: i === 0 });
+        }
+        points.push({ close: true });
+      } else if (tag === 'ellipse') {
+        const cx = parseFloat(el.getAttribute('cx')) || svgRect.width / 2;
+        const cy = parseFloat(el.getAttribute('cy')) || svgRect.height / 2;
+        const rx = parseFloat(el.getAttribute('rx')) || svgRect.width / 2;
+        const ry = parseFloat(el.getAttribute('ry')) || svgRect.height / 2;
+        const seg = 8;
+        for (let i = 0; i < seg; i++) {
+          const a = (i * 2 * Math.PI) / seg;
+          points = points || [];
+          points.push({ x: cx + rx * Math.cos(a), y: cy + ry * Math.sin(a), moveTo: i === 0 });
+        }
+        points.push({ close: true });
+      } else if (tag === 'line') {
+        points = [
+          { x: parseFloat(el.getAttribute('x1')) || 0, y: parseFloat(el.getAttribute('y1')) || 0, moveTo: true },
+          { x: parseFloat(el.getAttribute('x2')) || 0, y: parseFloat(el.getAttribute('y2')) || 0 },
+        ];
+      } else if (tag === 'polygon' || tag === 'polyline') {
+        const raw = el.getAttribute('points') || '';
+        const nums = raw.trim().split(/[\s,]+/).filter(Boolean).map(parseFloat);
+        for (let i = 0; i < nums.length; i += 2) {
+          points = points || [];
+          points.push({ x: nums[i], y: nums[i + 1], moveTo: i === 0 });
+        }
+        if (tag === 'polygon') points.push({ close: true });
+      } else if (tag === 'path') {
+        points = parseSimpleSvgPath(el.getAttribute('d'));
+      }
+
+      if (!points || points.length < 2) return;
+
+      // 计算局部 bbox
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      for (const p of points) {
+        if ('close' in p || 'curve' in p) continue;
+        minX = Math.min(minX, p.x);
+        minY = Math.min(minY, p.y);
+        maxX = Math.max(maxX, p.x);
+        maxY = Math.max(maxY, p.y);
+      }
+      const pw = maxX - minX || 1;
+      const ph = maxY - minY || 1;
+
+      // 归一化为相对于局部 bbox 的百分比
+      const normPoints = points.map((p) => {
+        if ('close' in p) return { close: true };
+        if ('curve' in p) return p;
+        return { x: (p.x - minX) / pw, y: (p.y - minY) / ph, moveTo: p.moveTo };
+      });
+
+      svgShapes.push({
+        type: 'customPath',
+        x: svgRect.left - wrapperRect.left + (minX / svgRect.width) * svgRect.width,
+        y: svgRect.top - wrapperRect.top + (minY / svgRect.height) * svgRect.height,
+        w: pw,
+        h: ph,
+        fill,
+        lineColor: stroke,
+        lineWidth: strokeWidth,
+        points: normPoints,
+      });
+    });
+
+    if (svgShapes.length > 0) {
+      shapes.push(...svgShapes);
+      if (markElements) {
+        const original = JSON.parse(svg.getAttribute('data-lp-overlay') || '{}');
+        original.opacity = svg.style.getPropertyValue('opacity');
+        svg.style.setProperty('opacity', '0', 'important');
+        svg.setAttribute('data-lp-overlay', JSON.stringify(original));
+      }
+    }
+  });
+
+  return shapes;
+}
+
+function hasComplexGradient(el) {
+  const style = window.getComputedStyle(el);
+  const bg = style.backgroundImage;
+  return bg && bg !== 'none' && /linear-gradient|radial-gradient|conic-gradient|repeating/.test(bg);
+}
+
+function hasFilterOrComplexClip(el) {
+  const style = window.getComputedStyle(el);
+  return !!(style.filter && style.filter !== 'none') ||
+    !!(style.clipPath && style.clipPath !== 'none');
+}
+
+function extractFallbackRegions(slideIndex, markElements) {
+  const wrapper = getWrapper(slideIndex);
+  if (!wrapper) return [];
+  const wrapperRect = wrapper.getBoundingClientRect();
+  const regions = [];
+
+  const selectors = ['.lp-fallback-region', 'canvas', 'svg', '[data-lp-region-fallback]'];
+  wrapper.querySelectorAll(selectors.join(',')).forEach((el) => {
+    // SVG：仅当无法简单矢量化时才作为 fallback region
+    if (el.tagName.toLowerCase() === 'svg') {
+      const shapes = extractSvgShapes(slideIndex, false);
+      if (shapes.length > 0) return; // 已可矢量化，不再截图
+    }
+    const rect = el.getBoundingClientRect();
+    if (rect.width < 4 || rect.height < 4) return;
+    if (rect.width > wrapperRect.width * 0.98 && rect.height > wrapperRect.height * 0.98) return;
+
+    regions.push({
+      x: rect.left - wrapperRect.left,
+      y: rect.top - wrapperRect.top,
+      w: rect.width,
+      h: rect.height,
+      selector: el.className || el.tagName.toLowerCase(),
+    });
+
+    if (markElements) {
+      el.setAttribute('data-lp-region-fallback', 'true');
+      const original = JSON.parse(el.getAttribute('data-lp-overlay') || '{}');
+      original.opacity = el.style.getPropertyValue('opacity');
+      el.style.setProperty('opacity', '0', 'important');
+      el.setAttribute('data-lp-overlay', JSON.stringify(original));
+    }
+  });
+
+  return regions;
+}
+
 function extractVectorizableShapes(slideIndex, markElements) {
   const wrapper = getWrapper(slideIndex);
   if (!wrapper) return [];
@@ -706,6 +1098,10 @@ function extractVectorizableShapes(slideIndex, markElements) {
 
     shapes.push(shape);
   }
+
+  // 叠加 SVG 可矢量化形状
+  const svgShapes = extractSvgShapes(slideIndex, markElements);
+  shapes.push(...svgShapes);
 
   return shapes;
 }
