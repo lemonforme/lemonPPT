@@ -128,6 +128,18 @@ export interface PropsSchema {
   fields: PropsField[];
 }
 
+/**
+ * 版式 Prop Contract。
+ * - defaultProps：由 controls 中 defaultValue 聚合而来的默认值对象。
+ * - controls：编辑器控件列表，与 PropsSchema.fields 一致。
+ */
+export interface LayoutContract {
+  /** 默认属性 */
+  defaultProps: Record<string, unknown>;
+  /** 编辑器控件 */
+  controls: PropsField[];
+}
+
 /** 版式元数据 */
 export interface LayoutMeta {
   /** 版式唯一 ID */

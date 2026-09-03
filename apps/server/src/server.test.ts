@@ -80,7 +80,7 @@ describe('server', () => {
     expect(res.headers['content-type']).toMatch(/octet-stream|officedocument/);
     expect(res.headers['content-disposition']).toMatch(/\.pptx/);
     expect(Number(res.headers['content-length'])).toBeGreaterThan(1000);
-  });
+  }, 30000);
 
   it('POST /api/export/pdf should return a PDF blob', async () => {
     const res = await request(app).post('/api/export/pdf').send(sampleGoal);

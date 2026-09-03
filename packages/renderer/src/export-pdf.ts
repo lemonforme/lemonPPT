@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import type { DeckGoal } from '@lemonppt/core';
-import { normalizeDeckGoal } from '@lemonppt/core';
+import { normalizeGoal } from './normalize-goal.js';
 import { cp, mkdir, mkdtemp, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import { renderDeck } from './render.js';
+import { startPreviewServer } from './preview-server.js';
 
 declare global {
   interface Window {
@@ -27,7 +28,7 @@ export interface ExportPdfOptions {
 }
 
 export async function exportDeckToPdf(goal: DeckGoal, options: ExportPdfOptions): Promise<void> {
-  goal = normalizeDeckGoal(goal);
+  goal = normalizeGoal(goal);
   const { outFile, width = 1280, height = 720 } = options;
 
   const result = renderDeck(goal);
@@ -68,11 +69,12 @@ export async function exportDeckToPdf(goal: DeckGoal, options: ExportPdfOptions)
     // 可选资源，忽略复制失败
   }
 
+  const previewServer = await startPreviewServer(tempDir);
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
   try {
-    await page.goto('file://' + tempHtml, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${previewServer.url}/index.html`, { waitUntil: 'domcontentloaded' });
     await page.evaluate(() => document.fonts.ready);
     // 显式等待并执行 ECharts 初始化，确保异步图表渲染完成后再生成 PDF。
     await page.evaluate(async () => {
@@ -89,6 +91,7 @@ export async function exportDeckToPdf(goal: DeckGoal, options: ExportPdfOptions)
       preferCSSPageSize: true,
     });
   } finally {
+    await previewServer.close();
     await browser.close();
   }
 }

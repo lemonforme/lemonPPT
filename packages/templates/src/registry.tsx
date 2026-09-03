@@ -2,7 +2,7 @@
 // Copyright (c) 2026 lemonforme
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import type { LayoutMeta, PropsSchema, Slide } from '@lemonppt/core';
+import type { LayoutMeta, PropsField, PropsSchema, Slide, LayoutContract } from '@lemonppt/core';
 import type { ComponentType, ReactElement } from 'react';
 import {
   Theme01AppendixV1,
@@ -3604,6 +3604,64 @@ export function getLayout(id: string): RegisteredLayout<Record<string, unknown>>
  */
 export function getLayoutSchema(id: string): PropsSchema | undefined {
   return registryById.get(id)?.schema;
+}
+
+function setNestedValue(obj: Record<string, unknown>, key: string, value: unknown): void {
+  const parts = key.split('.');
+  let current: Record<string, unknown> = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    const part = parts[i];
+    if (!current[part] || typeof current[part] !== 'object') {
+      current[part] = {};
+    }
+    current = current[part] as Record<string, unknown>;
+  }
+  current[parts[parts.length - 1]] = value;
+}
+
+function inferDefaultValue(field: PropsField): unknown {
+  if (field.defaultValue !== undefined) return field.defaultValue;
+  switch (field.type) {
+    case 'text':
+    case 'textarea':
+    case 'color':
+      return '';
+    case 'number':
+      return 0;
+    case 'boolean':
+      return false;
+    case 'select':
+      return field.options && field.options.length > 0 ? field.options[0].value : '';
+    case 'array':
+      return [];
+    case 'object':
+      return {};
+    case 'slider':
+      return field.min ?? 0;
+    case 'image':
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * 获取指定版式的 Prop Contract（defaultProps + controls）。
+ * 未显式声明 defaultValue 的字段会按类型推断一个安全默认值（如 text 返回空字符串、array 返回空数组），
+ * 确保 `normalizeDeckGoal` 在补齐缺失 props 时不会遗漏字段。
+ */
+export function getLayoutContract(id: string): LayoutContract | undefined {
+  const schema = getLayoutSchema(id);
+  if (!schema) {
+    return undefined;
+  }
+  const defaultProps: Record<string, unknown> = {};
+  for (const field of schema.fields) {
+    const value = inferDefaultValue(field);
+    if (value !== undefined) {
+      setNestedValue(defaultProps, field.key, value);
+    }
+  }
+  return { defaultProps, controls: schema.fields };
 }
 
 /**

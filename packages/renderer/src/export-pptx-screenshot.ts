@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import type { DeckGoal } from '@lemonppt/core';
-import { normalizeDeckGoal } from '@lemonppt/core';
+import { normalizeGoal } from './normalize-goal.js';
 import { exportDomToPptx, type Logger, type ExportProgress } from '@lemonppt/dom-to-pptx';
 import { cp, mkdir, mkdtemp, writeFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderDeck } from './render.js';
+import { startPreviewServer } from './preview-server.js';
 
 export interface ExportPptxScreenshotOptions {
   /** 输出 PPTX 文件路径 */
@@ -46,7 +47,7 @@ export async function exportDeckToPptxScreenshot(
   goal: DeckGoal,
   options: ExportPptxScreenshotOptions,
 ): Promise<void> {
-  goal = normalizeDeckGoal(goal);
+  goal = normalizeGoal(goal);
   const {
     outFile,
     width = 1280,
@@ -97,24 +98,31 @@ export async function exportDeckToPptxScreenshot(
       // 可选资源，忽略复制失败
     }
 
-    const buffer = await exportDomToPptx({
-      html: result.html,
-      assetsDir,
-      width,
-      height,
-      title,
-      subject,
-      author,
-      editableText: overlayText,
-      vectorizeShapes,
-      extractImages,
-      fontDir: fontsDest,
-      initECharts: true,
-      logger,
-      onProgress,
-    });
+    await writeFile(path.join(tempDir, 'index.html'), result.html, 'utf-8');
 
-    await writeFile(outFile, buffer);
+    const previewServer = await startPreviewServer(tempDir);
+    try {
+      const buffer = await exportDomToPptx({
+        html: result.html,
+        previewUrl: `${previewServer.url}/index.html`,
+        width,
+        height,
+        title,
+        subject,
+        author,
+        editableText: overlayText,
+        vectorizeShapes,
+        extractImages,
+        fontDir: fontsDest,
+        initECharts: true,
+        logger,
+        onProgress,
+      });
+
+      await writeFile(outFile, buffer);
+    } finally {
+      await previewServer.close();
+    }
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }

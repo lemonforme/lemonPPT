@@ -2,7 +2,7 @@
 // Copyright (c) 2026 lemonforme
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import type { DeckGoal, RawDeckGoal, Slide, RawSlide, SlideRole } from './types.js';
+import type { DeckGoal, RawDeckGoal, Slide, RawSlide, SlideRole, LayoutContract } from './types.js';
 
 const VALID_ROLES: SlideRole[] = [
   'cover', 'tableOfContents', 'metric', 'stats', 'chart', 'comparison', 'pricing',
@@ -85,11 +85,70 @@ export function normalizeThemeId(themeId: string): string {
   return themeId;
 }
 
-function normalizeSlide(slide: Slide): Slide {
-  return {
+function getNestedValue(obj: Record<string, unknown>, key: string): unknown {
+  const parts = key.split('.');
+  let current: unknown = obj;
+  for (const part of parts) {
+    if (current === null || typeof current !== 'object') return undefined;
+    current = (current as Record<string, unknown>)[part];
+  }
+  return current;
+}
+
+function setNestedValue(obj: Record<string, unknown>, key: string, value: unknown): void {
+  const parts = key.split('.');
+  let current: Record<string, unknown> = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    const part = parts[i];
+    if (!current[part] || typeof current[part] !== 'object') {
+      current[part] = {};
+    }
+    current = current[part] as Record<string, unknown>;
+  }
+  current[parts[parts.length - 1]] = value;
+}
+
+function applyPropContract(slide: Slide, contract: LayoutContract): Slide {
+  const props = { ...slide.props };
+  for (const field of contract.controls) {
+    if (field.defaultValue !== undefined && getNestedValue(props, field.key) === undefined) {
+      setNestedValue(props, field.key, field.defaultValue);
+    }
+  }
+  return { ...slide, props };
+}
+
+/**
+ * 校验 props 是否满足版式 contract 的必填要求。
+ * 返回错误列表；为空表示校验通过。
+ */
+export function validatePropsAgainstContract(
+  props: Record<string, unknown>,
+  contract: LayoutContract,
+): string[] {
+  const errors: string[] = [];
+  for (const field of contract.controls) {
+    if (field.defaultValue !== undefined) continue;
+    if (field.type === 'image') continue;
+    if (getNestedValue(props, field.key) === undefined) {
+      errors.push(`缺少必填字段 ${field.key} (${field.label})`);
+    }
+  }
+  return errors;
+}
+
+function normalizeSlide(slide: Slide, resolveContract?: (theme: string, layout: string) => LayoutContract | undefined, theme?: string): Slide {
+  const normalized: Slide = {
     ...slide,
     layout: normalizeLayoutId(slide.layout),
   };
+  if (resolveContract && theme) {
+    const contract = resolveContract(theme, normalized.layout);
+    if (contract) {
+      return applyPropContract(normalized, contract);
+    }
+  }
+  return normalized;
 }
 
 function normalizeRawSlide(slide: RawSlide): RawSlide {
@@ -177,15 +236,21 @@ function normalizeAppearance(
 
 /**
  * 规范化 DeckGoal，将旧版 layout 与 theme 命名映射到新版。
+ *
+ * 可选传入 `resolveContract(theme, layout)` 获取版式 Prop Contract，
+ * 用于在规范化阶段自动补齐 slide.props 中缺失的默认值。
  */
-export function normalizeDeckGoal(goal: DeckGoal): DeckGoal {
+export function normalizeDeckGoal(
+  goal: DeckGoal,
+  resolveContract?: (theme: string, layout: string) => LayoutContract | undefined,
+): DeckGoal {
   const theme = normalizeThemeId(goal.theme);
   return {
     ...goal,
     theme,
     colorScheme: normalizeColorScheme(theme, goal.colorScheme),
     appearance: normalizeAppearance(theme, goal.appearance),
-    slides: goal.slides.map(normalizeSlide),
+    slides: goal.slides.map((slide) => normalizeSlide(slide, resolveContract, theme)),
   };
 }
 

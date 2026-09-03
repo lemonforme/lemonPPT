@@ -32,10 +32,10 @@ export const theme01CoverV1Meta: LayoutMeta = {
 
 export const theme01CoverV1Schema: PropsSchema = {
   fields: [
-    { key: 'kicker', label: '标签', type: 'text', inlineEditable: true },
-    { key: 'title', label: '标题', type: 'text', inlineEditable: true },
-    { key: 'subtitle', label: '副标题', type: 'textarea', inlineEditable: true },
-    { key: 'date', label: '日期', type: 'text', inlineEditable: true },
+    { key: 'kicker', label: '标签', type: 'text', inlineEditable: true, defaultValue: '封面标签' },
+    { key: 'title', label: '标题', type: 'text', inlineEditable: true, defaultValue: '请输入标题' },
+    { key: 'subtitle', label: '副标题', type: 'textarea', inlineEditable: true, defaultValue: '请输入副标题' },
+    { key: 'date', label: '日期', type: 'text', inlineEditable: true, defaultValue: '2026.09.03' },
     { key: 'image', label: 'image', type: 'image' },
   ],
 };

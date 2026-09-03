@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { describe, expect, it } from 'vitest';
+import type { LayoutContract } from './types.js';
 import { normalizeDeckGoal, normalizeLayoutId, normalizeThemeId } from './normalize.js';
 
 describe('normalize', () => {
@@ -48,5 +49,28 @@ describe('normalize', () => {
     };
 
     expect(normalizeDeckGoal(normalizeDeckGoal(goal))).toEqual(normalizeDeckGoal(goal));
+  });
+
+  it('should fill missing props from layout contract', () => {
+    const contract: LayoutContract = {
+      defaultProps: { title: 'Default Title', nested: { value: 42 } },
+      controls: [
+        { key: 'title', label: 'Title', type: 'text', defaultValue: 'Default Title' },
+        { key: 'nested.value', label: 'Value', type: 'number', defaultValue: 42 },
+      ],
+    };
+    const goal = {
+      title: 'Test',
+      goal: 'Test',
+      audience: 'Test',
+      theme: 'theme01',
+      language: 'zh' as const,
+      pageCount: 1,
+      slides: [{ role: 'cover' as const, layout: 'cover_v1', props: { title: 'Custom' } }],
+    };
+
+    const normalized = normalizeDeckGoal(goal, () => contract);
+    expect(normalized.slides[0].props.title).toBe('Custom');
+    expect(normalized.slides[0].props.nested).toEqual({ value: 42 });
   });
 });

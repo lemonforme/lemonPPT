@@ -6,7 +6,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { exportDeckToPptx } from '@lemonppt/renderer';
+import { exportDeckToPptxScreenshot } from '@lemonppt/renderer';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -161,6 +161,6 @@ const goalPath = path.join(rootDir, 'output', 'all-layouts-goal.json');
 await writeFile(goalPath, JSON.stringify(goal, null, 2));
 
 const outFile = path.join(rootDir, 'output', 'all-layouts.pptx');
-await exportDeckToPptx(goal, { outFile, title: goal.title });
+await exportDeckToPptxScreenshot(goal, { outFile, title: goal.title });
 
 console.log(`已生成 ${slides.length} 页测试 PPTX: ${outFile}`);

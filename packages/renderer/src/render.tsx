@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import type { DeckGoal, RenderOutput } from '@lemonppt/core';
-import { normalizeDeckGoal } from '@lemonppt/core';
+import { normalizeGoal } from './normalize-goal.js';
 import {
   renderSlide,
   generateThemeCssVariablesWithDark,
@@ -12,6 +12,11 @@ import {
   generateTheme04CssVariablesWithTonesAndAppearance,
   generateTheme05CssVariablesWithSchemesAndAppearance,
   generateTheme06CssVariablesWithSchemesAndAppearance,
+  generateTheme07CssVariables,
+  generateTheme08CssVariables,
+  generateTheme09CssVariables,
+  generateTheme10CssVariables,
+  generateTheme11CssVariables,
 } from '@lemonppt/templates';
 import ReactDOMServer from 'react-dom/server';
 
@@ -23,7 +28,7 @@ export interface RenderOptions {
 }
 
 export function renderDeck(goal: DeckGoal, options: RenderOptions = {}): RenderOutput {
-  goal = normalizeDeckGoal(goal);
+  goal = normalizeGoal(goal);
   const { width = 1280, height = 720 } = options;
 
   const slideCount = goal.slides.length;
@@ -87,7 +92,17 @@ export function renderDeck(goal: DeckGoal, options: RenderOptions = {}): RenderO
             ? generateTheme05CssVariablesWithSchemesAndAppearance()
             : theme === 'theme06'
               ? generateTheme06CssVariablesWithSchemesAndAppearance()
-              : '';
+              : theme === 'theme07'
+                ? generateTheme07CssVariables('light')
+                : theme === 'theme08'
+                  ? generateTheme08CssVariables('primary')
+                  : theme === 'theme09'
+                    ? generateTheme09CssVariables('paper', 'primary')
+                    : theme === 'theme10'
+                      ? generateTheme10CssVariables('obsidian')
+                      : theme === 'theme11'
+                        ? generateTheme11CssVariables('daylight')
+                        : '';
 
   const html = `<!DOCTYPE html>
 <html lang="${goal.language ?? 'zh'}" data-theme="${colorScheme}"${appearanceAttr}>

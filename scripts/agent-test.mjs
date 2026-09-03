@@ -17,7 +17,7 @@
 import { generateGoal } from '@lemonppt/agent-prompts';
 import { validateDeckGoal } from '@lemonppt/core';
 import { composeDeck } from '@lemonppt/composer';
-import { exportDeckToPptx, exportDeckToPdf } from '@lemonppt/renderer';
+import { exportDeckToPptxScreenshot, exportDeckToPdf } from '@lemonppt/renderer';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -107,7 +107,7 @@ function validateGoal(goal) {
 }
 
 async function exportPptx(goal, filePath) {
-  await exportDeckToPptx(goal, { outFile: filePath, title: goal.title, author: goal.owner || 'lemonPPT' });
+  await exportDeckToPptxScreenshot(goal, { outFile: filePath, title: goal.title, author: goal.owner || 'lemonPPT' });
 }
 
 async function exportPdf(goal, filePath) {

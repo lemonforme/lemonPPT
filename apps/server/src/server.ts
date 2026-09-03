@@ -6,8 +6,6 @@ import { generateGoal } from '@lemonppt/agent-prompts';
 import { preprocessAgentGoal, type DeckGoal } from '@lemonppt/core';
 import {
   copyThemeAssets,
-  exportGoalToPdf,
-  exportGoalToPptx,
   inspectLayout,
   listThemes,
   queryLayouts,
@@ -18,9 +16,16 @@ import {
   writeSafePropsToFile,
 } from '@lemonppt/cli';
 import { getTheme } from '@lemonppt/themes';
-import { renderEditorData } from '@lemonppt/renderer';
+import {
+  exportDeckToPdf,
+  exportDeckToPptxScreenshot,
+  renderBrowserExportDriver,
+  renderEditorData,
+} from '@lemonppt/renderer';
 import express, { type Express, type NextFunction, type Request, type Response } from 'express';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import crypto from 'node:crypto';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { log } from './logger.js';
@@ -42,7 +47,7 @@ export interface ServerOptions {
 
 export function createServer(options: ServerOptions): Express {
   const app = express();
-  app.use(express.json());
+  app.use(express.json({ limit: '64mb' }));
 
   // 请求日志
   app.use((req, _res, next) => {
@@ -88,29 +93,181 @@ export function createServer(options: ServerOptions): Express {
     }
   });
 
-  // 导出 PPTX
+  // 浏览器端导出兜底：沙箱环境无法启动 Chromium 时使用
+  const browserExportJobs = new Map<string, { filePath: string; filename: string; mimeType: string; tempDir: string }>();
+
+  async function prepareBrowserExportDir(goal: DeckGoal): Promise<{ jobId: string; tempDir: string; callbackBaseUrl: string }> {
+    const jobId = crypto.randomUUID();
+    const tempDir = await mkdtemp(path.join(os.tmpdir(), 'lemonppt-browser-export-'));
+    const assetsDir = path.join(tempDir, 'assets');
+    await copyThemeAssets(goal.theme, assetsDir);
+    const callbackBaseUrl = `/api/export/browser-callback/${jobId}`;
+    return { jobId, tempDir, callbackBaseUrl };
+  }
+
+  function isBrowserLaunchError(err: unknown): boolean {
+    const message = err instanceof Error ? err.message : String(err);
+    return /launch|browser|chromium|executable|playwright/i.test(message);
+  }
+
+  async function tryExportWithBrowserFallback(
+    req: Request,
+    res: Response,
+    mode: 'pptx' | 'pdf',
+    directExport: (goal: DeckGoal, filePath: string) => Promise<void>,
+  ): Promise<void> {
+    const goal = parseGoalBody(req.body);
+    const ext = mode === 'pptx' ? 'pptx' : 'pdf';
+    const mimeType = mode === 'pptx'
+      ? 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+      : 'application/pdf';
+    const filePath = path.join(options.outputDir, `deck.${ext}`);
+
+    try {
+      await directExport(goal, filePath);
+      log('info', `Exported ${mode.toUpperCase()}`, { theme: goal.theme, slides: goal.slides.length });
+      res.download(filePath, `${goal.title || 'presentation'}.${ext}`);
+      return;
+    } catch (err) {
+      if (!isBrowserLaunchError(err)) {
+        handleError(err, req, res);
+        return;
+      }
+      log('warn', `Playwright ${mode.toUpperCase()} export failed, falling back to browser export`, { error: err instanceof Error ? err.message : String(err) });
+    }
+
+    try {
+      const { jobId, tempDir, callbackBaseUrl } = await prepareBrowserExportDir(goal);
+      const filename = `${goal.title || 'presentation'}.${ext}`;
+      const outPath = path.join(options.outputDir, filename);
+      browserExportJobs.set(jobId, { filePath: outPath, filename, mimeType, tempDir });
+
+      const driverHtml = renderBrowserExportDriver({
+        goal,
+        mode,
+        callbackUrl: callbackBaseUrl,
+        assetBaseUrl: `/browser-export/${jobId}/assets`,
+      });
+      await writeFile(path.join(tempDir, 'index.html'), driverHtml);
+
+      log('info', `Browser ${mode.toUpperCase()} export started`, { jobId, theme: goal.theme });
+      res.setHeader('X-Export-Fallback', 'browser');
+      res.sendFile(path.join(tempDir, 'index.html'));
+    } catch (fallbackErr) {
+      handleError(fallbackErr, req, res);
+    }
+  }
+
+  // 导出 PPTX（Playwright 优先，失败时回退到浏览器端兜底）
   app.post('/api/export/pptx', async (req, res) => {
+    await tryExportWithBrowserFallback(req, res, 'pptx', (goal, filePath) =>
+      exportDeckToPptxScreenshot(goal, { outFile: filePath }),
+    );
+  });
+
+  // 导出 PDF（Playwright 优先，失败时回退到浏览器端兜底）
+  app.post('/api/export/pdf', async (req, res) => {
+    await tryExportWithBrowserFallback(req, res, 'pdf', (goal, filePath) =>
+      exportDeckToPdf(goal, { outFile: filePath }),
+    );
+  });
+
+  // 为浏览器导出任务提供静态资源服务
+  app.use('/browser-export/:jobId', (req, res, next) => {
+    const jobId = req.params.jobId;
+    const job = browserExportJobs.get(jobId);
+    if (!job) {
+      res.status(404).json({ success: false, error: '未找到导出任务资源' });
+      return;
+    }
+    express.static(job.tempDir)(req, res, next);
+  });
+
+  // PPTX 浏览器兜底：前端组装 PPTX 后 POST base64 到 callback
+  app.post('/api/export/pptx-browser', async (req, res) => {
     try {
       const goal = parseGoalBody(req.body);
-      const filePath = path.join(options.outputDir, 'deck.pptx');
-      await exportGoalToPptx(goal, { outFile: filePath });
+      const { jobId, tempDir, callbackBaseUrl } = await prepareBrowserExportDir(goal);
+      const filename = `${goal.title || 'presentation'}.pptx`;
+      const filePath = path.join(options.outputDir, filename);
+      browserExportJobs.set(jobId, { filePath, filename, mimeType: 'application/vnd.openxmlformats-officedocument.presentationml.presentation', tempDir });
 
-      log('info', 'Exported PPTX', { theme: goal.theme, slides: goal.slides.length });
-      res.download(filePath, `${goal.title || 'presentation'}.pptx`);
+      const driverHtml = renderBrowserExportDriver({
+        goal,
+        mode: 'pptx',
+        callbackUrl: callbackBaseUrl,
+        assetBaseUrl: `/browser-export/${jobId}/assets`,
+      });
+      await writeFile(path.join(tempDir, 'index.html'), driverHtml);
+
+      log('info', 'Browser PPTX export started', { jobId, theme: goal.theme });
+      res.sendFile(path.join(tempDir, 'index.html'));
     } catch (err) {
       handleError(err, req, res);
     }
   });
 
-  // 导出 PDF
-  app.post('/api/export/pdf', async (req, res) => {
+  // PDF 浏览器兜底：前端截图后 POST base64 数组到 callback，服务端 pdf-lib 组装
+  app.post('/api/export/pdf-browser', async (req, res) => {
     try {
       const goal = parseGoalBody(req.body);
-      const filePath = path.join(options.outputDir, 'deck.pdf');
-      await exportGoalToPdf(goal, { outFile: filePath });
+      const { jobId, tempDir, callbackBaseUrl } = await prepareBrowserExportDir(goal);
+      const filename = `${goal.title || 'presentation'}.pdf`;
+      const filePath = path.join(options.outputDir, filename);
+      browserExportJobs.set(jobId, { filePath, filename, mimeType: 'application/pdf', tempDir });
 
-      log('info', 'Exported PDF', { theme: goal.theme, slides: goal.slides.length });
-      res.download(filePath, `${goal.title || 'presentation'}.pdf`);
+      const driverHtml = renderBrowserExportDriver({
+        goal,
+        mode: 'pdf',
+        callbackUrl: callbackBaseUrl,
+        assetBaseUrl: `/browser-export/${jobId}/assets`,
+      });
+      await writeFile(path.join(tempDir, 'index.html'), driverHtml);
+
+      log('info', 'Browser PDF export started', { jobId, theme: goal.theme });
+      res.sendFile(path.join(tempDir, 'index.html'));
+    } catch (err) {
+      handleError(err, req, res);
+    }
+  });
+
+  // 浏览器导出回调：接收 base64 文件内容并落盘
+  app.post('/api/export/browser-callback/:jobId', express.json({ limit: '64mb' }), async (req, res) => {
+    try {
+      const { jobId } = req.params;
+      const job = browserExportJobs.get(jobId);
+      if (!job) {
+        res.status(404).json({ success: false, error: '未找到导出任务' });
+        return;
+      }
+
+      const { base64 } = req.body as { base64?: string };
+      if (typeof base64 !== 'string') {
+        res.status(400).json({ success: false, error: '缺少 base64 文件数据' });
+        return;
+      }
+      await writeFile(job.filePath, Buffer.from(base64, 'base64'));
+
+      log('info', 'Browser export callback received', { jobId, file: job.filePath });
+      res.json({ success: true, downloadUrl: `/api/export/download?jobId=${jobId}` });
+    } catch (err) {
+      handleError(err, req, res);
+    }
+  });
+
+  // 浏览器导出结果下载
+  app.get('/api/export/download', async (req, res) => {
+    try {
+      const jobId = String(req.query.jobId || '');
+      const job = browserExportJobs.get(jobId);
+      if (!job) {
+        res.status(404).json({ success: false, error: '未找到导出任务' });
+        return;
+      }
+      res.setHeader('Content-Type', job.mimeType);
+      res.setHeader('Content-Disposition', `attachment; filename="${job.filename}"`);
+      const buffer = await readFile(job.filePath);
+      res.send(buffer);
     } catch (err) {
       handleError(err, req, res);
     }

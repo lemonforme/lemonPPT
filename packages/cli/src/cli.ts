@@ -4,11 +4,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { createServer as createHttpServer } from 'node:http';
+import { createServer as createHttpsServer } from 'node:https';
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { stat, readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { generate as generateSelfSignedCert } from 'selfsigned';
 import {
   exportGoalToPdf,
   exportGoalToPptx,
@@ -32,8 +34,10 @@ function printUsage(): void {
   lemonppt generate "<input>" [--pages N] [--theme <id>] [--language zh|en] [--out goal.json] [--api-key KEY]
   lemonppt render <goal.json> [--out ./output] [--editable]
   lemonppt export <goal.json> --pptx out.pptx [--pdf out.pdf]
-  lemonppt serve [<dir>] [--port N]   # start API server if built, else static preview
-  lemonppt server [<dir>] [--port N]  # alias for serve
+  lemonppt serve [<dir>] [--port N] [--https] [--cert <path>] [--key <path>]
+                                      # start API server if built, else static preview
+  lemonppt server [<dir>] [--port N] [--https] [--cert <path>] [--key <path>]
+                                      # alias for serve
   lemonppt install-skill [--claude] [--codex] [--cursor] [--all] [--target <dir>]
 
   lemonppt list-themes
@@ -101,7 +105,39 @@ async function startApiServer(dir: string, port: number): Promise<void> {
   });
 }
 
-async function serveDir(dir: string, port: number): Promise<void> {
+interface ServeOptions {
+  /** 启用 HTTPS；未提供证书时自动生成自签名证书 */
+  https?: boolean;
+  cert?: string;
+  key?: string;
+}
+
+async function readCertFile(filePath: string | undefined): Promise<string | undefined> {
+  if (!filePath) return undefined;
+  const content = await readFile(resolve(filePath), 'utf-8');
+  return content;
+}
+
+async function resolveHttpsCredentials(options: ServeOptions): Promise<{ cert: string; key: string } | undefined> {
+  if (!options.https && !options.cert && !options.key) return undefined;
+
+  const certFromFile = await readCertFile(options.cert);
+  const keyFromFile = await readCertFile(options.key);
+
+  if (certFromFile && keyFromFile) {
+    return { cert: certFromFile, key: keyFromFile };
+  }
+
+  if (certFromFile || keyFromFile) {
+    throw new Error('使用 HTTPS 时必须同时提供 --cert 和 --key，或都不提供以自动生成自签名证书。');
+  }
+
+  const attrs = [{ name: 'commonName', value: 'localhost' }];
+  const pems = generateSelfSignedCert(attrs, { days: 365, keySize: 2048 });
+  return { cert: pems.cert, key: pems.private };
+}
+
+async function serveDir(dir: string, port: number, options: ServeOptions = {}): Promise<void> {
   const root = resolve(dir);
   const mimeTypes: Record<string, string> = {
     '.html': 'text/html; charset=utf-8',
@@ -120,8 +156,9 @@ async function serveDir(dir: string, port: number): Promise<void> {
     '.eot': 'application/vnd.ms-fontobject',
   };
 
-  const server = createHttpServer(async (req, res) => {
-    const url = new URL(req.url || '/', `http://${req.headers.host}`);
+  const requestHandler = async (req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse) => {
+    const protocol = options.https ? 'https' : 'http';
+    const url = new URL(req.url || '/', `${protocol}://${req.headers.host}`);
     let pathname = decodeURIComponent(url.pathname);
 
     if (pathname === '/') {
@@ -160,11 +197,17 @@ async function serveDir(dir: string, port: number): Promise<void> {
       res.writeHead(404);
       res.end('Not found');
     }
-  });
+  };
+
+  const credentials = await resolveHttpsCredentials(options);
+  const protocol = credentials ? 'https' : 'http';
+  const server = credentials
+    ? createHttpsServer(credentials, requestHandler)
+    : createHttpServer(requestHandler);
 
   return new Promise((resolve) => {
     server.listen(port, () => {
-      console.log(`Serving ${root} at http://localhost:${port}`);
+      console.log(`Serving ${root} at ${protocol}://localhost:${port}`);
       resolve();
     });
   });
@@ -244,12 +287,17 @@ async function main(): Promise<void> {
       case 'server': {
         const dir = positional[0] || './output';
         const port = args.options.port ? Number(args.options.port) : 3456;
+        const serveOptions: ServeOptions = {
+          https: args.options.https === true,
+          cert: args.options.cert as string | undefined,
+          key: args.options.key as string | undefined,
+        };
         if (existsSync(apiServerPath)) {
           console.log(`Starting API server on port ${port}...`);
           await startApiServer(dir, port);
         } else {
           console.log(`API server not built, falling back to static preview.`);
-          await serveDir(dir, port);
+          await serveDir(dir, port, serveOptions);
           // 保持进程运行
           await new Promise(() => {});
         }

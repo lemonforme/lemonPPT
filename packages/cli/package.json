@@ -39,7 +39,8 @@
     "@lemonppt/agent-prompts": "workspace:*",
     "@lemonppt/core": "workspace:*",
     "@lemonppt/renderer": "workspace:*",
-    "@lemonppt/themes": "workspace:*"
+    "@lemonppt/themes": "workspace:*",
+    "selfsigned": "^2.4.1"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

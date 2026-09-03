@@ -4,10 +4,12 @@
 
 import { generateGoal } from '@lemonppt/agent-prompts';
 import type { DeckGoal } from '@lemonppt/core';
-import { normalizeDeckGoal, preprocessAgentGoal, validateDeckGoal, validateDeckGoalContent, validateSlideCount } from '@lemonppt/core';
+import { preprocessAgentGoal, validateDeckGoal, validateDeckGoalContent, validateSlideCount } from '@lemonppt/core';
 import {
   exportDeckToPdf,
-  exportDeckToPptx,
+  exportDeckToPptxScreenshot,
+  normalizeGoal,
+  renderBrowserExportDriver,
   renderDeck,
   renderEditorData,
   type RenderOptions,
@@ -56,6 +58,21 @@ function resolveTheme(themeId?: string): string {
   return getTheme(id) ? id : 'theme01';
 }
 
+function isBrowserLaunchError(err: unknown): boolean {
+  const message = err instanceof Error ? err.message : String(err);
+  return /launch|browser|chromium|executable|playwright/i.test(message);
+}
+
+async function copyBrowserExportAssets(assetsDir: string): Promise<void> {
+  await mkdir(assetsDir, { recursive: true });
+  const vendorSource = resolvePackagePath('@lemonppt/renderer', 'assets', 'vendor');
+  const vendorDest = path.join(assetsDir, 'vendor');
+  await cp(vendorSource, vendorDest, { recursive: true, force: true });
+  const bundleSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'browser-export.js');
+  const bundleDest = path.join(assetsDir, 'browser-export.js');
+  await copyFile(bundleSource, bundleDest);
+}
+
 export async function copyThemeAssets(themeId: string, assetsDir: string): Promise<void> {
   const theme = resolveTheme(themeId);
   await mkdir(assetsDir, { recursive: true });
@@ -87,6 +104,15 @@ export async function copyThemeAssets(themeId: string, assetsDir: string): Promi
   const editorScriptSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'editor-script.js');
   const editorScriptDest = path.join(assetsDir, 'editor-script.js');
   await copyFile(editorScriptSource, editorScriptDest);
+
+  // 复制浏览器端导出兜底脚本及 vendor bundle（沙箱环境无法启动 Chromium 时使用）
+  const browserExportSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'browser-export.js');
+  const browserExportDest = path.join(assetsDir, 'browser-export.js');
+  await copyFile(browserExportSource, browserExportDest);
+
+  const vendorDirSource = resolvePackagePath('@lemonppt/renderer', 'assets', 'vendor');
+  const vendorDirDest = path.join(assetsDir, 'vendor');
+  await cp(vendorDirSource, vendorDirDest, { recursive: true, force: true });
 }
 
 export interface StageMediaOptions {
@@ -179,7 +205,7 @@ export async function readGoalFromFile(filePath: string): Promise<DeckGoal> {
   const raw = await readFile(path.resolve(filePath), 'utf-8');
   const parsed = preprocessAgentGoal(JSON.parse(raw)) as unknown as DeckGoal;
   parsed.theme = resolveTheme(parsed.theme);
-  return normalizeDeckGoal(parsed);
+  return normalizeGoal(parsed);
 }
 
 /**
@@ -248,8 +274,31 @@ window.__lemonPPT_layoutSchemas = ${JSON.stringify(layoutSchemas)};
   return { html: result.html, indexPath, assetsDir, assets: result.assets };
 }
 
+async function generateBrowserFallbackDriver(
+  goal: DeckGoal,
+  mode: 'pptx' | 'pdf',
+  outFile: string,
+): Promise<string> {
+  const driverDir = path.join(path.dirname(outFile), `.browser-fallback-${mode}`);
+  const assetsDir = path.join(driverDir, 'assets');
+  await mkdir(assetsDir, { recursive: true });
+  await copyThemeAssets(goal.theme, assetsDir);
+  await copyBrowserExportAssets(assetsDir);
+
+  const driverHtml = renderBrowserExportDriver({
+    mode,
+    goal,
+    callbackUrl: '',
+    assetBaseUrl: './assets',
+  });
+  const driverPath = path.join(driverDir, 'index.html');
+  await writeFile(driverPath, driverHtml, 'utf-8');
+  return driverPath;
+}
+
 /**
  * 导出 goal 为 PPTX。
+ * 若服务端 Chromium 无法启动，会自动生成浏览器兜底驱动页。
  */
 export async function exportGoalToPptx(
   goal: DeckGoal,
@@ -257,11 +306,22 @@ export async function exportGoalToPptx(
 ): Promise<void> {
   const outFile = path.resolve(options.outFile);
   await mkdir(path.dirname(outFile), { recursive: true });
-  await exportDeckToPptx(goal, { outFile });
+  try {
+    await exportDeckToPptxScreenshot(goal, { outFile });
+  } catch (err) {
+    if (!isBrowserLaunchError(err)) {
+      throw err;
+    }
+    const driverPath = await generateBrowserFallbackDriver(goal, 'pptx', outFile);
+    throw new Error(
+      `无法启动 Chromium 进行 PPTX 导出。已生成浏览器兜底驱动页：${driverPath}，请用浏览器打开该页面完成导出。`,
+    );
+  }
 }
 
 /**
  * 导出 goal 为 PDF。
+ * 若服务端 Chromium 无法启动，会自动生成浏览器兜底驱动页。
  */
 export async function exportGoalToPdf(
   goal: DeckGoal,
@@ -269,7 +329,17 @@ export async function exportGoalToPdf(
 ): Promise<void> {
   const outFile = path.resolve(options.outFile);
   await mkdir(path.dirname(outFile), { recursive: true });
-  await exportDeckToPdf(goal, { outFile });
+  try {
+    await exportDeckToPdf(goal, { outFile });
+  } catch (err) {
+    if (!isBrowserLaunchError(err)) {
+      throw err;
+    }
+    const driverPath = await generateBrowserFallbackDriver(goal, 'pdf', outFile);
+    throw new Error(
+      `无法启动 Chromium 进行 PDF 导出。已生成浏览器兜底驱动页：${driverPath}，请用浏览器打开该页面完成导出。`,
+    );
+  }
 }
 
 /**

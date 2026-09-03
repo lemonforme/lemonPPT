@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/lemonforme/lemonPPT#readme",
   "scripts": {
-    "build": "tsc && node scripts/build-editor-script.js && esbuild src/client-render.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_clientRender --outfile=dist/client/client-render.js --alias:react-dom/server=react-dom/server.browser --target=es2019 --minify && esbuild src/theme-echarts.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_themeECharts --outfile=dist/client/theme-echarts.js --target=es2019 --minify",
+    "build": "tsc && node scripts/build-editor-script.js && esbuild src/client-render.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_clientRender --outfile=dist/client/client-render.js --alias:react-dom/server=react-dom/server.browser --target=es2019 --minify && esbuild src/theme-echarts.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_themeECharts --outfile=dist/client/theme-echarts.js --target=es2019 --minify && node scripts/build-vendor-bundles.js && esbuild src/browser-export.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_browserExport --outfile=dist/client/browser-export.js --target=es2019 --minify",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "tsc"
   },
@@ -37,6 +37,8 @@
     "@lemonppt/dom-to-pptx": "workspace:*",
     "@lemonppt/templates": "workspace:*",
     "@lemonppt/themes": "workspace:*",
+    "html-to-image": "^1.11.13",
+    "pdf-lib": "^1.17.1",
     "playwright": "^1.62.1",
     "pptxgenjs": "3.12.0",
     "react": "^18.3.1",

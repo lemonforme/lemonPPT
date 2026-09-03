@@ -11,7 +11,7 @@ import { createServer } from 'node:http';
 import { readFile, writeFile, mkdir, copyFile, cp } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderDeck, renderEditorData, exportDeckToPptx, exportDeckToPdf } from '@lemonppt/renderer';
+import { renderDeck, renderEditorData, exportDeckToPptxScreenshot, exportDeckToPdf } from '@lemonppt/renderer';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -173,7 +173,7 @@ const server = createServer(async (req, res) => {
     if (req.method === 'POST' && url.pathname === '/api/export/pptx') {
       const goal = await readJsonBody(req);
       const outFile = path.join(outputDir, 'presentation.pptx');
-      await exportDeckToPptx(goal, { outFile });
+      await exportDeckToPptxScreenshot(goal, { outFile });
       const data = await readFile(outFile);
       res.writeHead(200, {
         'Content-Type': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',

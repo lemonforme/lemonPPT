@@ -112,20 +112,51 @@ const DEFAULT_LINKS: Theme09NetworkLink[] = [
   { source: '数据服务', target: '模型团队' },
 ];
 
+function deterministicPosition(cat: number, indexInCat: number, totalInCat: number): { x: number; y: number } {
+  // 中心 hub + 四组卫星固定坐标，彻底消除 force 布局随机性。
+  if (cat === 0) return { x: 500, y: 500 };
+  // 类别 1-4 分布在右、上、左、下四个方向
+  const angle = ((cat - 1) * 90 * Math.PI) / 180;
+  const radius = 380;
+  const baseX = 500 + radius * Math.cos(angle);
+  const baseY = 500 + radius * Math.sin(angle);
+  if (totalInCat <= 1) return { x: baseX, y: baseY };
+  // 同类别多个节点时沿垂直方向散开
+  const spread = 120;
+  const offset = (indexInCat - (totalInCat - 1) / 2) * spread;
+  return {
+    x: baseX + offset * Math.cos(angle + Math.PI / 2),
+    y: baseY + offset * Math.sin(angle + Math.PI / 2),
+  };
+}
+
 function buildOption(nodes: Theme09NetworkNode[], links: Theme09NetworkLink[]): Record<string, unknown> {
   const c = t9ChartColors('ink');
   const ns = nodes.length ? nodes : DEFAULT_NODES;
   const ls = links.length ? links : DEFAULT_LINKS;
+
+  // 按类别统计节点数量，用于同类别内散列
+  const catCounts = new Map<number, number>();
+  const catIndices = new Map<number, number>();
+  for (const n of ns) {
+    const cat = typeof n.category === 'number' ? n.category : 0;
+    catCounts.set(cat, (catCounts.get(cat) || 0) + 1);
+  }
 
   const nodeData = ns.map((n, i) => {
     const cat = typeof n.category === 'number' ? n.category : 0;
     const hub = cat === 0;
     const v = t9ParseNumber(n.value) || 40;
     const color = hub ? c.accent : c.series[cat % c.series.length];
+    const idxInCat = catIndices.get(cat) || 0;
+    catIndices.set(cat, idxInCat + 1);
+    const pos = deterministicPosition(cat, idxInCat, catCounts.get(cat) || 1);
     return {
       name: n.name ?? `节点 ${i + 1}`,
       value: v,
       category: cat,
+      x: pos.x,
+      y: pos.y,
       symbolSize: hub ? 66 : 26 + Math.min(v, 100) * 0.22,
       itemStyle: {
         color,
@@ -152,10 +183,13 @@ function buildOption(nodes: Theme09NetworkNode[], links: Theme09NetworkLink[]): 
 
   return {
     tooltip: t9Tooltip(c),
+    xAxis: { show: false, min: 0, max: 1000 },
+    yAxis: { show: false, min: 0, max: 1000 },
     series: [
       {
         type: 'graph',
-        layout: 'force',
+        coordinateSystem: 'cartesian2d',
+        layout: 'none',
         roam: false,
         draggable: false,
         top: '4%',
@@ -164,9 +198,7 @@ function buildOption(nodes: Theme09NetworkNode[], links: Theme09NetworkLink[]): 
         bottom: '4%',
         data: nodeData,
         links: linkData,
-        force: { repulsion: 240, edgeLength: [60, 130], gravity: 0.15, friction: 0.25 },
         emphasis: t9Emphasis(c, { focus: 'adjacency', lineStyle: { width: 3, color: t9Rgba(c.accent, 0.7) } }),
-        labelLayout: { hideOverlap: true },
         lineStyle: { color: t9Rgba(c.ink, 0.24), curveness: 0.12 },
       },
     ],

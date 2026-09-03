@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import type { DeckGoal, EditorData, RenderOutput } from '@lemonppt/core';
-import { normalizeDeckGoal } from '@lemonppt/core';
+import { normalizeGoal } from './normalize-goal.js';
 import {
   renderSlide,
   generateThemeCssVariablesWithDark,
@@ -89,7 +89,7 @@ function resolveThemeMeta(goal: DeckGoal) {
  * 返回的各字段可直接注入统一的 editor.html 模板，不再为每个主题单独生成完整页面。
  */
 export function renderEditorData(goal: DeckGoal, options: RenderEditorOptions = {}): EditorData {
-  goal = normalizeDeckGoal(goal);
+  goal = normalizeGoal(goal);
   const { width = 1280, height = 720 } = options;
 
   const slideElements = goal.slides.map((slide, index) => {
