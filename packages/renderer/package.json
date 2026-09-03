@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@lemonppt/core": "workspace:*",
+    "@lemonppt/dom-to-pptx": "workspace:*",
     "@lemonppt/templates": "workspace:*",
     "@lemonppt/themes": "workspace:*",
     "playwright": "^1.62.1",

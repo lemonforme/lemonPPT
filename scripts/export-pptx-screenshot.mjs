@@ -4,22 +4,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /**
- * 将 goal.json 导出为 PPTX
- * 用法: node scripts/export-pptx.mjs [path/to/goal.json] [path/to/output.pptx]
+ * 截图式 PPTX 导出
+ * 用法: node scripts/export-pptx-screenshot.mjs [path/to/goal.json] [path/to/output.pptx]
  */
 import { readFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { exportDeckToPptx, exportDeckToPptxScreenshot } from '@lemonppt/renderer';
+import { exportDeckToPptxScreenshot } from '@lemonppt/renderer';
 import { validateDeckGoal, validateDeckGoalContent } from '@lemonppt/core';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
-const args = process.argv.slice(2);
-const useScreenshot = args.includes('--screenshot');
-const positional = args.filter((a) => !a.startsWith('--'));
-const goalPath = positional[0] ?? path.join(rootDir, 'examples', 'sample-goal.json');
-const outFile = positional[1] ?? path.join(rootDir, 'output', 'presentation.pptx');
+const goalPath = process.argv[2] ?? path.join(rootDir, 'examples', 'sample-goal.json');
+const outFile = process.argv[3] ?? path.join(rootDir, 'output', 'presentation-screenshot.pptx');
 
 async function main() {
   const raw = await readFile(goalPath, 'utf-8');
@@ -40,24 +37,14 @@ async function main() {
 
   await mkdir(path.dirname(outFile), { recursive: true });
 
-  if (useScreenshot) {
-    await exportDeckToPptxScreenshot(validation.data, {
-      outFile,
-      title: validation.data.title,
-      subject: validation.data.goal,
-      author: validation.data.owner || 'lemonPPT',
-    });
-    console.log(`已导出截图式 PPTX: ${outFile}`);
-  } else {
-    await exportDeckToPptx(validation.data, {
-      outFile,
-      title: validation.data.title,
-      subject: validation.data.goal,
-      author: validation.data.owner || 'lemonPPT',
-    });
-    console.log(`已导出 PPTX: ${outFile}`);
-  }
+  await exportDeckToPptxScreenshot(validation.data, {
+    outFile,
+    title: validation.data.title,
+    subject: validation.data.goal,
+    author: validation.data.owner || 'lemonPPT',
+  });
 
+  console.log(`已导出截图式 PPTX: ${outFile}`);
   console.log(`页数: ${validation.data.slides.length}`);
 }
 

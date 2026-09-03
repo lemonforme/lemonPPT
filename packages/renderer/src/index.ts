@@ -6,3 +6,4 @@ export * from './render.js';
 export * from './render-editor-data.js';
 export * from './export-pptx.js';
 export * from './export-pdf.js';
+export * from './export-pptx-screenshot.js';

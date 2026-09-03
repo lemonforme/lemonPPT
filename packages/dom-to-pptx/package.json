@@ -1,0 +1,43 @@
+{
+  "name": "@lemonppt/dom-to-pptx",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lemonforme/lemonPPT.git",
+    "directory": "packages/dom-to-pptx"
+  },
+  "bugs": {
+    "url": "https://github.com/lemonforme/lemonPPT/issues"
+  },
+  "homepage": "https://github.com/lemonforme/lemonPPT#readme",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "tsc"
+  },
+  "dependencies": {
+    "playwright": "^1.62.1",
+    "pptx-embed-fonts": "^0.0.6",
+    "pptxgenjs": "3.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.5.0"
+  },
+  "license": "AGPL-3.0"
+}
