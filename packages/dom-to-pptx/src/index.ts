@@ -5,6 +5,7 @@
 import { cp, mkdir, mkdtemp, writeFile, rm, readFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import PptxGenJS from 'pptxgenjs';
 import { withPPTXEmbedFonts } from 'pptx-embed-fonts/pptxgenjs';
@@ -388,16 +389,24 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
 
     // 添加图片覆盖层
     for (const img of images) {
+      let imagePath = img.src;
+      if (imagePath.startsWith('file:')) {
+        imagePath = fileURLToPath(imagePath);
+      } else if (/^https?:/.test(imagePath)) {
+        log.warn(`第 ${i + 1} 页跳过远程图片（当前不支持自动下载）: ${imagePath}`);
+        continue;
+      }
+
       try {
         slide.addImage({
-          path: img.src,
+          path: imagePath,
           x: pxToIn(img.x),
           y: pxToIn(img.y),
           w: pxToIn(img.w),
           h: pxToIn(img.h),
         });
       } catch (err) {
-        log.warn(`第 ${i + 1} 页图片添加失败: ${img.src}`, err);
+        log.warn(`第 ${i + 1} 页图片添加失败: ${imagePath}`, err);
       }
     }
 
@@ -729,8 +738,16 @@ function extractImages(slideIndex, markElements) {
     const rect = el.getBoundingClientRect();
     if (rect.width < 2 || rect.height < 2) return;
 
-    const src = el.getAttribute('src');
-    if (!src || src.startsWith('data:')) return; // data URI 暂不支持直接引用
+    const rawSrc = el.getAttribute('src');
+    if (!rawSrc || rawSrc.startsWith('data:')) return; // data URI 暂不支持直接引用
+
+    // 将相对路径解析为绝对 file:// URL，便于 Node 端读取。
+    let src;
+    try {
+      src = new URL(rawSrc, window.location.href).href;
+    } catch {
+      src = rawSrc;
+    }
 
     images.push({
       src,
