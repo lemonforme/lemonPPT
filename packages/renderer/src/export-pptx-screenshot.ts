@@ -15,9 +15,9 @@ import { startPreviewServer } from './preview-server.js';
 export interface ExportPptxScreenshotOptions {
   /** 输出 PPTX 文件路径 */
   outFile: string;
-  /** 页面宽度（像素），默认 1280 */
+  /** 页面宽度（像素），默认 1920 */
   width?: number;
-  /** 页面高度（像素），默认 720 */
+  /** 页面高度（像素），默认 1080 */
   height?: number;
   /** PPTX 元数据：标题 */
   title?: string;
@@ -35,6 +35,8 @@ export interface ExportPptxScreenshotOptions {
   downloadRemoteImages?: boolean;
   /** 是否对复杂区域（图表、复杂 SVG、表格等）单独截图并叠加，默认 true */
   regionFallback?: boolean;
+  /** Playwright 截图设备像素比，默认 2（Retina）。设置为 1 可减小文件体积 */
+  deviceScaleFactor?: number;
   /** 结构化日志器 */
   logger?: Logger;
   /** 进度回调 */
@@ -54,8 +56,8 @@ export async function exportDeckToPptxScreenshot(
   goal = normalizeGoal(goal);
   const {
     outFile,
-    width = 1280,
-    height = 720,
+    width = 1920,
+    height = 1080,
     title,
     subject,
     author,
@@ -64,11 +66,12 @@ export async function exportDeckToPptxScreenshot(
     extractImages = true,
     downloadRemoteImages = true,
     regionFallback = true,
+    deviceScaleFactor = 2,
     logger,
     onProgress,
   } = options;
 
-  const result = renderDeck(goal);
+  const result = renderDeck(goal, { width, height });
   const theme = goal.theme || 'theme01';
 
   // 在临时目录中准备静态资源，确保 HTML 中的相对引用可用。
@@ -121,6 +124,7 @@ export async function exportDeckToPptxScreenshot(
         extractImages,
         downloadRemoteImages,
         regionFallback,
+        deviceScaleFactor,
         fontDir: fontsDest,
         initECharts: true,
         logger,

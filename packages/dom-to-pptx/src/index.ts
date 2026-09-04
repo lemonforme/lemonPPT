@@ -26,7 +26,9 @@ declare global {
   function extractTextBoxes(slideIndex: number, markElements?: boolean): TextBox[];
   function extractVectorizableShapes(slideIndex: number, markElements?: boolean): ShapeOverlay[];
   function extractImages(slideIndex: number, markElements?: boolean): ImageOverlay[];
-  function extractFallbackRegions(slideIndex: number, markElements?: boolean): Array<{ x: number; y: number; w: number; h: number; selector?: string }>;
+  function detectFallbackRegions(slideIndex: number): Array<{ x: number; y: number; w: number; h: number; selector?: string }>;
+  function hideFallbackRegions(slideIndex: number): void;
+  function showFallbackRegions(slideIndex: number): void;
   function restoreOverlayStyles(): void;
 }
 
@@ -83,6 +85,8 @@ export interface ExportDomToPptxOptions {
   navigationTimeout?: number;
   /** 截图超时毫秒数，默认 30000 */
   screenshotTimeout?: number;
+  /** Playwright 截图设备像素比，默认 2（Retina）。设置为 1 可减小文件体积 */
+  deviceScaleFactor?: number;
   /** 结构化日志器，默认 console */
   logger?: Logger;
   /** 进度回调 */
@@ -141,6 +145,8 @@ interface FallbackRegion {
   y: number;
   w: number;
   h: number;
+  /** 区域单独截图失败时，回退到整页截图裁剪，此时区域内文字/图形/图片不应再叠加，避免重复。 */
+  imageOnly?: boolean;
 }
 
 interface SlideData {
@@ -166,8 +172,8 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
     html,
     assetsDir,
     previewUrl,
-    width = 1280,
-    height = 720,
+    width = 1920,
+    height = 1080,
     title,
     subject,
     author,
@@ -181,6 +187,7 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
     echartsWaitMs = 600,
     navigationTimeout = 30000,
     screenshotTimeout = 30000,
+    deviceScaleFactor = 2,
     logger = console,
     onProgress,
   } = options;
@@ -272,7 +279,8 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
   try {
     log.info('启动 Playwright Chromium');
     browser = await chromium.launch();
-    const page = await browser.newPage();
+    const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor });
+    const page = await context.newPage();
 
     const screenshotDir = path.join(tempDir, 'screenshots');
     await mkdir(screenshotDir, { recursive: true });
@@ -284,7 +292,6 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
     const targetUrl = previewUrl || 'file://' + tempHtml;
     log.info(`加载页面: ${targetUrl}`);
     progress({ phase: 'render', message: '加载 HTML 并等待资源就绪' });
-    await page.setViewportSize({ width, height });
     await page.goto(targetUrl, { waitUntil: 'domcontentloaded' });
 
     // 等待字体就绪，避免文字截断或 fallback 字体导致排版偏差。
@@ -426,8 +433,13 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
       let images: ImageOverlay[] = [];
       let fallbackRegions: FallbackRegion[] = [];
 
+      if (regionFallback) {
+        // 先识别复杂区域，后续文字/形状/图片提取会据此决定是否在区域内隐藏。
+        fallbackRegions = await page.evaluate((idx) => detectFallbackRegions(idx), i);
+      }
       if (editableText) {
         // 先提取文字并隐藏原始文字，再截图，避免底层截图文字与叠加文字重影。
+        // 复杂区域内部的文字也会被提取，稍后区域截图中文字保持隐藏，再通过文本框叠加恢复可编辑性。
         textBoxes = await page.evaluate((idx) => extractTextBoxes(idx, true), i);
       }
       if (vectorizeShapes) {
@@ -435,12 +447,12 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
         shapes = await page.evaluate((idx) => extractVectorizableShapes(idx, true), i);
       }
       if (extractImagesEnabled) {
-        // 提取 <img> 并在截图中隐藏，避免重复绘制。
+        // 提取 <img> 并在截图中隐藏，避免重复绘制；复杂区域内的图片由区域截图保留。
         images = await page.evaluate((idx) => extractImages(idx, true), i);
       }
-      if (regionFallback) {
-        // 识别无法矢量化的复杂区域，在整页截图时隐藏，稍后单独截图并叠加。
-        fallbackRegions = await page.evaluate((idx) => extractFallbackRegions(idx, true), i);
+      if (regionFallback && fallbackRegions.length > 0) {
+        // 整页截图前隐藏复杂区域，稍后单独截图并叠加。
+        await page.evaluate((idx) => hideFallbackRegions(idx), i);
       }
 
       // 启用区域级 fallback 且有复杂区域时，整页背景改用 JPEG 压缩，复杂区域单独用 PNG 保留质量，从而整体体积下降。
@@ -459,22 +471,11 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
         throw new Error(`第 ${i + 1} 页截图失败: ${err instanceof Error ? err.message : String(err)}`);
       }
 
-      if (editableText || vectorizeShapes || extractImagesEnabled || regionFallback) {
-        // 恢复被隐藏的文字/图形/图片/区域样式，避免影响下一页提取。
-        await page.evaluate(() => restoreOverlayStyles());
-      }
-
       // 区域级 alpha-matte：对复杂区域单独截图并叠加。
+      const failedRegionIndices: number[] = [];
       if (regionFallback && fallbackRegions.length > 0) {
-        // 排除落在复杂区域内的文本框与形状，避免与区域截图重复绘制。
-        const isInsideRegion = (item: { x: number; y: number; w: number; h: number }) => {
-          const cx = item.x + item.w / 2;
-          const cy = item.y + item.h / 2;
-          return fallbackRegions.some((r) => cx >= r.x && cx <= r.x + r.w && cy >= r.y && cy <= r.y + r.h);
-        };
-        textBoxes = textBoxes.filter((t) => !isInsideRegion(t));
-        shapes = shapes.filter((s) => !isInsideRegion(s));
-        images = images.filter((img) => !isInsideRegion(img));
+        // 恢复复杂区域可见性；文字仍保持隐藏（将在最后统一恢复并叠加为文本框）。
+        await page.evaluate((idx) => showFallbackRegions(idx), i);
 
         for (let r = 0; r < fallbackRegions.length; r++) {
           const region = fallbackRegions[r];
@@ -485,10 +486,50 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
             await regionEl.screenshot({ path: regionPath, type: 'png', timeout: screenshotTimeout });
             region.path = regionPath;
           } catch (err) {
-            log.warn(`第 ${i + 1} 页区域 ${r + 1} 截图失败，跳过`, err);
+            log.warn(`第 ${i + 1} 页区域 ${r + 1} 单独截图失败，将回退到整页裁剪`, err);
+            failedRegionIndices.push(r);
+          }
+        }
+      }
+
+      // 对单独截图失败的区域，回退到恢复所有样式后按整页裁剪，保证不出现空白。
+      if (failedRegionIndices.length > 0) {
+        await page.evaluate(() => restoreOverlayStyles());
+        for (const r of failedRegionIndices) {
+          const region = fallbackRegions[r];
+          const regionPath = path.join(screenshotDir, `slide-${i}-region-${r}-fallback.png`);
+          try {
+            await page.screenshot({
+              path: regionPath,
+              type: 'png',
+              clip: { x: region.x, y: region.y, width: region.w, height: region.h },
+              timeout: screenshotTimeout,
+            });
+            region.path = regionPath;
+            region.imageOnly = true;
+          } catch (err) {
+            log.warn(`第 ${i + 1} 页区域 ${r + 1} 整页裁剪也失败，跳过该区域`, err);
             region.path = '';
           }
         }
+
+        // 回退区域已包含文字/图形/图片，避免再叠加造成重影。
+        const isInsideFailedRegion = (item: { x: number; y: number; w: number; h: number }) => {
+          const cx = item.x + item.w / 2;
+          const cy = item.y + item.h / 2;
+          return failedRegionIndices.some((idx) => {
+            const r = fallbackRegions[idx];
+            return cx >= r.x && cx <= r.x + r.w && cy >= r.y && cy <= r.y + r.h;
+          });
+        };
+        textBoxes = textBoxes.filter((t) => !isInsideFailedRegion(t));
+        shapes = shapes.filter((s) => !isInsideFailedRegion(s));
+        images = images.filter((img) => !isInsideFailedRegion(img));
+      }
+
+      if (editableText || vectorizeShapes || extractImagesEnabled || regionFallback) {
+        // 恢复被隐藏的文字/图形/图片/区域样式，避免影响下一页提取。
+        await page.evaluate(() => restoreOverlayStyles());
       }
 
       log.debug(`第 ${i + 1} 页: ${textBoxes.length} 文本框, ${shapes.length} 形状, ${images.length} 图片, ${fallbackRegions.length} 区域`);
@@ -535,10 +576,12 @@ interface BuildPPTXOptions {
 async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
   const { slides, width, height, title, subject, author, fontDir, log, progress, imageResolver } = options;
 
+  // 设计稿以 1280×720 为基准，1280px 对应 10 英寸；高分辨率导出时保持相同像素密度。
+  const pxToIn = (px: number) => (px * 10) / 1280;
+
   const EnhancedPptxGenJS = withPPTXEmbedFonts(PptxGenJS);
   const pptx = new EnhancedPptxGenJS();
 
-  // 按实际像素尺寸设置幻灯片大小：1280x720 -> 10 x 5.625 inch。
   pptx.defineLayout({ name: 'CUSTOM', width: pxToIn(width), height: pxToIn(height) });
   pptx.layout = 'CUSTOM';
 
@@ -693,10 +736,6 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
   return await readFile(outFile);
 }
 
-function pxToIn(px: number): number {
-  return (px * 10) / 1280;
-}
-
 function buildFontRegistry(fontDir: string): Record<string, string> {
   return {
     Anton: path.join(fontDir, 'Anton', 'Anton-Regular.ttf'),
@@ -737,6 +776,22 @@ function isIgnoredElement(el) {
   return el.matches && el.matches('.lp-nav, .lp-page-counter, .lp-hint');
 }
 
+function isInsideFallbackRegion(el) {
+  let node = el;
+  while (node) {
+    if (node.getAttribute && node.getAttribute('data-lp-region-fallback') === 'true') return true;
+    node = node.parentElement;
+  }
+  return false;
+}
+
+function getExportScale() {
+  const slide = document.querySelector('.lp-slide');
+  if (!slide) return 1;
+  const zoom = window.getComputedStyle(slide).zoom;
+  return parseFloat(zoom) || 1;
+}
+
 function walkElements(root, callback) {
   function walk(el) {
     for (const child of Array.from(el.children)) {
@@ -760,6 +815,7 @@ function extractTextBoxes(slideIndex, markElements) {
   const wrapper = getWrapper(slideIndex);
   if (!wrapper) return [];
 
+  const scale = getExportScale();
   const wrapperRect = wrapper.getBoundingClientRect();
   const candidates = [];
 
@@ -818,7 +874,7 @@ function extractTextBoxes(slideIndex, markElements) {
       w: rect.width,
       h: rect.height,
       fontFamilies,
-      fontSize: fontSizePx * 0.75,
+      fontSize: fontSizePx * 0.75 * scale,
       color,
       bold,
       italic,
@@ -925,8 +981,9 @@ function extractSvgShapes(slideIndex, markElements) {
 
   wrapper.querySelectorAll('svg').forEach((svg) => {
       if (isIgnoredElement(svg)) return;
-      // ECharts 图表走区域截图 fallback，不做强制矢量化
+      // ECharts 图表及已标记为 fallback 区域内部的 SVG 不做强制矢量化
       if (svg.hasAttribute('data-lp-echart-type')) return;
+      if (isInsideFallbackRegion(svg)) return;
       const svgRect = svg.getBoundingClientRect();
     if (svgRect.width < 2 || svgRect.height < 2) return;
 
@@ -1048,17 +1105,58 @@ function hasComplexGradient(el) {
   return bg && bg !== 'none' && /linear-gradient|radial-gradient|conic-gradient|repeating/.test(bg);
 }
 
-function hasFilterOrComplexClip(el) {
-  const style = window.getComputedStyle(el);
-  return !!(style.filter && style.filter !== 'none') ||
-    !!(style.clipPath && style.clipPath !== 'none');
+function splitFilterFunctions(filter) {
+  const fns = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < filter.length; i++) {
+    if (filter[i] === '(') depth++;
+    else if (filter[i] === ')') {
+      depth--;
+      if (depth === 0) {
+        fns.push(filter.slice(start, i + 1).trim());
+        start = i + 1;
+      }
+    }
+  }
+  return fns;
 }
 
-function extractFallbackRegions(slideIndex, markElements) {
+function hasFilterOrComplexClip(el) {
+  const style = window.getComputedStyle(el);
+  if (style.clipPath && style.clipPath !== 'none') return true;
+  if (!style.filter || style.filter === 'none') return false;
+  // drop-shadow 在主题装饰中很常见，其效果可通过 PPTX 阴影近似；
+  // 仅当存在其他滤镜（blur/brightness/hue-rotate/url 等）时才视为必须截图的复杂元素。
+  const filters = splitFilterFunctions(style.filter);
+  return filters.some((f) => !f.startsWith('drop-shadow'));
+}
+
+function pushFallbackRegion(regions, regionEls, el, wrapperRect) {
+  if (isInsideFallbackRegion(el)) return false;
+  const rect = el.getBoundingClientRect();
+  if (rect.width < 4 || rect.height < 4) return false;
+  if (rect.width > wrapperRect.width * 0.98 && rect.height > wrapperRect.height * 0.98) return false;
+
+  regions.push({
+    x: rect.left - wrapperRect.left,
+    y: rect.top - wrapperRect.top,
+    w: rect.width,
+    h: rect.height,
+    selector: el.className || el.tagName.toLowerCase(),
+  });
+
+  el.setAttribute('data-lp-region-fallback', 'true');
+  regionEls.push(el);
+  return true;
+}
+
+function detectFallbackRegions(slideIndex) {
   const wrapper = getWrapper(slideIndex);
   if (!wrapper) return [];
   const wrapperRect = wrapper.getBoundingClientRect();
   const regions = [];
+  const regionEls = [];
 
   const selectors = [
     '.lp-fallback-region',
@@ -1071,6 +1169,9 @@ function extractFallbackRegions(slideIndex, markElements) {
     '.lp-comparison-v3-table',
   ];
   wrapper.querySelectorAll(selectors.join(',')).forEach((el) => {
+    // 已在其他 fallback 区域内则跳过，避免重复截图。
+    if (regionEls.some((r) => r !== el && r.contains(el))) return;
+
     // SVG：ECharts 图表强制走区域截图；其它 SVG 仅当无法简单矢量化时才作为 fallback region
     if (el.tagName.toLowerCase() === 'svg') {
       if (!el.hasAttribute('data-lp-echart-type')) {
@@ -1078,28 +1179,44 @@ function extractFallbackRegions(slideIndex, markElements) {
         if (shapes.length > 0) return; // 已可矢量化，不再截图
       }
     }
-    const rect = el.getBoundingClientRect();
-    if (rect.width < 4 || rect.height < 4) return;
-    if (rect.width > wrapperRect.width * 0.98 && rect.height > wrapperRect.height * 0.98) return;
 
-    regions.push({
-      x: rect.left - wrapperRect.left,
-      y: rect.top - wrapperRect.top,
-      w: rect.width,
-      h: rect.height,
-      selector: el.className || el.tagName.toLowerCase(),
-    });
+    pushFallbackRegion(regions, regionEls, el, wrapperRect);
+  });
 
-    if (markElements) {
-      el.setAttribute('data-lp-region-fallback', 'true');
-      const original = JSON.parse(el.getAttribute('data-lp-overlay') || '{}');
-      original.opacity = el.style.getPropertyValue('opacity');
-      el.style.setProperty('opacity', '0', 'important');
-      el.setAttribute('data-lp-overlay', JSON.stringify(original));
-    }
+  // 补充识别未显式标记但带有滤镜、复杂裁剪等效果的元素（渐变背景暂不走自动 fallback，避免主题装饰被过度截图）。
+  wrapper.querySelectorAll('*').forEach((el) => {
+    if (regionEls.some((r) => r !== el && r.contains(el))) return;
+    if (!hasFilterOrComplexClip(el)) return;
+    const parent = el.parentElement;
+    if (parent && hasFilterOrComplexClip(parent)) return;
+    pushFallbackRegion(regions, regionEls, el, wrapperRect);
   });
 
   return regions;
+}
+
+function hideFallbackRegions(slideIndex) {
+  const wrapper = getWrapper(slideIndex);
+  if (!wrapper) return;
+  wrapper.querySelectorAll('[data-lp-region-fallback="true"]').forEach((el) => {
+    const original = JSON.parse(el.getAttribute('data-lp-overlay') || '{}');
+    original.opacity = el.style.getPropertyValue('opacity');
+    el.style.setProperty('opacity', '0', 'important');
+    el.setAttribute('data-lp-overlay', JSON.stringify(original));
+  });
+}
+
+function showFallbackRegions(slideIndex) {
+  const wrapper = getWrapper(slideIndex);
+  if (!wrapper) return;
+  wrapper.querySelectorAll('[data-lp-region-fallback="true"]').forEach((el) => {
+    const original = JSON.parse(el.getAttribute('data-lp-overlay') || '{}');
+    if (original.opacity !== undefined && original.opacity !== '') {
+      el.style.setProperty('opacity', original.opacity, 'important');
+    } else {
+      el.style.removeProperty('opacity');
+    }
+  });
 }
 
 function extractVectorizableShapes(slideIndex, markElements) {
@@ -1116,6 +1233,9 @@ function extractVectorizableShapes(slideIndex, markElements) {
 
   const shapes = [];
   for (const el of kept) {
+    // 已标记为复杂区域（表格/图表等）的元素将由区域截图保留，不再拆成矢量形状。
+    if (isInsideFallbackRegion(el)) continue;
+
     const style = window.getComputedStyle(el);
     const rect = el.getBoundingClientRect();
     if (rect.width < 2 || rect.height < 2) continue;
@@ -1200,6 +1320,8 @@ function extractImages(slideIndex, markElements) {
 
   walkElements(wrapper, (el) => {
     if (el.tagName !== 'IMG') return;
+    // 复杂区域（如图表/表格）内部的图片由区域截图保留，不再单独提取。
+    if (isInsideFallbackRegion(el)) return;
     const style = window.getComputedStyle(el);
     if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) return;
 
