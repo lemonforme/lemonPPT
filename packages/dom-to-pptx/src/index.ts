@@ -1060,7 +1060,16 @@ function extractFallbackRegions(slideIndex, markElements) {
   const wrapperRect = wrapper.getBoundingClientRect();
   const regions = [];
 
-  const selectors = ['.lp-fallback-region', 'canvas', 'svg', '[data-lp-region-fallback]'];
+  const selectors = [
+    '.lp-fallback-region',
+    'canvas',
+    'svg',
+    '[data-lp-region-fallback]',
+    // 数据表格/对比表格类容器统一走截图，避免被拆成零散文本框
+    'table',
+    '.lp-table-data-wrap',
+    '.lp-comparison-v3-table',
+  ];
   wrapper.querySelectorAll(selectors.join(',')).forEach((el) => {
     // SVG：ECharts 图表强制走区域截图；其它 SVG 仅当无法简单矢量化时才作为 fallback region
     if (el.tagName.toLowerCase() === 'svg') {

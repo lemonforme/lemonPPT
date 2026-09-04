@@ -1,14 +1,14 @@
 {
   "theme": "theme09",
   "status": "ok",
-  "duration": 67429,
-  "fileSize": 32952927,
-  "sha256": "bc62694551c2c4ceb90699dded41c788746829a52b710f27ca6d866e2975d200",
+  "duration": 67259,
+  "fileSize": 32827442,
+  "sha256": "b6abc389e29236bb6ee81a4572698abb88826c67b4a0851de8a0ab17a4ba5345",
   "slides": 114,
   "slideCount": 114,
-  "mediaCount": 176,
-  "shapeCount": 2616,
-  "textBoxCount": 1938,
+  "mediaCount": 179,
+  "shapeCount": 2501,
+  "textBoxCount": 1826,
   "slideDetails": [
     {
       "file": "ppt/slides/slide1.xml",
@@ -172,8 +172,8 @@
     },
     {
       "file": "ppt/slides/slide25.xml",
-      "shapeCount": 47,
-      "textBoxCount": 40
+      "shapeCount": 16,
+      "textBoxCount": 10
     },
     {
       "file": "ppt/slides/slide26.xml",
@@ -292,8 +292,8 @@
     },
     {
       "file": "ppt/slides/slide47.xml",
-      "shapeCount": 49,
-      "textBoxCount": 47
+      "shapeCount": 8,
+      "textBoxCount": 7
     },
     {
       "file": "ppt/slides/slide48.xml",
@@ -497,8 +497,8 @@
     },
     {
       "file": "ppt/slides/slide84.xml",
-      "shapeCount": 57,
-      "textBoxCount": 55
+      "shapeCount": 14,
+      "textBoxCount": 13
     },
     {
       "file": "ppt/slides/slide85.xml",
@@ -606,10 +606,10 @@
     "ppt/media/image-22-1.png": "cdb927666ca934f9bc6acb537ebbd0a1c7fbb465cab00359d8a20ea4c69992a5",
     "ppt/media/image-23-1.png": "be956d6d5efe03302e8ab03d25a35d9dde6e2b46445c6c380324aabd6f498b95",
     "ppt/media/image-24-1.png": "9401d50fa475ed2de24b6877a6e65c4806e128cfdc8165d92144d004d111ddd9",
-    "ppt/media/image-25-1.png": "fd1121b07bca388e5f46f93e9ff1384b41e5692eee1ab0b2171201c6f18ead4b",
+    "ppt/media/image-25-2.png": "d4832a8a31a9e7865e4f01f942b62972fd8f9185ebd0f4c16adc72cd7c47e86a",
     "ppt/media/image-26-1.png": "0ce61cc2d793410928040c19f0a02bd531d49f85c5245cb115c5d4f7162f7cd0",
     "ppt/media/image-27-1.png": "f8dabccba4430ef52f1b5d16ff3ee50611b255837cf40215970600cbb11a657c",
-    "ppt/media/image-28-1.png": "baeb476e24192f7e5a55fa561d440a2fd1a53dcc062442555b213251dc727f5d",
+    "ppt/media/image-28-1.png": "aa588c8c32406fafe0b1b4f9c55504b839a888173c5e4d2a158c4ad391cd0742",
     "ppt/media/image-29-2.png": "2009088c3d1d0461dcf886f3cccfa7c4823e9e606a294bf8961b6a9653c2f767",
     "ppt/media/image-30-1.png": "3823c2cd4bbfdbf2e45c3a1a96aae092e788a9d3a2e6606ab3ef3e2701972b45",
     "ppt/media/image-31-1.png": "f69d4a903124dae4fa1468e6af7dc509812d14c1a94d6a1159debd9bf0200489",
@@ -628,7 +628,7 @@
     "ppt/media/image-44-2.png": "1db07dce980893dedefd3938b22d3da353bb19aac01602064d6e948b7f395cbe",
     "ppt/media/image-45-2.png": "a4117e07bb0f294c5abb131a971c3d7bfe7005de9a989a4de4b77c3b9dc73d02",
     "ppt/media/image-46-1.png": "c42d7a9e86082ea73420ae8de5629a3b106fe09d76b62d87622d58e24e652bd7",
-    "ppt/media/image-47-1.png": "d12c1e2cb54c873f86ca0155f2225b897ab7ccfb5673bca98b0b050b3d2ce55a",
+    "ppt/media/image-47-2.png": "fbeafa58d4e6abf74e41c3b640fe4e03e55beac773f1284e9c218f1120b55ff1",
     "ppt/media/image-48-1.png": "088fe0a06230c3da74c0eebd997970c3dad987fa0bbf8ff63b055f8d375d1baf",
     "ppt/media/image-49-2.png": "2009088c3d1d0461dcf886f3cccfa7c4823e9e606a294bf8961b6a9653c2f767",
     "ppt/media/image-50-2.png": "1d0bea5dfc8d121ab3e9043911f09a0626ca77cd7026217515f058f21a77a0d5",
@@ -677,7 +677,7 @@
     "ppt/media/image-81-2.png": "a0f972365984a499b9b4c69453e50cefe4e70f21be9050a5af063613f2a5f013",
     "ppt/media/image-82-2.png": "2a0dec1e46ee19933610598c718ebc1c13c96fae5ab2733e03ee1b3918a6d5c4",
     "ppt/media/image-83-1.png": "c58c2285051746160a35d13126f991775ff30451aeb4a6427b19769db21470b4",
-    "ppt/media/image-84-1.png": "14cb9ebeb2c277cb1f57db8cc190b341efa5192014cd330f871b027aca433335",
+    "ppt/media/image-84-2.png": "77d1cfdfa62c65cb5e85dccbd3fd4674baf57fc25e84d1ba1ea781230393210a",
     "ppt/media/image-85-1.png": "009c233b4e6820921cb46207ee8c6b76e1f0c0e50fa7da48a5c2affa4e6aec94",
     "ppt/media/image-86-1.png": "46a3b4efef1cc58f07ca6a7cfab293fab544d0ab06fc986153f45ff4a17e0381",
     "ppt/media/image-87-2.png": "2009088c3d1d0461dcf886f3cccfa7c4823e9e606a294bf8961b6a9653c2f767",
