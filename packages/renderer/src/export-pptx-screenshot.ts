@@ -33,6 +33,8 @@ export interface ExportPptxScreenshotOptions {
   extractImages?: boolean;
   /** 是否自动下载远程图片（http/https），默认 true */
   downloadRemoteImages?: boolean;
+  /** 是否对复杂区域（图表、复杂 SVG、表格等）单独截图并叠加，默认 true */
+  regionFallback?: boolean;
   /** 结构化日志器 */
   logger?: Logger;
   /** 进度回调 */
@@ -61,6 +63,7 @@ export async function exportDeckToPptxScreenshot(
     vectorizeShapes = true,
     extractImages = true,
     downloadRemoteImages = true,
+    regionFallback = true,
     logger,
     onProgress,
   } = options;
@@ -117,6 +120,7 @@ export async function exportDeckToPptxScreenshot(
         vectorizeShapes,
         extractImages,
         downloadRemoteImages,
+        regionFallback,
         fontDir: fontsDest,
         initECharts: true,
         logger,

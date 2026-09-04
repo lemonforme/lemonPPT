@@ -924,8 +924,10 @@ function extractSvgShapes(slideIndex, markElements) {
   const shapes = [];
 
   wrapper.querySelectorAll('svg').forEach((svg) => {
-    if (isIgnoredElement(svg)) return;
-    const svgRect = svg.getBoundingClientRect();
+      if (isIgnoredElement(svg)) return;
+      // ECharts 图表走区域截图 fallback，不做强制矢量化
+      if (svg.hasAttribute('data-lp-echart-type')) return;
+      const svgRect = svg.getBoundingClientRect();
     if (svgRect.width < 2 || svgRect.height < 2) return;
 
     const svgStyle = window.getComputedStyle(svg);
@@ -1060,10 +1062,12 @@ function extractFallbackRegions(slideIndex, markElements) {
 
   const selectors = ['.lp-fallback-region', 'canvas', 'svg', '[data-lp-region-fallback]'];
   wrapper.querySelectorAll(selectors.join(',')).forEach((el) => {
-    // SVG：仅当无法简单矢量化时才作为 fallback region
+    // SVG：ECharts 图表强制走区域截图；其它 SVG 仅当无法简单矢量化时才作为 fallback region
     if (el.tagName.toLowerCase() === 'svg') {
-      const shapes = extractSvgShapes(slideIndex, false);
-      if (shapes.length > 0) return; // 已可矢量化，不再截图
+      if (!el.hasAttribute('data-lp-echart-type')) {
+        const shapes = extractSvgShapes(slideIndex, false);
+        if (shapes.length > 0) return; // 已可矢量化，不再截图
+      }
     }
     const rect = el.getBoundingClientRect();
     if (rect.width < 4 || rect.height < 4) return;
