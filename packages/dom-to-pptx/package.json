@@ -1,6 +1,6 @@
 {
   "name": "@lemonppt/dom-to-pptx",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "将 HTML DOM 渲染并导出为可编辑 PPTX 的引擎，支持文本、简单图形和图片提取。",
   "keywords": ["pptx", "html", "dom", "export", "presentation"],
   "type": "module",
