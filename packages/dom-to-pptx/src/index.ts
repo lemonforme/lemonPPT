@@ -462,9 +462,9 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
       progress({ phase: 'screenshot', current: i + 1, total: slideCount, message: `截取第 ${i + 1}/${slideCount} 页` });
       try {
         if (useJpegBackground) {
-          await wrapper.screenshot({ path: screenshotPath, type: 'jpeg', quality: 90, timeout: screenshotTimeout });
+          await wrapper.screenshot({ path: screenshotPath, type: 'jpeg', quality: 90, timeout: screenshotTimeout, animations: 'disabled' });
         } else {
-          await wrapper.screenshot({ path: screenshotPath, type: 'png', timeout: screenshotTimeout });
+          await wrapper.screenshot({ path: screenshotPath, type: 'png', timeout: screenshotTimeout, animations: 'disabled' });
         }
       } catch (err) {
         log.error(`第 ${i + 1} 页截图失败`, err);
@@ -483,7 +483,7 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
           try {
             // 通过 data-lp-region-fallback 属性定位到具体元素并截图。
             const regionEl = page.locator(`.lp-slide-wrapper[data-slide-index="${i}"] [data-lp-region-fallback="true"]`).nth(r);
-            await regionEl.screenshot({ path: regionPath, type: 'png', timeout: screenshotTimeout });
+            await regionEl.screenshot({ path: regionPath, type: 'png', timeout: screenshotTimeout, animations: 'disabled' });
             region.path = regionPath;
           } catch (err) {
             log.warn(`第 ${i + 1} 页区域 ${r + 1} 单独截图失败，将回退到整页裁剪`, err);
@@ -1132,11 +1132,22 @@ function hasFilterOrComplexClip(el) {
   return filters.some((f) => !f.startsWith('drop-shadow'));
 }
 
-function pushFallbackRegion(regions, regionEls, el, wrapperRect) {
+function pushFallbackRegion(regions, regionEls, el, wrapperRect, force = false) {
   if (isInsideFallbackRegion(el)) return false;
   const rect = el.getBoundingClientRect();
   if (rect.width < 4 || rect.height < 4) return false;
-  if (rect.width > wrapperRect.width * 0.98 && rect.height > wrapperRect.height * 0.98) return false;
+
+  // 跳过几乎覆盖整页的元素（通常是背景/容器截图无意义），但 ECharts 等强制截图的元素例外。
+  if (!force && rect.width > wrapperRect.width * 0.98 && rect.height > wrapperRect.height * 0.98) return false;
+
+  // 跳过主体在视口外的装饰性元素，避免产生无效的大图区域。
+  const overflow = 10;
+  if (!force && (
+    rect.left < wrapperRect.left - overflow ||
+    rect.top < wrapperRect.top - overflow ||
+    rect.right > wrapperRect.right + overflow ||
+    rect.bottom > wrapperRect.bottom + overflow
+  )) return false;
 
   regions.push({
     x: rect.left - wrapperRect.left,
@@ -1169,18 +1180,20 @@ function detectFallbackRegions(slideIndex) {
     '.lp-comparison-v3-table',
   ];
   wrapper.querySelectorAll(selectors.join(',')).forEach((el) => {
-    // 已在其他 fallback 区域内则跳过，避免重复截图。
-    if (regionEls.some((r) => r !== el && r.contains(el))) return;
+    // 优先把 ECharts/SVG 容器本身作为 fallback 区域（ECharts 强制走截图）。
+    const echartContainer = el.closest('[data-lp-echart-type]');
+    const target = echartContainer || el;
 
-    // SVG：ECharts 图表强制走区域截图；其它 SVG 仅当无法简单矢量化时才作为 fallback region
-    if (el.tagName.toLowerCase() === 'svg') {
-      if (!el.hasAttribute('data-lp-echart-type')) {
-        const shapes = extractSvgShapes(slideIndex, false);
-        if (shapes.length > 0) return; // 已可矢量化，不再截图
-      }
+    // 已在其他 fallback 区域内则跳过，避免重复截图。
+    if (regionEls.some((r) => r === target || r.contains(target))) return;
+
+    // SVG：ECharts 图表已在上面被其容器接管；其它 SVG 仅当无法简单矢量化时才作为 fallback region。
+    if (!echartContainer && el.tagName.toLowerCase() === 'svg') {
+      const shapes = extractSvgShapes(slideIndex, false);
+      if (shapes.length > 0) return; // 已可矢量化，不再截图
     }
 
-    pushFallbackRegion(regions, regionEls, el, wrapperRect);
+    pushFallbackRegion(regions, regionEls, target, wrapperRect, !!echartContainer);
   });
 
   // 补充识别未显式标记但带有滤镜、复杂裁剪等效果的元素（渐变背景暂不走自动 fallback，避免主题装饰被过度截图）。
