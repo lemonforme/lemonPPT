@@ -1122,6 +1122,35 @@ function splitFilterFunctions(filter) {
   return fns;
 }
 
+function isComplexSvg(svg) {
+  // 检查 SVG 内是否使用了无法矢量化的特性：渐变、滤镜、mask、clipPath、pattern 等
+  const complexSelectors = [
+    'linearGradient', 'radialGradient', 'filter', 'mask',
+    'clipPath', 'pattern', 'marker', 'symbol', 'use',
+    '[fill^="url(#"]', '[stroke^="url(#"]', '[filter^="url(#"]',
+    '[mask^="url(#"]', '[clip-path^="url(#"]', '[fill-opacity]',
+    '[stroke-opacity]', 'foreignObject', 'textPath',
+  ];
+  if (svg.querySelector(complexSelectors.join(','))) return true;
+
+  // 检查是否有嵌套 SVG 或 transform 组合导致无法简单映射
+  const nestedSvgs = svg.querySelectorAll('svg');
+  if (nestedSvgs.length > 0) return true;
+
+  // 检查 path 的 d 属性是否包含复杂贝塞尔曲线命令（C/S/Q/T/A），当前 parseSimpleSvgPath 可能无法正确处理
+  const paths = svg.querySelectorAll('path[d]');
+  for (const p of paths) {
+    const d = p.getAttribute('d') || '';
+    if (/[CQSTA]/.test(d)) return true;
+  }
+
+  // 检查是否有大量形状元素（>30个），大概率是复杂图表，直接截图
+  const shapeEls = svg.querySelectorAll('path, rect, circle, ellipse, line, polygon, polyline');
+  if (shapeEls.length > 30) return true;
+
+  return false;
+}
+
 function hasFilterOrComplexClip(el) {
   const style = window.getComputedStyle(el);
   if (style.clipPath && style.clipPath !== 'none') return true;
@@ -1174,26 +1203,88 @@ function detectFallbackRegions(slideIndex) {
     'canvas',
     'svg',
     '[data-lp-region-fallback]',
+    // ECharts 容器
+    '[data-lp-echart-type]',
+    // 主题自带的 HTML/CSS 图表内容容器（lp-chart-body 是实际绘制区域，lp-chart-card 是卡片容器）
+    '.lp-chart-body', '.lp-chart-card',
+    '.lp-chart-wrapper:not(.lp-slide)', '.lp-echart-wrapper',
     // 数据表格/对比表格类容器统一走截图，避免被拆成零散文本框
     'table',
     '.lp-table-data-wrap',
     '.lp-comparison-v3-table',
+    '.lp-comparison-table',
+    // 特定图表类型容器
+    '.lp-chart-donut-chart', '.lp-chart-line-chart', '.lp-chart-bar-chart',
+    '.lp-chart-pie-chart', '.lp-chart-funnel-chart', '.lp-chart-radar-chart',
+    '.lp-chart-gauge-chart', '.lp-chart-heatmap-chart',
+    '.lp-trend-chart', '.lp-bar-chart', '.lp-pie-chart', '.lp-line-chart',
+    '.lp-donut-chart', '.lp-funnel-chart', '.lp-radar-chart', '.lp-gauge-chart',
   ];
   wrapper.querySelectorAll(selectors.join(',')).forEach((el) => {
-    // 优先把 ECharts/SVG 容器本身作为 fallback 区域（ECharts 强制走截图）。
+    // 优先把 ECharts/图表容器本身作为 fallback 区域（ECharts/HTML图表强制走截图）。
     const echartContainer = el.closest('[data-lp-echart-type]');
-    const target = echartContainer || el;
+
+    // 对于非 ECharts 的元素，向上查找最合适的图表/表格容器，避免对子元素重复截图
+    let target = echartContainer || el;
+    if (!echartContainer) {
+      // 如果是 svg/table/canvas 内部元素，向上找到有意义的容器（排除 slide 根元素）
+      const containerSelectors = [
+        '[data-lp-echart-type]',
+        '.lp-chart-body', '.lp-chart-card',
+        '.lp-chart-wrapper', '.lp-echart-wrapper',
+        'table', '.lp-table-data-wrap', '.lp-comparison-v3-table', '.lp-comparison-table',
+        '.lp-chart-donut-chart', '.lp-chart-line-chart', '.lp-chart-bar-chart',
+        '.lp-chart-pie-chart', '.lp-chart-funnel-chart', '.lp-chart-radar-chart',
+      ];
+      let container = el.closest(containerSelectors.join(','));
+      // 如果找到的容器是 slide 根（接近整页大小），则跳过它，使用 el 本身
+      if (container) {
+        const cRect = container.getBoundingClientRect();
+        if (cRect.width > wrapperRect.width * 0.95 && cRect.height > wrapperRect.height * 0.95) {
+          container = null;
+        }
+      }
+      if (container) target = container;
+    }
+
+    // 过滤掉过小的元素（如轴标签、图例文字等），避免产生大量无效区域
+    const targetRect = target.getBoundingClientRect();
+    if (targetRect.width < 80 || targetRect.height < 60) return;
 
     // 已在其他 fallback 区域内则跳过，避免重复截图。
     if (regionEls.some((r) => r === target || r.contains(target))) return;
 
     // SVG：ECharts 图表已在上面被其容器接管；其它 SVG 仅当无法简单矢量化时才作为 fallback region。
-    if (!echartContainer && el.tagName.toLowerCase() === 'svg') {
+    if (!echartContainer && el.tagName.toLowerCase() === 'svg' && target === el) {
+      // 如果 SVG 使用了渐变/滤镜/复杂路径等特性，或形状数量过多，直接走截图
+      if (isComplexSvg(el)) {
+        // 对于复杂 SVG，尝试向上查找包含它的图表容器（不能是 slide 根），对整个容器截图
+        let chartWrapper = el.closest('.lp-chart-wrapper, .lp-echart-wrapper, .lp-chart-body, .lp-chart-card, [class*="-chart"]');
+        if (chartWrapper) {
+          const cwRect = chartWrapper.getBoundingClientRect();
+          if (cwRect.width > wrapperRect.width * 0.95 && cwRect.height > wrapperRect.height * 0.95) {
+            chartWrapper = null;
+          }
+        }
+        const svgTarget = chartWrapper || el;
+        if (regionEls.some((r) => r === svgTarget || r.contains(svgTarget))) return;
+        pushFallbackRegion(regions, regionEls, svgTarget, wrapperRect, true);
+        return;
+      }
       const shapes = extractSvgShapes(slideIndex, false);
       if (shapes.length > 0) return; // 已可矢量化，不再截图
     }
 
-    pushFallbackRegion(regions, regionEls, target, wrapperRect, !!echartContainer);
+    // 表格/图表容器强制截图
+    const isChartOrTable = !!target.closest(
+      '[data-lp-echart-type], .lp-chart-body, .lp-chart-card, ' +
+      '.lp-chart-wrapper, .lp-echart-wrapper, ' +
+      'table, .lp-table-data-wrap, .lp-comparison-v3-table, .lp-comparison-table, canvas, ' +
+      '.lp-chart-donut-chart, .lp-chart-line-chart, .lp-chart-bar-chart, ' +
+      '.lp-chart-pie-chart, .lp-chart-funnel-chart, .lp-chart-radar-chart'
+    ) || ['table', 'canvas'].includes(target.tagName.toLowerCase());
+
+    pushFallbackRegion(regions, regionEls, target, wrapperRect, !!echartContainer || isChartOrTable);
   });
 
   // 补充识别未显式标记但带有滤镜、复杂裁剪等效果的元素（渐变背景暂不走自动 fallback，避免主题装饰被过度截图）。
