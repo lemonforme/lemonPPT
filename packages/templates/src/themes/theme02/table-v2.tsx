@@ -85,7 +85,7 @@ export function Theme02TableV2(props: Theme02TableV2Props): ReactNode {
             )}
           </div>
         </div>
-        <div className="lp-theme02-table-v2-scroll">
+        <div className="lp-theme02-table-v2-scroll" data-lp-fallback-region="table">
           <table className="lp-theme02-table-v2-table">
             <thead>
               <tr>

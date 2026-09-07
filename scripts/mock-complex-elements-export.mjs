@@ -275,7 +275,7 @@ const html = `<!DOCTYPE html>
 
 await mkdir(outDir, { recursive: true });
 
-const buffer = await exportDomToPptx({
+const { buffer, report } = await exportDomToPptx({
   html,
   width: SLIDE_W,
   height: SLIDE_H,
@@ -300,3 +300,8 @@ const buffer = await exportDomToPptx({
 
 await writeFile(outFile, buffer);
 console.log(`\n✅ PPTX 已导出: ${outFile} (${(buffer.length / 1024).toFixed(1)} KB)`);
+console.log(`\n📊 导出报告: ${report.slideCount} 页, 平均保真度 ${(report.fidelity * 100).toFixed(1)}%, 警告 ${report.warnings.length} 条`);
+for (const w of report.warnings) {
+  console.log(`   - [${w.type}] 第${w.slide}页 ${w.detail || ''}`);
+}
+await writeFile(outFile.replace(/\.pptx$/i, '.report.json'), JSON.stringify(report, null, 2), 'utf-8');

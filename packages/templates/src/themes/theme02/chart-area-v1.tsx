@@ -175,11 +175,13 @@ export function Theme02ChartAreaV1(props: Theme02ChartAreaV1Props): ReactNode {
           </div>
         </div>
         {unit && <div className="lp-theme02-chart-area-unit">{unit}</div>}
-        {hasData ? (
-          renderAreas(safeLabels, safeSeries, prefix)
-        ) : (
-          <div className="lp-theme02-chart-area-empty">请配置图表数据</div>
-        )}
+        <div className="lp-theme02-chart-area-canvas" data-lp-fallback-region="chart">
+          {hasData ? (
+            renderAreas(safeLabels, safeSeries, prefix)
+          ) : (
+            <div className="lp-theme02-chart-area-empty">请配置图表数据</div>
+          )}
+        </div>
         {safeSeries.length > 0 && (
           <div className="lp-theme02-chart-area-legend">
             {safeSeries.map((s, i) => (

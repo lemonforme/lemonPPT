@@ -81,7 +81,7 @@ export function Theme08ChartBarV1(props: Theme08ChartBarV1Props): ReactNode {
           {subtitle && <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-theme08-subtitle">{subtitle}</EditableField>}
         </div>
         <div className="lp-theme08-body">
-          <div className="lp-theme08-chart-bar lp-rise">
+          <div className="lp-theme08-chart-bar lp-rise" data-lp-fallback-region="chart">
             <div className="lp-theme08-bars">
               {valid.map((b, i) => {
                 const h = Math.round(((parseFloat(b.value) || 0) / max) * 100);

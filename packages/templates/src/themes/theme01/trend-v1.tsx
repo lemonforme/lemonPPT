@@ -145,7 +145,7 @@ export function Theme01TrendV1(props: Theme01TrendV1Props): ReactNode {
           <Headline cn={title || ''} size="large" slideIdx={_slideIdx} editable={_editable} propCn="title" />
         </div>
 
-        <div className="lp-trend-v1-chart lp-rise">
+        <div className="lp-trend-v1-chart lp-rise" data-lp-fallback-region="chart">
           <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="lp-trend-v1-svg">
             {/* grid lines */}
             {Array.from({ length: 5 }).map((_, i) => {

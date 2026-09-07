@@ -190,11 +190,13 @@ export function Theme02ChartBarV1(props: Theme02ChartBarV1Props): ReactNode {
           </div>
         </div>
         {unit && <div className="lp-theme02-chart-bar-unit">{unit}</div>}
-        {hasData ? (
-          renderBars(safeLabels, safeSeries, prefix)
-        ) : (
-          <div className="lp-theme02-chart-bar-empty">请配置图表数据</div>
-        )}
+        <div className="lp-theme02-chart-bar-canvas" data-lp-fallback-region="chart">
+          {hasData ? (
+            renderBars(safeLabels, safeSeries, prefix)
+          ) : (
+            <div className="lp-theme02-chart-bar-empty">请配置图表数据</div>
+          )}
+        </div>
         {safeSeries.length > 0 && (
           <div className="lp-theme02-chart-bar-legend">
             {safeSeries.map((s, i) => (

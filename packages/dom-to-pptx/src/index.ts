@@ -23,10 +23,17 @@ declare global {
     __lpEChartInstance?: any;
   }
 
-  function extractTextBoxes(slideIndex: number, markElements?: boolean): TextBox[];
+  function extractTextBoxes(slideIndex: number, markElements?: boolean): {
+    boxes: TextBox[];
+    warnings: Array<{ slide: number; type: string; detail?: string }>;
+  };
   function extractVectorizableShapes(slideIndex: number, markElements?: boolean): ShapeOverlay[];
   function extractImages(slideIndex: number, markElements?: boolean): ImageOverlay[];
-  function detectFallbackRegions(slideIndex: number): Array<{ x: number; y: number; w: number; h: number; selector?: string }>;
+  function detectFallbackRegions(slideIndex: number): {
+    regions: Array<{ x: number; y: number; w: number; h: number; selector?: string }>;
+    warnings: Array<{ slide: number; type: string; detail?: string }>;
+  };
+  function computeSlideSignature(slideIndex: number): string;
   function hideFallbackRegions(slideIndex: number): void;
   function showFallbackRegions(slideIndex: number): void;
   function restoreOverlayStyles(): void;
@@ -44,6 +51,53 @@ export interface ExportProgress {
   current?: number;
   total?: number;
   message: string;
+}
+
+/** 导出警告类型（质量报告可观测性） */
+export type ExportWarningType =
+  | 'region-screenshot-failed' // 区域单独截图失败（已回退整页裁剪）
+  | 'region-cropped-from-fullpage' // 区域走整页裁剪降级
+  | 'region-skipped' // 区域截图与裁剪均失败（页面可能出现空白洞）
+  | 'region-decorative-skipped' // 装饰性元素被排除出 fallback 区域
+  | 'complex-svg-unsupported' // SVG 命中无法矢量化的复杂特性，走截图
+  | 'chart-region-text-kept' // 图表区域内小字保留在截图中（未抽文本框）
+  | 'decorative-text-skipped' // 装饰性文本被过滤（不导出为文本框）
+  | 'font-not-embedded' // 字体未在 fontDir 中找到，使用安全映射/系统回退
+  | 'content-unstable'; // 内容签名在轮询窗口内未稳定（可能截到加载/动画中间态）
+
+export interface ExportWarning {
+  /** 1-based 页码 */
+  slide: number;
+  type: ExportWarningType;
+  detail?: string;
+}
+
+export interface SlideSummary {
+  slide: number;
+  textBoxes: number;
+  shapes: number;
+  images: number;
+  fallbackRegions: number;
+  /** 页面可编辑保真度 = 1 - min(1, 内容区域截图面积/页面面积)。装饰保护区(kind=decoration)不计入，避免 fidelity 被 blur blob 等设计元素低估。 */
+  fidelity: number;
+}
+
+export interface ExportReport {
+  captureMode: 'dom-to-pptx';
+  slideCount: number;
+  slideSummaries: SlideSummary[];
+  warnings: ExportWarning[];
+  /** 全局 fidelity = 各页平均 */
+  fidelity: number;
+  textObjects: number;
+  shapeObjects: number;
+  imageObjects: number;
+  regionObjects: number;
+}
+
+export interface ExportDomToPptxResult {
+  buffer: Buffer;
+  report: ExportReport;
 }
 
 export interface ExportDomToPptxOptions {
@@ -87,6 +141,12 @@ export interface ExportDomToPptxOptions {
   screenshotTimeout?: number;
   /** Playwright 截图设备像素比，默认 2（Retina）。设置为 1 可减小文件体积 */
   deviceScaleFactor?: number;
+  /** 是否在截图前进行内容签名稳定检测（连续两次签名一致才截图），默认 true */
+  stabilityCheck?: boolean;
+  /** 内容签名轮询间隔毫秒数，默认 120 */
+  stabilityPollMs?: number;
+  /** 内容签名轮询最大次数，默认 25（约 3 秒）。超时记录 content-unstable 警告并继续导出 */
+  stabilityMaxPolls?: number;
   /** 结构化日志器，默认 console */
   logger?: Logger;
   /** 进度回调 */
@@ -106,6 +166,16 @@ interface TextBox {
   italic: boolean;
   align: 'left' | 'center' | 'right';
   valign: 'top' | 'middle' | 'bottom';
+  /** 字距（pt），letterSpacing px × 0.5625 换算 */
+  charSpacing?: number;
+  /** 行距倍数，lineHeight px / fontSize px */
+  lineSpacingMultiple?: number;
+  underline?: boolean;
+  strike?: boolean;
+  /** 透明度 0-100，颜色 alpha × opacity 合成 */
+  transparency?: number;
+  /** 是否含 CJK 字符（字号系数选择依据） */
+  hasCJK?: boolean;
 }
 
 interface ShapeOverlay {
@@ -147,6 +217,8 @@ interface FallbackRegion {
   h: number;
   /** 区域单独截图失败时，回退到整页截图裁剪，此时区域内文字/图形/图片不应再叠加，避免重复。 */
   imageOnly?: boolean;
+  /** 区域类型，用于 fidelity 计算区分内容区与装饰保护区 */
+  kind?: 'chart' | 'table' | 'decoration' | 'generic';
 }
 
 interface SlideData {
@@ -155,6 +227,8 @@ interface SlideData {
   shapes: ShapeOverlay[];
   images: ImageOverlay[];
   fallbackRegions: FallbackRegion[];
+  /** 本页质量警告（区域降级、装饰过滤等） */
+  warnings: ExportWarning[];
 }
 
 export { validatePptxOutput };
@@ -167,7 +241,7 @@ export type { PptxValidationOptions, PptxValidationResult } from './validate.js'
  * 用 Playwright 渲染后逐页截图，并将文字/简单图形/图片抽回为可编辑 PPTX 元素。
  * 返回 PPTX 文件 Buffer。
  */
-export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<Buffer> {
+export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<ExportDomToPptxResult> {
   const {
     html,
     assetsDir,
@@ -188,6 +262,9 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
     navigationTimeout = 30000,
     screenshotTimeout = 30000,
     deviceScaleFactor = 2,
+    stabilityCheck = true,
+    stabilityPollMs = 120,
+    stabilityMaxPolls = 25,
     logger = console,
     onProgress,
   } = options;
@@ -432,15 +509,45 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
       let shapes: ShapeOverlay[] = [];
       let images: ImageOverlay[] = [];
       let fallbackRegions: FallbackRegion[] = [];
+      let slideWarnings: ExportWarning[] = [];
+
+      // P1-2 内容签名稳定检测：轮询签名直至连续两次一致，避免截到懒加载/字体迟到/动画中间态。
+      // 注意：必须在任何 DOM 修改（隐藏文字/标记区域）之前采集，否则签名必然不一致。
+      if (stabilityCheck) {
+        let stable = false;
+        let lastSig = await page.evaluate((idx) => computeSlideSignature(idx), i);
+        for (let poll = 1; poll <= stabilityMaxPolls; poll++) {
+          await page.waitForTimeout(stabilityPollMs);
+          const sig = await page.evaluate((idx) => computeSlideSignature(idx), i);
+          if (sig === lastSig) {
+            stable = true;
+            break;
+          }
+          lastSig = sig;
+        }
+        if (!stable) {
+          slideWarnings.push({
+            slide: i + 1,
+            type: 'content-unstable',
+            detail: `签名在 ${stabilityMaxPolls} 次轮询（${stabilityPollMs}ms 间隔）内未稳定`,
+          });
+          log.warn(`第 ${i + 1} 页内容签名未稳定，继续导出（可能存在未完成的懒加载或动画）`);
+        }
+      }
 
       if (regionFallback) {
         // 先识别复杂区域，后续文字/形状/图片提取会据此决定是否在区域内隐藏。
-        fallbackRegions = await page.evaluate((idx) => detectFallbackRegions(idx), i);
+        const regionResult = await page.evaluate((idx) => detectFallbackRegions(idx), i);
+        fallbackRegions = regionResult.regions;
+        slideWarnings.push(...(regionResult.warnings as ExportWarning[]));
       }
       if (editableText) {
         // 先提取文字并隐藏原始文字，再截图，避免底层截图文字与叠加文字重影。
         // 复杂区域内部的文字也会被提取，稍后区域截图中文字保持隐藏，再通过文本框叠加恢复可编辑性。
-        textBoxes = await page.evaluate((idx) => extractTextBoxes(idx, true), i);
+        // P0-2：装饰性文本（水印/描边字/旋转小字）与图表区域内小字被过滤并记录警告。
+        const textResult = await page.evaluate((idx) => extractTextBoxes(idx, true), i);
+        textBoxes = textResult.boxes;
+        slideWarnings.push(...(textResult.warnings as ExportWarning[]));
       }
       if (vectorizeShapes) {
         // 在文字提取之后提取简单图形，避免隐藏父容器后无法获取内部文字。
@@ -487,6 +594,11 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
             region.path = regionPath;
           } catch (err) {
             log.warn(`第 ${i + 1} 页区域 ${r + 1} 单独截图失败，将回退到整页裁剪`, err);
+            slideWarnings.push({
+              slide: i + 1,
+              type: 'region-screenshot-failed',
+              detail: `region ${r + 1}`,
+            });
             failedRegionIndices.push(r);
           }
         }
@@ -507,9 +619,19 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
             });
             region.path = regionPath;
             region.imageOnly = true;
+            slideWarnings.push({
+              slide: i + 1,
+              type: 'region-cropped-from-fullpage',
+              detail: `region ${r + 1}`,
+            });
           } catch (err) {
             log.warn(`第 ${i + 1} 页区域 ${r + 1} 整页裁剪也失败，跳过该区域`, err);
             region.path = '';
+            slideWarnings.push({
+              slide: i + 1,
+              type: 'region-skipped',
+              detail: `region ${r + 1}`,
+            });
           }
         }
 
@@ -533,11 +655,11 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
       }
 
       log.debug(`第 ${i + 1} 页: ${textBoxes.length} 文本框, ${shapes.length} 形状, ${images.length} 图片, ${fallbackRegions.length} 区域`);
-      slides.push({ path: screenshotPath, textBoxes, shapes, images, fallbackRegions });
+      slides.push({ path: screenshotPath, textBoxes, shapes, images, fallbackRegions, warnings: slideWarnings });
     }
 
     progress({ phase: 'build', message: '组装 PPTX' });
-    const buffer = await buildPPTX({
+    const { buffer, report } = await buildPPTX({
       slides,
       width,
       height,
@@ -551,7 +673,12 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
     });
 
     progress({ phase: 'done', message: 'PPTX 生成完成' });
-    return buffer;
+    log.info(
+      `导出报告: ${report.slideCount} 页, 平均保真度 ${(report.fidelity * 100).toFixed(1)}%, ` +
+        `文本 ${report.textObjects} / 形状 ${report.shapeObjects} / 图片 ${report.imageObjects} / 区域 ${report.regionObjects}` +
+        (report.warnings.length > 0 ? `, 警告 ${report.warnings.length} 条` : ''),
+    );
+    return { buffer, report };
   } finally {
     if (browser) {
       await browser.close().catch((err) => log.warn('关闭浏览器失败', err));
@@ -573,7 +700,7 @@ interface BuildPPTXOptions {
   imageResolver?: (src: string, slideNo: number) => Promise<string | undefined>;
 }
 
-async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
+async function buildPPTX(options: BuildPPTXOptions): Promise<{ buffer: Buffer; report: ExportReport }> {
   const { slides, width, height, title, subject, author, fontDir, log, progress, imageResolver } = options;
 
   // 设计稿以 1280×720 为基准，1280px 对应 10 英寸；高分辨率导出时保持相同像素密度。
@@ -592,6 +719,8 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
   const fontRegistry = fontDir ? buildFontRegistry(fontDir) : {};
   const embeddableFonts = new Map<string, string>();
   const missingFonts = new Set<string>();
+  const fontWarnings: ExportWarning[] = [];
+  const reportedFontKeys = new Set<string>();
 
   for (let i = 0; i < slides.length; i++) {
     const { path: screenshotPath, textBoxes, shapes, images, fallbackRegions } = slides[i];
@@ -696,7 +825,17 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
         embeddableFonts.set(fontFace, fontFile);
       } else if (fontDir) {
         const firstFamily = box.fontFamilies[0]?.replace(/['"]/g, '').trim();
-        if (firstFamily) missingFonts.add(firstFamily);
+        // 已命中安全字体映射或首字体本身就在安全栈中 → 不报 missing（系统回退可接受）
+        if (firstFamily && (fontFace !== firstFamily || findSafeFontFace(firstFamily))) {
+          // safe-mapped, no warning
+        } else if (firstFamily) {
+          missingFonts.add(firstFamily);
+          const key = `${i + 1}:${firstFamily}`;
+          if (!reportedFontKeys.has(key)) {
+            reportedFontKeys.add(key);
+            fontWarnings.push({ slide: i + 1, type: 'font-not-embedded', detail: firstFamily });
+          }
+        }
       }
 
       slide.addText(box.text, {
@@ -711,6 +850,11 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
         italic: box.italic,
         align: box.align,
         valign: box.valign,
+        ...(box.charSpacing ? { charSpacing: box.charSpacing } : {}),
+        ...(box.lineSpacingMultiple ? { lineSpacingMultiple: box.lineSpacingMultiple } : {}),
+        ...(box.underline ? { underline: { style: 'sng' } } : {}),
+        ...(box.strike ? { strike: true } : {}),
+        ...(box.transparency ? { transparency: box.transparency } : {}),
       } as any);
     }
   }
@@ -733,7 +877,41 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<Buffer> {
 
   const outFile = path.join(os.tmpdir(), `lemonppt-dom-to-pptx-output-${Date.now()}.pptx`);
   await (pptx as any).writeFile({ fileName: outFile });
-  return await readFile(outFile);
+  const buffer = await readFile(outFile);
+
+  // 生成质量报告：每页 fidelity = 1 - min(1, 内容区域截图面积 / 页面面积)，全局取各页平均。
+  // 装饰保护区（kind='decoration'，如 blur Blob、复杂滤镜装饰）不计入，避免 fidelity 被设计装饰低估。
+  const pageArea = width * height;
+  const slideSummaries: SlideSummary[] = slides.map((s, idx) => {
+    const contentRegionArea = s.fallbackRegions.reduce((sum, r) => {
+      if (r.kind === 'decoration') return sum;
+      return sum + (r.w || 0) * (r.h || 0);
+    }, 0);
+    const fidelity = 1 - Math.min(1, contentRegionArea / pageArea);
+    return {
+      slide: idx + 1,
+      textBoxes: s.textBoxes.length,
+      shapes: s.shapes.length,
+      images: s.images.length,
+      fallbackRegions: s.fallbackRegions.length,
+      fidelity: Math.round(fidelity * 1000) / 1000,
+    };
+  });
+  const report: ExportReport = {
+    captureMode: 'dom-to-pptx',
+    slideCount: slides.length,
+    slideSummaries,
+    warnings: [...slides.flatMap((s) => s.warnings), ...fontWarnings],
+    fidelity:
+      slideSummaries.length > 0
+        ? Math.round((slideSummaries.reduce((sum, s) => sum + s.fidelity, 0) / slideSummaries.length) * 1000) / 1000
+        : 1,
+    textObjects: slideSummaries.reduce((sum, s) => sum + s.textBoxes, 0),
+    shapeObjects: slideSummaries.reduce((sum, s) => sum + s.shapes, 0),
+    imageObjects: slideSummaries.reduce((sum, s) => sum + s.images, 0),
+    regionObjects: slideSummaries.reduce((sum, s) => sum + s.fallbackRegions, 0),
+  };
+  return { buffer, report };
 }
 
 function buildFontRegistry(fontDir: string): Record<string, string> {
@@ -752,6 +930,26 @@ function buildFontRegistry(fontDir: string): Record<string, string> {
   };
 }
 
+/**
+ * 字体安全映射：嵌入字体未命中时，将网页字体映射到 PPT 通用安全字体栈，
+ * 避免目标机器字体缺失导致乱码/回退（中文 → 微软雅黑/宋体，等宽 → Courier New）。
+ */
+const PPTX_SAFE_FONT_MAP: Array<[RegExp, string]> = [
+  [/^(Noto Sans SC|PingFang SC|Source Han Sans.*|思源黑体|Hiragino Sans GB|Microsoft YaHei|微软雅黑)$/i, 'Microsoft YaHei'],
+  [/^(Noto Serif SC|Songti SC|Source Han Serif.*|思源宋体|SimSun|宋体)$/i, 'SimSun'],
+  [/^(Space Mono|JetBrains Mono|IBM Plex Mono|Menlo|Consolas|Courier New)$/i, 'Courier New'],
+  [/^(Inter|Helvetica Neue|Helvetica|Arial)$/i, 'Arial'],
+  // Georgia 等经典 Web 衬线字体映射到 Times New Roman（PPT 通用安全衬线字体）
+  [/^(Georgia|Times New Roman|Times|Palatino|Garamond)$/i, 'Times New Roman'],
+];
+
+function findSafeFontFace(name: string): string | undefined {
+  for (const [pattern, safeFace] of PPTX_SAFE_FONT_MAP) {
+    if (pattern.test(name)) return safeFace;
+  }
+  return undefined;
+}
+
 function resolveEmbeddableFont(
   fontFamilies: string[],
   fontRegistry: Record<string, string>,
@@ -762,7 +960,17 @@ function resolveEmbeddableFont(
       return { fontFace: name, fontFile: fontRegistry[name] };
     }
   }
-  return { fontFace: fontFamilies[0]?.replace(/['"]/g, '').trim() || 'Arial' };
+  // 嵌入字体未命中 → 安全栈映射（跨平台稳定）
+  for (const raw of fontFamilies) {
+    const name = raw.replace(/['"]/g, '').trim();
+    const safeFace = findSafeFontFace(name);
+    if (safeFace) {
+      return { fontFace: safeFace };
+    }
+  }
+  // 最终 fallback：即使首字体命中安全映射也要转换为安全字体
+  const firstFamily = fontFamilies[0]?.replace(/['"]/g, '').trim() || 'Arial';
+  return { fontFace: findSafeFontFace(firstFamily) || firstFamily };
 }
 
 const EXTRACT_SCRIPT = `
@@ -792,6 +1000,34 @@ function getExportScale() {
   return parseFloat(zoom) || 1;
 }
 
+// P1-2 内容签名：轻量级页面稳定态指纹（元素数 + innerHTML 内容哈希 + 图片加载态 + canvas 尺寸 + 字体状态）。
+// 两次采集一致 → 页面无进行中的渲染变化（懒加载/异步图表/字体迟到），可以安全截图。
+function computeSlideSignature(slideIndex) {
+  const wrapper = getWrapper(slideIndex);
+  if (!wrapper) return 'missing';
+  const parts = [];
+  parts.push('el:' + wrapper.getElementsByTagName('*').length);
+  // djb2 哈希 innerHTML：比 length 更强，能捕获等长内容变化（tick-5 -> tick-6）
+  let hash = 5381;
+  const html = wrapper.innerHTML;
+  for (let k = 0; k < html.length; k++) {
+    hash = ((hash << 5) + hash + html.charCodeAt(k)) | 0;
+  }
+  parts.push('html:' + hash + ':' + html.length);
+  const imgs = wrapper.querySelectorAll('img');
+  for (let k = 0; k < imgs.length; k++) {
+    const img = imgs[k];
+    parts.push('img' + k + ':' + (img.complete ? img.naturalWidth + 'x' + img.naturalHeight : 'loading'));
+  }
+  const canvases = wrapper.querySelectorAll('canvas');
+  for (let k = 0; k < canvases.length; k++) {
+    parts.push('cv' + k + ':' + canvases[k].width + 'x' + canvases[k].height);
+  }
+  parts.push('chart:' + wrapper.querySelectorAll('[data-lp-echart-type]').length);
+  parts.push('font:' + (document.fonts && document.fonts.status ? document.fonts.status : 'n/a'));
+  return parts.join('|');
+}
+
 function walkElements(root, callback) {
   function walk(el) {
     for (const child of Array.from(el.children)) {
@@ -811,12 +1047,145 @@ function rgbToHex(rgb) {
   return '#' + toHex(m[1]) + toHex(m[2]) + toHex(m[3]);
 }
 
+function parseColorAlpha(colorStr) {
+  if (!colorStr || colorStr === 'none') return 1;
+  const m = colorStr.match(/,\\s*([\\d.]+)\\s*\\)\\s*$/);
+  return m ? parseFloat(m[1]) : 1;
+}
+
+// 检测元素是否带旋转：computed transform 会把 rotate() 归一为 matrix()，需分解 a/b 分量判断。
+function hasRotation(transformStr) {
+  if (!transformStr || transformStr === 'none') return false;
+  if (/rotate[3XY]?\\(/i.test(transformStr)) return true;
+  const m = transformStr.match(/matrix\\(\\s*([-\\d.eE+]+)\\s*,\\s*([-\\d.eE+]+)/);
+  if (m) {
+    const angle = Math.atan2(parseFloat(m[2]), parseFloat(m[1]));
+    return Math.abs(angle) > 0.01; // 约 0.57° 以上视为旋转
+  }
+  return false;
+}
+
+// P0-2 装饰性文本识别：返回跳过原因（不抽为文本框，保留在截图中），否则返回 null。
+function getDecorativeTextSkipReason(el, style, fontSizePx, isSvg, scale) {
+  // 1. 描边空心字：stroke-only 大字（水印/装饰标题）
+  const strokeW = parseFloat(style.webkitTextStrokeWidth) || 0;
+  const fillTransparent = style.webkitTextFillColor === 'rgba(0, 0, 0, 0)';
+  if (strokeW >= 1 && fillTransparent) {
+    return { type: 'decorative-text-skipped', detail: 'stroke-only' };
+  }
+  // 2. 低透明度水印字（color alpha × opacity）
+  const colorStr = isSvg ? style.fill : style.color;
+  const opacity = parseFloat(style.opacity);
+  const effectiveAlpha = parseColorAlpha(colorStr) * (Number.isNaN(opacity) ? 1 : opacity);
+  if (effectiveAlpha > 0 && effectiveAlpha < 0.08) {
+    return { type: 'decorative-text-skipped', detail: 'low-alpha(' + effectiveAlpha.toFixed(3) + ')' };
+  }
+  // 3. 旋转小字（装饰性标签），字号按设计稿 scale 还原后判断
+  const designFontSize = fontSizePx / (scale || 1);
+  if (hasRotation(style.transform) && designFontSize < 12) {
+    return { type: 'decorative-text-skipped', detail: 'rotated-small' };
+  }
+  // 4. 图表区域内小字：区域截图已包含这些文字，抽出必然重影/漂浮。
+  //    SVG text（ECharts 轴标签/刻度）一律保留；HTML 小字（<14px）保留；标题（≥14px）仍抽为文本框。
+  if (isInsideFallbackRegion(el)) {
+    if (isSvg) {
+      return { type: 'chart-region-text-kept', detail: 'svg-text' };
+    }
+    if (designFontSize < 14) {
+      return { type: 'chart-region-text-kept', detail: 'small(' + Math.round(designFontSize) + 'px)' };
+    }
+  }
+  return null;
+}
+
+// P1-1 逐行文本拆分：用 Range 逐字符测量元素子树内所有文本节点，
+// 按行顶坐标分组还原浏览器实际折行位置（含 inline 子元素如 <b>/<span> 跨节点同行），
+// 每行返回 { text, left, top, width, height }（视觉坐标）。
+// 返回 null 表示无需/无法拆分：单行、无文本或超长（3000 字符，防最坏情况性能）。
+function extractTextLines(el) {
+  const rawText = el.innerText || el.textContent || '';
+  const text = rawText.trim();
+  if (!text || text.length > 3000) return null;
+
+  const textNodes = [];
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+  let node;
+  while ((node = walker.nextNode())) {
+    if (node.textContent && node.textContent.trim().length > 0) textNodes.push(node);
+  }
+  if (textNodes.length === 0) return null;
+
+  const range = document.createRange();
+  const lines = [];
+  let current = null; // { text, top, height, segments: [{ node, start, end }] }
+
+  function flush() {
+    if (current && current.text.trim()) {
+      // 行矩形 = 该行所有文本段 rect 的并集
+      let left = Infinity, top = Infinity, right = -Infinity, bottom = -Infinity;
+      for (const seg of current.segments) {
+        try {
+          range.setStart(seg.node, seg.start);
+          range.setEnd(seg.node, seg.end);
+        } catch (e) { continue; }
+        const rects = range.getClientRects();
+        for (let k = 0; k < rects.length; k++) {
+          const r = rects[k];
+          if (r.width < 0.5 || r.height < 0.5) continue;
+          if (r.left < left) left = r.left;
+          if (r.top < top) top = r.top;
+          if (r.right > right) right = r.right;
+          if (r.bottom > bottom) bottom = r.bottom;
+        }
+      }
+      if (left !== Infinity && right > left && bottom > top) {
+        lines.push({ text: current.text.trim(), left, top, width: right - left, height: bottom - top });
+      }
+    }
+    current = null;
+  }
+
+  for (const tn of textNodes) {
+    const content = tn.textContent;
+    for (let i = 0; i < content.length; i++) {
+      const ch = content[i];
+      if (ch === '\\n' || ch === '\\r') { flush(); continue; }
+      range.setStart(tn, i);
+      range.setEnd(tn, i + 1);
+      const rects = range.getClientRects();
+      if (!rects.length) { flush(); continue; }
+      const r = rects[0];
+      // 折行产生的不可见空白字符（宽 <0.5px）：行首时丢弃，行中保留
+      if (r.width < 0.5 && ch.trim() === '' && !current) continue;
+      // 行顶坐标跳变超过半个行高 → 新行
+      if (current && Math.abs(r.top - current.top) > Math.max(2, r.height * 0.5)) {
+        flush();
+      }
+      if (!current) {
+        current = { text: '', top: r.top, height: r.height, segments: [] };
+      }
+      const lastSeg = current.segments[current.segments.length - 1];
+      if (lastSeg && lastSeg.node === tn && lastSeg.end === i) {
+        lastSeg.end = i + 1;
+      } else {
+        current.segments.push({ node: tn, start: i, end: i + 1 });
+      }
+      current.text += ch;
+      if (r.height > current.height) current.height = r.height;
+    }
+  }
+  flush();
+
+  return lines.length > 1 ? lines : null;
+}
+
 function extractTextBoxes(slideIndex, markElements) {
   const wrapper = getWrapper(slideIndex);
-  if (!wrapper) return [];
+  if (!wrapper) return { boxes: [], warnings: [] };
 
   const scale = getExportScale();
   const wrapperRect = wrapper.getBoundingClientRect();
+  const slideNo = slideIndex + 1;
   const candidates = [];
 
   walkElements(wrapper, (el) => {
@@ -831,6 +1200,7 @@ function extractTextBoxes(slideIndex, markElements) {
   );
 
   const boxes = [];
+  const warnings = [];
   for (const el of kept) {
     const style = window.getComputedStyle(el);
     if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) continue;
@@ -847,11 +1217,46 @@ function extractTextBoxes(slideIndex, markElements) {
 
     const fontSizePx = parseFloat(style.fontSize);
     if (!fontSizePx || fontSizePx <= 0) continue;
+    const opacityValue = parseFloat(style.opacity);
+
+    // P0-2 装饰性文本过滤：跳过的文字不抽为文本框、不隐藏，原样保留在截图中。
+    const skipReason = getDecorativeTextSkipReason(el, style, fontSizePx, isSvg, scale);
+    if (skipReason) {
+      warnings.push({
+        slide: slideNo,
+        type: skipReason.type,
+        detail: (skipReason.detail || '') + ': ' + text.slice(0, 40),
+      });
+      continue;
+    }
 
     const fontFamilies = style.fontFamily.split(',').map((s) => s.replace(/['"]/g, '').trim()).filter(Boolean);
     const fontWeight = style.fontWeight;
     const bold = fontWeight === 'bold' || parseInt(fontWeight, 10) >= 600;
     const italic = style.fontStyle === 'italic';
+
+    // P0-3 字号系数：CJK 0.5625（128px/in 几何精确值，修复中文爆框）；等宽 0.62；其他拉丁 0.75（视觉补偿）
+    const hasCJK = /[\\u4e00-\\u9fff\\u3400-\\u4dbf\\u3000-\\u303f\\uff00-\\uffef]/.test(text);
+    const isMono = /mono|menlo|consolas|courier|jetbrains/i.test(style.fontFamily);
+    const fontCoeff = hasCJK ? 0.5625 : isMono ? 0.62 : 0.75;
+
+    // P0-3 文本样式采集：字距 / 行距倍数 / 下划线删除线 / 透明度
+    let charSpacing;
+    const ls = parseFloat(style.letterSpacing);
+    if (!Number.isNaN(ls) && ls !== 0) {
+      charSpacing = Math.round(ls * 0.5625 * 1000) / 1000;
+    }
+    let lineSpacingMultiple;
+    const lhPx = parseFloat(style.lineHeight);
+    if (!Number.isNaN(lhPx) && lhPx > 0 && fontSizePx > 0) {
+      const multiple = lhPx / fontSizePx;
+      if (Math.abs(multiple - 1) > 0.05) lineSpacingMultiple = Math.round(multiple * 100) / 100;
+    }
+    const deco = style.textDecorationLine || '';
+    const underline = deco.indexOf('underline') !== -1;
+    const strike = deco.indexOf('line-through') !== -1;
+    const effAlpha = parseColorAlpha(isSvg ? style.fill : style.color) * (Number.isNaN(opacityValue) ? 1 : opacityValue);
+    const transparency = effAlpha < 1 ? Math.round((1 - effAlpha) * 100) : undefined;
 
     let align = 'left';
     if (style.textAlign === 'center') align = 'center';
@@ -867,6 +1272,51 @@ function extractTextBoxes(slideIndex, markElements) {
       hideElementText(el);
     }
 
+    // P1-1 逐行拆分：多行文本按浏览器实际折行位置拆成独立文本框，避免 PPT 整框重排错位。
+    // 单行/无法拆分（SVG、超长、单行）仍用整元素矩形（容器 rect，避免行高测量偏差）。
+    if (!isSvg) {
+      const lines = extractTextLines(el);
+      if (lines) {
+        const lineBoxes = [];
+        for (const line of lines) {
+          // 与 wrapper 求交集：越界行（被裁剪隐藏的部分）丢弃
+          const overflow = 5;
+          if (
+            line.left < wrapperRect.left - overflow ||
+            line.top < wrapperRect.top - overflow ||
+            line.left + line.width > wrapperRect.right + overflow ||
+            line.top + line.height > wrapperRect.bottom + overflow
+          ) {
+            continue;
+          }
+          lineBoxes.push({
+            text: line.text,
+            x: line.left - wrapperRect.left,
+            y: line.top - wrapperRect.top,
+            w: line.width,
+            h: line.height,
+            fontFamilies,
+            fontSize: fontSizePx * fontCoeff * scale,
+            color,
+            bold,
+            italic,
+            align,
+            valign: 'top',
+            charSpacing,
+            underline,
+            strike,
+            transparency,
+            hasCJK,
+          });
+        }
+        // 至少一行有效才走行拆分路径（原文已隐藏，不能丢字）；否则回退整元素框
+        if (lineBoxes.length > 0) {
+          boxes.push(...lineBoxes);
+          continue;
+        }
+      }
+    }
+
     boxes.push({
       text,
       x: rect.left - wrapperRect.left,
@@ -874,16 +1324,22 @@ function extractTextBoxes(slideIndex, markElements) {
       w: rect.width,
       h: rect.height,
       fontFamilies,
-      fontSize: fontSizePx * 0.75 * scale,
+      fontSize: fontSizePx * fontCoeff * scale,
       color,
       bold,
       italic,
       align,
       valign,
+      charSpacing,
+      lineSpacingMultiple,
+      underline,
+      strike,
+      transparency,
+      hasCJK,
     });
   }
 
-  return boxes;
+  return { boxes, warnings };
 }
 
 function hideElementText(el) {
@@ -1123,7 +1579,7 @@ function splitFilterFunctions(filter) {
 }
 
 function isComplexSvg(svg) {
-  // 检查 SVG 内是否使用了无法矢量化的特性：渐变、滤镜、mask、clipPath、pattern 等
+  // 返回命中的复杂特性描述（用于质量报告），未命中返回 null
   const complexSelectors = [
     'linearGradient', 'radialGradient', 'filter', 'mask',
     'clipPath', 'pattern', 'marker', 'symbol', 'use',
@@ -1131,24 +1587,25 @@ function isComplexSvg(svg) {
     '[mask^="url(#"]', '[clip-path^="url(#"]', '[fill-opacity]',
     '[stroke-opacity]', 'foreignObject', 'textPath',
   ];
-  if (svg.querySelector(complexSelectors.join(','))) return true;
+  for (const sel of complexSelectors) {
+    if (svg.querySelector(sel)) return sel;
+  }
 
-  // 检查是否有嵌套 SVG 或 transform 组合导致无法简单映射
-  const nestedSvgs = svg.querySelectorAll('svg');
-  if (nestedSvgs.length > 0) return true;
+  // 嵌套 SVG：transform 组合导致无法简单映射
+  if (svg.querySelectorAll('svg').length > 0) return 'nested-svg';
 
-  // 检查 path 的 d 属性是否包含复杂贝塞尔曲线命令（C/S/Q/T/A），当前 parseSimpleSvgPath 可能无法正确处理
+  // 复杂贝塞尔曲线命令（C/S/Q/T/A），当前 parseSimpleSvgPath 无法正确处理
   const paths = svg.querySelectorAll('path[d]');
   for (const p of paths) {
     const d = p.getAttribute('d') || '';
-    if (/[CQSTA]/.test(d)) return true;
+    if (/[CQSTA]/.test(d)) return 'bezier-path';
   }
 
-  // 检查是否有大量形状元素（>30个），大概率是复杂图表，直接截图
+  // 大量形状元素（>30个），大概率是复杂图表，直接截图
   const shapeEls = svg.querySelectorAll('path, rect, circle, ellipse, line, polygon, polyline');
-  if (shapeEls.length > 30) return true;
+  if (shapeEls.length > 30) return 'too-many-shapes(' + shapeEls.length + ')';
 
-  return false;
+  return null;
 }
 
 function hasFilterOrComplexClip(el) {
@@ -1161,7 +1618,7 @@ function hasFilterOrComplexClip(el) {
   return filters.some((f) => !f.startsWith('drop-shadow'));
 }
 
-function pushFallbackRegion(regions, regionEls, el, wrapperRect, force = false) {
+function pushFallbackRegion(regions, regionEls, el, wrapperRect, force = false, warnings, slideNo, kind = 'generic') {
   if (isInsideFallbackRegion(el)) return false;
   const rect = el.getBoundingClientRect();
   if (rect.width < 4 || rect.height < 4) return false;
@@ -1169,21 +1626,42 @@ function pushFallbackRegion(regions, regionEls, el, wrapperRect, force = false) 
   // 跳过几乎覆盖整页的元素（通常是背景/容器截图无意义），但 ECharts 等强制截图的元素例外。
   if (!force && rect.width > wrapperRect.width * 0.98 && rect.height > wrapperRect.height * 0.98) return false;
 
-  // 跳过主体在视口外的装饰性元素，避免产生无效的大图区域。
+  // 处理主体溢出 slide 的装饰元素：不直接丢弃，而是裁剪到 slide 可见区域后截图。
+  // 这样可保留部分可见的装饰（如 theme01 的 Blob），同时避免生成无意义的超大截图。
   const overflow = 10;
-  if (!force && (
-    rect.left < wrapperRect.left - overflow ||
-    rect.top < wrapperRect.top - overflow ||
-    rect.right > wrapperRect.right + overflow ||
-    rect.bottom > wrapperRect.bottom + overflow
-  )) return false;
+  let useRect = rect;
+  const overflowLeft = rect.left < wrapperRect.left - overflow;
+  const overflowTop = rect.top < wrapperRect.top - overflow;
+  const overflowRight = rect.right > wrapperRect.right + overflow;
+  const overflowBottom = rect.bottom > wrapperRect.bottom + overflow;
+  if (!force && (overflowLeft || overflowTop || overflowRight || overflowBottom)) {
+    const left = Math.max(rect.left, wrapperRect.left);
+    const top = Math.max(rect.top, wrapperRect.top);
+    const right = Math.min(rect.right, wrapperRect.right);
+    const bottom = Math.min(rect.bottom, wrapperRect.bottom);
+    const cw = right - left;
+    const ch = bottom - top;
+    // 完全在 slide 外，或裁剪后过小（<40px）才跳过
+    if (cw < 40 || ch < 40) {
+      if (warnings) {
+        warnings.push({
+          slide: slideNo,
+          type: 'region-decorative-skipped',
+          detail: 'off-slide: ' + (el.className || el.tagName.toLowerCase() || '').toString().slice(0, 60),
+        });
+      }
+      return false;
+    }
+    useRect = { left, top, right, bottom, width: cw, height: ch };
+  }
 
   regions.push({
-    x: rect.left - wrapperRect.left,
-    y: rect.top - wrapperRect.top,
-    w: rect.width,
-    h: rect.height,
+    x: useRect.left - wrapperRect.left,
+    y: useRect.top - wrapperRect.top,
+    w: useRect.width,
+    h: useRect.height,
     selector: el.className || el.tagName.toLowerCase(),
+    kind,
   });
 
   el.setAttribute('data-lp-region-fallback', 'true');
@@ -1193,10 +1671,26 @@ function pushFallbackRegion(regions, regionEls, el, wrapperRect, force = false) 
 
 function detectFallbackRegions(slideIndex) {
   const wrapper = getWrapper(slideIndex);
-  if (!wrapper) return [];
+  const slideNo = slideIndex + 1;
+  if (!wrapper) return { regions: [], warnings: [] };
   const wrapperRect = wrapper.getBoundingClientRect();
   const regions = [];
   const regionEls = [];
+  const warnings = [];
+  const declaredEls = [];
+
+  // P1-3 声明式 fallback 协议：模板通过 data-lp-fallback-region="chart|table" 显式声明复杂区域，
+  // 引擎优先消费声明（消除选择器硬编码的猜测）；未声明内容仍走下方启发式检测兜底。
+  // 嵌套声明取最内层（最具体）；声明区域强制截图（force），信任模板的复杂度判断。
+  const declared = Array.from(wrapper.querySelectorAll('[data-lp-fallback-region]'));
+  for (const el of declared) {
+    if (declared.some((d) => d !== el && el.contains(d))) continue;
+    if (regionEls.some((r) => r === el || r.contains(el))) continue;
+    const kind = el.getAttribute('data-lp-fallback-region') === 'table' ? 'table' : 'chart';
+    if (pushFallbackRegion(regions, regionEls, el, wrapperRect, true, warnings, slideNo, kind)) {
+      declaredEls.push(el);
+    }
+  }
 
   const selectors = [
     '.lp-fallback-region',
@@ -1220,7 +1714,8 @@ function detectFallbackRegions(slideIndex) {
     '.lp-trend-chart', '.lp-bar-chart', '.lp-pie-chart', '.lp-line-chart',
     '.lp-donut-chart', '.lp-funnel-chart', '.lp-radar-chart', '.lp-gauge-chart',
   ];
-  wrapper.querySelectorAll(selectors.join(',')).forEach((el) => {
+  const candidateEls = selectors.length > 0 ? Array.from(wrapper.querySelectorAll(selectors.join(','))) : [];
+  candidateEls.forEach((el) => {
     // 优先把 ECharts/图表容器本身作为 fallback 区域（ECharts/HTML图表强制走截图）。
     const echartContainer = el.closest('[data-lp-echart-type]');
 
@@ -1254,10 +1749,16 @@ function detectFallbackRegions(slideIndex) {
     // 已在其他 fallback 区域内则跳过，避免重复截图。
     if (regionEls.some((r) => r === target || r.contains(target))) return;
 
+    // P1-3：候选容器内部已有声明式区域（图表/表格本体）时，跳过容器级截图——声明优先，
+    // 容器内声明区域之外的标题/图例等内容保持可编辑（「能编辑的尽量编辑」）。
+    if (declaredEls.some((d) => target !== d && target.contains(d))) return;
+
     // SVG：ECharts 图表已在上面被其容器接管；其它 SVG 仅当无法简单矢量化时才作为 fallback region。
     if (!echartContainer && el.tagName.toLowerCase() === 'svg' && target === el) {
       // 如果 SVG 使用了渐变/滤镜/复杂路径等特性，或形状数量过多，直接走截图
-      if (isComplexSvg(el)) {
+      const complexReason = isComplexSvg(el);
+      if (complexReason) {
+        warnings.push({ slide: slideNo, type: 'complex-svg-unsupported', detail: complexReason });
         // 对于复杂 SVG，尝试向上查找包含它的图表容器（不能是 slide 根），对整个容器截图
         let chartWrapper = el.closest('.lp-chart-wrapper, .lp-echart-wrapper, .lp-chart-body, .lp-chart-card, [class*="-chart"]');
         if (chartWrapper) {
@@ -1268,7 +1769,7 @@ function detectFallbackRegions(slideIndex) {
         }
         const svgTarget = chartWrapper || el;
         if (regionEls.some((r) => r === svgTarget || r.contains(svgTarget))) return;
-        pushFallbackRegion(regions, regionEls, svgTarget, wrapperRect, true);
+        pushFallbackRegion(regions, regionEls, svgTarget, wrapperRect, true, warnings, slideNo, 'chart');
         return;
       }
       const shapes = extractSvgShapes(slideIndex, false);
@@ -1284,7 +1785,12 @@ function detectFallbackRegions(slideIndex) {
       '.lp-chart-pie-chart, .lp-chart-funnel-chart, .lp-chart-radar-chart'
     ) || ['table', 'canvas'].includes(target.tagName.toLowerCase());
 
-    pushFallbackRegion(regions, regionEls, target, wrapperRect, !!echartContainer || isChartOrTable);
+    const kind = ['table', '.lp-table-data-wrap', '.lp-comparison-v3-table', '.lp-comparison-table'].some((sel) =>
+      target.matches && target.matches(sel)
+    ) || target.tagName.toLowerCase() === 'table'
+      ? 'table'
+      : 'chart';
+    pushFallbackRegion(regions, regionEls, target, wrapperRect, !!echartContainer || isChartOrTable, warnings, slideNo, kind);
   });
 
   // 补充识别未显式标记但带有滤镜、复杂裁剪等效果的元素（渐变背景暂不走自动 fallback，避免主题装饰被过度截图）。
@@ -1293,10 +1799,10 @@ function detectFallbackRegions(slideIndex) {
     if (!hasFilterOrComplexClip(el)) return;
     const parent = el.parentElement;
     if (parent && hasFilterOrComplexClip(parent)) return;
-    pushFallbackRegion(regions, regionEls, el, wrapperRect);
+    pushFallbackRegion(regions, regionEls, el, wrapperRect, false, warnings, slideNo, 'decoration');
   });
 
-  return regions;
+  return { regions, warnings };
 }
 
 function hideFallbackRegions(slideIndex) {

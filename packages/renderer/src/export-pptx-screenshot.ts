@@ -111,7 +111,7 @@ export async function exportDeckToPptxScreenshot(
 
     const previewServer = await startPreviewServer(tempDir);
     try {
-      const buffer = await exportDomToPptx({
+      const { buffer, report } = await exportDomToPptx({
         html: result.html,
         previewUrl: `${previewServer.url}/index.html`,
         width,
@@ -132,6 +132,15 @@ export async function exportDeckToPptxScreenshot(
       });
 
       await writeFile(outFile, buffer);
+
+      // 将质量报告写到输出文件同级（*.report.json），便于回归对比与问题定位。
+      try {
+        const reportFile = outFile.replace(/\.pptx$/i, '') + '.report.json';
+        await writeFile(reportFile, JSON.stringify(report, null, 2), 'utf-8');
+        logger?.info(`导出质量报告已写入: ${reportFile}`);
+      } catch (err) {
+        logger?.warn(`写入导出质量报告失败: ${err instanceof Error ? err.message : String(err)}`);
+      }
     } finally {
       await previewServer.close();
     }

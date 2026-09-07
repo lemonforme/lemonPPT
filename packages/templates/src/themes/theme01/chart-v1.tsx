@@ -562,7 +562,7 @@ export function Theme01ChartV1(props: Theme01ChartV1Props): ReactNode {
       </div>
 
       <div className={`lp-chart-body ${hasInsight ? 'lp-chart-body--with-insight' : ''} lp-rise`}>
-        <div className="lp-chart-wrapper">
+        <div className="lp-chart-wrapper" data-lp-fallback-region="chart">
           {chartElement}
         </div>
         {hasInsight && insightPanel(insight, _slideIdx, _editable)}

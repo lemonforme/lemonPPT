@@ -159,7 +159,7 @@ export function Theme09VennV1(props: Theme09VennV1Props): ReactNode {
               </EditableField>
             )}
             {title && renderTitle(title || '')}
-            <div className="lp-theme09-chart-area">
+            <div data-lp-fallback-region="chart" className="lp-theme09-chart-area">
               <svg viewBox={`0 0 ${VB_W} ${VB_H}`} preserveAspectRatio="xMidYMid meet" className="lp-theme09-chart-svg" role="img">
                 <g>
                   {circles.map((s, i) => (

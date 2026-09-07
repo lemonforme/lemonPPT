@@ -93,7 +93,7 @@ export function Theme08TableV1(props: Theme08TableV1Props): ReactNode {
           {subtitle && <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-theme08-subtitle">{subtitle}</EditableField>}
         </div>
         <div className="lp-theme08-body">
-          <table className="lp-theme08-table lp-rise" style={{ tableLayout: 'fixed' }}>
+          <table className="lp-theme08-table lp-rise" style={{ tableLayout: 'fixed' }} data-lp-fallback-region="table">
             <thead>
               <tr>
                 {validHeaders.map((h, i) => {

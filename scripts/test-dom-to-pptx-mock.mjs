@@ -145,7 +145,7 @@ async function main() {
 </html>
 `;
 
-  const buffer = await exportDomToPptx({
+  const { buffer } = await exportDomToPptx({
     html,
     assetsDir,
     width: 1280,
