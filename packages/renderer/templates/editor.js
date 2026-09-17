@@ -60,8 +60,9 @@
       <div id="lp-editor-export" class="lp-editor-export">
         <button id="lp-export-toggle" class="lp-editor-btn lp-editor-export-toggle" type="button" aria-expanded="false"><span>⬇</span> 导出 <span class="lp-editor-caret">▼</span></button>
         <div id="lp-export-menu" class="lp-editor-export-menu" hidden>
+          <button id="lp-export-pptx-client" class="lp-editor-export-item" data-format="pptx-client"><span class="lp-editor-export-icon">⚡</span><span class="lp-editor-export-label">快速导出 PPTX</span><span class="lp-editor-export-tag">可编辑</span></button>
           <button id="lp-export-html" class="lp-editor-export-item" data-format="html"><span class="lp-editor-export-icon">🌐</span><span class="lp-editor-export-label">HTML 演示</span><span class="lp-editor-export-tag">在线播放</span></button>
-          <button id="lp-export-pptx" class="lp-editor-export-item" data-format="pptx"><span class="lp-editor-export-icon">📊</span><span class="lp-editor-export-label">PowerPoint</span><span class="lp-editor-export-tag">.pptx</span></button>
+          <button id="lp-export-pptx" class="lp-editor-export-item" data-format="pptx"><span class="lp-editor-export-icon">📊</span><span class="lp-editor-export-label">PowerPoint</span><span class="lp-editor-export-tag">服务端</span></button>
           <button id="lp-export-pdf" class="lp-editor-export-item" data-format="pdf"><span class="lp-editor-export-icon">📄</span><span class="lp-editor-export-label">PDF</span><span class="lp-editor-export-tag">打印/分享</span></button>
         </div>
       </div>`;
@@ -190,6 +191,7 @@
       // editor-script 依赖 client-render 的渲染函数与 ECharts 主题脚本
       await loadScript(assetUrl('client-render.js'));
       await loadScript(assetUrl('theme-echarts.js'));
+      await loadScript(assetUrl('client-export.js'));
       await loadScript(assetUrl('editor-script.js'));
       editorScriptLoaded = true;
     } else if (typeof window.__lemonPPT_applyTheme === 'function') {

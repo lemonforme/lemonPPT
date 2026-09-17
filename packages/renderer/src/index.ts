@@ -7,4 +7,5 @@ export * from './render-editor-data.js';
 export * from './export-pdf.js';
 export * from './export-pptx-screenshot.js';
 export * from './browser-export-driver.js';
+export * from './client-export.js';
 export * from './normalize-goal.js';

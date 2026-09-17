@@ -12,6 +12,7 @@ import { chromium } from 'playwright';
 import PptxGenJS from 'pptxgenjs';
 import { withPPTXEmbedFonts } from 'pptx-embed-fonts/pptxgenjs';
 import { validatePptxOutput } from './validate.js';
+import { buildFontRegistry } from './fonts/font-cache.js';
 
 declare global {
   interface Window {
@@ -27,7 +28,7 @@ declare global {
     boxes: TextBox[];
     warnings: Array<{ slide: number; type: string; detail?: string }>;
   };
-  function extractVectorizableShapes(slideIndex: number, markElements?: boolean): ShapeOverlay[];
+  function extractVectorizableShapes(slideIndex: number, markElements?: boolean, applyCssEffects?: boolean): ShapeOverlay[];
   function extractImages(slideIndex: number, markElements?: boolean): ImageOverlay[];
   function detectFallbackRegions(slideIndex: number): {
     regions: Array<{ x: number; y: number; w: number; h: number; selector?: string }>;
@@ -93,6 +94,8 @@ export interface ExportReport {
   shapeObjects: number;
   imageObjects: number;
   regionObjects: number;
+  /** 实际嵌入的字体家族列表（阶段 4 字体缓存增强后可观测性） */
+  embeddedFonts?: string[];
 }
 
 export interface ExportDomToPptxResult {
@@ -119,6 +122,8 @@ export interface ExportDomToPptxOptions {
   editableText?: boolean;
   /** 是否将简单图形（圆角矩形、圆形、线条）矢量化，默认 true */
   vectorizeShapes?: boolean;
+  /** 是否将 CSS 高级效果（box-shadow 等）同步矢量化到 shape，默认 true */
+  vectorizeCssEffects?: boolean;
   /** 是否将 <img> 元素提取为 PPTX 图片，默认 true */
   extractImages?: boolean;
   /** 是否自动下载远程图片（http/https）到本地临时文件，默认 true */
@@ -129,6 +134,8 @@ export interface ExportDomToPptxOptions {
   regionFallback?: boolean;
   /** 需要嵌入的字体目录，可选。提供后会按 CSS font-family 自动匹配并嵌入 */
   fontDir?: string;
+  /** 字体缓存目录，可选。作为 fontDir 的补充 fallback，常用于内置公共字体缓存 */
+  fontCacheDir?: string;
   /** 外部预览服务器 URL，提供时优先于本地 file:// 加载 HTML */
   previewUrl?: string;
   /** 在 Playwright 中初始化 ECharts，默认 true */
@@ -191,6 +198,15 @@ interface ShapeOverlay {
   lineWidth?: number;
   lineTransparency?: number;
   lineDirection?: 'horizontal' | 'vertical';
+  /** 矢量化 outer box-shadow（阶段 3） */
+  shadow?: {
+    type: 'outer';
+    color: string;
+    opacity: number;
+    blur: number;
+    angle: number;
+    offset: number;
+  };
   /** 自定义路径点（仅 customPath），坐标为相对于 shape 自身 bounding box 的百分比 [0,1] */
   points?: Array<
     | { x: number; y: number; moveTo?: boolean }
@@ -234,6 +250,28 @@ interface SlideData {
 export { validatePptxOutput };
 export type { PptxValidationOptions, PptxValidationResult } from './validate.js';
 
+// 阶段 2 CDP 提取 POC（实验性）
+export * as cdpExtraction from './extraction/cdp.js';
+
+// 阶段 3 CSS 高级效果矢量化（实验性）
+export {
+  classifyGradient,
+  parseBoxShadow,
+  parseClipPath,
+  parseCssColor,
+  parseCssLength,
+  parseLinearGradient,
+  gradientToPptxFill,
+  shadowToPptxOptions,
+  type GradientKind,
+  type ParsedGradient,
+  type ParsedGradientStop,
+  type ParsedShadow,
+  type ParsedClipPath,
+  type PptxGradientFill,
+  type PptxShadowOptions,
+} from './css-effects.js';
+
 /**
  * DOM-to-PPTX 导出引擎（阶段 5）。
  *
@@ -253,10 +291,12 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
     author,
     editableText = true,
     vectorizeShapes = true,
+    vectorizeCssEffects = true,
     extractImages: extractImagesEnabled = true,
     downloadRemoteImages = true,
     regionFallback = false,
     fontDir,
+    fontCacheDir,
     initECharts = true,
     echartsWaitMs = 600,
     navigationTimeout = 30000,
@@ -551,7 +591,10 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
       }
       if (vectorizeShapes) {
         // 在文字提取之后提取简单图形，避免隐藏父容器后无法获取内部文字。
-        shapes = await page.evaluate((idx) => extractVectorizableShapes(idx, true), i);
+        shapes = await page.evaluate(
+          ({ idx, applyCssEffects }) => extractVectorizableShapes(idx, true, applyCssEffects),
+          { idx: i, applyCssEffects: vectorizeCssEffects },
+        );
       }
       if (extractImagesEnabled) {
         // 提取 <img> 并在截图中隐藏，避免重复绘制；复杂区域内的图片由区域截图保留。
@@ -667,6 +710,7 @@ export async function exportDomToPptx(options: ExportDomToPptxOptions): Promise<
       subject,
       author,
       fontDir,
+      fontCacheDir,
       log,
       progress,
       imageResolver: resolveImagePath,
@@ -695,13 +739,14 @@ interface BuildPPTXOptions {
   subject?: string;
   author?: string;
   fontDir?: string;
+  fontCacheDir?: string;
   log: Logger;
   progress: (p: ExportProgress) => void;
   imageResolver?: (src: string, slideNo: number) => Promise<string | undefined>;
 }
 
 async function buildPPTX(options: BuildPPTXOptions): Promise<{ buffer: Buffer; report: ExportReport }> {
-  const { slides, width, height, title, subject, author, fontDir, log, progress, imageResolver } = options;
+  const { slides, width, height, title, subject, author, fontDir, fontCacheDir, log, progress, imageResolver } = options;
 
   // 设计稿以 1280×720 为基准，1280px 对应 10 英寸；高分辨率导出时保持相同像素密度。
   const pxToIn = (px: number) => (px * 10) / 1280;
@@ -716,7 +761,7 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<{ buffer: Buffer; r
   if (subject) pptx.subject = subject;
   if (author) pptx.author = author;
 
-  const fontRegistry = fontDir ? buildFontRegistry(fontDir) : {};
+  const fontRegistry = await buildFontRegistryWithFallback(fontDir, fontCacheDir);
   const embeddableFonts = new Map<string, string>();
   const missingFonts = new Set<string>();
   const fontWarnings: ExportWarning[] = [];
@@ -758,6 +803,16 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<{ buffer: Buffer; r
       }
       if (shape.type === 'roundRect' && shape.rectRadius !== undefined) {
         opts.rectRadius = shape.rectRadius;
+      }
+      if (shape.shadow) {
+        opts.shadow = {
+          type: 'outer',
+          color: shape.shadow.color,
+          opacity: shape.shadow.opacity,
+          blur: shape.shadow.blur,
+          angle: shape.shadow.angle,
+          offset: shape.shadow.offset,
+        };
       }
 
       if (shape.type === 'customPath' && shape.points && shape.points.length >= 2) {
@@ -823,7 +878,7 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<{ buffer: Buffer; r
       const { fontFace, fontFile } = resolveEmbeddableFont(box.fontFamilies, fontRegistry);
       if (fontFile) {
         embeddableFonts.set(fontFace, fontFile);
-      } else if (fontDir) {
+      } else if (fontDir || fontCacheDir) {
         const firstFamily = box.fontFamilies[0]?.replace(/['"]/g, '').trim();
         // 已命中安全字体映射或首字体本身就在安全栈中 → 不报 missing（系统回退可接受）
         if (firstFamily && (fontFace !== firstFamily || findSafeFontFace(firstFamily))) {
@@ -910,24 +965,41 @@ async function buildPPTX(options: BuildPPTXOptions): Promise<{ buffer: Buffer; r
     shapeObjects: slideSummaries.reduce((sum, s) => sum + s.shapes, 0),
     imageObjects: slideSummaries.reduce((sum, s) => sum + s.images, 0),
     regionObjects: slideSummaries.reduce((sum, s) => sum + s.fallbackRegions, 0),
+    embeddedFonts: Array.from(embeddableFonts.keys()).sort(),
   };
   return { buffer, report };
 }
 
-function buildFontRegistry(fontDir: string): Record<string, string> {
-  return {
-    Anton: path.join(fontDir, 'Anton', 'Anton-Regular.ttf'),
-    Archivo: path.join(fontDir, 'Archivo', 'Archivo[wdth,wght].ttf'),
-    Caveat: path.join(fontDir, 'Caveat', 'Caveat[wght].ttf'),
-    'IBM Plex Sans': path.join(fontDir, 'IBMPlexSans', 'IBMPlexSans[wdth,wght].ttf'),
-    Inter: path.join(fontDir, 'Inter', 'Inter[opsz,wght].ttf'),
-    'JetBrains Mono': path.join(fontDir, 'JetBrainsMono', 'JetBrainsMono[wght].ttf'),
-    Newsreader: path.join(fontDir, 'Newsreader', 'Newsreader[opsz,wght].ttf'),
-    'Noto Sans SC': path.join(fontDir, 'NotoSansSC', 'NotoSansSC[wght].ttf'),
-    'Noto Serif SC': path.join(fontDir, 'NotoSerifSC', 'NotoSerifSC[wght].ttf'),
-    'Space Grotesk': path.join(fontDir, 'SpaceGrotesk', 'SpaceGrotesk[wght].ttf'),
-    'Space Mono': path.join(fontDir, 'SpaceMono', 'SpaceMono-Regular.ttf'),
-  };
+/** 保留少量硬编码映射作为最终 fallback（目录扫描失败时仍可命中常见字体）。 */
+const KNOWN_FONT_FILES: Record<string, string[]> = {
+  Anton: ['Anton', 'Anton-Regular.ttf'],
+  Archivo: ['Archivo', 'Archivo[wdth,wght].ttf'],
+  Caveat: ['Caveat', 'Caveat[wght].ttf'],
+  'IBM Plex Sans': ['IBMPlexSans', 'IBMPlexSans[wdth,wght].ttf'],
+  Inter: ['Inter', 'Inter[opsz,wght].ttf'],
+  'JetBrains Mono': ['JetBrainsMono', 'JetBrainsMono[wght].ttf'],
+  Newsreader: ['Newsreader', 'Newsreader[opsz,wght].ttf'],
+  'Noto Sans SC': ['NotoSansSC', 'NotoSansSC[wght].ttf'],
+  'Noto Serif SC': ['NotoSerifSC', 'NotoSerifSC[wght].ttf'],
+  'Space Grotesk': ['SpaceGrotesk', 'SpaceGrotesk[wght].ttf'],
+  'Space Mono': ['SpaceMono', 'SpaceMono-Regular.ttf'],
+};
+
+async function buildFontRegistryWithFallback(fontDir?: string, fontCacheDir?: string): Promise<Record<string, string>> {
+  const registry = await buildFontRegistry({ fontDir, fontCacheDir });
+  // 若扫描未命中但某个目录存在，补充硬编码路径作为兜底。
+  const baseDirs = [fontDir, fontCacheDir].filter(Boolean) as string[];
+  for (const [family, parts] of Object.entries(KNOWN_FONT_FILES)) {
+    if (registry[family]) continue;
+    for (const base of baseDirs) {
+      const candidate = path.join(base, ...parts);
+      if (existsSync(candidate)) {
+        registry[family] = candidate;
+        break;
+      }
+    }
+  }
+  return registry;
 }
 
 /**
@@ -975,6 +1047,126 @@ function resolveEmbeddableFont(
 
 const EXTRACT_SCRIPT = `
 const LP_ORIGINAL_PROPS = ['color', 'fill', 'stroke', 'webkitTextFillColor', 'textShadow', 'textDecoration', 'opacity', 'backgroundColor', 'borderColor', 'borderWidth', 'boxShadow'];
+
+function rgbToHex(rgb) {
+  if (!rgb || rgb === 'none') return null;
+  const m = rgb.match(/rgba?\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)/);
+  if (!m) return null;
+  const toHex = (n) => parseInt(n, 10).toString(16).padStart(2, '0');
+  return '#' + toHex(m[1]) + toHex(m[2]) + toHex(m[3]);
+}
+
+function parseCssColor(value) {
+  if (!value || value === 'transparent' || value === 'none') return undefined;
+  const clean = value.trim();
+
+  if (clean.startsWith('#')) {
+    let hex = clean.slice(1);
+    if (hex.length === 3 || hex.length === 4) {
+      hex = hex.split('').map((c) => c + c).join('');
+    }
+    if (hex.length === 6) return { hex: hex.toUpperCase(), alpha: 1 };
+    if (hex.length === 8) return { hex: hex.slice(0, 6).toUpperCase(), alpha: parseInt(hex.slice(6, 8), 16) / 255 };
+    return undefined;
+  }
+
+  const rgbMatch = clean.match(/rgba?\\(\\s*([\\d.]+)\\s*,\\s*([\\d.]+)\\s*,\\s*([\\d.]+)\\s*(?:,\\s*([\\d.]+)\\s*)?\\)/);
+  if (rgbMatch) {
+    const r = Math.round(parseFloat(rgbMatch[1]));
+    const g = Math.round(parseFloat(rgbMatch[2]));
+    const b = Math.round(parseFloat(rgbMatch[3]));
+    const alpha = rgbMatch[4] !== undefined ? parseFloat(rgbMatch[4]) : 1;
+    const toHex = (n) => Math.max(0, Math.min(255, n)).toString(16).padStart(2, '0');
+    return { hex: (toHex(r) + toHex(g) + toHex(b)).toUpperCase(), alpha: Number.isNaN(alpha) ? 1 : alpha };
+  }
+
+  const srgbMatch = clean.match(/color\\(\\s*srgb\\s+([\\d.]+)\\s+([\\d.]+)\\s+([\\d.]+)\\s*(?:\\/\\s*([\\d.]+))?\\s*\\)/);
+  if (srgbMatch) {
+    const r = Math.round(parseFloat(srgbMatch[1]) * 255);
+    const g = Math.round(parseFloat(srgbMatch[2]) * 255);
+    const b = Math.round(parseFloat(srgbMatch[3]) * 255);
+    const alpha = srgbMatch[4] !== undefined ? parseFloat(srgbMatch[4]) : 1;
+    const toHex = (n) => Math.max(0, Math.min(255, n)).toString(16).padStart(2, '0');
+    return { hex: (toHex(r) + toHex(g) + toHex(b)).toUpperCase(), alpha: Number.isNaN(alpha) ? 1 : alpha };
+  }
+
+  const namedColors = {
+    black: '000000', white: 'FFFFFF', red: 'FF0000', green: '008000', blue: '0000FF',
+    yellow: 'FFFF00', cyan: '00FFFF', magenta: 'FF00FF', orange: 'FFA500', purple: '800080',
+    pink: 'FFC0CB', gray: '808080', grey: '808080', transparent: '000000',
+  };
+  if (namedColors[clean.toLowerCase()]) {
+    return { hex: namedColors[clean.toLowerCase()], alpha: clean.toLowerCase() === 'transparent' ? 0 : 1 };
+  }
+  return undefined;
+}
+
+function parseCssLength(value, base) {
+  if (!base) base = 16;
+  if (!value || value === '0') return 0;
+  const clean = value.trim().toLowerCase();
+  const num = parseFloat(clean);
+  if (Number.isNaN(num)) return undefined;
+  if (clean.endsWith('px')) return num;
+  if (clean.endsWith('em')) return num * base;
+  if (clean.endsWith('rem')) return num * 16;
+  if (clean.endsWith('pt')) return num * 1.333;
+  if (clean.endsWith('%')) return num / 100 * base;
+  if (clean.endsWith('cm')) return num * 37.795;
+  if (clean.endsWith('mm')) return num * 3.78;
+  if (clean.endsWith('in')) return num * 96;
+  return num;
+}
+
+function parseBoxShadow(value) {
+  if (!value || value === 'none') return undefined;
+  const clean = value.trim();
+  function splitTopLevel(input) {
+    const result = [];
+    let depth = 0;
+    let current = '';
+    for (const char of input) {
+      if (char === '(') depth++;
+      else if (char === ')') depth--;
+      if (char === ',' && depth === 0) {
+        result.push(current);
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    if (current) result.push(current);
+    return result;
+  }
+  const firstShadow = splitTopLevel(clean)[0]?.trim();
+  if (!firstShadow) return undefined;
+  const tokens = firstShadow.split(/\s+/).filter(Boolean);
+  let inset = false;
+  let color;
+  const lengths = [];
+  for (const token of tokens) {
+    const lower = token.toLowerCase();
+    if (lower === 'inset') { inset = true; continue; }
+    const parsedColor = parseCssColor(token);
+    if (parsedColor) { color = parsedColor; continue; }
+    const len = parseCssLength(token);
+    if (len !== undefined) lengths.push(len);
+  }
+  if (lengths.length < 2) return undefined;
+  const offsetX = lengths[0];
+  const offsetY = lengths[1];
+  const blur = lengths[2] || 0;
+  const angle = (Math.atan2(offsetY, offsetX) * 180) / Math.PI;
+  const distance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
+  return {
+    type: inset ? 'inner' : 'outer',
+    color: color ? color.hex : '000000',
+    transparency: Math.round((1 - (color ? color.alpha : 1)) * 100),
+    blur,
+    angle,
+    distance,
+  };
+}
 
 function getWrapper(slideIndex) {
   return document.querySelector('.lp-slide-wrapper[data-slide-index="' + slideIndex + '"]');
@@ -1829,7 +2021,7 @@ function showFallbackRegions(slideIndex) {
   });
 }
 
-function extractVectorizableShapes(slideIndex, markElements) {
+function extractVectorizableShapes(slideIndex, markElements, applyCssEffects) {
   const wrapper = getWrapper(slideIndex);
   if (!wrapper) return [];
 
@@ -1892,6 +2084,21 @@ function extractVectorizableShapes(slideIndex, markElements) {
     }
     if (type === 'line') {
       shape.lineDirection = isHorizontalLine ? 'horizontal' : 'vertical';
+    }
+
+    // 阶段 3：将 outer box-shadow 矢量化到 shape。
+    if (applyCssEffects) {
+      const parsedShadow = parseBoxShadow(style.boxShadow);
+      if (parsedShadow && parsedShadow.type === 'outer') {
+        shape.shadow = {
+          type: 'outer',
+          color: parsedShadow.color,
+          opacity: Math.max(0, Math.min(1, 1 - parsedShadow.transparency / 100)),
+          blur: parsedShadow.blur,
+          angle: parsedShadow.angle,
+          offset: parsedShadow.distance,
+        };
+      }
     }
 
     if (markElements) {

@@ -110,6 +110,11 @@ export async function copyThemeAssets(themeId: string, assetsDir: string): Promi
   const browserExportDest = path.join(assetsDir, 'browser-export.js');
   await copyFile(browserExportSource, browserExportDest);
 
+  // 复制浏览器端可编辑 PPTX 导出脚本（dom-to-pptx 轻量导出）
+  const clientExportSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'client-export.js');
+  const clientExportDest = path.join(assetsDir, 'client-export.js');
+  await copyFile(clientExportSource, clientExportDest);
+
   const vendorDirSource = resolvePackagePath('@lemonppt/renderer', 'assets', 'vendor');
   const vendorDirDest = path.join(assetsDir, 'vendor');
   await cp(vendorDirSource, vendorDirDest, { recursive: true, force: true });
@@ -263,6 +268,7 @@ window.__lemonPPT_layoutSchemas = ${JSON.stringify(layoutSchemas)};
       './assets/editor-script.js',
       './assets/client-render.js',
       './assets/theme-echarts.js',
+      './assets/client-export.js',
     ];
     return { html: editorHtml, indexPath, assetsDir, assets };
   }

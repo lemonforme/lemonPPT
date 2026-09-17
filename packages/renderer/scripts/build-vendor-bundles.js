@@ -20,6 +20,24 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outdir = path.resolve(__dirname, '../assets/vendor');
 fs.mkdirSync(outdir, { recursive: true });
 
+/**
+ * 直接复制 dom-to-pptx 预构建 UMD bundle，避免与其内部 pptxgenjs 4.x 产生版本冲突。
+ * MIT 许可证，保留原版权声明。详见 packages/dom-to-pptx/NOTICE。
+ */
+function copyDomToPptxBundle() {
+  const mainPath = fileURLToPath(import.meta.resolve('dom-to-pptx'));
+  const source = path.join(path.dirname(mainPath), 'dom-to-pptx.bundle.js');
+  const dest = path.join(outdir, 'dom-to-pptx.bundle.js');
+  if (!fs.existsSync(source)) {
+    throw new Error('未找到 dom-to-pptx bundle，请先安装 dom-to-pptx@2.1.1');
+  }
+  fs.copyFileSync(source, dest);
+  const stats = fs.statSync(dest);
+  console.log(
+    `Copied dom-to-pptx bundle: ${(stats.size / 1024 / 1024).toFixed(2)} MB -> assets/vendor/dom-to-pptx.bundle.js`,
+  );
+}
+
 const vendorEntries = [
   {
     name: 'html-to-image',
@@ -39,6 +57,8 @@ const vendorEntries = [
 ];
 
 async function build() {
+  copyDomToPptxBundle();
+
   for (const vendor of vendorEntries) {
     await esbuild.build({
       entryPoints: [vendor.entry],

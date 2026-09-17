@@ -16,6 +16,8 @@
     "render": "node scripts/render.mjs",
     "render:editor": "node packages/cli/dist/cli.js render examples/sample-goal.json --out ./output --editable",
     "render:editor:theme03": "node packages/cli/dist/cli.js render examples/theme03-sample-goal.json --out ./output --editable",
+    "demo:client-export": "node scripts/demo-client-export.mjs",
+    "compare:extraction": "node scripts/compare-extraction-modes.mjs",
     "export:pptx": "node scripts/export-pptx.mjs",
     "export:pdf": "node scripts/export-pdf.mjs",
     "generate:goal": "node scripts/generate-goal.mjs",
@@ -35,6 +37,7 @@
   "dependencies": {
     "@lemonppt/agent-prompts": "workspace:*",
     "@lemonppt/core": "workspace:*",
+    "@lemonppt/dom-to-pptx": "workspace:*",
     "@lemonppt/renderer": "workspace:*",
     "jquery": "^3.7.1",
     "jquery.scrollbar": "^0.2.11"

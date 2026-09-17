@@ -29,6 +29,8 @@ export interface ExportPptxScreenshotOptions {
   overlayText?: boolean;
   /** 是否将简单图形（圆角矩形、圆形、线条）矢量化，默认 true */
   vectorizeShapes?: boolean;
+  /** 是否将 CSS 高级效果（box-shadow 等）同步矢量化到 shape，默认 true */
+  vectorizeCssEffects?: boolean;
   /** 是否将 <img> 元素提取为 PPTX 图片，默认 true */
   extractImages?: boolean;
   /** 是否自动下载远程图片（http/https），默认 true */
@@ -37,6 +39,10 @@ export interface ExportPptxScreenshotOptions {
   regionFallback?: boolean;
   /** Playwright 截图设备像素比，默认 2（Retina）。设置为 1 可减小文件体积 */
   deviceScaleFactor?: number;
+  /** 用户自定义字体目录，优先于内置字体缓存 */
+  fontDir?: string;
+  /** 字体缓存目录，默认使用 renderer 内置字体 assets/fonts */
+  fontCacheDir?: string;
   /** 结构化日志器 */
   logger?: Logger;
   /** 进度回调 */
@@ -63,10 +69,13 @@ export async function exportDeckToPptxScreenshot(
     author,
     overlayText = true,
     vectorizeShapes = true,
+    vectorizeCssEffects = true,
     extractImages = true,
     downloadRemoteImages = true,
     regionFallback = true,
     deviceScaleFactor = 2,
+    fontDir,
+    fontCacheDir,
     logger,
     onProgress,
   } = options;
@@ -121,11 +130,13 @@ export async function exportDeckToPptxScreenshot(
         author,
         editableText: overlayText,
         vectorizeShapes,
+        vectorizeCssEffects,
         extractImages,
         downloadRemoteImages,
         regionFallback,
         deviceScaleFactor,
-        fontDir: fontsDest,
+        fontDir,
+        fontCacheDir: fontCacheDir ?? fontsDest,
         initECharts: true,
         logger,
         onProgress,
