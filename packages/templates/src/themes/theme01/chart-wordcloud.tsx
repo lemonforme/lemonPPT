@@ -161,7 +161,7 @@ export function Theme01ChartWordcloud(props: Theme01ChartWordcloudProps): ReactN
       </div>
 
       <div className="lp-chart-body lp-rise">
-        <div className="lp-chart-wrapper lp-wordcloud-wrapper">
+        <div className="lp-chart-wrapper lp-wordcloud-wrapper" data-lp-fallback-region="chart">
           <svg viewBox={`0 0 ${width} ${height}`} className="lp-wordcloud-svg" style={{ width: '100%', height: '100%' }}>
             {placed.map((item, i) => (
               <text

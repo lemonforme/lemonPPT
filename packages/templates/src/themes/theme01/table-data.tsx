@@ -181,7 +181,7 @@ export function Theme01TableData(props: Theme01TableDataProps): ReactNode {
           />
         </div>
 
-        <div className="lp-table-data-wrap lp-rise">
+        <div className="lp-table-data-wrap lp-rise" data-lp-fallback-region="table">
           <table className="lp-table-data-table">
             <thead>
               <tr>

@@ -118,7 +118,7 @@ export function Theme04TableV1(props: Theme04TableV1Props): ReactNode {
         )}
       </div>
 
-      <div className="lp-theme04-table-wrap lp-rise lp-theme04-card">
+      <div className="lp-theme04-table-wrap lp-rise lp-theme04-card" data-lp-fallback-region="table">
         <div className="lp-theme04-table-header">
           {safeColumns.map((col, idx) => (
             <div key={idx} className="lp-theme04-table-header-cell">{col}</div>

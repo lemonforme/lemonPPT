@@ -82,7 +82,7 @@ export function Theme07ConcentrationV1(props: Theme07ConcentrationV1Props): Reac
         {subtitle && <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-theme07-subtitle">{subtitle}</EditableField>}
       </div>
       {validRows.length > 0 && (
-        <div className="lp-theme07-ranking-list lp-rise">
+        <div className="lp-theme07-ranking-list lp-rise" data-lp-fallback-region="chart">
           {validRows.map((row, i) => (
             <div key={i} className={`lp-theme07-rank-row ${(row.focus || i === focusIndex) ? 'lp-focus accent' : ''}`} style={{ animationDelay: `${i * 60}ms` }}>
               {(row.focus || i === focusIndex) && <span className="lp-focus-lens" aria-hidden="true" />}

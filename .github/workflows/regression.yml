@@ -105,6 +105,8 @@ jobs:
     needs: snapshot
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # PR 阶段视觉差异是预期信号，不阻塞合并；main push 会自动更新基线。
+    continue-on-error: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4

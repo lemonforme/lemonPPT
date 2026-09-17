@@ -86,7 +86,7 @@ export function Theme11TableDataV1(props: Theme11TableDataV1Props): ReactNode {
         <SectionTitle tone="violet"><EditableField prop="title" slideIdx={s} editable={e} as="span">{title}</EditableField></SectionTitle>
         {subtitle && <EditableField prop="subtitle" slideIdx={s} editable={e} as="p" className="lp-theme11-table-data-sub">{subtitle}</EditableField>}
       </div>
-      <div className="lp-theme11-table-data-list">
+      <div className="lp-theme11-table-data-list" data-lp-fallback-region="table">
         {validRows.map((row, i) => (
           <Card key={i} className="lp-theme11-table-data-row lp-rise" padding="medium" style={{ animationDelay: `${i * 60}ms` }}>
             <div className="lp-theme11-table-data-top">

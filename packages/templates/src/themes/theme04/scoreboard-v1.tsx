@@ -130,7 +130,7 @@ export function Theme04ScoreboardV1(props: Theme04ScoreboardV1Props): ReactNode 
       </div>
 
       {validRows.length > 0 && validMetrics.length > 0 && (
-        <div className="lp-theme04-scoreboard-table-wrap lp-rise">
+        <div className="lp-theme04-scoreboard-table-wrap lp-rise" data-lp-fallback-region="table">
           <table className="lp-theme04-scoreboard-table">
             <thead>
               <tr>

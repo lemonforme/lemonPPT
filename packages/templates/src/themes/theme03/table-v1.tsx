@@ -104,7 +104,7 @@ export function Theme03TableV1(props: Theme03TableV1Props): ReactNode {
           )}
         </div>
 
-        <div className="lp-theme03-table-card lp-rise lp-theme03-corner-bracket">
+        <div className="lp-theme03-table-card lp-rise lp-theme03-corner-bracket" data-lp-fallback-region="table">
           <table className="lp-theme03-table">
             {headers.length > 0 && (
               <thead>

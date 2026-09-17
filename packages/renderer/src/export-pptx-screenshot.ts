@@ -15,9 +15,9 @@ import { startPreviewServer } from './preview-server.js';
 export interface ExportPptxScreenshotOptions {
   /** 输出 PPTX 文件路径 */
   outFile: string;
-  /** 页面宽度（像素），默认 1280 */
+  /** 页面宽度（像素），默认 1920 */
   width?: number;
-  /** 页面高度（像素），默认 720 */
+  /** 页面高度（像素），默认 1080 */
   height?: number;
   /** PPTX 元数据：标题 */
   title?: string;
@@ -29,10 +29,20 @@ export interface ExportPptxScreenshotOptions {
   overlayText?: boolean;
   /** 是否将简单图形（圆角矩形、圆形、线条）矢量化，默认 true */
   vectorizeShapes?: boolean;
+  /** 是否将 CSS 高级效果（box-shadow 等）同步矢量化到 shape，默认 true */
+  vectorizeCssEffects?: boolean;
   /** 是否将 <img> 元素提取为 PPTX 图片，默认 true */
   extractImages?: boolean;
   /** 是否自动下载远程图片（http/https），默认 true */
   downloadRemoteImages?: boolean;
+  /** 是否对复杂区域（图表、复杂 SVG、表格等）单独截图并叠加，默认 true */
+  regionFallback?: boolean;
+  /** Playwright 截图设备像素比，默认 2（Retina）。设置为 1 可减小文件体积 */
+  deviceScaleFactor?: number;
+  /** 用户自定义字体目录，优先于内置字体缓存 */
+  fontDir?: string;
+  /** 字体缓存目录，默认使用 renderer 内置字体 assets/fonts */
+  fontCacheDir?: string;
   /** 结构化日志器 */
   logger?: Logger;
   /** 进度回调 */
@@ -52,20 +62,25 @@ export async function exportDeckToPptxScreenshot(
   goal = normalizeGoal(goal);
   const {
     outFile,
-    width = 1280,
-    height = 720,
+    width = 1920,
+    height = 1080,
     title,
     subject,
     author,
     overlayText = true,
     vectorizeShapes = true,
+    vectorizeCssEffects = true,
     extractImages = true,
     downloadRemoteImages = true,
+    regionFallback = true,
+    deviceScaleFactor = 2,
+    fontDir,
+    fontCacheDir,
     logger,
     onProgress,
   } = options;
 
-  const result = renderDeck(goal);
+  const result = renderDeck(goal, { width, height });
   const theme = goal.theme || 'theme01';
 
   // 在临时目录中准备静态资源，确保 HTML 中的相对引用可用。
@@ -105,7 +120,7 @@ export async function exportDeckToPptxScreenshot(
 
     const previewServer = await startPreviewServer(tempDir);
     try {
-      const buffer = await exportDomToPptx({
+      const { buffer, report } = await exportDomToPptx({
         html: result.html,
         previewUrl: `${previewServer.url}/index.html`,
         width,
@@ -115,15 +130,28 @@ export async function exportDeckToPptxScreenshot(
         author,
         editableText: overlayText,
         vectorizeShapes,
+        vectorizeCssEffects,
         extractImages,
         downloadRemoteImages,
-        fontDir: fontsDest,
+        regionFallback,
+        deviceScaleFactor,
+        fontDir,
+        fontCacheDir: fontCacheDir ?? fontsDest,
         initECharts: true,
         logger,
         onProgress,
       });
 
       await writeFile(outFile, buffer);
+
+      // 将质量报告写到输出文件同级（*.report.json），便于回归对比与问题定位。
+      try {
+        const reportFile = outFile.replace(/\.pptx$/i, '') + '.report.json';
+        await writeFile(reportFile, JSON.stringify(report, null, 2), 'utf-8');
+        logger?.info(`导出质量报告已写入: ${reportFile}`);
+      } catch (err) {
+        logger?.warn(`写入导出质量报告失败: ${err instanceof Error ? err.message : String(err)}`);
+      }
     } finally {
       await previewServer.close();
     }

@@ -31,6 +31,12 @@ export function renderDeck(goal: DeckGoal, options: RenderOptions = {}): RenderO
   goal = normalizeGoal(goal);
   const { width = 1280, height = 720 } = options;
 
+  // 主题设计稿以 1280×720 为基准；当输出分辨率改变时，通过 CSS zoom 保持版式比例一致。
+  const scale = width / 1280;
+  const slideZoomCss = scale !== 1
+    ? `    .lp-slide { zoom: ${scale}; }`
+    : '';
+
   const slideCount = goal.slides.length;
 
   const slideElements = goal.slides.map((slide, index) => {
@@ -1136,6 +1142,7 @@ ${themeCssVars}
       outline-offset: 2px;
       border-radius: 2px;
     }
+${slideZoomCss}
     @page {
       size: ${width}px ${height}px;
       margin: 0;

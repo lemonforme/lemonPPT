@@ -115,7 +115,7 @@ export function Theme01TableV1(props: Theme01TableV1Props): ReactNode {
       />
 
       <div className="lp-table-v1-canvas lp-rise">
-        <table className="lp-table-v1-table">
+        <table className="lp-table-v1-table" data-lp-fallback-region="table">
           {headers.length > 0 && (
             <thead>
               <tr>

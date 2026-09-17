@@ -370,6 +370,62 @@ export const editorScript = `
     });
   }
 
+  async function exportPptxFromServer() {
+    const res = await fetch('/api/export/pptx', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(goal),
+    });
+    if (!res.ok) throw new Error('导出失败: ' + res.status);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'presentation.pptx';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  const exportPptxClientBtn = document.getElementById('lp-export-pptx-client');
+  if (exportPptxClientBtn) {
+    const clientLabel = exportPptxClientBtn.querySelector('.lp-editor-export-label');
+    exportPptxClientBtn.addEventListener('click', async () => {
+      if (window.location.protocol === 'file:') {
+        alert('静态文件模式下无法直接导出 PPTX。\\n\\n请通过本地服务器访问后导出：\\n  pnpm dev\\n或运行：\\n  node scripts/export-pptx.mjs <goal.json> out.pptx');
+        if (exportMenu) exportMenu.setAttribute('hidden', '');
+        return;
+      }
+      if (clientLabel) clientLabel.textContent = '快速导出中...';
+      exportPptxClientBtn.disabled = true;
+      try {
+        if (!window.__lemonPPT_clientExport) {
+          throw new Error('浏览器端导出脚本未加载');
+        }
+        await window.__lemonPPT_clientExport.exportDeckToPptxClient({
+          fileName: (goal.title || 'presentation') + '.pptx',
+          title: goal.title || 'Presentation',
+          author: 'lemonPPT',
+        });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        console.warn('Client PPTX export failed, offering server fallback', err);
+        const fallback = confirm('快速导出失败：' + message + '\\n\\n是否回退到服务端导出？');
+        if (fallback) {
+          if (clientLabel) clientLabel.textContent = '服务端导出中...';
+          try {
+            await exportPptxFromServer();
+          } catch (fallbackErr) {
+            alert(fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr));
+          }
+        }
+      } finally {
+        if (clientLabel) clientLabel.textContent = '快速导出 PPTX';
+        exportPptxClientBtn.disabled = false;
+        if (exportMenu) exportMenu.setAttribute('hidden', '');
+      }
+    });
+  }
+
   const exportPptxBtn = document.getElementById('lp-export-pptx');
   if (exportPptxBtn) {
     const pptxLabel = exportPptxBtn.querySelector('.lp-editor-export-label');
@@ -382,19 +438,7 @@ export const editorScript = `
       if (pptxLabel) pptxLabel.textContent = '导出中...';
       exportPptxBtn.disabled = true;
       try {
-        const res = await fetch('/api/export/pptx', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(goal),
-        });
-        if (!res.ok) throw new Error('导出失败: ' + res.status);
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'presentation.pptx';
-        a.click();
-        URL.revokeObjectURL(url);
+        await exportPptxFromServer();
       } catch (err) {
         alert(err instanceof Error ? err.message : String(err));
       } finally {

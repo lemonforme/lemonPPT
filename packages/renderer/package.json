@@ -1,6 +1,6 @@
 {
   "name": "@lemonppt/renderer",
-  "version": "1.0.8",
+  "version": "1.0.13",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/lemonforme/lemonPPT#readme",
   "scripts": {
-    "build": "tsc && node scripts/build-editor-script.js && esbuild src/client-render.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_clientRender --outfile=dist/client/client-render.js --alias:react-dom/server=react-dom/server.browser --target=es2019 --minify && esbuild src/theme-echarts.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_themeECharts --outfile=dist/client/theme-echarts.js --target=es2019 --minify && node scripts/build-vendor-bundles.js && esbuild src/browser-export.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_browserExport --outfile=dist/client/browser-export.js --target=es2019 --minify",
+    "build": "tsc && node scripts/build-editor-script.js && esbuild src/client-render.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_clientRender --outfile=dist/client/client-render.js --alias:react-dom/server=react-dom/server.browser --target=es2019 --minify && esbuild src/theme-echarts.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_themeECharts --outfile=dist/client/theme-echarts.js --target=es2019 --minify && node scripts/build-vendor-bundles.js && esbuild src/browser-export.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_browserExport --outfile=dist/client/browser-export.js --target=es2019 --minify && esbuild src/client-export.ts --bundle --platform=browser --format=iife --global-name=__lemonPPT_clientExport --outfile=dist/client/client-export.js --target=es2019 --minify",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "tsc"
   },
@@ -48,6 +48,7 @@
     "@types/node": "^20.0.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
+    "dom-to-pptx": "2.1.1",
     "esbuild": "^0.28.1",
     "typescript": "^5.5.0"
   },

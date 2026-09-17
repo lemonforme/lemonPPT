@@ -126,7 +126,7 @@ export function Theme04LedgerV1(props: Theme04LedgerV1Props): ReactNode {
         )}
       </div>
 
-      <div className="lp-theme04-ledger-list lp-rise">
+      <div className="lp-theme04-ledger-list lp-rise" data-lp-fallback-region="table">
         {validInvestors.map((investor, idx) => (
           <div key={idx} className="lp-theme04-ledger-row lp-theme04-card">
             <div className={`lp-theme04-ledger-rank ${toneClass[investor.tone ?? 'green']}`}>
