@@ -1,6 +1,6 @@
 (function () {
   const params = new URLSearchParams(window.location.search);
-  const initialTheme = params.get('theme') || window.__lemonPPT_editorData?.theme || window.__lemonPPT_goal?.theme || 'theme01';
+  const initialTheme = params.get('theme') || window.__lemonPPT_editorData?.theme || window.__lemonPPT_goal?.theme || '';
   const isStatic = !!window.__lemonPPT_editorData || !!window.__lemonPPT_goal;
   const assetsBase = window.__lemonPPT_assetsBase || '/deck/assets/';
   const apiBase = window.__lemonPPT_apiBase || '';
@@ -30,39 +30,22 @@
     return base + name;
   }
 
-  function buildEditorBar(goal, currentTheme, staticMode) {
-    const appearance = goal.appearance || 'primary';
-    const appearanceButtons = [
-      { value: 'primary', label: '亮', icon: '☀' },
-      { value: 'dark', label: '暗', icon: '☾' },
-      { value: 'contrast', label: '彩', icon: '◐' },
-    ]
-      .map(btn => `<button type="button" class="lp-appearance-btn ${btn.value === appearance ? 'lp-appearance-active' : ''}" data-appearance="${btn.value}"><span>${btn.icon}</span><span>${btn.label}</span></button>`)
-      .join('');
-
-    const themeSelect = staticMode
-      ? `<select id="lp-theme-select" class="lp-editor-select" title="当前主题" disabled><option>${escapeHtml(currentTheme)}</option></select>`
-      : `<select id="lp-theme-select" class="lp-editor-select" title="切换主题">
-        ${[1,2,3,4,5,6,7,8,9,10].map(i => { const id = `theme${String(i).padStart(2, '0')}`; return `<option value="${id}" ${currentTheme === id ? 'selected' : ''}>Theme ${String(i).padStart(2, '0')}</option>`; }).join('')}
-      </select>`;
-
+  function buildEditorBar(goal) {
     return `
       <div class="lp-editor-title">${escapeHtml(goal.title || 'Untitled')}</div>
-      <div class="lp-appearance-switcher">${appearanceButtons}</div>
-      ${themeSelect}
       <div class="lp-editor-btn-group">
         <button id="lp-undo" class="lp-editor-btn" type="button" title="撤销 (Ctrl+Z)" disabled><span>↶</span> 撤销</button>
         <button id="lp-redo" class="lp-editor-btn" type="button" title="重做 (Ctrl+Y)" disabled><span>↷</span> 重做</button>
       </div>
-      <button id="lp-add-slide" class="lp-editor-btn" type="button"><span>+</span> 添加页面</button>
       <button id="lp-save-deck" class="lp-editor-btn lp-editor-btn-primary" type="button">保存</button>
       <button id="lp-play" class="lp-editor-btn lp-editor-btn-primary" type="button" title="播放演示"><span>▶</span> 播放</button>
       <div id="lp-editor-export" class="lp-editor-export">
-        <button id="lp-export-toggle" class="lp-editor-btn lp-editor-export-toggle" type="button" aria-expanded="false"><span>⬇</span> 导出 <span class="lp-editor-caret">▼</span></button>
+        <button id="lp-export-toggle" class="lp-editor-btn lp-editor-export-toggle" type="button" aria-expanded="false"><img class="lp-editor-export-toggle-icon" src="${assetsBase}icons/导出.svg" alt=""> 导出 <span class="lp-editor-caret">▼</span></button>
         <div id="lp-export-menu" class="lp-editor-export-menu" hidden>
-          <button id="lp-export-html" class="lp-editor-export-item" data-format="html"><span class="lp-editor-export-icon">🌐</span><span class="lp-editor-export-label">HTML 演示</span><span class="lp-editor-export-tag">在线播放</span></button>
-          <button id="lp-export-pptx" class="lp-editor-export-item" data-format="pptx"><span class="lp-editor-export-icon">📊</span><span class="lp-editor-export-label">PowerPoint</span><span class="lp-editor-export-tag">.pptx</span></button>
-          <button id="lp-export-pdf" class="lp-editor-export-item" data-format="pdf"><span class="lp-editor-export-icon">📄</span><span class="lp-editor-export-label">PDF</span><span class="lp-editor-export-tag">打印/分享</span></button>
+          <button id="lp-export-pptx-client" class="lp-editor-export-item" data-format="pptx-client"><img class="lp-editor-export-icon" src="${assetsBase}icons/导出.svg" alt=""><span class="lp-editor-export-label">快速导出 PPTX</span><span class="lp-editor-export-tag">可编辑</span></button>
+          <button id="lp-export-html" class="lp-editor-export-item" data-format="html"><img class="lp-editor-export-icon" src="${assetsBase}icons/HTML.svg" alt=""><span class="lp-editor-export-label">HTML 演示</span><span class="lp-editor-export-tag">在线播放</span></button>
+          <button id="lp-export-pptx" class="lp-editor-export-item" data-format="pptx"><img class="lp-editor-export-icon" src="${assetsBase}icons/ppt文件.svg" alt=""><span class="lp-editor-export-label">PowerPoint</span><span class="lp-editor-export-tag">服务端</span></button>
+          <button id="lp-export-pdf" class="lp-editor-export-item" data-format="pdf"><img class="lp-editor-export-icon" src="${assetsBase}icons/pdf.svg" alt=""><span class="lp-editor-export-label">PDF</span><span class="lp-editor-export-tag">打印/分享</span></button>
         </div>
       </div>`;
   }
@@ -107,22 +90,6 @@
 
   function buildRightPanel() {
     return `<div class="lp-property-header">属性面板</div><div class="lp-property-content" id="lp-property-content"><div class="lp-property-empty">点击左侧缩略图选择幻灯片，然后编辑内容。</div></div>`;
-  }
-
-  function buildAddSlideModal(goal) {
-    const layouts = goal.slides.length > 0 ? Array.from(new Set(goal.slides.map(s => s.layout))) : ['title', 'content', 'section', 'closing'];
-    const layoutItems = layouts.map(layout =>
-      `<div class="lp-add-slide-item" data-layout="${layout}"><span class="lp-add-slide-item-icon">⊞</span><span class="lp-add-slide-item-label">${layout}</span></div>`
-    ).join('\n');
-    return `<div id="lp-add-slide-modal" class="lp-add-slide-modal-overlay">
-  <div class="lp-add-slide-modal">
-    <div class="lp-add-slide-modal-header"><span class="lp-add-slide-modal-title">添加幻灯片</span><button id="lp-add-slide-close" class="lp-add-slide-modal-close" type="button">×</button></div>
-    <div class="lp-add-slide-modal-body">
-      <div class="lp-add-slide-section-title">选择版式</div>
-      <div class="lp-add-slide-grid">${layoutItems}</div>
-    </div>
-  </div>
-</div>`;
   }
 
   async function applyData(data, { isInitial = false, staticMode = false } = {}) {
@@ -173,13 +140,13 @@
     const height = firstWrapper ? parseInt(firstWrapper.style.height, 10) || 720 : 720;
 
     // 填充 UI
-    document.getElementById('lp-editor-bar').innerHTML = buildEditorBar(goal, theme, staticMode);
+    document.getElementById('lp-editor-bar').innerHTML = buildEditorBar(goal);
     document.getElementById('lp-left-panel').innerHTML = buildLeftPanel(goal, data.slideHtmls, width, height);
     document.getElementById('lp-right-panel').innerHTML = buildRightPanel();
-    document.getElementById('lp-modal').innerHTML = buildAddSlideModal(goal);
 
-    // 暴露 goal 给 editor-script
+    // 暴露 goal 和版式 schema 给 editor-script
     window.__lemonPPT_goal = goal;
+    window.__lemonPPT_layoutSchemas = data.layoutSchemas || window.__lemonPPT_layoutSchemas || {};
 
     // 显示编辑器
     document.getElementById('lp-loading').classList.add('hidden');
@@ -190,6 +157,7 @@
       // editor-script 依赖 client-render 的渲染函数与 ECharts 主题脚本
       await loadScript(assetUrl('client-render.js'));
       await loadScript(assetUrl('theme-echarts.js'));
+      await loadScript(assetUrl('client-export.js'));
       await loadScript(assetUrl('editor-script.js'));
       editorScriptLoaded = true;
     } else if (typeof window.__lemonPPT_applyTheme === 'function') {
@@ -202,20 +170,12 @@
       url.searchParams.set('theme', theme);
       window.history.replaceState({}, '', url.toString());
     }
-
-    // 主题切换事件
-    const themeSelect = document.getElementById('lp-theme-select');
-    if (themeSelect && !staticMode) {
-      themeSelect.addEventListener('change', (e) => {
-        if (document.activeElement) document.activeElement.blur();
-        fetchTheme(e.target.value);
-      });
-    }
   }
 
   async function fetchTheme(theme) {
     try {
-      const res = await fetch(`${apiBase}/api/render-editor?theme=${encodeURIComponent(theme)}`);
+      const query = theme ? `?theme=${encodeURIComponent(theme)}` : '';
+      const res = await fetch(`${apiBase}/api/render-editor${query}`);
       const json = await res.json();
       if (!json.success) throw new Error(json.error || '加载失败');
       await applyData(json.data, { staticMode: false });
@@ -225,6 +185,29 @@
       document.getElementById('lp-loading').innerHTML = `<div>加载失败：${escapeHtml(err.message)}</div>`;
     }
   }
+
+  window.__lemonPPT_exportProgress = {
+    show(title) {
+      const overlay = document.getElementById('lp-export-progress');
+      const titleEl = document.getElementById('lp-export-progress-title');
+      if (titleEl && title) titleEl.textContent = title;
+      this.set(0, '准备中');
+      if (overlay) overlay.classList.remove('hidden');
+    },
+    set(percent, status) {
+      const bar = document.getElementById('lp-export-progress-bar');
+      const statusEl = document.getElementById('lp-export-progress-status');
+      const percentEl = document.getElementById('lp-export-progress-percent');
+      const value = Math.max(0, Math.min(100, Math.round(percent)));
+      if (bar) bar.style.width = value + '%';
+      if (statusEl && status) statusEl.textContent = status;
+      if (percentEl) percentEl.textContent = value + '%';
+    },
+    hide() {
+      const overlay = document.getElementById('lp-export-progress');
+      if (overlay) overlay.classList.add('hidden');
+    },
+  };
 
   async function init() {
     try {

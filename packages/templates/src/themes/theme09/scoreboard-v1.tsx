@@ -187,7 +187,7 @@ export function Theme09ScoreboardV1(props: Theme09ScoreboardV1Props): ReactNode 
               </EditableField>
             )}
 
-            <div style={{ flex: '1 1 auto', minHeight: 0, display: 'flex', alignItems: 'stretch' }}>
+            <div data-lp-fallback-region="table" style={{ flex: '1 1 auto', minHeight: 0, display: 'flex', alignItems: 'stretch' }}>
               <table
                 style={{
                   width: '100%',

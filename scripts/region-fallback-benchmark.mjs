@@ -92,7 +92,7 @@ const html = `<!DOCTYPE html>
 async function run(label, options) {
   console.log(`\nRunning ${label}...`);
   const start = Date.now();
-  const buffer = await exportDomToPptx({
+  const { buffer, report } = await exportDomToPptx({
     html,
     width: 1280,
     height: 720,
@@ -102,7 +102,7 @@ async function run(label, options) {
   const outFile = path.join(outDir, `${label}.pptx`);
   await writeFile(outFile, buffer);
   const sizeMB = buffer.length / (1024 * 1024);
-  console.log(`${label}: ${buffer.length} bytes (${sizeMB.toFixed(2)} MB) in ${Date.now() - start}ms`);
+  console.log(`${label}: ${buffer.length} bytes (${sizeMB.toFixed(2)} MB) in ${Date.now() - start}ms, fidelity=${report.fidelity}`);
   return { label, bytes: buffer.length, mb: sizeMB, file: outFile };
 }
 

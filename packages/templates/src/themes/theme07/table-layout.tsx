@@ -114,7 +114,7 @@ export function Theme07TableLayout(props: Theme07TableLayoutProps): ReactNode {
         <EditableField prop="intro" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-theme07-table-intro">{intro}</EditableField>
       )}
       {validRows.length > 0 && validHeaders.length > 0 && (
-        <div className="lp-theme07-table-wrap lp-rise">
+        <div className="lp-theme07-table-wrap lp-rise" data-lp-fallback-region="table">
           <div className="lp-theme07-table">
             <div className="lp-theme07-table-row lp-theme07-table-head">
               {validHeaders.map((h, i) => (

@@ -108,7 +108,7 @@ export function Theme02TableV1(props: Theme02TableV1Props): ReactNode {
           </EditableField>
         )}
       </div>
-      <div className="lp-theme02-table-card lp-rise">
+      <div className="lp-theme02-table-card lp-rise" data-lp-fallback-region="table">
         <table className="lp-theme02-table">
           {headers.length > 0 && (
             <thead>

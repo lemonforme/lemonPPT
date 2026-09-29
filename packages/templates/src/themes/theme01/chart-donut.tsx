@@ -236,7 +236,7 @@ export function Theme01ChartDonut(props: Theme01ChartDonutProps): ReactNode {
       </div>
 
       <div className="lp-chart-donut-body lp-rise">
-        <div className="lp-chart-donut-chart">
+        <div className="lp-chart-donut-chart" data-lp-fallback-region="chart">
           {donutChart(validSegments)}
           <div className="lp-chart-donut-center">
             <EditableField prop="total.value" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-chart-donut-total-value">

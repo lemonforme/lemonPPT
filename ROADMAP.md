@@ -13,7 +13,7 @@ lemonPPT 已完成商业上线所需的版式、主题与导出能力储备：
 - **802 个注册版式**：覆盖 23 个页面角色（封面、目录、指标、图表、对比、流程、时间线、路线图、团队、价格、SWOT、PEST、结尾等）。
 - **三套导出路径**：HTML 在线编辑、PPTX（pptxgenjs）、PDF（Playwright）。
 - **CLI / API / Agent Skill**：`@lemonppt/cli` 已发布，支持 `generate / render / export / serve` 等子命令，并可通过 `install-skill` 安装到 Claude / Codex / Cursor。
-- **自动化验证**：版式导出审计（`audit:layouts`）、视觉回归快照（`snapshot` / `regression`）、Agent smoke test（`agent:test`）。
+- **自动化验证**：视觉回归快照（`snapshot` / `regression`）、Agent smoke test（`agent:test`）。PPTX 导出已通过 DOM-to-PPTX 截图方案统一覆盖，不再使用 `audit:layouts`。
 
 > 详细内部规划见 `docs/plans/`；进度日志见 `docs/progress.md`。
 

@@ -80,7 +80,7 @@ export function Theme11TableV1(props: Theme11TableV1Props): ReactNode {
         <SectionTitle tone="accent"><EditableField prop="title" slideIdx={s} editable={e} as="span">{title}</EditableField></SectionTitle>
         {subtitle && <EditableField prop="subtitle" slideIdx={s} editable={e} as="p" className="lp-theme11-table-sub">{subtitle}</EditableField>}
       </div>
-      <Card className="lp-theme11-table-card lp-rise" padding="none">
+      <Card className="lp-theme11-table-card lp-rise" padding="none" data-lp-fallback-region="table">
         <table className="lp-theme11-table-self">
           <thead>
             <tr>

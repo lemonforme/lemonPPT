@@ -90,7 +90,7 @@ export function Theme08ChartDonutV1(props: Theme08ChartDonutV1Props): ReactNode 
           {subtitle && <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-theme08-subtitle">{subtitle}</EditableField>}
         </div>
         <div className="lp-theme08-body">
-          <div className="lp-theme08-chart-donut lp-rise">
+          <div className="lp-theme08-chart-donut lp-rise" data-lp-fallback-region="chart">
             <div className="lp-theme08-donut-wrap">
               <div className="lp-theme08-donut" style={{ width: '100%', height: '100%', borderRadius: '50%', background: gradient }} />
               <div className="lp-theme08-donut-hole" aria-hidden="true" />

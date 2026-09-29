@@ -74,7 +74,7 @@ export function Theme05HeatmapV1(props: Theme05HeatmapV1Props): ReactNode {
       {subtitle && (
         <EditableField prop="subtitle" slideIdx={_slideIdx} editable={_editable} as="p" className="lp-theme05-subtitle lp-rise">{subtitle}</EditableField>
       )}
-      <div className="lp-theme05-heatmap-grid lp-rise">
+      <div className="lp-theme05-heatmap-grid lp-rise" data-lp-fallback-region="chart">
         {values.map((v, i) => (
           <div
             key={i}

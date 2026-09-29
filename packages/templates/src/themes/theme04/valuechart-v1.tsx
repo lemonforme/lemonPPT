@@ -105,7 +105,7 @@ export function Theme04ValuechartV1(props: Theme04ValuechartV1Props): ReactNode 
         </div>
       )}
 
-      <div className="lp-theme04-valuechart-stages lp-rise">
+      <div className="lp-theme04-valuechart-stages lp-rise" data-lp-fallback-region="chart">
         {validStages.map((stage, idx) => (
           <div key={idx} className={`lp-theme04-valuechart-stage lp-theme04-card ${toneClass[stage.tone || 'green'] || ''}`} style={{ animationDelay: `${idx * 100}ms` }}>
             <EditableField prop={`stages.${idx}.label`} slideIdx={_slideIdx} editable={_editable} as="div" className="lp-theme04-valuechart-stage-label">{stage.label}</EditableField>

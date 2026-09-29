@@ -85,6 +85,16 @@ export async function copyThemeAssets(themeId: string, assetsDir: string): Promi
   const fontsDest = path.join(assetsDir, 'fonts');
   await cp(fontsSource, fontsDest, { recursive: true, force: true });
 
+  // 复制编辑器图标资源，供导出菜单使用
+  const iconsSource = resolvePackagePath('@lemonppt/renderer', 'assets', 'icons');
+  const iconsDest = path.join(assetsDir, 'icons');
+  await cp(iconsSource, iconsDest, { recursive: true, force: true });
+
+  // 复制共享切换动画样式，覆盖所有主题
+  const transitionsSource = resolvePackagePath('@lemonppt/renderer', 'assets', 'transitions.css');
+  const transitionsDest = path.join(assetsDir, 'transitions.css');
+  await copyFile(transitionsSource, transitionsDest);
+
   // 复制浏览器可执行 bundle（IIFE 格式），支持静态文件模式下结构编辑
   const clientRenderSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'client-render.js');
   const clientRenderDest = path.join(assetsDir, 'client-render.js');
@@ -109,6 +119,11 @@ export async function copyThemeAssets(themeId: string, assetsDir: string): Promi
   const browserExportSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'browser-export.js');
   const browserExportDest = path.join(assetsDir, 'browser-export.js');
   await copyFile(browserExportSource, browserExportDest);
+
+  // 复制浏览器端可编辑 PPTX 导出脚本（dom-to-pptx 轻量导出）
+  const clientExportSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'client-export.js');
+  const clientExportDest = path.join(assetsDir, 'client-export.js');
+  await copyFile(clientExportSource, clientExportDest);
 
   const vendorDirSource = resolvePackagePath('@lemonppt/renderer', 'assets', 'vendor');
   const vendorDirDest = path.join(assetsDir, 'vendor');
@@ -235,20 +250,13 @@ export async function renderGoalToDir(
     editorHtml = editorHtml.replace(/\/deck\/assets\//g, './assets/');
     editorHtml = editorHtml.replace(/src="\/editor\.js"/g, 'src="./editor.js"');
 
-    // 收集当前 goal 用到的版式 Schema，注入 editor-script 以在属性面板显示中文标签和数组控件
-    const layoutIds = [...new Set(goal.slides.map((s) => s.layout))];
-    const layoutSchemas: Record<string, unknown> = {};
-    for (const id of layoutIds) {
-      const schema = getLayoutSchema(id);
-      if (schema) layoutSchemas[id] = schema;
-    }
-
     // 内嵌 EditorData，让 editor.js 在静态模式下无需请求 API
+    // data.layoutSchemas 已包含当前 goal 用到的版式 Schema，用于属性面板显示中文标签和数组控件
     const embeddedData = `<script>
 window.__lemonPPT_assetsBase = './assets/';
 window.__lemonPPT_goal = ${JSON.stringify(goal)};
 window.__lemonPPT_editorData = ${JSON.stringify(data)};
-window.__lemonPPT_layoutSchemas = ${JSON.stringify(layoutSchemas)};
+window.__lemonPPT_layoutSchemas = ${JSON.stringify(data.layoutSchemas || {})};
 </script>`;
     editorHtml = editorHtml.replace('</head>', `${embeddedData}\n</head>`);
 
@@ -259,10 +267,12 @@ window.__lemonPPT_layoutSchemas = ${JSON.stringify(layoutSchemas)};
     const assets = [
       './assets/fonts/fonts.css',
       `./assets/${data.theme}.css`,
+      './assets/transitions.css',
       './assets/jquery.min.js',
       './assets/editor-script.js',
       './assets/client-render.js',
       './assets/theme-echarts.js',
+      './assets/client-export.js',
     ];
     return { html: editorHtml, indexPath, assetsDir, assets };
   }

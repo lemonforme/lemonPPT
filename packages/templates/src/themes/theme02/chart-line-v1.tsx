@@ -171,11 +171,13 @@ export function Theme02ChartLineV1(props: Theme02ChartLineV1Props): ReactNode {
           </div>
         </div>
         {unit && <div className="lp-theme02-chart-line-unit">{unit}</div>}
-        {hasData ? (
-          renderLines(safeLabels, safeSeries)
-        ) : (
-          <div className="lp-theme02-chart-line-empty">请配置图表数据</div>
-        )}
+        <div className="lp-theme02-chart-line-canvas" data-lp-fallback-region="chart">
+          {hasData ? (
+            renderLines(safeLabels, safeSeries)
+          ) : (
+            <div className="lp-theme02-chart-line-empty">请配置图表数据</div>
+          )}
+        </div>
         {safeSeries.length > 0 && (
           <div className="lp-theme02-chart-line-legend">
             {safeSeries.map((s, i) => (

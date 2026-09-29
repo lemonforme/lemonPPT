@@ -127,7 +127,7 @@ export function Theme04QuartertableV1(props: Theme04QuartertableV1Props): ReactN
         )}
       </div>
 
-      <div className="lp-theme04-quartertable-wrap lp-rise lp-theme04-card">
+      <div className="lp-theme04-quartertable-wrap lp-rise lp-theme04-card" data-lp-fallback-region="table">
         <div className="lp-theme04-quartertable-header">
           {safeColumns.map((col, idx) => (
             <div key={idx} className="lp-theme04-quartertable-header-cell">{col}</div>

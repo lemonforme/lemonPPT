@@ -247,7 +247,7 @@ export function Theme09ArcV1(props: Theme09ArcV1Props): ReactNode {
               </EditableField>
             )}
             {title && renderTitle(title || '')}
-            <div className="lp-theme09-chart-area" style={{ flex: '1 1 auto', minHeight: 0 }}>
+            <div data-lp-fallback-region="chart" className="lp-theme09-chart-area" style={{ flex: '1 1 auto', minHeight: 0 }}>
               <ArcSvg nodes={nodes} links={links} />
             </div>
           </div>

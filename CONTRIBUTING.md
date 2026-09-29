@@ -19,7 +19,6 @@
    - `corepack pnpm -r build`
    - `corepack pnpm test`
    - `corepack pnpm agent:test`
-   - `corepack pnpm audit:layouts`
 4. **提交 Pull Request**，并在 PR 描述中勾选 CLA 协议选项。
 5. **等待审查**：维护者会审查代码、测试和 CLA 状态。
 

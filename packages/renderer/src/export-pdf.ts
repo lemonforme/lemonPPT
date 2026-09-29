@@ -21,17 +21,17 @@ declare global {
 export interface ExportPdfOptions {
   /** 输出 PDF 文件路径 */
   outFile: string;
-  /** 页面宽度（像素），默认 1280 */
+  /** 页面宽度（像素），默认 1920 */
   width?: number;
-  /** 页面高度（像素），默认 720 */
+  /** 页面高度（像素），默认 1080 */
   height?: number;
 }
 
 export async function exportDeckToPdf(goal: DeckGoal, options: ExportPdfOptions): Promise<void> {
   goal = normalizeGoal(goal);
-  const { outFile, width = 1280, height = 720 } = options;
+  const { outFile, width = 1920, height = 1080 } = options;
 
-  const result = renderDeck(goal);
+  const result = renderDeck(goal, { width, height });
   const theme = goal.theme || 'theme01';
 
   // 在临时目录中准备 HTML 和主题/字体资源，确保相对引用可用

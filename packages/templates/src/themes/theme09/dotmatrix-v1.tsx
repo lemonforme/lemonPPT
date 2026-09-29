@@ -110,7 +110,7 @@ export function Theme09DotMatrixV1(props: Theme09DotMatrixV1Props): ReactNode {
               </EditableField>
             )}
             {title && renderTitle(title, _slideIdx, _editable)}
-            <div className="lp-theme09-dotmatrix-grid">
+            <div data-lp-fallback-region="chart" className="lp-theme09-dotmatrix-grid">
               {dots.map((on, i) => (
                 <span
                   key={i}

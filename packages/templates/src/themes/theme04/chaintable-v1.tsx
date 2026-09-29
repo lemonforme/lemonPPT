@@ -109,7 +109,7 @@ export function Theme04ChaintableV1(props: Theme04ChaintableV1Props): ReactNode 
         )}
       </div>
 
-      <div className="lp-theme04-chaintable-wrap lp-rise">
+      <div className="lp-theme04-chaintable-wrap lp-rise" data-lp-fallback-region="table">
         {validTiers.map((tier, idx) => (
           <div key={idx} className={`lp-theme04-chaintable-tier lp-theme04-card ${toneClass[tier.tone ?? 'green']}`}>
             <div className="lp-theme04-chaintable-tier-head">

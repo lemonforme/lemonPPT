@@ -31,6 +31,12 @@ export function renderDeck(goal: DeckGoal, options: RenderOptions = {}): RenderO
   goal = normalizeGoal(goal);
   const { width = 1280, height = 720 } = options;
 
+  // 主题设计稿以 1280×720 为基准；当输出分辨率改变时，通过 CSS zoom 保持版式比例一致。
+  const scale = width / 1280;
+  const slideZoomCss = scale !== 1
+    ? `    .lp-slide { zoom: ${scale}; }`
+    : '';
+
   const slideCount = goal.slides.length;
 
   const slideElements = goal.slides.map((slide, index) => {
@@ -237,17 +243,39 @@ ${themeCssVars}
       border-color: #10b981 !important;
     }
     .lp-editor-root .lp-editor-select {
+      appearance: none;
+      -webkit-appearance: none;
       background: #2a2a2a;
       color: #e5e5e5;
       border: 1px solid #444;
       border-radius: 6px;
-      padding: 6px 10px;
+      padding: 8px 32px 8px 12px;
       font-size: 13px;
+      line-height: 1.4;
       outline: none;
       max-width: 120px;
+      width: auto;
+      cursor: pointer;
+      transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+    .lp-editor-root .lp-editor-select option {
+      background: #2a2a2a;
+      color: #e5e5e5;
+    }
+    .lp-editor-root .lp-editor-select:hover {
+      background-color: #333;
+      border-color: #5b8cff;
     }
     .lp-editor-root .lp-editor-select:focus {
       border-color: #5b8cff;
+      box-shadow: 0 0 0 2px rgba(91, 140, 255, 0.25);
+    }
+    .lp-editor-root .lp-property-section .lp-editor-select {
+      width: 100%;
+      max-width: none;
     }
     .lp-editor-export {
       position: relative;
@@ -1136,6 +1164,7 @@ ${themeCssVars}
       outline-offset: 2px;
       border-radius: 2px;
     }
+${slideZoomCss}
     @page {
       size: ${width}px ${height}px;
       margin: 0;

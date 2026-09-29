@@ -410,7 +410,9 @@ export function Theme02ChartV1(props: Theme02ChartV1Props): ReactNode {
             </div>
           </div>
           {unit && <div className="lp-theme02-chart-unit">{unit}</div>}
-          {renderChart()}
+          <div className="lp-theme02-chart-canvas" data-lp-fallback-region="chart">
+            {renderChart()}
+          </div>
           {footnote && (
             <EditableField prop="footnote" slideIdx={_slideIdx} editable={_editable} as="div" className="lp-theme02-chart-footnote">
               {footnote}

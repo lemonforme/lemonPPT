@@ -47,6 +47,7 @@ export function LpEChart(props: LpEChartProps): ReactNode {
       data-lp-echart-type={type}
       data-lp-echart-id={containerId}
       data-lp-echart-option={JSON.stringify(option)}
+      data-lp-fallback-region="chart"
       style={{ width: '100%', height: '100%' }}
     />
   );

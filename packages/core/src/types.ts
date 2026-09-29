@@ -225,4 +225,6 @@ export interface EditorData {
   addSlideModalMarkup: string;
   /** 编辑器交互脚本 HTML（包含 window.__lemonPPT_goal） */
   editorScriptMarkup: string;
+  /** 当前 goal 用到的版式 Schema，用于属性面板渲染中文标签和数组控件 */
+  layoutSchemas?: Record<string, PropsSchema>;
 }

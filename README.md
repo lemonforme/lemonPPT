@@ -21,7 +21,7 @@ lemonPPT 是一个基于 AI 的演示文稿生成与渲染引擎。它接收自�
   - `theme10` 金指数据指数风（gold-index / blue-index / green-index）
 - **丰富版式**：覆盖封面、目录、核心数字、统计、图表、对比、流程、时间线、路线图、引用、客户证言、FAQ、图文、分屏、特性、团队、合作伙伴、价格、图库、SWOT、PEST、结尾等 23 个页面角色，注册版式 802 个。
 - **浏览器编辑**：在线修改文字、替换图片、撤销/重做、自动保存到 localStorage。
-- **导出能力**：一键导出可编辑 PPTX 与 PDF。
+- **导出能力**：一键导出可编辑 PPTX 与 PDF；编辑器内新增「快速导出 PPTX」，纯浏览器端即时生成可编辑 PPTX，无需等待服务端渲染。
 - **本地字体集成**：内置 Anton、Archivo、Caveat、IBM Plex Sans、Inter、JetBrains Mono、Newsreader、Space Grotesk、Space Mono 9 款英文字体，以及 Noto Sans SC、Noto Serif SC 2 款中文字体，均来自 Google Fonts 并使用 SIL Open Font License 1.1。
 - **可扩展**：版式、主题、主题专属变体均为插件化注册，易于新增。
 
@@ -124,12 +124,26 @@ OPENAI_API_KEY=your-key OPENAI_BASE_URL=https://api.openai.com/v1 OPENAI_MODEL=g
 ### 导出 PPTX / PDF
 
 ```bash
-# 示例：theme01 主题
+# 服务端导出（高保真，推荐复杂图表/自定义字体场景）
 node scripts/export-pptx.mjs examples/sample-goal.json examples/sample-goal.pptx
 
 # 导出 PDF
 node scripts/export-pdf.mjs examples/sample-goal.json output/sample-goal.pdf
 ```
+
+### 浏览器端快速导出
+
+在浏览器编辑器中点击「⚡ 快速导出 PPTX」，即可在本地即时生成可编辑 PPTX，无需等待服务端渲染。适合简单版式快速预览或分享。
+
+```bash
+# 生成可编辑编辑器页面
+corepack pnpm render:editor
+
+# 浏览器打开 output/editor.html，点击右上角导出菜单 → 「快速导出 PPTX」
+open output/editor.html
+```
+
+> 快速导出基于 `dom-to-pptx` 浏览器方案，复杂图表、自定义字体嵌入等场景会自动提示回退到服务端导出。
 
 ## API 列表
 

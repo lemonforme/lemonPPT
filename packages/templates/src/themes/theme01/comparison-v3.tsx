@@ -92,7 +92,7 @@ export function Theme01ComparisonV3(props: Theme01ComparisonV3Props): ReactNode 
       <Masthead section={kicker} slideIdx={_slideIdx} editable={_editable} />
       <Headline cn={title ?? ''} en="COMPARISON" size="large" className="lp-comparison-v3-headline lp-rise" />
       <div className="lp-comparison-v3-canvas lp-rise">
-        <div className="lp-comparison-v3-table">
+        <div className="lp-comparison-v3-table" data-lp-fallback-region="table">
           <div className="lp-comparison-v3-row lp-comparison-v3-row--header">
             <div className="lp-comparison-v3-cell lp-comparison-v3-feature">
               <Pill variant="outline" color="amber">维度</Pill>

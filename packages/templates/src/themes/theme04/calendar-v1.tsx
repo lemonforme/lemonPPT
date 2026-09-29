@@ -110,7 +110,7 @@ export function Theme04CalendarV1(props: Theme04CalendarV1Props): ReactNode {
         )}
       </div>
 
-      <div className="lp-theme04-calendar-grid lp-rise">
+      <div className="lp-theme04-calendar-grid lp-rise" data-lp-fallback-region="chart">
         {MONTH_NAMES.map((name, idx) => {
           const month = idx + 1;
           const event = eventMap.get(month);

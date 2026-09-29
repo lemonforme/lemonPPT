@@ -24,6 +24,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const rendererDir = path.join(rootDir, 'packages', 'renderer', 'src');
 
+// 已弃用：PPTX 导出已迁移为 DOM-to-PPTX 截图方案，不再使用 themeNN-pptx.ts 坐标渲染器。
+// 保留脚本文件仅用于历史参考，直接返回成功。
+console.log('ℹ️ audit:layouts 已弃用：当前 PPTX 导出基于 DOM-to-PPTX 截图，不再依赖 themeNN-pptx.ts 坐标映射。');
+process.exit(0);
+
 async function findThemeRendererPaths() {
   const entries = await readdir(rendererDir);
   return entries

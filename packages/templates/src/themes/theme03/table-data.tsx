@@ -160,7 +160,7 @@ export function Theme03TableData(props: Theme03TableDataProps): ReactNode {
           )}
         </div>
 
-        <div className="lp-theme03-table-data-card lp-rise lp-theme03-corner-bracket">
+        <div className="lp-theme03-table-data-card lp-rise lp-theme03-corner-bracket" data-lp-fallback-region="table">
           <table className="lp-theme03-table-data-table">
             {safeColumns.length > 0 && (
               <thead>

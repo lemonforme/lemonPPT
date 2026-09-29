@@ -108,7 +108,7 @@ export function Theme02ChartStackV1(props: Theme02ChartStackV1Props): ReactNode 
         </div>
         {unit && <div className="lp-theme02-chart-stack-unit">{unit}</div>}
         {hasData ? (
-          <div className="lp-theme02-chart-stack-rows">
+          <div className="lp-theme02-chart-stack-rows" data-lp-fallback-region="chart">
             {safeLabels.map((label, li) => {
               const total = safeSeries.reduce((sum, s) => sum + Math.max(0, s.values?.[li] ?? 0), 0) || 1;
               return (

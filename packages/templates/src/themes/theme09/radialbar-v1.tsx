@@ -178,7 +178,7 @@ export function Theme09RadialbarV1(props: Theme09RadialbarV1Props): ReactNode {
               </EditableField>
             )}
             {title && renderTitle(title || '')}
-            <div className="lp-theme09-chart-area">
+            <div data-lp-fallback-region="chart" className="lp-theme09-chart-area">
               <svg className="lp-theme09-chart-svg" viewBox="0 0 600 470" preserveAspectRatio="xMidYMid meet" role="img">
                 {list.map((s, i) => {
                   const v = vals[i];
