@@ -31,7 +31,7 @@ describe('editor e2e', () => {
     await new Promise<void>((resolve) => server?.close(() => resolve()));
   });
 
-  it('loads single-page editor and switches theme without reload', async () => {
+  it('loads single-page editor with initial theme', async () => {
     await page.goto(`${baseUrl()}/editor?theme=theme01`, { waitUntil: 'load' });
 
     // 等待编辑器渲染完成
@@ -39,24 +39,21 @@ describe('editor e2e', () => {
     await page.waitForSelector('#lp-slides .lp-slide-wrapper', { state: 'visible' });
     await page.waitForTimeout(500);
 
-    const initialTheme = await page.$eval('#lp-theme-select', (el) => (el as HTMLSelectElement).value);
-    expect(initialTheme).toBe('theme01');
+    // 主题选择器已移除，不再支持无刷新切换主题
+    const themeSelect = await page.$('#lp-theme-select');
+    expect(themeSelect).toBeNull();
 
-    // 切换主题
-    await page.selectOption('#lp-theme-select', 'theme03');
+    // 确认初始主题 CSS 已加载
     await page.waitForFunction(
       () => {
         const link = document.getElementById('lp-theme-css') as HTMLLinkElement | null;
-        return link?.href.includes('theme03.css');
+        return link?.href.includes('theme01.css');
       },
       { timeout: 10000 }
     );
 
-    const switchedTheme = await page.$eval('#lp-theme-select', (el) => (el as HTMLSelectElement).value);
-    expect(switchedTheme).toBe('theme03');
-
     const url = page.url();
-    expect(url).toContain('theme=theme03');
+    expect(url).toContain('theme=theme01');
   }, 60000);
 
   it('edits slide content and persists after reload', async () => {
