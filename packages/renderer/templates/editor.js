@@ -31,18 +31,8 @@
   }
 
   function buildEditorBar(goal) {
-    const appearance = goal.appearance || 'primary';
-    const appearanceButtons = [
-      { value: 'primary', label: '亮', icon: '☀' },
-      { value: 'dark', label: '暗', icon: '☾' },
-      { value: 'contrast', label: '彩', icon: '◐' },
-    ]
-      .map(btn => `<button type="button" class="lp-appearance-btn ${btn.value === appearance ? 'lp-appearance-active' : ''}" data-appearance="${btn.value}"><span>${btn.icon}</span><span>${btn.label}</span></button>`)
-      .join('');
-
     return `
       <div class="lp-editor-title">${escapeHtml(goal.title || 'Untitled')}</div>
-      <div class="lp-appearance-switcher">${appearanceButtons}</div>
       <div class="lp-editor-btn-group">
         <button id="lp-undo" class="lp-editor-btn" type="button" title="撤销 (Ctrl+Z)" disabled><span>↶</span> 撤销</button>
         <button id="lp-redo" class="lp-editor-btn" type="button" title="重做 (Ctrl+Y)" disabled><span>↷</span> 重做</button>

@@ -2330,6 +2330,22 @@ export const editorScript = `
     });
     transitionSection.appendChild(transitionSelect.container);
 
+    // theme07 暗色模式切换放在右侧边栏
+    if ((goal.theme || 'theme01') === 'theme07') {
+      const appearanceSection = createEl('div', 'lp-property-section', propertyContent);
+      createEl('div', 'lp-property-section-title', appearanceSection).textContent = '主题外观';
+      const isDark = goal.appearance === 'dark';
+      const toggleWrap = createEl('label', 'lp-property-toggle', appearanceSection);
+      toggleWrap.innerHTML = '<input type="checkbox" ' + (isDark ? 'checked' : '') + '><span class="lp-property-toggle-track"><span class="lp-property-toggle-thumb"></span></span><span>暗色模式</span>';
+      const input = toggleWrap.querySelector('input');
+      if (input) {
+        input.addEventListener('change', () => {
+          const newMode = input.checked ? 'dark' : 'light';
+          applyAppearanceClientSide(newMode);
+        });
+      }
+    }
+
     if (selectedEl && slide.role === 'chart') {
       const prop = selectedEl.getAttribute('data-lp-prop');
       const schema = resolveLayoutSchema(slide);
