@@ -3599,3 +3599,11 @@
 /* 对比度修复 #322（修订）：versus / metric 实际落在深 substrate（#15151A/#1E1E24）上，
    故沿用 :root（dark 外观）自带的浅色 --lp-ink2/--lp-ink3 与 --lp-accent 眉标，
    不再强制深灰（此前误判为浅底导致 4.5:1 不达标）。 */
+
+/* fix: ensure .active.enter ends transition correctly */
+.lp-deck[data-lp-transition="slide"] .lp-slide-wrapper.active.enter,
+.lp-deck[data-lp-transition="slide"][data-lp-direction="prev"] .lp-slide-wrapper.active.enter {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 2;
+}

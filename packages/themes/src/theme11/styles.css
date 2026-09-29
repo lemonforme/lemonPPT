@@ -6905,3 +6905,11 @@
   opacity: 0;
   transform: translateX(-100%);
 }
+
+/* fix: ensure .active.enter ends transition correctly */
+.lp-deck[data-lp-transition="slide"] .lp-slide-wrapper.active.enter,
+.lp-deck[data-lp-transition="slide"][data-lp-direction="prev"] .lp-slide-wrapper.active.enter {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 2;
+}

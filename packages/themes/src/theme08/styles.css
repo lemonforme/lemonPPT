@@ -1223,3 +1223,11 @@
   background: color-mix(in srgb, var(--lp-bg) 70%, #fff 18%);
   border-color: color-mix(in srgb, var(--lp-ink) 14%, transparent);
 }
+
+/* fix: ensure .active.enter ends transition correctly */
+.lp-deck[data-lp-transition="slide"] .lp-slide-wrapper.active.enter,
+.lp-deck[data-lp-transition="slide"][data-lp-direction="prev"] .lp-slide-wrapper.active.enter {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 2;
+}

@@ -5015,3 +5015,17 @@
 .lp-theme02-logo-wall-card { background: var(--lp-surface); border: 1px solid var(--lp-border); border-radius: var(--lp-radius-medium); padding: 26px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; box-shadow: var(--lp-shadow-sm); min-height: 110px; }
 .lp-theme02-logo-wall-name { font-size: 22px; font-weight: 800; color: var(--lp-ink); text-align: center; }
 .lp-theme02-logo-wall-sub { font-size: 13px; color: var(--lp-ink3); text-align: center; }
+
+/* fix: ensure .active.enter ends transition correctly */
+.lp-deck[data-lp-transition="slide"] .lp-slide-wrapper.active.enter,
+.lp-deck[data-lp-transition="slide"][data-lp-direction="prev"] .lp-slide-wrapper.active.enter {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 2;
+}
+
+/* fix: ensure .active.enter ends fade transition correctly */
+.lp-deck[data-lp-transition="fade"] .lp-slide-wrapper.active.enter {
+  opacity: 1;
+  z-index: 2;
+}
