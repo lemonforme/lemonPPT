@@ -126,18 +126,19 @@ curl -X POST http://localhost:3456/api/stage-media \
 
 ## 可用主题
 
-| 主题 ID | 风格 | 配色/外观 |
-|---|---|---|
-| `theme01` | 浅色玻璃质感 | light / dark |
-| `theme02` | 深色霓虹科技 | scheme-a / scheme-b |
-| `theme03` | 代码编辑器风 | scheme-a / scheme-b + light / dark |
-| `theme04` | 玻璃糖果风 | green / yellow / blue / pink + light / dark |
-| `theme05` | 光谱报告风 | coral / amber / teal / indigo / violet + light / dark |
-| `theme06` | 深色图谱风 | volt / magma / nebula / nova + light / dark |
-| `theme07` | 冷白金融投资风 | cold-white / warm-gray / ink / navy + light / dark |
-| `theme08` | 曜金黑金机构风 | obsidian-gold / midnight-silver / graphite-rose / forest-gold |
-| `theme09` | 墨韵杂志印刷风 | paper / ink 双基底 + primary / muted |
-| `theme10` | 金指数据指数风 | gold-index / blue-index / green-index |
+| 主题 ID | 风格 | 配色/外观 | 适用场景 |
+|---|---|---|---|
+| `theme01` | 浅色玻璃质感 | light / dark | 通用商务汇报、产品介绍、创业公司路演，通透轻盈 |
+| `theme02` | 深色霓虹科技 | scheme-a / scheme-b | 科技、AI、开发者大会、深色沉浸演示，高对比霓虹色 |
+| `theme03` | 代码编辑器风 | scheme-a / scheme-b + light / dark | 技术分享、代码演示、开发者文档，模拟 IDE/终端 |
+| `theme04` | 玻璃糖果风 | green / yellow / blue / pink + light / dark | 年轻品牌、教育课件、创意提案，多彩糖果色 |
+| `theme05` | 光谱报告风 | coral / amber / teal / indigo / violet + light / dark | 市场分析、咨询报告、数据报告，光谱渐变 |
+| `theme06` | 深色图谱风 | volt / magma / nebula / nova + light / dark | 产业图谱、知识网络、复杂关系展示，深色背景 |
+| `theme07` | 冷白金融投资风 | cold-white / warm-gray / ink / navy + light / dark | 金融、投资、财报、B2B 提案，冷白专业 |
+| `theme08` | 曜金黑金机构风 | obsidian-gold / midnight-silver / graphite-rose / forest-gold | 高端机构、奢侈品、品牌发布会、贵宾汇报 |
+| `theme09` | 墨韵杂志印刷风 | paper / ink 双基底 + primary / muted | 杂志风、品牌故事、内容出版物，纸张墨色质感 |
+| `theme10` | 金指数据指数风 | gold-index / blue-index / green-index | 金融指数、数据大屏、经济指标展示 |
+| `theme11` | 流光科技 · 浅色扁平科技风 | aurora / daylight / sunset | SaaS、科技产品、轻松现代的商业演示，柔和弥散渐变 |
 
 默认主题：`theme01`。
 
