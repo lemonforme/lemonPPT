@@ -67,6 +67,10 @@ export const editorScript = `
     { key: 'flip', label: '翻页' },
     { key: 'cover', label: '覆盖' },
     { key: 'wipe', label: '擦除' },
+    { key: 'push', label: '推挤' },
+    { key: 'fall', label: '下落' },
+    { key: 'rise', label: '上升' },
+    { key: 'zoom', label: '冲击' },
   ];
 
   const history = [deepClone(goal)];

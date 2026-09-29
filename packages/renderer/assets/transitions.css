@@ -166,3 +166,115 @@
   clip-path: inset(0 0 0 0);
   opacity: 1;
 }
+
+/* ---- push: new slide pushes the current one out ---- */
+.lp-deck[data-lp-transition="push"] .lp-slide-wrapper {
+  transform: translate3d(100%, 0, 0);
+  opacity: 1;
+  transition: transform 400ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.lp-deck[data-lp-transition="push"] .lp-slide-wrapper.active {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  z-index: 2;
+}
+.lp-deck[data-lp-transition="push"] .lp-slide-wrapper.leave {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  z-index: 1;
+}
+.lp-deck[data-lp-transition="push"] .lp-slide-wrapper.enter {
+  transform: translate3d(100%, 0, 0);
+  opacity: 1;
+  z-index: 3;
+}
+.lp-deck[data-lp-transition="push"][data-lp-direction="next"] .lp-slide-wrapper.leave {
+  transform: translate3d(-100%, 0, 0);
+}
+.lp-deck[data-lp-transition="push"][data-lp-direction="prev"] .lp-slide-wrapper.enter {
+  transform: translate3d(-100%, 0, 0);
+}
+.lp-deck[data-lp-transition="push"][data-lp-direction="prev"] .lp-slide-wrapper.leave {
+  transform: translate3d(100%, 0, 0);
+}
+.lp-deck[data-lp-transition="push"] .lp-slide-wrapper.active.enter {
+  transform: translate3d(0, 0, 0);
+}
+
+/* ---- fall: new slide drops from the top ---- */
+.lp-deck[data-lp-transition="fall"] .lp-slide-wrapper {
+  transform: translate3d(0, -100%, 0);
+  opacity: 0;
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1), opacity 350ms ease;
+}
+.lp-deck[data-lp-transition="fall"] .lp-slide-wrapper.active {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  z-index: 2;
+}
+.lp-deck[data-lp-transition="fall"] .lp-slide-wrapper.leave {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  z-index: 1;
+}
+.lp-deck[data-lp-transition="fall"] .lp-slide-wrapper.enter {
+  transform: translate3d(0, -100%, 0);
+  opacity: 0;
+  z-index: 3;
+}
+.lp-deck[data-lp-transition="fall"] .lp-slide-wrapper.active.enter {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+/* ---- rise: new slide rises from the bottom ---- */
+.lp-deck[data-lp-transition="rise"] .lp-slide-wrapper {
+  transform: translate3d(0, 100%, 0);
+  opacity: 0;
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1), opacity 350ms ease;
+}
+.lp-deck[data-lp-transition="rise"] .lp-slide-wrapper.active {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  z-index: 2;
+}
+.lp-deck[data-lp-transition="rise"] .lp-slide-wrapper.leave {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  z-index: 1;
+}
+.lp-deck[data-lp-transition="rise"] .lp-slide-wrapper.enter {
+  transform: translate3d(0, 100%, 0);
+  opacity: 0;
+  z-index: 3;
+}
+.lp-deck[data-lp-transition="rise"] .lp-slide-wrapper.active.enter {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+/* ---- zoom: dramatic scale impact ---- */
+.lp-deck[data-lp-transition="zoom"] .lp-slide-wrapper {
+  transform: scale(2);
+  opacity: 0;
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), opacity 400ms ease;
+}
+.lp-deck[data-lp-transition="zoom"] .lp-slide-wrapper.active {
+  transform: scale(1);
+  opacity: 1;
+  z-index: 2;
+}
+.lp-deck[data-lp-transition="zoom"] .lp-slide-wrapper.leave {
+  transform: scale(1);
+  opacity: 0;
+  z-index: 1;
+}
+.lp-deck[data-lp-transition="zoom"] .lp-slide-wrapper.enter {
+  transform: scale(2);
+  opacity: 0;
+  z-index: 3;
+}
+.lp-deck[data-lp-transition="zoom"] .lp-slide-wrapper.active.enter {
+  transform: scale(1);
+  opacity: 1;
+}
