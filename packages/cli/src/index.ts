@@ -85,6 +85,11 @@ export async function copyThemeAssets(themeId: string, assetsDir: string): Promi
   const fontsDest = path.join(assetsDir, 'fonts');
   await cp(fontsSource, fontsDest, { recursive: true, force: true });
 
+  // 复制编辑器图标资源，供导出菜单使用
+  const iconsSource = resolvePackagePath('@lemonppt/renderer', 'assets', 'icons');
+  const iconsDest = path.join(assetsDir, 'icons');
+  await cp(iconsSource, iconsDest, { recursive: true, force: true });
+
   // 复制浏览器可执行 bundle（IIFE 格式），支持静态文件模式下结构编辑
   const clientRenderSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'client-render.js');
   const clientRenderDest = path.join(assetsDir, 'client-render.js');

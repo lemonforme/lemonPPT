@@ -58,12 +58,12 @@
       <button id="lp-save-deck" class="lp-editor-btn lp-editor-btn-primary" type="button">保存</button>
       <button id="lp-play" class="lp-editor-btn lp-editor-btn-primary" type="button" title="播放演示"><span>▶</span> 播放</button>
       <div id="lp-editor-export" class="lp-editor-export">
-        <button id="lp-export-toggle" class="lp-editor-btn lp-editor-export-toggle" type="button" aria-expanded="false"><span>⬇</span> 导出 <span class="lp-editor-caret">▼</span></button>
+        <button id="lp-export-toggle" class="lp-editor-btn lp-editor-export-toggle" type="button" aria-expanded="false"><img class="lp-editor-export-toggle-icon" src="${assetsBase}icons/导出.svg" alt=""> 导出 <span class="lp-editor-caret">▼</span></button>
         <div id="lp-export-menu" class="lp-editor-export-menu" hidden>
-          <button id="lp-export-pptx-client" class="lp-editor-export-item" data-format="pptx-client"><span class="lp-editor-export-icon">⚡</span><span class="lp-editor-export-label">快速导出 PPTX</span><span class="lp-editor-export-tag">可编辑</span></button>
-          <button id="lp-export-html" class="lp-editor-export-item" data-format="html"><span class="lp-editor-export-icon">🌐</span><span class="lp-editor-export-label">HTML 演示</span><span class="lp-editor-export-tag">在线播放</span></button>
-          <button id="lp-export-pptx" class="lp-editor-export-item" data-format="pptx"><span class="lp-editor-export-icon">📊</span><span class="lp-editor-export-label">PowerPoint</span><span class="lp-editor-export-tag">服务端</span></button>
-          <button id="lp-export-pdf" class="lp-editor-export-item" data-format="pdf"><span class="lp-editor-export-icon">📄</span><span class="lp-editor-export-label">PDF</span><span class="lp-editor-export-tag">打印/分享</span></button>
+          <button id="lp-export-pptx-client" class="lp-editor-export-item" data-format="pptx-client"><img class="lp-editor-export-icon" src="${assetsBase}icons/导出.svg" alt=""><span class="lp-editor-export-label">快速导出 PPTX</span><span class="lp-editor-export-tag">可编辑</span></button>
+          <button id="lp-export-html" class="lp-editor-export-item" data-format="html"><img class="lp-editor-export-icon" src="${assetsBase}icons/HTML.svg" alt=""><span class="lp-editor-export-label">HTML 演示</span><span class="lp-editor-export-tag">在线播放</span></button>
+          <button id="lp-export-pptx" class="lp-editor-export-item" data-format="pptx"><img class="lp-editor-export-icon" src="${assetsBase}icons/ppt文件.svg" alt=""><span class="lp-editor-export-label">PowerPoint</span><span class="lp-editor-export-tag">服务端</span></button>
+          <button id="lp-export-pdf" class="lp-editor-export-item" data-format="pdf"><img class="lp-editor-export-icon" src="${assetsBase}icons/pdf.svg" alt=""><span class="lp-editor-export-label">PDF</span><span class="lp-editor-export-tag">打印/分享</span></button>
         </div>
       </div>`;
   }
