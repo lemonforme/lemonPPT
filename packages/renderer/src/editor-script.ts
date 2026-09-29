@@ -95,11 +95,14 @@ export const editorScript = `
     }
   }
 
-  function showNotice(title, message) {
+  function showNotice(title, message, html = false) {
     return new Promise((resolve) => {
       noticeResolve = resolve;
       if (noticeTitle) noticeTitle.textContent = title || '提示';
-      if (noticeMessage) noticeMessage.textContent = message || '';
+      if (noticeMessage) {
+        if (html) noticeMessage.innerHTML = message || '';
+        else noticeMessage.textContent = message || '';
+      }
       if (noticeOverlay) noticeOverlay.classList.remove('hidden');
       if (noticeConfirm) noticeConfirm.focus();
       const handler = (e) => {
@@ -459,7 +462,7 @@ export const editorScript = `
     const clientLabel = exportPptxClientBtn.querySelector('.lp-editor-export-label');
     exportPptxClientBtn.addEventListener('click', async () => {
       if (window.location.protocol === 'file:') {
-        showNotice('导出不可用', '静态文件模式下无法直接导出 PPTX。\\n\\n请通过本地服务器访问后导出：\\n  pnpm dev\\n或运行：\\n  node scripts/export-pptx.mjs <goal.json> out.pptx');
+        showNotice('导出不可用', '<p>静态文件模式下无法直接导出 PPTX。</p><p>请通过本地服务器访问后导出：</p><pre><code>pnpm dev</code></pre><p>或运行：</p><pre><code>node scripts/export-pptx.mjs &lt;goal.json&gt; out.pptx</code></pre>', true);
         if (exportMenu) exportMenu.setAttribute('hidden', '');
         return;
       }
@@ -482,7 +485,7 @@ export const editorScript = `
         const message = err instanceof Error ? err.message : String(err);
         console.warn('Client PPTX export failed, offering server fallback', err);
         hideProgress();
-        const fallback = confirm('快速导出失败：' + message + '\\n\\n是否回退到服务端导出？');
+        const fallback = confirm('快速导出失败：' + message + '\n\n是否回退到服务端导出？');
         if (fallback) {
           showProgress('服务端导出 PPTX');
           if (clientLabel) clientLabel.textContent = '服务端导出中...';
@@ -508,7 +511,7 @@ export const editorScript = `
     const pptxLabel = exportPptxBtn.querySelector('.lp-editor-export-label');
     exportPptxBtn.addEventListener('click', async () => {
       if (window.location.protocol === 'file:') {
-        showNotice('导出不可用', '静态文件模式下无法直接导出 PPTX。\\n\\n请通过本地服务器访问后导出：\\n  pnpm dev\\n或运行：\\n  node scripts/export-pptx.mjs <goal.json> out.pptx');
+        showNotice('导出不可用', '<p>静态文件模式下无法直接导出 PPTX。</p><p>请通过本地服务器访问后导出：</p><pre><code>pnpm dev</code></pre><p>或运行：</p><pre><code>node scripts/export-pptx.mjs &lt;goal.json&gt; out.pptx</code></pre>', true);
         if (exportMenu) exportMenu.setAttribute('hidden', '');
         return;
       }
@@ -533,7 +536,7 @@ export const editorScript = `
     const pdfLabel = exportPdfBtn.querySelector('.lp-editor-export-label');
     exportPdfBtn.addEventListener('click', async () => {
       if (window.location.protocol === 'file:') {
-        showNotice('导出不可用', '静态文件模式下无法直接导出 PDF。\\n\\n请通过本地服务器访问后导出：\\n  pnpm dev\\n或运行：\\n  node scripts/export-pdf.mjs <goal.json> out.pdf');
+        showNotice('导出不可用', '<p>静态文件模式下无法直接导出 PDF。</p><p>请通过本地服务器访问后导出：</p><pre><code>pnpm dev</code></pre><p>或运行：</p><pre><code>node scripts/export-pdf.mjs &lt;goal.json&gt; out.pdf</code></pre>', true);
         if (exportMenu) exportMenu.setAttribute('hidden', '');
         return;
       }
