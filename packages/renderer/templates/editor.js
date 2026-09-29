@@ -30,7 +30,7 @@
     return base + name;
   }
 
-  function buildEditorBar(goal, currentTheme, staticMode) {
+  function buildEditorBar(goal) {
     const appearance = goal.appearance || 'primary';
     const appearanceButtons = [
       { value: 'primary', label: '亮', icon: '☀' },
@@ -40,21 +40,13 @@
       .map(btn => `<button type="button" class="lp-appearance-btn ${btn.value === appearance ? 'lp-appearance-active' : ''}" data-appearance="${btn.value}"><span>${btn.icon}</span><span>${btn.label}</span></button>`)
       .join('');
 
-    const themeSelect = staticMode
-      ? `<select id="lp-theme-select" class="lp-editor-select" title="当前主题" disabled><option>${escapeHtml(currentTheme)}</option></select>`
-      : `<select id="lp-theme-select" class="lp-editor-select" title="切换主题">
-        ${[1,2,3,4,5,6,7,8,9,10].map(i => { const id = `theme${String(i).padStart(2, '0')}`; return `<option value="${id}" ${currentTheme === id ? 'selected' : ''}>Theme ${String(i).padStart(2, '0')}</option>`; }).join('')}
-      </select>`;
-
     return `
       <div class="lp-editor-title">${escapeHtml(goal.title || 'Untitled')}</div>
       <div class="lp-appearance-switcher">${appearanceButtons}</div>
-      ${themeSelect}
       <div class="lp-editor-btn-group">
         <button id="lp-undo" class="lp-editor-btn" type="button" title="撤销 (Ctrl+Z)" disabled><span>↶</span> 撤销</button>
         <button id="lp-redo" class="lp-editor-btn" type="button" title="重做 (Ctrl+Y)" disabled><span>↷</span> 重做</button>
       </div>
-      <button id="lp-add-slide" class="lp-editor-btn" type="button"><span>+</span> 添加页面</button>
       <button id="lp-save-deck" class="lp-editor-btn lp-editor-btn-primary" type="button">保存</button>
       <button id="lp-play" class="lp-editor-btn lp-editor-btn-primary" type="button" title="播放演示"><span>▶</span> 播放</button>
       <div id="lp-editor-export" class="lp-editor-export">
@@ -110,22 +102,6 @@
     return `<div class="lp-property-header">属性面板</div><div class="lp-property-content" id="lp-property-content"><div class="lp-property-empty">点击左侧缩略图选择幻灯片，然后编辑内容。</div></div>`;
   }
 
-  function buildAddSlideModal(goal) {
-    const layouts = goal.slides.length > 0 ? Array.from(new Set(goal.slides.map(s => s.layout))) : ['title', 'content', 'section', 'closing'];
-    const layoutItems = layouts.map(layout =>
-      `<div class="lp-add-slide-item" data-layout="${layout}"><span class="lp-add-slide-item-icon">⊞</span><span class="lp-add-slide-item-label">${layout}</span></div>`
-    ).join('\n');
-    return `<div id="lp-add-slide-modal" class="lp-add-slide-modal-overlay">
-  <div class="lp-add-slide-modal">
-    <div class="lp-add-slide-modal-header"><span class="lp-add-slide-modal-title">添加幻灯片</span><button id="lp-add-slide-close" class="lp-add-slide-modal-close" type="button">×</button></div>
-    <div class="lp-add-slide-modal-body">
-      <div class="lp-add-slide-section-title">选择版式</div>
-      <div class="lp-add-slide-grid">${layoutItems}</div>
-    </div>
-  </div>
-</div>`;
-  }
-
   async function applyData(data, { isInitial = false, staticMode = false } = {}) {
     const goal = data.goal;
     const theme = data.theme;
@@ -174,10 +150,9 @@
     const height = firstWrapper ? parseInt(firstWrapper.style.height, 10) || 720 : 720;
 
     // 填充 UI
-    document.getElementById('lp-editor-bar').innerHTML = buildEditorBar(goal, theme, staticMode);
+    document.getElementById('lp-editor-bar').innerHTML = buildEditorBar(goal);
     document.getElementById('lp-left-panel').innerHTML = buildLeftPanel(goal, data.slideHtmls, width, height);
     document.getElementById('lp-right-panel').innerHTML = buildRightPanel();
-    document.getElementById('lp-modal').innerHTML = buildAddSlideModal(goal);
 
     // 暴露 goal 给 editor-script
     window.__lemonPPT_goal = goal;
@@ -203,15 +178,6 @@
       const url = new URL(window.location.href);
       url.searchParams.set('theme', theme);
       window.history.replaceState({}, '', url.toString());
-    }
-
-    // 主题切换事件
-    const themeSelect = document.getElementById('lp-theme-select');
-    if (themeSelect && !staticMode) {
-      themeSelect.addEventListener('change', (e) => {
-        if (document.activeElement) document.activeElement.blur();
-        fetchTheme(e.target.value);
-      });
     }
   }
 

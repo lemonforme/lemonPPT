@@ -303,8 +303,7 @@
     .lp-editor-root.lp-editor-presentation-mode .lp-editor-left-panel,
     .lp-editor-root.lp-editor-presentation-mode .lp-editor-right-panel,
     .lp-editor-root.lp-editor-presentation-mode .lp-editor-zoom-bar,
-    .lp-editor-root.lp-editor-presentation-mode .lp-editor-page-counter,
-    .lp-editor-root.lp-editor-presentation-mode .lp-add-slide-modal-overlay {
+    .lp-editor-root.lp-editor-presentation-mode .lp-editor-page-counter {
       display: none !important;
     }
     .lp-editor-root.lp-editor-presentation-mode .lp-editor-workspace {
@@ -934,103 +933,6 @@
       text-align: center;
       padding: 20px 0;
     }
-    .lp-add-slide-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 2000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-    .lp-add-slide-modal-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .lp-add-slide-modal {
-      width: 600px;
-      max-width: 90vw;
-      max-height: 80vh;
-      background: #1e1e1e;
-      border: 1px solid #333;
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    }
-    .lp-add-slide-modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      border-bottom: 1px solid #333;
-    }
-    .lp-add-slide-modal-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #fff;
-    }
-    .lp-add-slide-modal-close {
-      background: transparent;
-      border: none;
-      color: #888;
-      font-size: 20px;
-      cursor: pointer;
-    }
-    .lp-add-slide-modal-close:hover {
-      color: #fff;
-    }
-    .lp-add-slide-modal-body {
-      padding: 16px 20px;
-      overflow-y: auto;
-      flex: 1;
-    }
-    .lp-add-slide-section-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #bbb;
-      margin: 16px 0 10px;
-    }
-    .lp-add-slide-section-title:first-child {
-      margin-top: 0;
-    }
-    .lp-add-slide-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-    .lp-add-slide-item {
-      aspect-ratio: 16 / 9;
-      background: #2a2a2a;
-      border: 1px solid #444;
-      border-radius: 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-      padding: 8px;
-      text-align: center;
-    }
-    .lp-add-slide-item:hover {
-      background: #333;
-      border-color: #5b8cff;
-    }
-    .lp-add-slide-item-icon {
-      font-size: 24px;
-      color: #888;
-    }
-    .lp-add-slide-item-label {
-      font-size: 12px;
-      color: #bbb;
-    }
-    .lp-export-progress-overlay {
       position: fixed;
       inset: 0;
       display: flex;
