@@ -1113,6 +1113,64 @@
       font-weight: 700;
       font-size: 13px;
     }
+    .lp-notice-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 4100;
+      opacity: 1;
+      transition: opacity 120ms ease;
+    }
+    .lp-notice-overlay.hidden {
+      display: none;
+    }
+    .lp-notice-dialog {
+      width: 380px;
+      max-width: calc(100vw - 40px);
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      color: #e5e5e5;
+    }
+    .lp-notice-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .lp-notice-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .lp-notice-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .lp-notice-message {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #ccc;
+      white-space: pre-line;
+      margin-bottom: 20px;
+    }
+    .lp-notice-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
   </style>
 </head>
 <body class="lp-editor-body">
@@ -1156,6 +1214,18 @@
         <div class="lp-export-progress-meta">
           <span id="lp-export-progress-status">准备中</span>
           <span id="lp-export-progress-percent">0%</span>
+        </div>
+      </div>
+    </div>
+    <div id="lp-notice-overlay" class="lp-notice-overlay hidden">
+      <div class="lp-notice-dialog">
+        <div class="lp-notice-header">
+          <span class="lp-notice-icon">!</span>
+          <div id="lp-notice-title" class="lp-notice-title"></div>
+        </div>
+        <div id="lp-notice-message" class="lp-notice-message"></div>
+        <div class="lp-notice-actions">
+          <button id="lp-notice-confirm" class="lp-editor-btn lp-editor-btn-primary" type="button">确定</button>
         </div>
       </div>
     </div>

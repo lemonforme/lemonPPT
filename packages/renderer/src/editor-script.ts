@@ -76,6 +76,52 @@ export const editorScript = `
     return JSON.parse(JSON.stringify(obj));
   }
 
+  const noticeOverlay = document.getElementById('lp-notice-overlay');
+  const noticeTitle = document.getElementById('lp-notice-title');
+  const noticeMessage = document.getElementById('lp-notice-message');
+  const noticeConfirm = document.getElementById('lp-notice-confirm');
+  let noticeResolve = null;
+  let noticeKeyHandler = null;
+
+  function hideNotice() {
+    if (noticeOverlay) noticeOverlay.classList.add('hidden');
+    if (noticeKeyHandler) {
+      document.removeEventListener('keydown', noticeKeyHandler);
+      noticeKeyHandler = null;
+    }
+    if (noticeResolve) {
+      noticeResolve();
+      noticeResolve = null;
+    }
+  }
+
+  function showNotice(title, message) {
+    return new Promise((resolve) => {
+      noticeResolve = resolve;
+      if (noticeTitle) noticeTitle.textContent = title || '提示';
+      if (noticeMessage) noticeMessage.textContent = message || '';
+      if (noticeOverlay) noticeOverlay.classList.remove('hidden');
+      if (noticeConfirm) noticeConfirm.focus();
+      const handler = (e) => {
+        if (e.key === 'Enter' || e.key === 'Escape') {
+          e.preventDefault();
+          hideNotice();
+        }
+      };
+      noticeKeyHandler = handler;
+      document.addEventListener('keydown', handler);
+    });
+  }
+
+  if (noticeOverlay) {
+    noticeOverlay.addEventListener('click', (e) => {
+      if (e.target === noticeOverlay) hideNotice();
+    });
+  }
+  if (noticeConfirm) {
+    noticeConfirm.addEventListener('click', hideNotice);
+  }
+
   function recordHistory() {
     // 截断 redo 分支
     if (historyIndex < history.length - 1) {
@@ -413,7 +459,7 @@ export const editorScript = `
     const clientLabel = exportPptxClientBtn.querySelector('.lp-editor-export-label');
     exportPptxClientBtn.addEventListener('click', async () => {
       if (window.location.protocol === 'file:') {
-        alert('静态文件模式下无法直接导出 PPTX。\\n\\n请通过本地服务器访问后导出：\\n  pnpm dev\\n或运行：\\n  node scripts/export-pptx.mjs <goal.json> out.pptx');
+        showNotice('导出不可用', '静态文件模式下无法直接导出 PPTX。\\n\\n请通过本地服务器访问后导出：\\n  pnpm dev\\n或运行：\\n  node scripts/export-pptx.mjs <goal.json> out.pptx');
         if (exportMenu) exportMenu.setAttribute('hidden', '');
         return;
       }
@@ -443,7 +489,7 @@ export const editorScript = `
           try {
             await exportPptxFromServer();
           } catch (fallbackErr) {
-            alert(fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr));
+            await showNotice('导出失败', fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr));
           } finally {
             hideProgress();
           }
@@ -462,7 +508,7 @@ export const editorScript = `
     const pptxLabel = exportPptxBtn.querySelector('.lp-editor-export-label');
     exportPptxBtn.addEventListener('click', async () => {
       if (window.location.protocol === 'file:') {
-        alert('静态文件模式下无法直接导出 PPTX。\\n\\n请通过本地服务器访问后导出：\\n  pnpm dev\\n或运行：\\n  node scripts/export-pptx.mjs <goal.json> out.pptx');
+        showNotice('导出不可用', '静态文件模式下无法直接导出 PPTX。\\n\\n请通过本地服务器访问后导出：\\n  pnpm dev\\n或运行：\\n  node scripts/export-pptx.mjs <goal.json> out.pptx');
         if (exportMenu) exportMenu.setAttribute('hidden', '');
         return;
       }
@@ -472,7 +518,7 @@ export const editorScript = `
       try {
         await exportPptxFromServer();
       } catch (err) {
-        alert(err instanceof Error ? err.message : String(err));
+        await showNotice('导出失败', err instanceof Error ? err.message : String(err));
       } finally {
         hideProgress();
         if (pptxLabel) pptxLabel.textContent = 'PPTX';
@@ -487,7 +533,7 @@ export const editorScript = `
     const pdfLabel = exportPdfBtn.querySelector('.lp-editor-export-label');
     exportPdfBtn.addEventListener('click', async () => {
       if (window.location.protocol === 'file:') {
-        alert('静态文件模式下无法直接导出 PDF。\\n\\n请通过本地服务器访问后导出：\\n  pnpm dev\\n或运行：\\n  node scripts/export-pdf.mjs <goal.json> out.pdf');
+        showNotice('导出不可用', '静态文件模式下无法直接导出 PDF。\\n\\n请通过本地服务器访问后导出：\\n  pnpm dev\\n或运行：\\n  node scripts/export-pdf.mjs <goal.json> out.pdf');
         if (exportMenu) exportMenu.setAttribute('hidden', '');
         return;
       }
@@ -513,7 +559,7 @@ export const editorScript = `
         URL.revokeObjectURL(url);
         setProgress(100, '完成');
       } catch (err) {
-        alert(err instanceof Error ? err.message : String(err));
+        await showNotice('导出失败', err instanceof Error ? err.message : String(err));
       } finally {
         hideProgress();
         if (pdfLabel) pdfLabel.textContent = 'PDF';
@@ -549,7 +595,7 @@ export const editorScript = `
         }, 1200);
       } catch (err) {
         console.warn('手动保存失败', err);
-        alert('保存失败，请检查浏览器存储权限。');
+        showNotice('保存失败', '保存失败，请检查浏览器存储权限。');
       }
     });
   }
@@ -794,7 +840,7 @@ export const editorScript = `
 
   function showDeleteConfirm(index, triggerEl) {
     if (goal.slides.length <= 1) {
-      alert('至少保留一页幻灯片。');
+      showNotice('提示', '至少保留一页幻灯片。');
       return;
     }
     pendingDeleteIndex = index;
@@ -1106,7 +1152,7 @@ export const editorScript = `
 
   function deleteSlide(index) {
     if (goal.slides.length <= 1) {
-      alert('至少保留一页幻灯片。');
+      showNotice('提示', '至少保留一页幻灯片。');
       return;
     }
     const deleteBtn = document.querySelector('.lp-thumbnail-delete[data-index="' + index + '"]');
