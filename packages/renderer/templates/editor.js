@@ -144,8 +144,9 @@
     document.getElementById('lp-left-panel').innerHTML = buildLeftPanel(goal, data.slideHtmls, width, height);
     document.getElementById('lp-right-panel').innerHTML = buildRightPanel();
 
-    // 暴露 goal 给 editor-script
+    // 暴露 goal 和版式 schema 给 editor-script
     window.__lemonPPT_goal = goal;
+    window.__lemonPPT_layoutSchemas = data.layoutSchemas || window.__lemonPPT_layoutSchemas || {};
 
     // 显示编辑器
     document.getElementById('lp-loading').classList.add('hidden');

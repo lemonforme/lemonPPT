@@ -2,10 +2,11 @@
 // Copyright (c) 2026 lemonforme
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import type { DeckGoal, EditorData, RenderOutput } from '@lemonppt/core';
+import type { DeckGoal, EditorData, PropsSchema, RenderOutput } from '@lemonppt/core';
 import { normalizeGoal } from './normalize-goal.js';
 import {
   renderSlide,
+  getLayoutSchema,
   generateThemeCssVariablesWithDark,
   generateTheme02CssVariablesWithSchemes,
   generateTheme03CssVariablesWithSchemes,
@@ -132,6 +133,13 @@ export function renderEditorData(goal: DeckGoal, options: RenderEditorOptions = 
 
   const { theme, colorScheme, appearance, themeCssVars } = resolveThemeMeta(goal);
 
+  const layoutIds = [...new Set(goal.slides.map((s) => s.layout))];
+  const layoutSchemas: Record<string, PropsSchema> = {};
+  for (const id of layoutIds) {
+    const schema = getLayoutSchema(id);
+    if (schema) layoutSchemas[id] = schema;
+  }
+
   return {
     goal,
     theme,
@@ -145,6 +153,7 @@ export function renderEditorData(goal: DeckGoal, options: RenderEditorOptions = 
     rightPanelMarkup: '',
     addSlideModalMarkup: '',
     editorScriptMarkup: '',
+    layoutSchemas,
   };
 }
 
