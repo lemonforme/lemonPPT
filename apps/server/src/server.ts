@@ -44,6 +44,7 @@ function parseGoalBody(body: unknown, fallbackTheme = 'theme01'): DeckGoal {
 export interface ServerOptions {
   port: number;
   outputDir: string;
+  sampleGoalPath?: string;
 }
 
 export function createServer(options: ServerOptions): Express {
@@ -310,7 +311,9 @@ export function createServer(options: ServerOptions): Express {
   // 编辑器渲染数据 API：返回单页编辑器所需的 EditorData，不再写静态文件
   app.get('/api/render-editor', async (req, res) => {
     try {
-      const samplePath = path.join(rootDir, 'examples/sample-goal.json');
+      const samplePath = options.sampleGoalPath
+        ? path.resolve(options.sampleGoalPath)
+        : path.join(rootDir, 'examples/sample-goal.json');
       const goal = await readGoalFromFile(samplePath);
       const themeId = String(req.query.theme || process.env.LEMONPPT_DEFAULT_THEME || goal.theme || 'theme01');
       goal.theme = getTheme(themeId) ? themeId : 'theme01';
