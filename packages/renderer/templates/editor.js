@@ -228,6 +228,29 @@
     }
   }
 
+  window.__lemonPPT_exportProgress = {
+    show(title) {
+      const overlay = document.getElementById('lp-export-progress');
+      const titleEl = document.getElementById('lp-export-progress-title');
+      if (titleEl && title) titleEl.textContent = title;
+      this.set(0, '准备中');
+      if (overlay) overlay.classList.remove('hidden');
+    },
+    set(percent, status) {
+      const bar = document.getElementById('lp-export-progress-bar');
+      const statusEl = document.getElementById('lp-export-progress-status');
+      const percentEl = document.getElementById('lp-export-progress-percent');
+      const value = Math.max(0, Math.min(100, Math.round(percent)));
+      if (bar) bar.style.width = value + '%';
+      if (statusEl && status) statusEl.textContent = status;
+      if (percentEl) percentEl.textContent = value + '%';
+    },
+    hide() {
+      const overlay = document.getElementById('lp-export-progress');
+      if (overlay) overlay.classList.add('hidden');
+    },
+  };
+
   async function init() {
     try {
       if (window.__lemonPPT_editorData) {

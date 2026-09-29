@@ -355,10 +355,26 @@ export const editorScript = `
     });
   }
 
+  const exportProgress = window.__lemonPPT_exportProgress;
+  function showProgress(title) {
+    if (exportProgress && typeof exportProgress.show === 'function') exportProgress.show(title);
+  }
+  function setProgress(percent, status) {
+    if (exportProgress && typeof exportProgress.set === 'function') exportProgress.set(percent, status);
+  }
+  function hideProgress() {
+    if (exportProgress && typeof exportProgress.hide === 'function') exportProgress.hide();
+  }
+  const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+
   const exportHtmlBtn = document.getElementById('lp-export-html');
   if (exportHtmlBtn) {
-    exportHtmlBtn.addEventListener('click', () => {
+    exportHtmlBtn.addEventListener('click', async () => {
+      showProgress('正在生成 HTML...');
+      setProgress(25, '收集页面内容...');
+      await nextFrame();
       const html = '<!DOCTYPE html>\\n' + document.documentElement.outerHTML;
+      setProgress(70, '正在打包...');
       const blob = new Blob([html], { type: 'text/html' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -366,24 +382,30 @@ export const editorScript = `
       a.download = 'presentation.html';
       a.click();
       URL.revokeObjectURL(url);
+      setProgress(100, '完成');
+      hideProgress();
       if (exportMenu) exportMenu.setAttribute('hidden', '');
     });
   }
 
   async function exportPptxFromServer() {
+    setProgress(20, '请求服务端...');
     const res = await fetch('/api/export/pptx', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(goal),
     });
     if (!res.ok) throw new Error('导出失败: ' + res.status);
+    setProgress(70, '正在生成文件...');
     const blob = await res.blob();
+    setProgress(90, '正在下载...');
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = 'presentation.pptx';
     a.click();
     URL.revokeObjectURL(url);
+    setProgress(100, '完成');
   }
 
   const exportPptxClientBtn = document.getElementById('lp-export-pptx-client');
@@ -395,33 +417,42 @@ export const editorScript = `
         if (exportMenu) exportMenu.setAttribute('hidden', '');
         return;
       }
-      if (clientLabel) clientLabel.textContent = '快速导出中...';
+      showProgress('快速导出 PPTX');
+      setProgress(10, '准备幻灯片...');
       exportPptxClientBtn.disabled = true;
+      await nextFrame();
       try {
         if (!window.__lemonPPT_clientExport) {
           throw new Error('浏览器端导出脚本未加载');
         }
+        setProgress(30, '加载转换引擎...');
         await window.__lemonPPT_clientExport.exportDeckToPptxClient({
           fileName: (goal.title || 'presentation') + '.pptx',
           title: goal.title || 'Presentation',
           author: 'lemonPPT',
         });
+        setProgress(100, '导出完成');
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
         console.warn('Client PPTX export failed, offering server fallback', err);
+        hideProgress();
         const fallback = confirm('快速导出失败：' + message + '\\n\\n是否回退到服务端导出？');
         if (fallback) {
+          showProgress('服务端导出 PPTX');
           if (clientLabel) clientLabel.textContent = '服务端导出中...';
           try {
             await exportPptxFromServer();
           } catch (fallbackErr) {
             alert(fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr));
+          } finally {
+            hideProgress();
           }
         }
       } finally {
         if (clientLabel) clientLabel.textContent = '快速导出 PPTX';
         exportPptxClientBtn.disabled = false;
         if (exportMenu) exportMenu.setAttribute('hidden', '');
+        hideProgress();
       }
     });
   }
@@ -435,13 +466,15 @@ export const editorScript = `
         if (exportMenu) exportMenu.setAttribute('hidden', '');
         return;
       }
-      if (pptxLabel) pptxLabel.textContent = '导出中...';
+      showProgress('正在导出 PowerPoint...');
+      setProgress(10, '准备数据...');
       exportPptxBtn.disabled = true;
       try {
         await exportPptxFromServer();
       } catch (err) {
         alert(err instanceof Error ? err.message : String(err));
       } finally {
+        hideProgress();
         if (pptxLabel) pptxLabel.textContent = 'PPTX';
         exportPptxBtn.disabled = false;
         if (exportMenu) exportMenu.setAttribute('hidden', '');
@@ -458,25 +491,31 @@ export const editorScript = `
         if (exportMenu) exportMenu.setAttribute('hidden', '');
         return;
       }
-      if (pdfLabel) pdfLabel.textContent = '导出中...';
+      showProgress('正在导出 PDF...');
+      setProgress(10, '准备数据...');
       exportPdfBtn.disabled = true;
       try {
+        setProgress(25, '请求服务端...');
         const res = await fetch('/api/export/pdf', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(goal),
         });
         if (!res.ok) throw new Error('导出失败: ' + res.status);
+        setProgress(70, '正在生成文件...');
         const blob = await res.blob();
+        setProgress(90, '正在下载...');
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
         a.download = 'presentation.pdf';
         a.click();
         URL.revokeObjectURL(url);
+        setProgress(100, '完成');
       } catch (err) {
         alert(err instanceof Error ? err.message : String(err));
       } finally {
+        hideProgress();
         if (pdfLabel) pdfLabel.textContent = 'PDF';
         exportPdfBtn.disabled = false;
         if (exportMenu) exportMenu.setAttribute('hidden', '');
@@ -1843,15 +1882,22 @@ export const editorScript = `
   }
 
   function attachThumbnailListeners() {
+    const container = document.querySelector('.lp-editor-thumbnails');
+    if (container && container.dataset.lpDeleteDelegated !== 'true') {
+      // 使用事件委托捕获删除按钮点击，避免动态重建缩略图后事件丢失或失效
+      container.addEventListener('click', (e) => {
+        const deleteBtn = e.target.closest && e.target.closest('.lp-thumbnail-delete');
+        if (!deleteBtn) return;
+        e.stopPropagation();
+        const index = Number(deleteBtn.getAttribute('data-index'));
+        showDeleteConfirm(index, deleteBtn);
+      }, true);
+      container.dataset.lpDeleteDelegated = 'true';
+    }
+
     thumbnails.forEach((thumb) => {
       thumb.addEventListener('click', (e) => {
-        const deleteBtn = e.target.closest && e.target.closest('.lp-thumbnail-delete');
-        if (deleteBtn) {
-          e.stopPropagation();
-          const index = Number(deleteBtn.getAttribute('data-index'));
-          showDeleteConfirm(index, deleteBtn);
-          return;
-        }
+        if (e.target.closest && e.target.closest('.lp-thumbnail-delete')) return;
         goTo(Number(thumb.dataset.index));
       });
 
@@ -2671,9 +2717,9 @@ export const editorScript = `
     syncDomFromGoal(path);
     autoSave();
     // 如果该字段在画布上没有对应的直接编辑元素（如 SVG 图表数据），刷新整页幻灯片。
-    // 对于标记为 data-lp-chart-data 的图表数据字段，即使画布上可直接编辑，也需要
-    // 重新渲染图表以同步数据变化。
-    if (!hasEditableElementForPath(path) || hasChartDataElementForPath(path)) {
+    // 对于标记为 data-lp-chart-data 的图表数据字段，以及路径命中 values/data/series
+    // 等图表数据字段时，即使画布上存在对应文字元素，也需要重新渲染图表以同步视觉。
+    if (!hasEditableElementForPath(path) || hasChartDataElementForPath(path) || isChartDataPath(path)) {
       refreshCurrentSlide();
     }
   }
@@ -2686,6 +2732,10 @@ export const editorScript = `
   function hasChartDataElementForPath(path) {
     const selector = '[data-lp-editable="true"][data-lp-chart-data="true"][data-lp-slide-idx="' + selectedSlideIdx + '"][data-lp-prop="' + path + '"]';
     return document.querySelector(selector) !== null;
+  }
+
+  function isChartDataPath(path) {
+    return /(^|\.)values(\.|$)/.test(path) || /(^|\.)data(\.|$)/.test(path) || /(^|\.)series(\.|$)/.test(path);
   }
 
   function createEl(tag, className, parent) {
@@ -2809,6 +2859,89 @@ export const editorScript = `
       });
     });
     return wrap;
+  }
+
+  function createTransitionSelect(currentKey, options, onSelect) {
+    const container = createEl('div', 'lp-transition-select');
+    const trigger = createEl('button', 'lp-transition-select-trigger', container);
+    trigger.type = 'button';
+    const labelEl = createEl('span', 'lp-transition-select-label', trigger);
+    const caret = createEl('span', 'lp-transition-select-caret', trigger);
+    caret.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l4 4 4-4"/></svg>';
+
+    const menu = createEl('div', 'lp-transition-select-menu', container);
+    menu.setAttribute('hidden', '');
+
+    function findLabel(key) {
+      const item = options.find((o) => o.key === key);
+      return item ? item.label : key;
+    }
+
+    function setValue(key) {
+      labelEl.textContent = findLabel(key);
+      Array.from(menu.children).forEach((btn) => {
+        const active = btn.getAttribute('data-key') === key;
+        btn.classList.toggle('lp-transition-select-item-active', active);
+        const check = btn.querySelector('.lp-transition-select-item-check');
+        if (check) check.textContent = active ? '✓' : '';
+      });
+    }
+
+    options.forEach((opt) => {
+      const btn = createEl('button', 'lp-transition-select-item', menu);
+      btn.type = 'button';
+      btn.setAttribute('data-key', opt.key);
+      const text = createEl('span', '', btn);
+      text.textContent = opt.label;
+      const check = createEl('span', 'lp-transition-select-item-check', btn);
+      check.textContent = opt.key === currentKey ? '✓' : '';
+      if (opt.key === currentKey) btn.classList.add('lp-transition-select-item-active');
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setValue(opt.key);
+        close();
+        onSelect(opt.key);
+      });
+    });
+
+    labelEl.textContent = findLabel(currentKey);
+
+    function open() {
+      container.classList.add('lp-transition-select-open');
+      menu.removeAttribute('hidden');
+    }
+
+    function close() {
+      container.classList.remove('lp-transition-select-open');
+      menu.setAttribute('hidden', '');
+    }
+
+    function toggle() {
+      if (menu.hasAttribute('hidden')) {
+        open();
+      } else {
+        close();
+      }
+    }
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggle();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!container.contains(e.target)) {
+        close();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.hasAttribute('hidden')) {
+        close();
+      }
+    });
+
+    return { container, setValue };
   }
 
   function createImageHintField(label) {
@@ -3206,25 +3339,15 @@ export const editorScript = `
 
     const transitionSection = createEl('div', 'lp-property-section', propertyContent);
     createEl('div', 'lp-property-section-title', transitionSection).textContent = '切换动画';
-    const transitionSelect = document.createElement('select');
-    transitionSelect.className = 'lp-editor-select';
-    transitionSelect.style.width = '100%';
     const currentTransition = slide.props.transition || 'none';
-    TRANSITIONS.forEach((t) => {
-      const opt = document.createElement('option');
-      opt.value = t.key;
-      opt.textContent = t.label;
-      if (t.key === currentTransition) opt.selected = true;
-      transitionSelect.appendChild(opt);
-    });
-    transitionSelect.addEventListener('change', () => {
-      slide.props.transition = transitionSelect.value;
+    const transitionSelect = createTransitionSelect(currentTransition, TRANSITIONS, (key) => {
+      slide.props.transition = key;
       const wrapper = document.querySelector('.lp-slide-wrapper[data-slide-index="' + selectedSlideIdx + '"]');
       if (wrapper) wrapper.setAttribute('data-lp-transition', slide.props.transition);
       recordHistory();
-      saveState();
+      autoSave();
     });
-    transitionSection.appendChild(transitionSelect);
+    transitionSection.appendChild(transitionSelect.container);
 
     if (selectedEl && slide.role === 'chart') {
       const prop = selectedEl.getAttribute('data-lp-prop');
@@ -3290,17 +3413,25 @@ export const editorScript = `
         inst.dispose();
       }
       container.__lpEChartInstance = undefined;
+      if (container.__lpChartRO) {
+        container.__lpChartRO.disconnect();
+        container.__lpChartRO = undefined;
+      }
     });
   }
 
   function renderCurrentSlideToRoot() {
     const wrapper = document.querySelector('.lp-slide-wrapper.active');
     if (!wrapper) return;
+    // 先释放当前 slide 中的旧 ECharts 实例，避免 React 重新渲染后旧实例与 DOM 错位。
+    disposeEChartsInWrapper(wrapper);
     renderSlideToRootByIndex(selectedSlideIdx, wrapper);
-    // React 18 createRoot().render() 是异步的，延迟到下一帧再初始化 ECharts，
-    // 确保占位容器已经挂载到 DOM 并有可测量的尺寸。
+    // React 18 createRoot().render() 是异步的，单帧 requestAnimationFrame 可能早于 commit。
+    // 使用 rAF + setTimeout 确保 React 完成提交、占位容器已挂载并有可测量尺寸后再初始化图表。
     requestAnimationFrame(() => {
-      initActiveSlideECharts();
+      setTimeout(() => {
+        initActiveSlideECharts();
+      }, 0);
     });
   }
 

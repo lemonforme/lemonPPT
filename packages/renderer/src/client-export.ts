@@ -134,6 +134,63 @@ function buildExportOptions(options: ClientExportOptions, slides: HTMLElement[])
   };
 }
 
+interface InlineStyleBackup {
+  el: HTMLElement;
+  opacity: string;
+  visibility: string;
+  pointerEvents: string;
+  transition: string;
+  animation: string;
+}
+
+/**
+ * 临时强制所有幻灯片可见，解决编辑器中非 active slide 因 opacity:0 被 dom-to-pptx
+ * 截图为空白的问题。导出完成后恢复原样式。
+ *
+ * 注意：主题 CSS 对 .lp-slide-wrapper 有过渡动画，必须先禁用 transition，否则
+ * 设置 opacity:1 后浏览器仍在动画起始帧，dom-to-pptx 会截到空白。
+ */
+function forceSlidesVisible(slides: HTMLElement[]): InlineStyleBackup[] {
+  const backups = slides.map((el) => ({
+    el,
+    opacity: el.style.opacity,
+    visibility: el.style.visibility,
+    pointerEvents: el.style.pointerEvents,
+    transition: el.style.transition,
+    animation: el.style.animation,
+  }));
+
+  // 先禁用过渡/动画，避免样式切换时被截到中间帧
+  slides.forEach((el) => {
+    el.style.setProperty('transition', 'none', 'important');
+    el.style.setProperty('animation', 'none', 'important');
+  });
+  // 强制回流，让禁用过渡立即生效
+  slides.forEach((el) => {
+    void el.offsetWidth;
+  });
+
+  slides.forEach((el) => {
+    el.style.opacity = '1';
+    el.style.visibility = 'visible';
+    // 防止导出过程中鼠标/键盘意外触发幻灯片切换
+    el.style.pointerEvents = 'none';
+  });
+
+  return backups;
+}
+
+function restoreSlidesStyle(backups: InlineStyleBackup[]): void {
+  backups.forEach(({ el, opacity, visibility, pointerEvents, transition, animation }) => {
+    el.style.opacity = opacity;
+    el.style.visibility = visibility;
+    el.style.pointerEvents = pointerEvents;
+    // 用 setProperty 重置，避免残留 !important
+    el.style.setProperty('transition', transition, '');
+    el.style.setProperty('animation', animation, '');
+  });
+}
+
 /**
  * 导出当前编辑器中所有幻灯片为可编辑 PPTX。
  */
@@ -141,7 +198,12 @@ export async function exportDeckToPptxClient(options: ClientExportOptions = {}):
   const api = await loadDomToPptx(options.bundleUrl);
   const slides = getSlideElements();
   const exportOptions = buildExportOptions(options, slides);
-  await api.exportToPptx(slides, exportOptions);
+  const backups = forceSlidesVisible(slides);
+  try {
+    await api.exportToPptx(slides, exportOptions);
+  } finally {
+    restoreSlidesStyle(backups);
+  }
 }
 
 /**
@@ -156,7 +218,12 @@ export async function exportCurrentSlideToPptxClient(options: ClientExportOption
     throw new Error('未找到可导出的幻灯片');
   }
   const exportOptions = buildExportOptions(options, slides);
-  await api.exportToPptx([target], exportOptions);
+  const backups = forceSlidesVisible([target]);
+  try {
+    await api.exportToPptx([target], exportOptions);
+  } finally {
+    restoreSlidesStyle(backups);
+  }
 }
 
 if (typeof window !== 'undefined') {

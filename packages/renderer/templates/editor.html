@@ -141,17 +141,39 @@
       border-color: #10b981;
     }
     .lp-editor-select {
+      appearance: none;
+      -webkit-appearance: none;
       background: #2a2a2a;
       color: #e5e5e5;
       border: 1px solid #444;
       border-radius: 6px;
-      padding: 6px 10px;
+      padding: 8px 32px 8px 12px;
       font-size: 13px;
+      line-height: 1.4;
       outline: none;
       max-width: 120px;
+      width: auto;
+      cursor: pointer;
+      transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+    .lp-editor-select option {
+      background: #2a2a2a;
+      color: #e5e5e5;
+    }
+    .lp-editor-select:hover {
+      background-color: #333;
+      border-color: #5b8cff;
     }
     .lp-editor-select:focus {
       border-color: #5b8cff;
+      box-shadow: 0 0 0 2px rgba(91, 140, 255, 0.25);
+    }
+    .lp-property-section .lp-editor-select {
+      width: 100%;
+      max-width: none;
     }
     .lp-editor-export {
       position: relative;
@@ -995,6 +1017,55 @@
       font-size: 12px;
       color: #bbb;
     }
+    .lp-export-progress-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 4000;
+      opacity: 1;
+      transition: opacity 120ms ease;
+    }
+    .lp-export-progress-overlay.hidden {
+      display: none;
+    }
+    .lp-export-progress-dialog {
+      width: 320px;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 22px 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      color: #e5e5e5;
+    }
+    .lp-export-progress-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .lp-export-progress-track {
+      height: 8px;
+      background: #333;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .lp-export-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #34d399, #10b981);
+      border-radius: 999px;
+      transition: width 200ms ease;
+    }
+    .lp-export-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #aaa;
+    }
     .lp-loading {
       position: fixed;
       inset: 0;
@@ -1020,6 +1091,141 @@
     }
     @keyframes lp-spin {
       to { transform: rotate(360deg); }
+    }
+    .lp-delete-confirm-toast {
+      position: fixed;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 10px;
+      padding: 12px 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      z-index: 3500;
+      min-width: 190px;
+      color: #e5e5e5;
+      font-size: 13px;
+    }
+    .lp-delete-confirm-toast[hidden] {
+      display: none !important;
+    }
+    .lp-delete-confirm-text {
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .lp-delete-confirm-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .lp-delete-confirm-btn {
+      border: 1px solid #444;
+      background: #2a2a2a;
+      color: #e5e5e5;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .lp-delete-confirm-btn:hover {
+      background: #333;
+      border-color: #555;
+    }
+    .lp-delete-confirm-btn-confirm {
+      background: #ef4444;
+      border-color: #ef4444;
+      color: #fff;
+    }
+    .lp-delete-confirm-btn-confirm:hover {
+      background: #dc2626;
+      border-color: #dc2626;
+    }
+    .lp-transition-select {
+      position: relative;
+      width: 100%;
+    }
+    .lp-transition-select-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: #2a2a2a;
+      color: #e5e5e5;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 13px;
+      line-height: 1.4;
+      cursor: pointer;
+      transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+    .lp-transition-select-trigger:hover {
+      background: #333;
+      border-color: #5b8cff;
+    }
+    .lp-transition-select-open .lp-transition-select-trigger {
+      border-color: #5b8cff;
+      box-shadow: 0 0 0 2px rgba(91, 140, 255, 0.25);
+    }
+    .lp-transition-select-label {
+      pointer-events: none;
+    }
+    .lp-transition-select-caret {
+      width: 12px;
+      height: 12px;
+      color: #aaa;
+      transition: transform 120ms ease;
+      flex-shrink: 0;
+    }
+    .lp-transition-select-open .lp-transition-select-caret {
+      transform: rotate(180deg);
+    }
+    .lp-transition-select-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 6px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+      z-index: 100;
+      max-height: 240px;
+      overflow: auto;
+    }
+    .lp-transition-select-menu[hidden] {
+      display: none !important;
+    }
+    .lp-transition-select-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      color: #e5e5e5;
+      padding: 8px 10px;
+      font-size: 13px;
+      line-height: 1.4;
+      cursor: pointer;
+      transition: background 120ms ease, color 120ms ease;
+      text-align: left;
+    }
+    .lp-transition-select-item:hover {
+      background: #333;
+    }
+    .lp-transition-select-item-active,
+    .lp-transition-select-item-active:hover {
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.08);
+    }
+    .lp-transition-select-item-check {
+      color: #34d399;
+      font-weight: 700;
+      font-size: 13px;
     }
   </style>
 </head>
@@ -1048,6 +1254,25 @@
       <aside id="lp-right-panel" class="lp-editor-right-panel"></aside>
     </div>
     <div id="lp-modal"></div>
+    <div id="lp-delete-confirm-toast" class="lp-delete-confirm-toast" hidden>
+      <div id="lp-delete-confirm-text" class="lp-delete-confirm-text"></div>
+      <div class="lp-delete-confirm-actions">
+        <button id="lp-delete-confirm-cancel" class="lp-delete-confirm-btn lp-delete-confirm-btn-cancel" type="button">取消</button>
+        <button id="lp-delete-confirm-confirm" class="lp-delete-confirm-btn lp-delete-confirm-btn-confirm" type="button">删除</button>
+      </div>
+    </div>
+    <div id="lp-export-progress" class="lp-export-progress-overlay hidden">
+      <div class="lp-export-progress-dialog">
+        <div id="lp-export-progress-title" class="lp-export-progress-title">正在导出...</div>
+        <div class="lp-export-progress-track">
+          <div id="lp-export-progress-bar" class="lp-export-progress-bar" style="width:0%"></div>
+        </div>
+        <div class="lp-export-progress-meta">
+          <span id="lp-export-progress-status">准备中</span>
+          <span id="lp-export-progress-percent">0%</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="/editor.js"></script>
