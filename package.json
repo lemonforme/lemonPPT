@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
-    "dev": "pnpm --filter @lemonppt/server dev",
+    "dev": "LEMONPPT_OUTPUT_DIR=$PWD/output pnpm --filter @lemonppt/server dev",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
     "test": "vitest run",
