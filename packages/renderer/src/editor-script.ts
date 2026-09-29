@@ -418,22 +418,41 @@ export const editorScript = `
 
   const exportHtmlBtn = document.getElementById('lp-export-html');
   if (exportHtmlBtn) {
+    const htmlLabel = exportHtmlBtn.querySelector('.lp-editor-export-label');
     exportHtmlBtn.addEventListener('click', async () => {
+      if (window.location.protocol === 'file:') {
+        showNotice('导出不可用', '<p>静态文件模式下无法直接导出 HTML 演示。</p><p>请通过本地服务器访问后导出：</p><pre><code>pnpm dev</code></pre>', true);
+        if (exportMenu) exportMenu.setAttribute('hidden', '');
+        return;
+      }
       showProgress('正在生成 HTML...');
-      setProgress(25, '收集页面内容...');
-      await nextFrame();
-      const html = '<!DOCTYPE html>\\n' + document.documentElement.outerHTML;
-      setProgress(70, '正在打包...');
-      const blob = new Blob([html], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'presentation.html';
-      a.click();
-      URL.revokeObjectURL(url);
-      setProgress(100, '完成');
-      hideProgress();
-      if (exportMenu) exportMenu.setAttribute('hidden', '');
+      setProgress(25, '请求服务端...');
+      exportHtmlBtn.disabled = true;
+      try {
+        const res = await fetch('/api/export/html', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(goal),
+        });
+        if (!res.ok) throw new Error('导出失败: ' + res.status);
+        setProgress(70, '正在打包...');
+        const blob = await res.blob();
+        setProgress(90, '正在下载...');
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'presentation.html';
+        a.click();
+        URL.revokeObjectURL(url);
+        setProgress(100, '完成');
+      } catch (err) {
+        await showNotice('导出失败', err instanceof Error ? err.message : String(err));
+      } finally {
+        hideProgress();
+        if (htmlLabel) htmlLabel.textContent = 'HTML 演示';
+        exportHtmlBtn.disabled = false;
+        if (exportMenu) exportMenu.setAttribute('hidden', '');
+      }
     });
   }
 

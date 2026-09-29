@@ -29,6 +29,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { log } from './logger.js';
+import { buildStandaloneHtml } from './export-html.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '../../..');
@@ -268,6 +269,21 @@ export function createServer(options: ServerOptions): Express {
       res.setHeader('Content-Disposition', `attachment; filename="${job.filename}"`);
       const buffer = await readFile(job.filePath);
       res.send(buffer);
+    } catch (err) {
+      handleError(err, req, res);
+    }
+  });
+
+  // 导出独立 HTML 演示文件（内联 CSS/JS，离线可打开）
+  app.post('/api/export/html', async (req, res) => {
+    try {
+      const goal = parseGoalBody(req.body);
+      const html = await buildStandaloneHtml(goal);
+      const filename = `${goal.title || 'presentation'}.html`;
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`);
+      res.send(html);
+      log('info', 'Exported standalone HTML', { theme: goal.theme, slides: goal.slides.length });
     } catch (err) {
       handleError(err, req, res);
     }
