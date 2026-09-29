@@ -298,6 +298,9 @@ export function createServer(options: ServerOptions): Express {
   app.get('/editor', (_req, res) => {
     res.sendFile(path.join(rootDir, 'packages', 'renderer', 'templates', 'editor.html'));
   });
+  app.get('/editor.html', (_req, res) => {
+    res.sendFile(path.join(rootDir, 'packages', 'renderer', 'templates', 'editor.html'));
+  });
 
   // 单页编辑器前端逻辑
   app.get('/editor.js', (_req, res) => {
