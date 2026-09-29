@@ -1,6 +1,6 @@
 (function () {
   const params = new URLSearchParams(window.location.search);
-  const initialTheme = params.get('theme') || window.__lemonPPT_editorData?.theme || window.__lemonPPT_goal?.theme || 'theme01';
+  const initialTheme = params.get('theme') || window.__lemonPPT_editorData?.theme || window.__lemonPPT_goal?.theme || '';
   const isStatic = !!window.__lemonPPT_editorData || !!window.__lemonPPT_goal;
   const assetsBase = window.__lemonPPT_assetsBase || '/deck/assets/';
   const apiBase = window.__lemonPPT_apiBase || '';
@@ -174,7 +174,8 @@
 
   async function fetchTheme(theme) {
     try {
-      const res = await fetch(`${apiBase}/api/render-editor?theme=${encodeURIComponent(theme)}`);
+      const query = theme ? `?theme=${encodeURIComponent(theme)}` : '';
+      const res = await fetch(`${apiBase}/api/render-editor${query}`);
       const json = await res.json();
       if (!json.success) throw new Error(json.error || '加载失败');
       await applyData(json.data, { staticMode: false });
