@@ -90,6 +90,11 @@ export async function copyThemeAssets(themeId: string, assetsDir: string): Promi
   const iconsDest = path.join(assetsDir, 'icons');
   await cp(iconsSource, iconsDest, { recursive: true, force: true });
 
+  // 复制共享切换动画样式，覆盖所有主题
+  const transitionsSource = resolvePackagePath('@lemonppt/renderer', 'assets', 'transitions.css');
+  const transitionsDest = path.join(assetsDir, 'transitions.css');
+  await copyFile(transitionsSource, transitionsDest);
+
   // 复制浏览器可执行 bundle（IIFE 格式），支持静态文件模式下结构编辑
   const clientRenderSource = resolvePackagePath('@lemonppt/renderer', 'dist', 'client', 'client-render.js');
   const clientRenderDest = path.join(assetsDir, 'client-render.js');
@@ -269,6 +274,7 @@ window.__lemonPPT_layoutSchemas = ${JSON.stringify(layoutSchemas)};
     const assets = [
       './assets/fonts/fonts.css',
       `./assets/${data.theme}.css`,
+      './assets/transitions.css',
       './assets/jquery.min.js',
       './assets/editor-script.js',
       './assets/client-render.js',
