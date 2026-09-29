@@ -312,7 +312,7 @@ export function createServer(options: ServerOptions): Express {
     try {
       const samplePath = path.join(rootDir, 'examples/sample-goal.json');
       const goal = await readGoalFromFile(samplePath);
-      const themeId = String(req.query.theme || goal.theme || 'theme01');
+      const themeId = String(req.query.theme || process.env.LEMONPPT_DEFAULT_THEME || goal.theme || 'theme01');
       goal.theme = getTheme(themeId) ? themeId : 'theme01';
 
       const assetsDir = path.join(options.outputDir, 'assets');
@@ -330,7 +330,7 @@ export function createServer(options: ServerOptions): Express {
   app.post('/api/render-editor', async (req, res) => {
     try {
       const goal = parseGoalBody(req.body);
-      const themeId = String(req.query.theme || goal.theme || 'theme01');
+      const themeId = String(req.query.theme || process.env.LEMONPPT_DEFAULT_THEME || goal.theme || 'theme01');
       goal.theme = getTheme(themeId) ? themeId : 'theme01';
 
       const assetsDir = path.join(options.outputDir, 'assets');
