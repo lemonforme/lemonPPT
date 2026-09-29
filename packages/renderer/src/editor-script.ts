@@ -62,11 +62,6 @@ export const editorScript = `
     { key: 'slide', label: '横滑' },
     { key: 'fade', label: '淡入淡出' },
     { key: 'scale', label: '缩放' },
-    { key: 'cut-in', label: '切入' },
-    { key: 'cube', label: '立方体' },
-    { key: 'flip', label: '翻页' },
-    { key: 'cover', label: '覆盖' },
-    { key: 'wipe', label: '擦除' },
   ];
 
   const history = [deepClone(goal)];
